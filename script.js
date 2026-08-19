@@ -18,12 +18,26 @@ class DialogueEditor {
         this.previewHistory = [];
         this.currentPreviewNode = null;
 
+        // рисование кривой
+        this.isDrawingCurve = false;
+        this.drawingFromOption = null; // { nodeId, optionId }
+        this.drawingTempPath = null;
+
+        // вкладка кода
+        this.currentCodeFile = 'index.html';
+        this.sourceCode = {
+            'index.html': '',
+            'style.css': '',
+            'script.js': ''
+        };
+
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
+        this.loadSourceCode();
         this.render();
 
-        console.log('✒ Кузница Скальда инициализирована (v2.1)');
+        console.log('✒ Кузница Скальда v2.1 инициализирована');
     }
 
     cacheElements() {
@@ -34,7 +48,7 @@ class DialogueEditor {
             'connectionLayer', 'nodeContainer', 'canvasContainer',
             'nodeProperties', 'optionProperties', 'emptyState',
             'nodeId', 'nodeText', 'nodeOptionsList', 'addNodeOptionBtn',
-            'optionText', 'optionTransition', 'optionIcon', 'optionColor',
+            'optionText', 'optionTransition', 'optionQuestLink', 'optionIcon', 'optionColor',
             'conditionsList', 'commandsList', 'addConditionBtn', 'addCommandBtn',
             'previewModal', 'previewContent',
             'questsModal', 'addQuestBtn', 'questsList', 'questEditor',
@@ -44,12 +58,15 @@ class DialogueEditor {
             'questTargetModal', 'targetPrefab', 'targetAmount', 'targetLevel', 'saveQuestTargetBtn',
             'questRewardModal', 'rewardType', 'rewardPrefab', 'rewardAmount', 'saveQuestRewardBtn',
             'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn',
-            'questPreviewModal', 'questPreviewContent'
+            'questPreviewModal', 'questPreviewContent',
+            'questPalette', 'questPaletteList', 'toggleQuestPalette',
+            'tabField', 'tabCode', 'codeEditor', 'copyCodeBtn', 'downloadCodeBtn'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
 
     initEventListeners() {
+        // Toolbar
         this.els.addNodeBtn.addEventListener('click', () => this.addNode());
         this.els.addOptionBtn.addEventListener('click', () => this.addOptionToSelected());
         this.els.deleteBtn.addEventListener('click', () => this.deleteSelected());
@@ -58,6 +75,7 @@ class DialogueEditor {
         this.els.fitToScreenBtn.addEventListener('click', () => this.fitToScreen());
         this.els.loadSampleBtn.addEventListener('click', () => this.loadSampleData());
 
+        // Header
         this.els.searchInput.addEventListener('input', (e) => this.searchDialogue(e.target.value));
         this.els.importDialogueBtn.addEventListener('click', () => this.els.dialogueFileInput.click());
         this.els.importQuestBtn.addEventListener('click', () => this.els.questFileInput.click());
@@ -66,47 +84,134 @@ class DialogueEditor {
         this.els.validateBtn.addEventListener('click', () => this.validateDialogue());
         this.els.previewBtn.addEventListener('click', () => this.showPreview());
 
+        // File inputs
         this.els.dialogueFileInput.addEventListener('change', (e) => this.handleDialogueFileImport(e));
         this.els.questFileInput.addEventListener('change', (e) => this.handleQuestFileImport(e));
 
+        // Node properties
         this.els.nodeId.addEventListener('change', (e) => this.updateNodeProperty('id', e.target.value));
         this.els.nodeText.addEventListener('input', (e) => this.updateNodeProperty('text', e.target.value));
         this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToNode(this.selectedNode));
 
+        // Option properties
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
         this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
+        this.els.optionQuestLink.addEventListener('change', (e) => this.updateOptionProperty('questLink', e.target.value));
         this.els.optionIcon.addEventListener('input', (e) => this.updateOptionProperty('icon', e.target.value));
         this.els.optionColor.addEventListener('input', (e) => this.updateOptionProperty('color', e.target.value));
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
 
+        // Condition/Command modals
         this.els.conditionType.addEventListener('change', () => this.updateConditionParams());
         this.els.saveConditionBtn.addEventListener('click', () => this.saveCondition());
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
         this.els.saveCommandBtn.addEventListener('click', () => this.saveCommand());
 
+        // Quests
         this.els.addQuestBtn.addEventListener('click', () => this.addQuest());
         this.els.saveQuestTargetBtn.addEventListener('click', () => this.saveQuestTarget());
         this.els.saveQuestRewardBtn.addEventListener('click', () => this.saveQuestReward());
         this.els.requirementType.addEventListener('change', () => this.updateRequirementParams());
         this.els.saveQuestRequirementBtn.addEventListener('click', () => this.saveQuestRequirement());
 
+        // Quest palette toggle
+        this.els.toggleQuestPalette.addEventListener('click', () => {
+            this.els.questPalette.classList.toggle('collapsed');
+            this.els.toggleQuestPalette.textContent = this.els.questPalette.classList.contains('collapsed') ? '+' : '−';
+        });
+
+        // Canvas drag
         this.els.canvasContainer.addEventListener('mousedown', (e) => this.startCanvasDrag(e));
         window.addEventListener('mousemove', (e) => this.canvasDrag(e));
-        window.addEventListener('mouseup', () => this.stopCanvasDrag());
+        window.addEventListener('mouseup', (e) => this.stopCanvasDrag(e));
         this.els.canvasContainer.addEventListener('wheel', (e) => {
             e.preventDefault();
             this.zoom(e.deltaY < 0 ? 0.1 : -0.1);
         }, { passive: false });
 
+        // Drawing curve - global mouse events
+        window.addEventListener('mousemove', (e) => this.onDrawMouseMove(e));
+        window.addEventListener('mouseup', (e) => this.onDrawMouseUp(e));
+
+        // Global click delegation
         document.addEventListener('click', (e) => this.handleGlobalClick(e));
 
+        // Bottom tabs
+        document.querySelectorAll('.bottom-tab').forEach(tab => {
+            tab.addEventListener('click', () => this.switchTab(tab.dataset.tab));
+        });
+
+        // Code tabs
+        document.querySelectorAll('.code-tab').forEach(tab => {
+            tab.addEventListener('click', () => this.switchCodeFile(tab.dataset.file));
+        });
+
+        // Code actions
+        this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
+        this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
+
+        // Keyboard
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') this.closeAllModals();
+            if (e.key === 'Escape') {
+                if (this.isDrawingCurve) this.cancelDrawing();
+                else this.closeAllModals();
+            }
             if (e.key === 'Delete' && this.selectedNode) this.deleteSelected();
         });
     }
 
+    // === TABS ===
+    switchTab(tabId) {
+        document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById(tabId).classList.add('active');
+        document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
+
+        if (tabId === 'tabCode') {
+            this.loadSourceCode();
+            this.showCodeFile(this.currentCodeFile);
+        }
+    }
+
+    switchCodeFile(file) {
+        this.currentCodeFile = file;
+        document.querySelectorAll('.code-tab').forEach(t => {
+            t.classList.toggle('active', t.dataset.file === file);
+        });
+        this.showCodeFile(file);
+    }
+
+    showCodeFile(file) {
+        this.els.codeEditor.value = this.sourceCode[file] || '// Файл не загружен';
+    }
+
+    async loadSourceCode() {
+        const files = ['index.html', 'style.css', 'script.js'];
+        for (const file of files) {
+            try {
+                const response = await fetch(file);
+                if (response.ok) {
+                    this.sourceCode[file] = await response.text();
+                }
+            } catch (e) {
+                console.warn(`Не удалось загрузить ${file}:`, e);
+            }
+        }
+    }
+
+    copyCurrentCode() {
+        this.els.codeEditor.select();
+        document.execCommand('copy');
+        this.els.copyCodeBtn.textContent = '✓ Скопировано!';
+        setTimeout(() => { this.els.copyCodeBtn.textContent = '📋 Копировать'; }, 2000);
+    }
+
+    downloadCurrentCode() {
+        this.downloadFile(this.currentCodeFile, this.els.codeEditor.value);
+    }
+
+    // === GLOBAL CLICK ===
     handleGlobalClick(e) {
         if (e.target.matches('.close') || e.target.closest('.close')) {
             this.closeAllModals();
@@ -125,62 +230,31 @@ class DialogueEditor {
         const data = actionTarget.dataset;
 
         switch (action) {
-            case 'close-modal':
-                this.closeAllModals();
-                break;
-            case 'select-node':
-                this.selectNode(data.id);
-                break;
-            case 'select-option':
-                this.selectOption(data.optionId);
-                break;
-            case 'navigate':
-                this.previewNavigate(data.target);
-                break;
-            case 'preview-go-back':
-                this.previewGoBack();
-                break;
-            case 'toggle-collapse':
-                this.toggleCollapse(data.id);
-                break;
-            case 'delete-option':
-                this.deleteOptionFromNode(data.optionId);
-                break;
-            case 'delete-condition':
-                this.removeCondition(parseInt(data.index));
-                break;
-            case 'delete-command':
-                this.removeCommand(parseInt(data.index));
-                break;
-            case 'select-quest':
-                this.selectQuest(data.id);
-                break;
-            case 'show-quest-target-modal':
-                this.openModal('questTargetModal');
-                break;
-            case 'show-quest-reward-modal':
-                this.openModal('questRewardModal');
-                break;
-            case 'show-quest-req-modal':
-                this.openModal('questRequirementModal');
-                this.updateRequirementParams();
-                break;
-            case 'delete-quest-target':
-                this.deleteQuestTarget(parseInt(data.index));
-                break;
-            case 'delete-quest-reward':
-                this.deleteQuestReward(parseInt(data.index));
-                break;
-            case 'delete-quest-req':
-                this.deleteQuestRequirement(parseInt(data.index));
-                break;
-            case 'show-quest-preview':
-                this.showQuestPreview();
-                break;
-            case 'preview-select-quest':
-                this.previewSelectQuest(data.id);
-                break;
+            case 'close-modal': this.closeAllModals(); break;
+            case 'select-node': this.selectNode(data.id); break;
+            case 'select-option': this.selectOption(data.optionId); break;
+            case 'navigate': this.previewNavigate(data.target); break;
+            case 'preview-go-back': this.previewGoBack(); break;
+            case 'toggle-collapse': this.toggleCollapse(data.id); break;
+            case 'delete-option': this.deleteOptionFromNode(data.optionId); break;
+            case 'delete-condition': this.removeCondition(parseInt(data.index)); break;
+            case 'delete-command': this.removeCommand(parseInt(data.index)); break;
+            case 'select-quest': this.selectQuest(data.id); break;
+            case 'show-quest-target-modal': this.openModal('questTargetModal'); break;
+            case 'show-quest-reward-modal': this.openModal('questRewardModal'); break;
+            case 'show-quest-req-modal': this.openModal('questRequirementModal'); this.updateRequirementParams(); break;
+            case 'delete-quest-target': this.deleteQuestTarget(parseInt(data.index)); break;
+            case 'delete-quest-reward': this.deleteQuestReward(parseInt(data.index)); break;
+            case 'delete-quest-req': this.deleteQuestRequirement(parseInt(data.index)); break;
+            case 'show-quest-preview': this.showQuestPreview(); break;
+            case 'preview-select-quest': this.previewSelectQuest(data.id); break;
+            case 'open-quest-link': this.openQuestLink(data.questId); break;
         }
+    }
+
+    openQuestLink(questId) {
+        this.selectQuest(questId);
+        this.openModal('questsModal');
     }
 
     openModal(id) {
@@ -196,7 +270,7 @@ class DialogueEditor {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
 
-    // === УЗЛЫ ===
+    // === NODES ===
     addNode(id = null, x = null, y = null) {
         const nodeId = id || `Node_${Date.now()}`;
         if (this.nodes.has(nodeId)) return null;
@@ -235,6 +309,7 @@ class DialogueEditor {
                 this.els.nodeText.value = node.text;
                 this.renderNodeOptionsList();
                 this.updateTransitionsList();
+                this.updateQuestLinksList();
             }
         }
     }
@@ -252,12 +327,14 @@ class DialogueEditor {
 
         this.els.optionText.value = option.text || '';
         this.els.optionTransition.value = option.transition || '';
+        this.els.optionQuestLink.value = option.questLink || '';
         this.els.optionIcon.value = option.icon || '';
         this.els.optionColor.value = option.color || '#ffffff';
 
         this.renderConditionsList(option.conditions);
         this.renderCommandsList(option.commands);
         this.renderNodeOptionsList();
+        this.updateQuestLinksList();
     }
 
     addOptionToSelected() {
@@ -273,6 +350,7 @@ class DialogueEditor {
             id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
             text: text,
             transition: '',
+            questLink: '',
             icon: '',
             color: '#ffffff',
             conditions: [],
@@ -328,6 +406,16 @@ class DialogueEditor {
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
         if (!option) return;
+
+        // одна кнопка = одно действие
+        if (property === 'transition' && value) {
+            option.questLink = '';
+            this.els.optionQuestLink.value = '';
+        } else if (property === 'questLink' && value) {
+            option.transition = '';
+            this.els.optionTransition.value = '';
+        }
+
         option[property] = value;
         this.renderNodes();
         this.renderNodeOptionsList();
@@ -365,8 +453,19 @@ class DialogueEditor {
         });
     }
 
+    updateQuestLinksList() {
+        const select = this.els.optionQuestLink;
+        select.innerHTML = '<option value="">— Нет —</option>';
+        this.quests.forEach((quest, questId) => {
+            const opt = document.createElement('option');
+            opt.value = questId;
+            opt.textContent = quest.name || questId;
+            select.appendChild(opt);
+        });
+    }
+
     // === RENDER ===
-    render() { this.renderNodes(); }
+    render() { this.renderNodes(); this.renderQuestPalette(); }
 
     renderNodes() {
         const container = this.els.nodeContainer;
@@ -377,7 +476,7 @@ class DialogueEditor {
             container.appendChild(el);
         });
 
-        this.renderConnections();
+        requestAnimationFrame(() => this.renderConnections());
     }
 
     createNodeElement(node) {
@@ -400,20 +499,44 @@ class DialogueEditor {
             </div>
             <div class="node-content">
                 <div class="node-text">${previewText}</div>
-                ${node.options.map((opt) => `
-                    <div class="option ${opt.id === this.selectedOption ? 'selected' : ''}" 
+                ${node.options.map((opt) => {
+                    const handleClass = this.getOptionHandleClass(opt);
+                    return `
+                    <div class="option ${opt.id === this.selectedOption ? 'selected' : ''} ${this.getOptionClass(opt)}" 
                          data-action="select-option" 
                          data-option-id="${opt.id}">
                         ${opt.icon ? `<div class="option-icon" title="${this.escapeHtml(opt.icon)}"></div>` : ''}
-                        <span class="option-text">${this.escapeHtml(opt.text.length > 30 ? opt.text.substring(0, 30) + '...' : opt.text)}</span>
-                        ${opt.transition ? `<span class="option-transition">→ ${this.escapeHtml(opt.transition)}</span>` : ''}
+                        <span class="option-text">${this.escapeHtml(opt.text.length > 25 ? opt.text.substring(0, 25) + '...' : opt.text)}</span>
+                        <div class="option-draw-handle ${handleClass}" 
+                             data-draw-handle 
+                             data-node-id="${node.id}" 
+                             data-option-id="${opt.id}"
+                             title="Тяни к другому узлу, квесту или в пустоту"></div>
                     </div>
-                `).join('')}
+                `;
+                }).join('')}
             </div>
         `;
 
         this.setupNodeDrag(div, node);
+        this.setupDrawHandles(div, node);
         return div;
+    }
+
+    getOptionClass(opt) {
+        if (opt.conditions.length > 0) return 'has-conditions';
+        if (opt.commands.length > 0) return 'has-commands';
+        if (opt.transition) return 'has-transition';
+        if (opt.questLink) return 'has-transition';
+        return 'is-end';
+    }
+
+    getOptionHandleClass(opt) {
+        if (opt.conditions.length > 0) return 'has-conditions';
+        if (opt.commands.length > 0) return 'has-commands';
+        if (opt.transition) return 'has-transition';
+        if (opt.questLink) return 'has-transition';
+        return 'is-end';
     }
 
     setupNodeDrag(element, node) {
@@ -422,7 +545,7 @@ class DialogueEditor {
         let startNodeX = 0, startNodeY = 0;
 
         const onMouseDown = (e) => {
-            if (e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+            if (e.target.closest('[data-draw-handle]') || e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
             
             this.selectNode(node.id);
             
@@ -453,6 +576,117 @@ class DialogueEditor {
         window.addEventListener('mouseup', onMouseUp);
     }
 
+    setupDrawHandles(element, node) {
+        const handles = element.querySelectorAll('[data-draw-handle]');
+        handles.forEach(handle => {
+            handle.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.startDrawing(e, node.id, handle.dataset.optionId);
+            });
+        });
+    }
+
+    // === DRAWING CURVES ===
+    startDrawing(e, nodeId, optionId) {
+        this.isDrawingCurve = true;
+        this.drawingFromOption = { nodeId, optionId };
+        this.els.canvasContainer.classList.add('drawing-mode');
+
+        // создаём временный path
+        const svg = this.els.connectionLayer;
+        this.drawingTempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        this.drawingTempPath.setAttribute('fill', 'none');
+        this.drawingTempPath.setAttribute('stroke', '#fff');
+        this.drawingTempPath.setAttribute('stroke-width', '2.5');
+        this.drawingTempPath.setAttribute('stroke-dasharray', '8 4');
+        this.drawingTempPath.setAttribute('marker-end', 'url(#arrowhead-drawing)');
+        this.drawingTempPath.setAttribute('opacity', '0.8');
+        svg.appendChild(this.drawingTempPath);
+    }
+
+    onDrawMouseMove(e) {
+        if (!this.isDrawingCurve || !this.drawingTempPath) return;
+
+        const containerRect = this.els.canvasContainer.getBoundingClientRect();
+        const mouseX = (e.clientX - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+        const mouseY = (e.clientY - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+
+        // Находим стартовую точку
+        const optionEl = this.els.nodeContainer.querySelector(`[data-option-id="${this.drawingFromOption.optionId}"]`);
+        if (!optionEl) return;
+
+        const handle = optionEl.querySelector('[data-draw-handle]');
+        if (!handle) return;
+
+        const handleRect = handle.getBoundingClientRect();
+        const sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+        const sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+
+        const pathD = this.getCurvePath(sx, sy, mouseX, mouseY);
+        this.drawingTempPath.setAttribute('d', pathD);
+    }
+
+    onDrawMouseUp(e) {
+        if (!this.isDrawingCurve) return;
+
+        const target = this.findDrawTarget(e);
+        const node = this.nodes.get(this.drawingFromOption.nodeId);
+        if (!node) { this.cancelDrawing(); return; }
+
+        const option = node.options.find(o => o.id === this.drawingFromOption.optionId);
+        if (!option) { this.cancelDrawing(); return; }
+
+        if (target.type === 'node') {
+            // тащим на узел - transition
+            option.transition = target.id;
+            option.questLink = '';
+        } else if (target.type === 'quest') {
+            // тащим на квест - questLink
+            option.questLink = target.id;
+            option.transition = '';
+        } else {
+            // тащим в пустоту - "Конец"
+            option.transition = '';
+            option.questLink = '';
+        }
+
+        this.cancelDrawing();
+        this.renderNodes();
+        this.renderNodeOptionsList();
+        if (this.selectedOption === option.id) {
+            this.els.optionTransition.value = option.transition;
+            this.els.optionQuestLink.value = option.questLink;
+        }
+    }
+
+    findDrawTarget(e) {
+        // чек, попали ли на узел
+        const nodeEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('.dialogue-node');
+        if (nodeEl && nodeEl.dataset.nodeId !== this.drawingFromOption.nodeId) {
+            return { type: 'node', id: nodeEl.dataset.nodeId };
+        }
+
+        // чек, попали ли на квест в палитре
+        const questEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('.quest-palette-item');
+        if (questEl) {
+            return { type: 'quest', id: questEl.dataset.questId };
+        }
+
+        // пустота - "Конец"
+        return { type: 'end' };
+    }
+
+    cancelDrawing() {
+        this.isDrawingCurve = false;
+        this.drawingFromOption = null;
+        this.els.canvasContainer.classList.remove('drawing-mode');
+        if (this.drawingTempPath) {
+            this.drawingTempPath.remove();
+            this.drawingTempPath = null;
+        }
+    }
+
     renderNodeOptionsList() {
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
@@ -469,47 +703,254 @@ class DialogueEditor {
         `).join('');
     }
 
+    // === CONNECTIONS ===
     renderConnections() {
         const svg = this.els.connectionLayer;
-        svg.querySelectorAll('path').forEach(p => p.remove());
+        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group').forEach(p => p.remove());
 
         this.nodes.forEach(node => {
-            const fromEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
-            if (!fromEl) return;
+            const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
+            if (!nodeEl) return;
 
-            const fromRect = fromEl.getBoundingClientRect();
-            const containerRect = this.els.canvasContainer.getBoundingClientRect();
+            node.options.forEach((opt) => {
+                const optionEl = nodeEl.querySelector(`[data-option-id="${opt.id}"]`);
+                if (!optionEl) return;
 
-            const fromX = (fromRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-            const fromY = (fromRect.top + fromRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                const handle = optionEl.querySelector('[data-draw-handle]');
+                if (!handle) return;
 
-            node.options.forEach(opt => {
-                if (!opt.transition) return;
-                const targetNode = this.nodes.get(opt.transition);
-                if (!targetNode) return;
+                const handleRect = handle.getBoundingClientRect();
+                const containerRect = this.els.canvasContainer.getBoundingClientRect();
 
-                const toEl = this.els.nodeContainer.querySelector(`[data-node-id="${opt.transition}"]`);
-                if (!toEl) return;
+                const sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                const sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
 
-                const toRect = toEl.getBoundingClientRect();
-                const toX = (toRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-                const toY = (toRect.top + toRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                const colorInfo = this.getOptionColorInfo(opt);
 
-                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-                const dx = Math.abs(toX - fromX) * 0.5;
-                path.setAttribute('d', `M ${fromX} ${fromY} C ${fromX + dx} ${fromY}, ${toX - dx} ${toY}, ${toX} ${toY}`);
-                path.setAttribute('fill', 'none');
-                path.setAttribute('stroke', '#f39c12');
-                path.setAttribute('stroke-width', '2');
-                path.setAttribute('marker-end', 'url(#arrowhead)');
-                path.setAttribute('opacity', '0.6');
-                svg.appendChild(path);
+                if (opt.transition && this.nodes.has(opt.transition)) {
+                    // кривая к узлу
+                    const targetEl = this.els.nodeContainer.querySelector(`[data-node-id="${opt.transition}"]`);
+                    if (!targetEl) return;
+
+                    const tRect = targetEl.getBoundingClientRect();
+                    const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+
+                    const pathD = this.getCurvePath(sx, sy, tx, ty);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', colorInfo.color);
+                    path.setAttribute('stroke-width', '2.5');
+                    path.setAttribute('marker-end', `url(#arrowhead-${colorInfo.marker})`);
+                    path.setAttribute('opacity', '0.85');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+
+                    // кружок в начале
+                    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('cx', sx);
+                    dot.setAttribute('cy', sy);
+                    dot.setAttribute('r', '4');
+                    dot.setAttribute('fill', colorInfo.color);
+                    dot.setAttribute('stroke', '#fff');
+                    dot.setAttribute('stroke-width', '1');
+                    svg.appendChild(dot);
+
+                } else if (opt.questLink && this.quests.has(opt.questLink)) {
+                    // кривая к квесту (облачко "Квест")
+                    const endX = sx + 120;
+                    const endY = sy;
+
+                    const pathD = this.getCurvePath(sx, sy, endX, endY);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', colorInfo.color);
+                    path.setAttribute('stroke-width', '2.5');
+                    path.setAttribute('marker-end', `url(#arrowhead-${colorInfo.marker})`);
+                    path.setAttribute('opacity', '0.85');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+
+                    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('cx', sx);
+                    dot.setAttribute('cy', sy);
+                    dot.setAttribute('r', '4');
+                    dot.setAttribute('fill', colorInfo.color);
+                    dot.setAttribute('stroke', '#fff');
+                    dot.setAttribute('stroke-width', '1');
+                    svg.appendChild(dot);
+
+                    this.renderQuestCloud(endX, endY, opt.questLink, svg);
+
+                } else {
+                    // выход - облачко "Конец"
+                    const endX = sx + 120;
+                    const endY = sy;
+
+                    const pathD = this.getCurvePath(sx, sy, endX, endY);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#95a5a6');
+                    path.setAttribute('stroke-width', '2');
+                    path.setAttribute('stroke-dasharray', '6 4');
+                    path.setAttribute('marker-end', 'url(#arrowhead-gray)');
+                    path.setAttribute('opacity', '0.7');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+
+                    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('cx', sx);
+                    dot.setAttribute('cy', sy);
+                    dot.setAttribute('r', '4');
+                    dot.setAttribute('fill', '#95a5a6');
+                    dot.setAttribute('stroke', '#fff');
+                    dot.setAttribute('stroke-width', '1');
+                    svg.appendChild(dot);
+
+                    this.renderEndCloud(endX, endY, svg);
+                }
             });
         });
     }
 
+    getOptionColorInfo(opt) {
+        if (opt.conditions.length > 0) return { color: '#e74c3c', marker: 'red' };
+        if (opt.commands.length > 0) return { color: '#27ae60', marker: 'green' };
+        if (opt.transition || opt.questLink) return { color: '#f39c12', marker: 'orange' };
+        return { color: '#95a5a6', marker: 'gray' };
+    }
+
+    getCurvePath(sx, sy, tx, ty) {
+        const dx = tx - sx;
+        const dy = ty - sy;
+
+        if (dx > 30) {
+            const cpOffset = Math.max(50, dx * 0.4);
+            return `M ${sx} ${sy} C ${sx + cpOffset} ${sy}, ${tx - cpOffset} ${ty}, ${tx} ${ty}`;
+        } else {
+            const loopOffset = 80 + Math.abs(dy) * 0.3;
+            const goUp = sy > 200;
+            const vertDir = goUp ? -1 : 1;
+            const midY = sy + vertDir * loopOffset;
+
+            return `M ${sx} ${sy} ` +
+                   `C ${sx + loopOffset} ${sy}, ${sx + loopOffset} ${midY}, ${(sx + tx) / 2} ${midY} ` +
+                   `S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
+        }
+    }
+
+    renderEndCloud(x, y, svg) {
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'end-cloud-group');
+
+        const cloudParts = [
+            { cx: x + 35, cy: y, rx: 38, ry: 18 },
+            { cx: x + 22, cy: y - 8, rx: 20, ry: 12 },
+            { cx: x + 48, cy: y - 8, rx: 20, ry: 12 },
+            { cx: x + 22, cy: y + 8, rx: 18, ry: 10 },
+            { cx: x + 48, cy: y + 8, rx: 18, ry: 10 },
+        ];
+
+        cloudParts.forEach(p => {
+            const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            ellipse.setAttribute('cx', p.cx);
+            ellipse.setAttribute('cy', p.cy);
+            ellipse.setAttribute('rx', p.rx);
+            ellipse.setAttribute('ry', p.ry);
+            ellipse.setAttribute('fill', '#3d4450');
+            ellipse.setAttribute('stroke', '#95a5a6');
+            ellipse.setAttribute('stroke-width', '1.5');
+            g.appendChild(ellipse);
+        });
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x + 35);
+        text.setAttribute('y', y + 5);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#bdc3c7');
+        text.setAttribute('font-size', '12');
+        text.setAttribute('font-weight', 'bold');
+        text.setAttribute('font-style', 'italic');
+        text.textContent = 'Конец';
+        g.appendChild(text);
+
+        svg.appendChild(g);
+    }
+
+    renderQuestCloud(x, y, questId, svg) {
+        const quest = this.quests.get(questId);
+        if (!quest) return;
+
+        const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        g.setAttribute('class', 'quest-cloud-group');
+        g.setAttribute('style', 'cursor: pointer;');
+        g.dataset.action = 'open-quest-link';
+        g.dataset.questId = questId;
+
+        // Облачко
+        const cloudParts = [
+            { cx: x + 40, cy: y, rx: 42, ry: 20 },
+            { cx: x + 25, cy: y - 10, rx: 22, ry: 14 },
+            { cx: x + 55, cy: y - 10, rx: 22, ry: 14 },
+            { cx: x + 25, cy: y + 10, rx: 20, ry: 12 },
+            { cx: x + 55, cy: y + 10, rx: 20, ry: 12 },
+        ];
+
+        cloudParts.forEach(p => {
+            const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+            ellipse.setAttribute('cx', p.cx);
+            ellipse.setAttribute('cy', p.cy);
+            ellipse.setAttribute('rx', p.rx);
+            ellipse.setAttribute('ry', p.ry);
+            ellipse.setAttribute('fill', '#2d4a2d');
+            ellipse.setAttribute('stroke', '#27ae60');
+            ellipse.setAttribute('stroke-width', '1.5');
+            g.appendChild(ellipse);
+        });
+
+        // эмодзи свитка
+        const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        icon.setAttribute('x', x + 20);
+        icon.setAttribute('y', y + 5);
+        icon.setAttribute('font-size', '14');
+        icon.textContent = '📜';
+        g.appendChild(icon);
+
+        // текст "Квест"
+        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        text.setAttribute('x', x + 45);
+        text.setAttribute('y', y + 5);
+        text.setAttribute('text-anchor', 'middle');
+        text.setAttribute('fill', '#27ae60');
+        text.setAttribute('font-size', '12');
+        text.setAttribute('font-weight', 'bold');
+        text.textContent = 'Квест';
+        g.appendChild(text);
+
+        // подсказка с названием квеста
+        const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+        title.textContent = `${quest.name} (${questId}) — клик для перехода в редактор`;
+        g.appendChild(title);
+
+        svg.appendChild(g);
+    }
+
+    // === QUEST PALETTE ===
+    renderQuestPalette() {
+        this.els.questPaletteList.innerHTML = Array.from(this.quests.values()).map(q => `
+            <div class="quest-palette-item" data-quest-id="${q.id}">
+                <div class="quest-palette-item-name">📜 ${this.escapeHtml(q.name)}</div>
+                <div class="quest-palette-item-id">${this.escapeHtml(q.id)}</div>
+            </div>
+        `).join('');
+    }
+
+    // === CANVAS ===
     startCanvasDrag(e) {
-        if (e.target.closest('.dialogue-node')) return;
+        if (e.target.closest('.dialogue-node') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
         this.isCanvasDragging = true;
         this.canvasStartPos = { x: e.clientX - this.canvasOffset.x, y: e.clientY - this.canvasOffset.y };
     }
@@ -543,7 +984,7 @@ class DialogueEditor {
         this.applyCanvasTransform();
     }
 
-    // === ПРЕДПРОСМОТР ===
+    // === PREVIEW ===
     showPreview() {
         if (!this.selectedNode) { alert('Выберите диалог для предпросмотра'); return; }
         this.previewHistory = [];
@@ -569,8 +1010,17 @@ class DialogueEditor {
         node.options.forEach((option, index) => {
             const processedOptionText = this.processTextForPreview(option.text);
             const colorStyle = option.color && option.color !== '#ffffff' ? `style="color: ${option.color}"` : '';
-            const transitionText = option.transition ? `→ ${this.escapeHtml(option.transition)}` : '';
-            const onClickAttr = option.transition ? `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"` : '';
+            let transitionText = '';
+            let onClickAttr = '';
+
+            if (option.transition) {
+                transitionText = `→ ${this.escapeHtml(option.transition)}`;
+                onClickAttr = `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"`;
+            } else if (option.questLink) {
+                const quest = this.quests.get(option.questLink);
+                transitionText = `📜 ${quest ? this.escapeHtml(quest.name) : option.questLink}`;
+                onClickAttr = '';
+            }
 
             html += `
                 <div class="preview-option" ${onClickAttr}>
@@ -609,7 +1059,7 @@ class DialogueEditor {
         return processed;
     }
 
-    // === УСЛОВИЯ И КОМАНДЫ ===
+    // === CONDITIONS & COMMANDS ===
     updateConditionParams() {
         this.renderParamInputs(this.els.conditionParams, this.getConditionParams(this.els.conditionType.value));
     }
@@ -666,6 +1116,7 @@ class DialogueEditor {
         option.conditions.push({ type, params });
         this.renderConditionsList(option.conditions);
         this.closeAllModals();
+        this.renderNodes();
     }
 
     saveCommand() {
@@ -680,6 +1131,7 @@ class DialogueEditor {
         option.commands.push({ type, params });
         this.renderCommandsList(option.commands);
         this.closeAllModals();
+        this.renderNodes();
     }
 
     renderConditionsList(conditions) {
@@ -704,17 +1156,17 @@ class DialogueEditor {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
-        if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); }
+        if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); this.renderNodes(); }
     }
 
     removeCommand(index) {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
-        if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); }
+        if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); this.renderNodes(); }
     }
 
-    // === КВЕСТЫ ===
+    // === QUESTS ===
     addQuest() {
         const id = `Quest_${Date.now()}`;
         this.quests.set(id, {
@@ -723,6 +1175,7 @@ class DialogueEditor {
             requirements: [], autocomplete: false
         });
         this.renderQuestsList();
+        this.renderQuestPalette();
         this.selectQuest(id);
     }
 
@@ -823,7 +1276,10 @@ class DialogueEditor {
                 const ev = el.type === 'checkbox' ? 'change' : 'input';
                 el.addEventListener(ev, (e) => {
                     quest[prop] = parser(el.type === 'checkbox' ? e.target.checked : e.target.value);
-                    if (prop === 'name' || prop === 'id') this.renderQuestsList();
+                    if (prop === 'name' || prop === 'id') {
+                        this.renderQuestsList();
+                        this.renderQuestPalette();
+                    }
                 });
             }
         };
@@ -939,7 +1395,7 @@ class DialogueEditor {
         this.els.questPreviewContent.innerHTML = this.generateQuestPreview();
     }
 
-    // === ЭКСПОРТ / ИМПОРТ ===
+    // === EXPORT / IMPORT ===
     exportCfg() {
         let cfg = '';
         this.nodes.forEach(node => {
@@ -947,6 +1403,7 @@ class DialogueEditor {
             node.options.forEach(opt => {
                 let line = `Text: ${opt.text}`;
                 if (opt.transition) line += ` | Transition: ${opt.transition}`;
+                if (opt.questLink) line += ` | QuestLink: ${opt.questLink}`;
                 opt.commands.forEach(cmd => { line += ` | Command: ${cmd.type}${cmd.params.length ? ', ' + cmd.params.join(', ') : ''}`; });
                 opt.conditions.forEach(cond => { line += ` | Condition: ${cond.type}${cond.params.length ? ', ' + cond.params.join(', ') : ''}`; });
                 if (opt.icon) line += ` | Icon: ${opt.icon}`;
@@ -979,10 +1436,8 @@ class DialogueEditor {
         e.target.value = '';
     }
 
-    // НОВЫЙ НАДЕЖНЫЙ ПАРСЕР ДИАЛОГОВ
     parseDialogueCfg(content) {
         this.nodes.clear();
-        // Разбиваем файл на блоки по началу нового узла [ID]
         const blocks = content.split(/\n(?=\[)/);
         
         blocks.forEach(block => {
@@ -1004,12 +1459,10 @@ class DialogueEditor {
                 collapsed: false
             };
             
-            // Вторая строка - это текст NPC (если она не начинается с Text:)
             if (lines.length > 1 && !lines[1].startsWith('Text:')) {
                 node.text = lines[1];
             }
             
-            // Остальные строки - это опции
             for (let i = 2; i < lines.length; i++) {
                 if (lines[i].startsWith('Text:')) {
                     this.parseOptionLine(node, lines[i]);
@@ -1021,6 +1474,7 @@ class DialogueEditor {
         
         this.renderNodes();
         this.updateTransitionsList();
+        this.renderQuestPalette();
         if (this.nodes.size > 0) {
             this.selectNode(this.nodes.keys().next().value);
         }
@@ -1035,6 +1489,7 @@ class DialogueEditor {
             id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
             text: textPart.substring(5).trim(),
             transition: '',
+            questLink: '',
             icon: '',
             color: '#ffffff',
             conditions: [],
@@ -1043,6 +1498,7 @@ class DialogueEditor {
 
         parts.forEach(part => {
             if (part.startsWith('Transition:')) option.transition = part.substring(11).trim();
+            else if (part.startsWith('QuestLink:')) option.questLink = part.substring(10).trim();
             else if (part.startsWith('Icon:')) option.icon = part.substring(5).trim();
             else if (part.startsWith('Color:')) {
                 const rgb = part.substring(6).trim().split(',').map(c => parseInt(c.trim()));
@@ -1130,6 +1586,7 @@ class DialogueEditor {
             }
         }
         this.renderQuestsList();
+        this.renderQuestPalette();
         if (this.quests.size > 0) {
             this.selectQuest(this.quests.keys().next().value);
         }
@@ -1142,10 +1599,11 @@ class DialogueEditor {
             node.options.forEach((opt, i) => {
                 if (!opt.text || !opt.text.trim()) errors.push(`"${id}" #${i+1}: нет текста опции`);
                 if (opt.transition && !this.nodes.has(opt.transition)) errors.push(`"${id}" #${i+1}: переход на несуществующий "${opt.transition}"`);
+                if (opt.questLink && !this.quests.has(opt.questLink)) errors.push(`"${id}" #${i+1}: ссылка на несуществующий квест "${opt.questLink}"`);
             });
         });
         if (errors.length === 0) alert('✅ Ошибок не найдено!');
-        else alert('⚠ Ошибки:\n\n' + errors.join('\n'));
+        else alert('Ошибки:\n\n' + errors.join('\n'));
     }
 
     searchDialogue(query) {
@@ -1171,7 +1629,7 @@ class DialogueEditor {
         n1.text = 'Приветствую тебя, путник!\\nЧем могу помочь?';
         const o1 = this.addOptionToNode('Start', 'Расскажи о себе'); o1.transition = 'About';
         const o2 = this.addOptionToNode('Start', '<color=#f1c40f>Есть работа?</color>'); o2.transition = 'QuestOffer'; o2.color = '#f1c40f'; o2.icon = 'Hammer';
-        const o3 = this.addOptionToNode('Start', 'Прощай'); o3.commands.push({ type: 'PlaySound', params: ['bye.wav'] });
+        const o3 = this.addOptionToNode('Start', 'Прощай');
 
         const n2 = this.addNode('About', 500, 100);
         n2.text = 'Я кузнец, работаю здесь уже 20 лет.\\nМогу сделать любое оружие.';
@@ -1179,7 +1637,7 @@ class DialogueEditor {
 
         const n3 = this.addNode('QuestOffer', 500, 300);
         n3.text = 'Есть одно дельце...\\nНужно принести <color=#e74c3c>10 шкур кабана</color>.';
-        const o5 = this.addOptionToNode('QuestOffer', 'Берусь!'); o5.commands.push({ type: 'GiveQuest', params: ['BoarHunt'] }); o5.transition = 'Accepted';
+        const o5 = this.addOptionToNode('QuestOffer', 'Берусь!'); o5.questLink = 'BoarHunt';
         const o6 = this.addOptionToNode('QuestOffer', 'Не сейчас'); o6.transition = 'Start';
 
         const n4 = this.addNode('Accepted', 900, 300);
@@ -1196,7 +1654,7 @@ class DialogueEditor {
 
         this.renderNodes();
         this.renderQuestsList();
-        this.selectQuest('BoarHunt');
+        this.renderQuestPalette();
     }
 
     escapeHtml(text) {
