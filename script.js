@@ -704,9 +704,10 @@ class DialogueEditor {
     }
 
     // === CONNECTIONS ===
-    renderConnections() {
+      renderConnections() {
         const svg = this.els.connectionLayer;
-        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group').forEach(p => p.remove());
+        // ИСПРАВЛЕНИЕ: добавлен селектор .connection-dot для удаления кружочков
+        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
 
         this.nodes.forEach(node => {
             const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
@@ -728,7 +729,6 @@ class DialogueEditor {
                 const colorInfo = this.getOptionColorInfo(opt);
 
                 if (opt.transition && this.nodes.has(opt.transition)) {
-                    // кривая к узлу
                     const targetEl = this.els.nodeContainer.querySelector(`[data-node-id="${opt.transition}"]`);
                     if (!targetEl) return;
 
@@ -747,8 +747,9 @@ class DialogueEditor {
                     path.setAttribute('stroke-linecap', 'round');
                     svg.appendChild(path);
 
-                    // кружок в начале
+                    // ИСПРАВЛЕНИЕ: добавлен класс connection-dot
                     const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('class', 'connection-dot');
                     dot.setAttribute('cx', sx);
                     dot.setAttribute('cy', sy);
                     dot.setAttribute('r', '4');
@@ -758,7 +759,6 @@ class DialogueEditor {
                     svg.appendChild(dot);
 
                 } else if (opt.questLink && this.quests.has(opt.questLink)) {
-                    // кривая к квесту (облачко "Квест")
                     const endX = sx + 120;
                     const endY = sy;
 
@@ -774,6 +774,7 @@ class DialogueEditor {
                     svg.appendChild(path);
 
                     const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('class', 'connection-dot');
                     dot.setAttribute('cx', sx);
                     dot.setAttribute('cy', sy);
                     dot.setAttribute('r', '4');
@@ -785,7 +786,6 @@ class DialogueEditor {
                     this.renderQuestCloud(endX, endY, opt.questLink, svg);
 
                 } else {
-                    // выход - облачко "Конец"
                     const endX = sx + 120;
                     const endY = sy;
 
@@ -802,6 +802,7 @@ class DialogueEditor {
                     svg.appendChild(path);
 
                     const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('class', 'connection-dot');
                     dot.setAttribute('cx', sx);
                     dot.setAttribute('cy', sy);
                     dot.setAttribute('r', '4');
@@ -842,33 +843,27 @@ class DialogueEditor {
         }
     }
 
-    renderEndCloud(x, y, svg) {
+      renderEndCloud(x, y, svg) {
         const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'end-cloud-group');
 
-        const cloudParts = [
-            { cx: x + 35, cy: y, rx: 38, ry: 18 },
-            { cx: x + 22, cy: y - 8, rx: 20, ry: 12 },
-            { cx: x + 48, cy: y - 8, rx: 20, ry: 12 },
-            { cx: x + 22, cy: y + 8, rx: 18, ry: 10 },
-            { cx: x + 48, cy: y + 8, rx: 18, ry: 10 },
-        ];
+        // поле "мягкий квадрат"
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y - 16);
+        rect.setAttribute('width', 80);
+        rect.setAttribute('height', 32);
+        rect.setAttribute('rx', 8);
+        rect.setAttribute('ry', 8);
+        rect.setAttribute('fill', '#3d4450');
+        rect.setAttribute('stroke', '#95a5a6');
+        rect.setAttribute('stroke-width', '1.5');
+        g.appendChild(rect);
 
-        cloudParts.forEach(p => {
-            const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-            ellipse.setAttribute('cx', p.cx);
-            ellipse.setAttribute('cy', p.cy);
-            ellipse.setAttribute('rx', p.rx);
-            ellipse.setAttribute('ry', p.ry);
-            ellipse.setAttribute('fill', '#3d4450');
-            ellipse.setAttribute('stroke', '#95a5a6');
-            ellipse.setAttribute('stroke-width', '1.5');
-            g.appendChild(ellipse);
-        });
-
+        // текст "Конец"
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x + 35);
-        text.setAttribute('y', y + 5);
+        text.setAttribute('x', x + 40);
+        text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('fill', '#bdc3c7');
         text.setAttribute('font-size', '12');
@@ -880,7 +875,7 @@ class DialogueEditor {
         svg.appendChild(g);
     }
 
-    renderQuestCloud(x, y, questId, svg) {
+       renderQuestCloud(x, y, questId, svg) {
         const quest = this.quests.get(questId);
         if (!quest) return;
 
@@ -890,30 +885,22 @@ class DialogueEditor {
         g.dataset.action = 'open-quest-link';
         g.dataset.questId = questId;
 
-        // Облачко
-        const cloudParts = [
-            { cx: x + 40, cy: y, rx: 42, ry: 20 },
-            { cx: x + 25, cy: y - 10, rx: 22, ry: 14 },
-            { cx: x + 55, cy: y - 10, rx: 22, ry: 14 },
-            { cx: x + 25, cy: y + 10, rx: 20, ry: 12 },
-            { cx: x + 55, cy: y + 10, rx: 20, ry: 12 },
-        ];
-
-        cloudParts.forEach(p => {
-            const ellipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
-            ellipse.setAttribute('cx', p.cx);
-            ellipse.setAttribute('cy', p.cy);
-            ellipse.setAttribute('rx', p.rx);
-            ellipse.setAttribute('ry', p.ry);
-            ellipse.setAttribute('fill', '#2d4a2d');
-            ellipse.setAttribute('stroke', '#27ae60');
-            ellipse.setAttribute('stroke-width', '1.5');
-            g.appendChild(ellipse);
-        });
+        //  поле "мягкий квадрат"
+        const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y - 18);
+        rect.setAttribute('width', 90);
+        rect.setAttribute('height', 36);
+        rect.setAttribute('rx', 8);
+        rect.setAttribute('ry', 8);
+        rect.setAttribute('fill', '#2d4a2d');
+        rect.setAttribute('stroke', '#27ae60');
+        rect.setAttribute('stroke-width', '1.5');
+        g.appendChild(rect);
 
         // эмодзи свитка
         const icon = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        icon.setAttribute('x', x + 20);
+        icon.setAttribute('x', x + 14);
         icon.setAttribute('y', y + 5);
         icon.setAttribute('font-size', '14');
         icon.textContent = '📜';
@@ -921,8 +908,8 @@ class DialogueEditor {
 
         // текст "Квест"
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x + 45);
-        text.setAttribute('y', y + 5);
+        text.setAttribute('x', x + 52);
+        text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('fill', '#27ae60');
         text.setAttribute('font-size', '12');
@@ -930,7 +917,7 @@ class DialogueEditor {
         text.textContent = 'Квест';
         g.appendChild(text);
 
-        // подсказка с названием квеста
+        // подсказка
         const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
         title.textContent = `${quest.name} (${questId}) — клик для перехода в редактор`;
         g.appendChild(title);
