@@ -482,16 +482,20 @@ input[type="color"].form-control {
 
 /* === MODALS === */
 .modal {
-    display: none;
+    display: none !important;
     position: fixed;
     z-index: 1000;
     inset: 0;
     background-color: rgba(0,0,0,0.75);
     backdrop-filter: blur(4px);
-    animation: fadeIn 0.2s ease;
 }
 
-.modal.open { display: flex; align-items: center; justify-content: center; }
+.modal.open {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease;
+}
 
 @keyframes fadeIn {
     from { opacity: 0; }
@@ -550,6 +554,29 @@ input[type="color"].form-control {
 .close:hover { color: var(--danger); }
 
 .modal-body { padding: 20px; overflow-y: auto; }
+
+#questPreviewContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* === QUEST PREVIEW === */
+.quest-preview-content {
+    background-color: #2a2520;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+    border: 4px solid #5c4a3a;
+    border-radius: 8px;
+    padding: 0;
+    color: #e8d8a3;
+    font-family: 'Georgia', serif;
+    text-shadow: 1px 1px 2px #000;
+    display: flex;
+    overflow: hidden;
+    flex: 1; /* Растягиваем на всю доступную высоту */
+}
 
 /* === QUESTS === */
 .quests-container {
