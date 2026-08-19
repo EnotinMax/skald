@@ -1,5 +1,5 @@
 // ============================================
-// КУЗНИЦА СКАЛЬДА — Dialogue Editor (v2.1 Fixed)
+// КУЗНИЦА СКАЛЬДА — Dialogue Editor (v2.1)
 // ============================================
 
 class DialogueEditor {
@@ -23,7 +23,7 @@ class DialogueEditor {
         this.initEventListeners();
         this.render();
 
-        console.log('✒ Кузница Скальда инициализирована (v2.1 Fixed)');
+        console.log('✒ Кузница Скальда инициализирована (v2.1)');
     }
 
     cacheElements() {
@@ -108,7 +108,11 @@ class DialogueEditor {
     }
 
     handleGlobalClick(e) {
-        // 1. Закрытие модального окна при клике на затемненный фон
+        if (e.target.matches('.close') || e.target.closest('.close')) {
+            this.closeAllModals();
+            return;
+        }
+
         if (e.target.classList.contains('modal')) {
             this.closeAllModals();
             return;
@@ -122,7 +126,6 @@ class DialogueEditor {
 
         switch (action) {
             case 'close-modal':
-                e.preventDefault();
                 this.closeAllModals();
                 break;
             case 'select-node':
@@ -229,7 +232,7 @@ class DialogueEditor {
             const node = this.nodes.get(nodeId);
             if (node) {
                 this.els.nodeId.value = node.id;
-                this.els.nodeText.value = node.text; // Гарантированное заполнение формы
+                this.els.nodeText.value = node.text;
                 this.renderNodeOptionsList();
                 this.updateTransitionsList();
             }
@@ -258,10 +261,7 @@ class DialogueEditor {
     }
 
     addOptionToSelected() {
-        if (!this.selectedNode) {
-            alert('Сначала выберите узел!');
-            return;
-        }
+        if (!this.selectedNode) { alert('Сначала выберите узел!'); return; }
         this.addOptionToNode(this.selectedNode);
     }
 
@@ -301,10 +301,7 @@ class DialogueEditor {
 
     toggleCollapse(nodeId) {
         const node = this.nodes.get(nodeId);
-        if (node) {
-            node.collapsed = !node.collapsed;
-            this.renderNodes();
-        }
+        if (node) { node.collapsed = !node.collapsed; this.renderNodes(); }
     }
 
     updateNodeProperty(property, value) {
@@ -369,9 +366,7 @@ class DialogueEditor {
     }
 
     // === RENDER ===
-    render() {
-        this.renderNodes();
-    }
+    render() { this.renderNodes(); }
 
     renderNodes() {
         const container = this.els.nodeContainer;
@@ -427,12 +422,8 @@ class DialogueEditor {
         let startNodeX = 0, startNodeY = 0;
 
         const onMouseDown = (e) => {
-            // Игнорируем клики по кнопкам, опциям и полям ввода внутри узла
-            if (e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-                return;
-            }
+            if (e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
             
-            // СРАЗУ выбираем узел при начале перетаскивания (исправляет проблему с формой)
             this.selectNode(node.id);
             
             isDragging = true;
@@ -441,7 +432,7 @@ class DialogueEditor {
             startNodeX = node.x;
             startNodeY = node.y;
             e.stopPropagation();
-            e.preventDefault(); // Предотвращаем выделение текста браузером
+            e.preventDefault();
         };
 
         const onMouseMove = (e) => {
@@ -455,9 +446,7 @@ class DialogueEditor {
             this.renderConnections();
         };
 
-        const onMouseUp = () => {
-            isDragging = false;
-        };
+        const onMouseUp = () => { isDragging = false; };
 
         element.addEventListener('mousedown', onMouseDown);
         window.addEventListener('mousemove', onMouseMove);
@@ -532,9 +521,7 @@ class DialogueEditor {
         this.applyCanvasTransform();
     }
 
-    stopCanvasDrag() {
-        this.isCanvasDragging = false;
-    }
+    stopCanvasDrag() { this.isCanvasDragging = false; }
 
     applyCanvasTransform() {
         const transform = `translate(${this.canvasOffset.x}px, ${this.canvasOffset.y}px) scale(${this.currentZoom})`;
@@ -558,10 +545,7 @@ class DialogueEditor {
 
     // === ПРЕДПРОСМОТР ===
     showPreview() {
-        if (!this.selectedNode) {
-            alert('Выберите диалог для предпросмотра');
-            return;
-        }
+        if (!this.selectedNode) { alert('Выберите диалог для предпросмотра'); return; }
         this.previewHistory = [];
         this.currentPreviewNode = this.nodes.get(this.selectedNode);
         this.els.previewContent.innerHTML = this.generatePreview(this.currentPreviewNode, true);
@@ -649,35 +633,23 @@ class DialogueEditor {
 
     getConditionParams(type) {
         const map = {
-            'HasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
-            'NotHasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
-            'SkillMore': ['SkillName', 'MinLevel'],
-            'SkillLess': ['SkillName', 'MaxLevel'],
-            'QuestFinished': ['QuestName'],
-            'NotFinished': ['QuestName'],
-            'HasQuest': ['QuestName'],
-            'NotHasQuest': ['QuestName'],
-            'GlobalKey': ['KeyName'],
-            'NotGlobalKey': ['KeyName']
+            'HasItem': ['ItemPrefab', 'Amount', 'ItemLevel'], 'NotHasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
+            'SkillMore': ['SkillName', 'MinLevel'], 'SkillLess': ['SkillName', 'MaxLevel'],
+            'QuestFinished': ['QuestName'], 'NotFinished': ['QuestName'],
+            'HasQuest': ['QuestName'], 'NotHasQuest': ['QuestName'],
+            'GlobalKey': ['KeyName'], 'NotGlobalKey': ['KeyName']
         };
         return map[type] || [];
     }
 
     getCommandParams(type) {
         const map = {
-            'GiveItem': ['ItemPrefab', 'Amount', 'Level'],
-            'RemoveItem': ['ItemPrefab', 'Amount'],
-            'GiveQuest': ['QuestName'],
-            'FinishQuest': ['QuestID'],
-            'RemoveQuest': ['QuestName', 'TriggerEvent'],
-            'OpenUI': ['UIType', 'Profile'],
-            'PlaySound': ['SoundName'],
-            'Spawn': ['PrefabName', 'Amount', 'Level'],
-            'Teleport': ['X', 'Y', 'Z', 'TeleportWithOre'],
-            'Damage': ['Amount'],
-            'Heal': ['Amount'],
-            'GiveBuff': ['BuffName', 'Duration'],
-            'AddPin': ['PinName', 'X', 'Y', 'Z']
+            'GiveItem': ['ItemPrefab', 'Amount', 'Level'], 'RemoveItem': ['ItemPrefab', 'Amount'],
+            'GiveQuest': ['QuestName'], 'FinishQuest': ['QuestID'],
+            'RemoveQuest': ['QuestName', 'TriggerEvent'], 'OpenUI': ['UIType', 'Profile'],
+            'PlaySound': ['SoundName'], 'Spawn': ['PrefabName', 'Amount', 'Level'],
+            'Teleport': ['X', 'Y', 'Z', 'TeleportWithOre'], 'Damage': ['Amount'],
+            'Heal': ['Amount'], 'GiveBuff': ['BuffName', 'Duration'], 'AddPin': ['PinName', 'X', 'Y', 'Z']
         };
         return map[type] || [];
     }
@@ -732,20 +704,14 @@ class DialogueEditor {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
-        if (option) {
-            option.conditions.splice(index, 1);
-            this.renderConditionsList(option.conditions);
-        }
+        if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); }
     }
 
     removeCommand(index) {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
-        if (option) {
-            option.commands.splice(index, 1);
-            this.renderCommandsList(option.commands);
-        }
+        if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); }
     }
 
     // === КВЕСТЫ ===
@@ -811,28 +777,16 @@ class DialogueEditor {
             <div class="quest-form">
                 <div class="quest-form-section">
                     <h4>Основное</h4>
-                    <div class="form-group">
-                        <label>ID:</label>
-                        <input type="text" class="form-control quest-id-input" value="${this.escapeHtml(quest.id)}">
-                    </div>
+                    <div class="form-group"><label>ID:</label><input type="text" class="form-control quest-id-input" value="${this.escapeHtml(quest.id)}"></div>
                     <div class="form-group">
                         <label>Тип:</label>
                         <select class="form-control quest-type-input">
-                            ${['Kill','Collect','Harvest','Craft','Talk','Build','Move'].map(t => 
-                                `<option value="${t}" ${quest.type === t ? 'selected' : ''}>${t}</option>`).join('')}
+                            ${['Kill','Collect','Harvest','Craft','Talk','Build','Move'].map(t => `<option value="${t}" ${quest.type === t ? 'selected' : ''}>${t}</option>`).join('')}
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Название:</label>
-                        <input type="text" class="form-control quest-name-input" value="${this.escapeHtml(quest.name)}">
-                    </div>
-                    <div class="form-group">
-                        <label>Описание:</label>
-                        <textarea class="form-control quest-desc-input" rows="3">${this.escapeHtml(quest.description)}</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label><input type="checkbox" class="quest-auto-input" ${quest.autocomplete ? 'checked' : ''}> Автозавершение</label>
-                    </div>
+                    <div class="form-group"><label>Название:</label><input type="text" class="form-control quest-name-input" value="${this.escapeHtml(quest.name)}"></div>
+                    <div class="form-group"><label>Описание:</label><textarea class="form-control quest-desc-input" rows="3">${this.escapeHtml(quest.description)}</textarea></div>
+                    <div class="form-group"><label><input type="checkbox" class="quest-auto-input" ${quest.autocomplete ? 'checked' : ''}> Автозавершение</label></div>
                 </div>
                 <div class="quest-form-section">
                     <h4>Цели</h4>
@@ -1025,38 +979,46 @@ class DialogueEditor {
         e.target.value = '';
     }
 
+    // НОВЫЙ НАДЕЖНЫЙ ПАРСЕР ДИАЛОГОВ
     parseDialogueCfg(content) {
         this.nodes.clear();
-        const lines = content.split('\n');
-        let currentNode = null;
-        let offsetX = 100, offsetY = 100;
-
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim();
-            if (line.startsWith('[') && line.endsWith(']')) {
-                const nodeId = line.slice(1, -1);
-                currentNode = this.addNode(nodeId, offsetX, offsetY);
-                offsetX += 300;
-                if (offsetX > 1500) { offsetX = 100; offsetY += 300; }
-                
-                // Устойчивый парсинг текста узла (пропускает пустые строки)
-                let j = i + 1;
-                while (j < lines.length) {
-                    const nextLine = lines[j].trim();
-                    if (nextLine.startsWith('[')) break;
-                    if (nextLine.startsWith('Text:')) break;
-                    if (nextLine !== '') {
-                        currentNode.text = nextLine;
-                        i = j;
-                        break;
-                    }
-                    j++;
-                }
-            } else if (line.startsWith('Text:') && currentNode) {
-                this.parseOptionLine(currentNode, line);
+        // Разбиваем файл на блоки по началу нового узла [ID]
+        const blocks = content.split(/\n(?=\[)/);
+        
+        blocks.forEach(block => {
+            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if (lines.length === 0) return;
+            
+            const firstLine = lines[0];
+            if (!firstLine.startsWith('[') || !firstLine.endsWith(']')) return;
+            
+            const nodeId = firstLine.slice(1, -1).trim();
+            if (!nodeId || this.nodes.has(nodeId)) return;
+            
+            const node = {
+                id: nodeId,
+                text: '',
+                options: [],
+                x: 100 + (this.nodes.size % 5) * 300,
+                y: 100 + Math.floor(this.nodes.size / 5) * 300,
+                collapsed: false
+            };
+            
+            // Вторая строка - это текст NPC (если она не начинается с Text:)
+            if (lines.length > 1 && !lines[1].startsWith('Text:')) {
+                node.text = lines[1];
             }
-        }
-
+            
+            // Остальные строки - это опции
+            for (let i = 2; i < lines.length; i++) {
+                if (lines[i].startsWith('Text:')) {
+                    this.parseOptionLine(node, lines[i]);
+                }
+            }
+            
+            this.nodes.set(nodeId, node);
+        });
+        
         this.renderNodes();
         this.updateTransitionsList();
         if (this.nodes.size > 0) {
@@ -1069,8 +1031,15 @@ class DialogueEditor {
         const textPart = parts.find(p => p.startsWith('Text:'));
         if (!textPart) return;
 
-        const option = this.addOptionToNode(node.id, textPart.substring(5).trim());
-        if (!option) return;
+        const option = {
+            id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+            text: textPart.substring(5).trim(),
+            transition: '',
+            icon: '',
+            color: '#ffffff',
+            conditions: [],
+            commands: []
+        };
 
         parts.forEach(part => {
             if (part.startsWith('Transition:')) option.transition = part.substring(11).trim();
@@ -1082,6 +1051,8 @@ class DialogueEditor {
             else if (part.startsWith('Condition:')) this.parseCondition(option, part.substring(10).trim());
             else if (part.startsWith('Command:')) this.parseCommand(option, part.substring(8).trim());
         });
+
+        node.options.push(option);
     }
 
     parseCondition(option, str) {
@@ -1159,7 +1130,6 @@ class DialogueEditor {
             }
         }
         this.renderQuestsList();
-        // ИСПРАВЛЕНИЕ: Автоматически открываем первый квест после импорта
         if (this.quests.size > 0) {
             this.selectQuest(this.quests.keys().next().value);
         }
