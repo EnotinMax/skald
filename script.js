@@ -1,38 +1,31 @@
 // ============================================
-// КУЗНИЦА СКАЛЬДА — Dialogue Editor
+// КУЗНИЦА СКАЛЬДА — Dialogue Editor (v2.1 Fixed)
 // ============================================
 
 class DialogueEditor {
     constructor() {
-        // Хранилища данных
         this.nodes = new Map();
         this.quests = new Map();
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
 
-        // Canvas state
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.isCanvasDragging = false;
         this.canvasStartPos = { x: 0, y: 0 };
 
-        // Preview state
         this.previewHistory = [];
         this.currentPreviewNode = null;
 
-        // Кэш DOM элементов
         this.els = {};
         this.cacheElements();
-
-        // Инициализация
         this.initEventListeners();
         this.render();
 
-        console.log('✒ Кузница Скальда инициализирована');
+        console.log('✒ Кузница Скальда инициализирована (v2.1 Fixed)');
     }
 
-    // === КЭШИРОВАНИЕ DOM ===
     cacheElements() {
         const ids = [
             'searchInput', 'importDialogueBtn', 'importQuestBtn', 'questsBtn',
@@ -56,9 +49,7 @@ class DialogueEditor {
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
 
-    // === ИНИЦИАЛИЗАЦИЯ СОБЫТИЙ ===
     initEventListeners() {
-        // Кнопки инструментов
         this.els.addNodeBtn.addEventListener('click', () => this.addNode());
         this.els.addOptionBtn.addEventListener('click', () => this.addOptionToSelected());
         this.els.deleteBtn.addEventListener('click', () => this.deleteSelected());
@@ -67,7 +58,6 @@ class DialogueEditor {
         this.els.fitToScreenBtn.addEventListener('click', () => this.fitToScreen());
         this.els.loadSampleBtn.addEventListener('click', () => this.loadSampleData());
 
-        // Header controls
         this.els.searchInput.addEventListener('input', (e) => this.searchDialogue(e.target.value));
         this.els.importDialogueBtn.addEventListener('click', () => this.els.dialogueFileInput.click());
         this.els.importQuestBtn.addEventListener('click', () => this.els.questFileInput.click());
@@ -76,16 +66,13 @@ class DialogueEditor {
         this.els.validateBtn.addEventListener('click', () => this.validateDialogue());
         this.els.previewBtn.addEventListener('click', () => this.showPreview());
 
-        // File inputs
         this.els.dialogueFileInput.addEventListener('change', (e) => this.handleDialogueFileImport(e));
         this.els.questFileInput.addEventListener('change', (e) => this.handleQuestFileImport(e));
 
-        // Node properties
         this.els.nodeId.addEventListener('change', (e) => this.updateNodeProperty('id', e.target.value));
         this.els.nodeText.addEventListener('input', (e) => this.updateNodeProperty('text', e.target.value));
         this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToNode(this.selectedNode));
 
-        // Option properties
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
         this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
         this.els.optionIcon.addEventListener('input', (e) => this.updateOptionProperty('icon', e.target.value));
@@ -93,20 +80,17 @@ class DialogueEditor {
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
 
-        // Condition/Command modals
         this.els.conditionType.addEventListener('change', () => this.updateConditionParams());
         this.els.saveConditionBtn.addEventListener('click', () => this.saveCondition());
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
         this.els.saveCommandBtn.addEventListener('click', () => this.saveCommand());
 
-        // Quests
         this.els.addQuestBtn.addEventListener('click', () => this.addQuest());
         this.els.saveQuestTargetBtn.addEventListener('click', () => this.saveQuestTarget());
         this.els.saveQuestRewardBtn.addEventListener('click', () => this.saveQuestReward());
         this.els.requirementType.addEventListener('change', () => this.updateRequirementParams());
         this.els.saveQuestRequirementBtn.addEventListener('click', () => this.saveQuestRequirement());
 
-        // Canvas drag
         this.els.canvasContainer.addEventListener('mousedown', (e) => this.startCanvasDrag(e));
         window.addEventListener('mousemove', (e) => this.canvasDrag(e));
         window.addEventListener('mouseup', () => this.stopCanvasDrag());
@@ -115,18 +99,21 @@ class DialogueEditor {
             this.zoom(e.deltaY < 0 ? 0.1 : -0.1);
         }, { passive: false });
 
-        // Глобальное делегирование событий (data-action)
         document.addEventListener('click', (e) => this.handleGlobalClick(e));
 
-        // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') this.closeAllModals();
             if (e.key === 'Delete' && this.selectedNode) this.deleteSelected();
         });
     }
 
-    // === ГЛОБАЛЬНОЕ ДЕЛЕГИРОВАНИЕ ===
     handleGlobalClick(e) {
+        // 1. Закрытие модального окна при клике на затемненный фон
+        if (e.target.classList.contains('modal')) {
+            this.closeAllModals();
+            return;
+        }
+
         const actionTarget = e.target.closest('[data-action]');
         if (!actionTarget) return;
 
@@ -135,6 +122,7 @@ class DialogueEditor {
 
         switch (action) {
             case 'close-modal':
+                e.preventDefault();
                 this.closeAllModals();
                 break;
             case 'select-node':
@@ -192,12 +180,10 @@ class DialogueEditor {
         }
     }
 
-    // === МОДАЛЬНЫЕ ОКНА ===
     openModal(id) {
         const modal = document.getElementById(id);
         if (modal) {
             modal.classList.add('open');
-            // Обновляем параметры при открытии
             if (id === 'conditionModal') this.updateConditionParams();
             if (id === 'commandModal') this.updateCommandParams();
         }
@@ -207,7 +193,7 @@ class DialogueEditor {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
 
-    // === РАБОТА С УЗЛАМИ ===
+    // === УЗЛЫ ===
     addNode(id = null, x = null, y = null) {
         const nodeId = id || `Node_${Date.now()}`;
         if (this.nodes.has(nodeId)) return null;
@@ -241,10 +227,12 @@ class DialogueEditor {
             this.els.optionProperties.style.display = 'none';
             this.els.emptyState.style.display = 'none';
             const node = this.nodes.get(nodeId);
-            this.els.nodeId.value = node.id;
-            this.els.nodeText.value = node.text;
-            this.renderNodeOptionsList();
-            this.updateTransitionsList();
+            if (node) {
+                this.els.nodeId.value = node.id;
+                this.els.nodeText.value = node.text; // Гарантированное заполнение формы
+                this.renderNodeOptionsList();
+                this.updateTransitionsList();
+            }
         }
     }
 
@@ -352,7 +340,6 @@ class DialogueEditor {
         if (this.selectedOption) {
             this.deleteOptionFromNode(this.selectedOption);
         } else if (this.selectedNode) {
-            // Убираем ссылки на этот узел в других опциях
             this.nodes.forEach(otherNode => {
                 otherNode.options.forEach(opt => {
                     if (opt.transition === this.selectedNode) opt.transition = '';
@@ -411,18 +398,17 @@ class DialogueEditor {
 
         div.innerHTML = `
             <div class="node-header">
-                <button class="collapse-btn" data-action="toggle-collapse" data-id="${node.id}" onclick="event.stopPropagation()">
+                <button class="collapse-btn" data-action="toggle-collapse" data-id="${node.id}">
                     ${node.collapsed ? '▶' : '▼'}
                 </button>
                 <span class="node-header-text">📝 ${this.escapeHtml(node.id)}</span>
             </div>
             <div class="node-content">
                 <div class="node-text">${previewText}</div>
-                ${node.options.map((opt, i) => `
+                ${node.options.map((opt) => `
                     <div class="option ${opt.id === this.selectedOption ? 'selected' : ''}" 
                          data-action="select-option" 
-                         data-option-id="${opt.id}"
-                         onclick="event.stopPropagation()">
+                         data-option-id="${opt.id}">
                         ${opt.icon ? `<div class="option-icon" title="${this.escapeHtml(opt.icon)}"></div>` : ''}
                         <span class="option-text">${this.escapeHtml(opt.text.length > 30 ? opt.text.substring(0, 30) + '...' : opt.text)}</span>
                         ${opt.transition ? `<span class="option-transition">→ ${this.escapeHtml(opt.transition)}</span>` : ''}
@@ -431,7 +417,6 @@ class DialogueEditor {
             </div>
         `;
 
-        // Перетаскивание узла
         this.setupNodeDrag(div, node);
         return div;
     }
@@ -442,13 +427,21 @@ class DialogueEditor {
         let startNodeX = 0, startNodeY = 0;
 
         const onMouseDown = (e) => {
-            if (e.target.closest('[data-action]')) return;
+            // Игнорируем клики по кнопкам, опциям и полям ввода внутри узла
+            if (e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                return;
+            }
+            
+            // СРАЗУ выбираем узел при начале перетаскивания (исправляет проблему с формой)
+            this.selectNode(node.id);
+            
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
             startNodeX = node.x;
             startNodeY = node.y;
             e.stopPropagation();
+            e.preventDefault(); // Предотвращаем выделение текста браузером
         };
 
         const onMouseMove = (e) => {
@@ -463,9 +456,7 @@ class DialogueEditor {
         };
 
         const onMouseUp = () => {
-            if (isDragging) {
-                isDragging = false;
-            }
+            isDragging = false;
         };
 
         element.addEventListener('mousedown', onMouseDown);
@@ -489,12 +480,9 @@ class DialogueEditor {
         `).join('');
     }
 
-    // === СВЯЗИ ===
     renderConnections() {
         const svg = this.els.connectionLayer;
-        // Очищаем существующие линии (но не defs)
-        const paths = svg.querySelectorAll('path');
-        paths.forEach(p => p.remove());
+        svg.querySelectorAll('path').forEach(p => p.remove());
 
         this.nodes.forEach(node => {
             const fromEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
@@ -531,7 +519,6 @@ class DialogueEditor {
         });
     }
 
-    // === CANVAS ===
     startCanvasDrag(e) {
         if (e.target.closest('.dialogue-node')) return;
         this.isCanvasDragging = true;
@@ -586,9 +573,7 @@ class DialogueEditor {
         let html = '';
 
         if (!isRoot) {
-            html += `<div class="preview-back">
-                <button data-action="preview-go-back">← Назад</button>
-            </div>`;
+            html += `<div class="preview-back"><button data-action="preview-go-back">← Назад</button></div>`;
         }
 
         html += `
@@ -601,8 +586,7 @@ class DialogueEditor {
             const processedOptionText = this.processTextForPreview(option.text);
             const colorStyle = option.color && option.color !== '#ffffff' ? `style="color: ${option.color}"` : '';
             const transitionText = option.transition ? `→ ${this.escapeHtml(option.transition)}` : '';
-            const hasTransition = !!option.transition;
-            const onClickAttr = hasTransition ? `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"` : '';
+            const onClickAttr = option.transition ? `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"` : '';
 
             html += `
                 <div class="preview-option" ${onClickAttr}>
@@ -636,28 +620,22 @@ class DialogueEditor {
 
     processTextForPreview(text) {
         if (!text) return '';
-        // Заменяем \n на <br>
         let processed = text.replace(/\\n/g, '<br>');
-        // Обрабатываем <color=...>...</color>
-        processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g,
-            '<span style="color: $1">$2</span>');
+        processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
         return processed;
     }
 
     // === УСЛОВИЯ И КОМАНДЫ ===
     updateConditionParams() {
-        const type = this.els.conditionType.value;
-        this.renderParamInputs(this.els.conditionParams, this.getConditionParams(type));
+        this.renderParamInputs(this.els.conditionParams, this.getConditionParams(this.els.conditionType.value));
     }
 
     updateCommandParams() {
-        const type = this.els.commandType.value;
-        this.renderParamInputs(this.els.commandParams, this.getCommandParams(type));
+        this.renderParamInputs(this.els.commandParams, this.getCommandParams(this.els.commandType.value));
     }
 
     updateRequirementParams() {
-        const type = this.els.requirementType.value;
-        this.renderParamInputs(this.els.requirementParams, this.getConditionParams(type));
+        this.renderParamInputs(this.els.requirementParams, this.getConditionParams(this.els.requirementType.value));
     }
 
     renderParamInputs(container, params) {
@@ -711,8 +689,7 @@ class DialogueEditor {
         if (!option) return;
 
         const type = this.els.conditionType.value;
-        const params = Array.from(this.els.conditionParams.querySelectorAll('.param-input'))
-            .map(i => i.value).filter(v => v);
+        const params = Array.from(this.els.conditionParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
 
         option.conditions.push({ type, params });
         this.renderConditionsList(option.conditions);
@@ -726,8 +703,7 @@ class DialogueEditor {
         if (!option) return;
 
         const type = this.els.commandType.value;
-        const params = Array.from(this.els.commandParams.querySelectorAll('.param-input'))
-            .map(i => i.value).filter(v => v);
+        const params = Array.from(this.els.commandParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
 
         option.commands.push({ type, params });
         this.renderCommandsList(option.commands);
@@ -806,7 +782,7 @@ class DialogueEditor {
     renderQuestEditor() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) {
-            this.els.questEditor.innerHTML = '<div class="no-quest-selected"><p>Выберите квест</p></div>';
+            this.els.questEditor.innerHTML = '<div class="no-quest-selected"><p>Выберите квест для редактирования</p></div>';
             return;
         }
 
@@ -855,10 +831,7 @@ class DialogueEditor {
                         <textarea class="form-control quest-desc-input" rows="3">${this.escapeHtml(quest.description)}</textarea>
                     </div>
                     <div class="form-group">
-                        <label>
-                            <input type="checkbox" class="quest-auto-input" ${quest.autocomplete ? 'checked' : ''}>
-                            Автозавершение
-                        </label>
+                        <label><input type="checkbox" class="quest-auto-input" ${quest.autocomplete ? 'checked' : ''}> Автозавершение</label>
                     </div>
                 </div>
                 <div class="quest-form-section">
@@ -878,20 +851,13 @@ class DialogueEditor {
                 </div>
                 <div class="quest-form-section">
                     <h4>Время</h4>
-                    <div class="form-group">
-                        <label>Кулдаун (дни):</label>
-                        <input type="number" class="form-control quest-cd-input" value="${quest.cooldown}">
-                    </div>
-                    <div class="form-group">
-                        <label>Лимит (сек):</label>
-                        <input type="number" class="form-control quest-tl-input" value="${quest.timeLimit}">
-                    </div>
+                    <div class="form-group"><label>Кулдаун (дни):</label><input type="number" class="form-control quest-cd-input" value="${quest.cooldown}"></div>
+                    <div class="form-group"><label>Лимит (сек):</label><input type="number" class="form-control quest-tl-input" value="${quest.timeLimit}"></div>
                 </div>
                 <button class="quest-preview-btn" data-action="show-quest-preview">🎮 Предпросмотр квеста</button>
             </div>
         `;
 
-        // Привязываем события к полям формы квеста
         this.bindQuestFormEvents(quest);
     }
 
@@ -921,11 +887,7 @@ class DialogueEditor {
         if (!quest) return;
         const prefab = this.els.targetPrefab.value.trim();
         if (!prefab) { alert('Введите префаб'); return; }
-        quest.targets.push({
-            prefab,
-            amount: this.els.targetAmount.value || '1',
-            level: this.els.targetLevel.value || ''
-        });
+        quest.targets.push({ prefab, amount: this.els.targetAmount.value || '1', level: this.els.targetLevel.value || '' });
         this.closeAllModals();
         this.renderQuestEditor();
     }
@@ -935,11 +897,7 @@ class DialogueEditor {
         if (!quest) return;
         const prefab = this.els.rewardPrefab.value.trim();
         if (!prefab) { alert('Введите префаб'); return; }
-        quest.rewards.push({
-            type: this.els.rewardType.value,
-            prefab,
-            amount: this.els.rewardAmount.value || '1'
-        });
+        quest.rewards.push({ type: this.els.rewardType.value, prefab, amount: this.els.rewardAmount.value || '1' });
         this.closeAllModals();
         this.renderQuestEditor();
     }
@@ -948,8 +906,7 @@ class DialogueEditor {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
         const type = this.els.requirementType.value;
-        const params = Array.from(this.els.requirementParams.querySelectorAll('.param-input'))
-            .map(i => i.value).filter(v => v);
+        const params = Array.from(this.els.requirementParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
         if (params.length === 0) { alert('Заполните параметры'); return; }
         quest.requirements.push({ type, params });
         this.closeAllModals();
@@ -982,28 +939,14 @@ class DialogueEditor {
         if (!quest) return '';
 
         const questsList = Array.from(this.quests.values()).map(q => `
-            <div class="quest-preview-list-item ${q.id === quest.id ? 'selected' : ''}" 
-                 data-action="preview-select-quest" 
-                 data-id="${q.id}">
+            <div class="quest-preview-list-item ${q.id === quest.id ? 'selected' : ''}" data-action="preview-select-quest" data-id="${q.id}">
                 ${this.escapeHtml(q.name)}
             </div>
         `).join('');
 
         const description = this.processQuestDescription(quest.description);
-
-        const targetsHtml = quest.targets.map(t => `
-            <div class="quest-preview-objective">
-                <span>${this.escapeHtml(t.prefab)}</span>
-                <span>x${t.amount}</span>
-            </div>
-        `).join('');
-
-        const rewardsHtml = quest.rewards.map(r => `
-            <div class="quest-preview-reward">
-                <span>${this.escapeHtml(r.prefab)}</span>
-                <span>x${r.amount}</span>
-            </div>
-        `).join('');
+        const targetsHtml = quest.targets.map(t => `<div class="quest-preview-objective"><span>${this.escapeHtml(t.prefab)}</span><span>x${t.amount}</span></div>`).join('');
+        const rewardsHtml = quest.rewards.map(r => `<div class="quest-preview-reward"><span>${this.escapeHtml(r.prefab)}</span><span>x${r.amount}</span></div>`).join('');
 
         return `
             <div class="quest-preview-content">
@@ -1015,15 +958,9 @@ class DialogueEditor {
                     <div class="quest-preview-title">${this.escapeHtml(quest.name)}</div>
                     ${description}
                     <div class="quest-preview-separator"></div>
-                    <div class="quest-preview-section">
-                        <h4>Что нужно сделать:</h4>
-                        <div class="quest-preview-objectives">${targetsHtml || '<p>Нет целей</p>'}</div>
-                    </div>
+                    <div class="quest-preview-section"><h4>Что нужно сделать:</h4><div class="quest-preview-objectives">${targetsHtml || '<p>Нет целей</p>'}</div></div>
                     <div class="quest-preview-separator"></div>
-                    <div class="quest-preview-section">
-                        <h4>Вознаграждение:</h4>
-                        <div class="quest-preview-rewards">${rewardsHtml || '<p>Нет наград</p>'}</div>
-                    </div>
+                    <div class="quest-preview-section"><h4>Вознаграждение:</h4><div class="quest-preview-rewards">${rewardsHtml || '<p>Нет наград</p>'}</div></div>
                     <button class="quest-preview-accept-btn">Взять квест</button>
                 </div>
             </div>
@@ -1039,8 +976,7 @@ class DialogueEditor {
             imageHtml = `<div class="quest-preview-image"><img src="${imageMatch[1]}" alt="Quest" onerror="this.style.display='none'"></div>`;
             cleanDesc = desc.replace(/<image=[^>]+>/, '');
         }
-        const processed = cleanDesc.replace(/\\n/g, '<br>');
-        return `<div class="quest-preview-description">${processed}</div>${imageHtml}`;
+        return `<div class="quest-preview-description">${this.escapeHtml(cleanDesc).replace(/\\n/g, '<br>')}</div>${imageHtml}`;
     }
 
     previewSelectQuest(id) {
@@ -1057,12 +993,8 @@ class DialogueEditor {
             node.options.forEach(opt => {
                 let line = `Text: ${opt.text}`;
                 if (opt.transition) line += ` | Transition: ${opt.transition}`;
-                opt.commands.forEach(cmd => {
-                    line += ` | Command: ${cmd.type}${cmd.params.length ? ', ' + cmd.params.join(', ') : ''}`;
-                });
-                opt.conditions.forEach(cond => {
-                    line += ` | Condition: ${cond.type}${cond.params.length ? ', ' + cond.params.join(', ') : ''}`;
-                });
+                opt.commands.forEach(cmd => { line += ` | Command: ${cmd.type}${cmd.params.length ? ', ' + cmd.params.join(', ') : ''}`; });
+                opt.conditions.forEach(cond => { line += ` | Condition: ${cond.type}${cond.params.length ? ', ' + cond.params.join(', ') : ''}`; });
                 if (opt.icon) line += ` | Icon: ${opt.icon}`;
                 if (opt.color && opt.color !== '#ffffff') {
                     const rgb = this.hexToRgb(opt.color);
@@ -1106,8 +1038,20 @@ class DialogueEditor {
                 currentNode = this.addNode(nodeId, offsetX, offsetY);
                 offsetX += 300;
                 if (offsetX > 1500) { offsetX = 100; offsetY += 300; }
-                i++;
-                if (i < lines.length) currentNode.text = lines[i];
+                
+                // Устойчивый парсинг текста узла (пропускает пустые строки)
+                let j = i + 1;
+                while (j < lines.length) {
+                    const nextLine = lines[j].trim();
+                    if (nextLine.startsWith('[')) break;
+                    if (nextLine.startsWith('Text:')) break;
+                    if (nextLine !== '') {
+                        currentNode.text = nextLine;
+                        i = j;
+                        break;
+                    }
+                    j++;
+                }
             } else if (line.startsWith('Text:') && currentNode) {
                 this.parseOptionLine(currentNode, line);
             }
@@ -1115,7 +1059,9 @@ class DialogueEditor {
 
         this.renderNodes();
         this.updateTransitionsList();
-        if (this.nodes.size > 0) this.selectNode(this.nodes.keys().next().value);
+        if (this.nodes.size > 0) {
+            this.selectNode(this.nodes.keys().next().value);
+        }
     }
 
     parseOptionLine(node, line) {
@@ -1131,9 +1077,7 @@ class DialogueEditor {
             else if (part.startsWith('Icon:')) option.icon = part.substring(5).trim();
             else if (part.startsWith('Color:')) {
                 const rgb = part.substring(6).trim().split(',').map(c => parseInt(c.trim()));
-                if (rgb.length === 3) {
-                    option.color = '#' + rgb.map(c => c.toString(16).padStart(2, '0')).join('');
-                }
+                if (rgb.length === 3) option.color = '#' + rgb.map(c => c.toString(16).padStart(2, '0')).join('');
             }
             else if (part.startsWith('Condition:')) this.parseCondition(option, part.substring(10).trim());
             else if (part.startsWith('Command:')) this.parseCommand(option, part.substring(8).trim());
@@ -1161,11 +1105,7 @@ class DialogueEditor {
                 const autocomplete = questId.includes('=autocomplete');
                 const cleanId = autocomplete ? questId.split('=')[0] : questId;
 
-                const q = {
-                    id: cleanId, type: '', name: '', description: '',
-                    targets: [], rewards: [], cooldown: '', timeLimit: '',
-                    requirements: [], autocomplete
-                };
+                const q = { id: cleanId, type: '', name: '', description: '', targets: [], rewards: [], cooldown: '', timeLimit: '', requirements: [], autocomplete };
 
                 i++; if (i < lines.length) { q.type = lines[i].trim(); i++; }
                 if (i < lines.length) { q.name = lines[i].trim(); i++; }
@@ -1181,7 +1121,6 @@ class DialogueEditor {
                     }
                     i++;
                 }
-
                 if (i < lines.length) {
                     const rl = lines[i].trim();
                     if (rl && rl !== 'None') {
@@ -1195,7 +1134,6 @@ class DialogueEditor {
                     }
                     i++;
                 }
-
                 if (i < lines.length) {
                     const tl = lines[i].trim();
                     if (tl && tl !== 'None') {
@@ -1205,38 +1143,35 @@ class DialogueEditor {
                     }
                     i++;
                 }
-
                 if (i < lines.length) {
                     const rl = lines[i].trim();
                     if (rl && rl !== 'None') {
                         rl.split('|').map(p => p.trim()).forEach(p => {
                             const d = p.split(':');
-                            q.requirements.push({
-                                type: d[0],
-                                params: d.length > 1 ? d[1].split(',').map(x => x.trim()) : []
-                            });
+                            q.requirements.push({ type: d[0], params: d.length > 1 ? d[1].split(',').map(x => x.trim()) : [] });
                         });
                     }
                     i++;
                 }
-
                 this.quests.set(q.id, q);
             } else {
                 i++;
             }
         }
         this.renderQuestsList();
+        // ИСПРАВЛЕНИЕ: Автоматически открываем первый квест после импорта
+        if (this.quests.size > 0) {
+            this.selectQuest(this.quests.keys().next().value);
+        }
     }
 
-    // === ВАЛИДАЦИЯ / ПОИСК ===
     validateDialogue() {
         const errors = [];
         this.nodes.forEach((node, id) => {
             if (!node.text || !node.text.trim()) errors.push(`"${id}": нет текста NPC`);
             node.options.forEach((opt, i) => {
                 if (!opt.text || !opt.text.trim()) errors.push(`"${id}" #${i+1}: нет текста опции`);
-                if (opt.transition && !this.nodes.has(opt.transition))
-                    errors.push(`"${id}" #${i+1}: переход на несуществующий "${opt.transition}"`);
+                if (opt.transition && !this.nodes.has(opt.transition)) errors.push(`"${id}" #${i+1}: переход на несуществующий "${opt.transition}"`);
             });
         });
         if (errors.length === 0) alert('✅ Ошибок не найдено!');
@@ -1252,14 +1187,11 @@ class DialogueEditor {
         this.nodes.forEach((node, id) => {
             const el = document.querySelector(`[data-node-id="${id}"]`);
             if (!el) return;
-            const match = id.toLowerCase().includes(q) ||
-                          node.text.toLowerCase().includes(q) ||
-                          node.options.some(o => o.text.toLowerCase().includes(q));
+            const match = id.toLowerCase().includes(q) || node.text.toLowerCase().includes(q) || node.options.some(o => o.text.toLowerCase().includes(q));
             el.style.opacity = match ? '1' : '0.25';
         });
     }
 
-    // === ПРИМЕР ===
     loadSampleData() {
         if (this.nodes.size > 0 && !confirm('Текущие данные будут заменены примером. Продолжить?')) return;
         this.nodes.clear();
@@ -1267,31 +1199,22 @@ class DialogueEditor {
 
         const n1 = this.addNode('Start', 100, 150);
         n1.text = 'Приветствую тебя, путник!\\nЧем могу помочь?';
-        const o1 = this.addOptionToNode('Start', 'Расскажи о себе');
-        o1.transition = 'About';
-        const o2 = this.addOptionToNode('Start', '<color=#f1c40f>Есть работа?</color>');
-        o2.transition = 'QuestOffer';
-        o2.color = '#f1c40f';
-        o2.icon = 'Hammer';
-        const o3 = this.addOptionToNode('Start', 'Прощай');
-        o3.commands.push({ type: 'PlaySound', params: ['bye.wav'] });
+        const o1 = this.addOptionToNode('Start', 'Расскажи о себе'); o1.transition = 'About';
+        const o2 = this.addOptionToNode('Start', '<color=#f1c40f>Есть работа?</color>'); o2.transition = 'QuestOffer'; o2.color = '#f1c40f'; o2.icon = 'Hammer';
+        const o3 = this.addOptionToNode('Start', 'Прощай'); o3.commands.push({ type: 'PlaySound', params: ['bye.wav'] });
 
         const n2 = this.addNode('About', 500, 100);
         n2.text = 'Я кузнец, работаю здесь уже 20 лет.\\nМогу сделать любое оружие.';
-        const o4 = this.addOptionToNode('About', 'Назад');
-        o4.transition = 'Start';
+        const o4 = this.addOptionToNode('About', 'Назад'); o4.transition = 'Start';
 
         const n3 = this.addNode('QuestOffer', 500, 300);
         n3.text = 'Есть одно дельце...\\nНужно принести <color=#e74c3c>10 шкур кабана</color>.';
-        const o5 = this.addOptionToNode('QuestOffer', 'Берусь!');
-        o5.commands.push({ type: 'GiveQuest', params: ['BoarHunt'] });
-        o5.transition = 'Accepted';
-        const o6 = this.addOptionToNode('QuestOffer', 'Не сейчас');
-        o6.transition = 'Start';
+        const o5 = this.addOptionToNode('QuestOffer', 'Берусь!'); o5.commands.push({ type: 'GiveQuest', params: ['BoarHunt'] }); o5.transition = 'Accepted';
+        const o6 = this.addOptionToNode('QuestOffer', 'Не сейчас'); o6.transition = 'Start';
 
         const n4 = this.addNode('Accepted', 900, 300);
         n4.text = 'Отлично! Жду тебя с добычей.';
-        const o7 = this.addOptionToNode('Accepted', 'До встречи');
+        this.addOptionToNode('Accepted', 'До встречи');
 
         this.quests.set('BoarHunt', {
             id: 'BoarHunt', type: 'Kill', name: 'Охота на кабанов',
@@ -1303,9 +1226,9 @@ class DialogueEditor {
 
         this.renderNodes();
         this.renderQuestsList();
+        this.selectQuest('BoarHunt');
     }
 
-    // === УТИЛИТЫ ===
     escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');
@@ -1331,7 +1254,6 @@ class DialogueEditor {
     }
 }
 
-// === ЗАПУСК ===
 document.addEventListener('DOMContentLoaded', () => {
     window.editor = new DialogueEditor();
 });
