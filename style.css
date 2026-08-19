@@ -176,10 +176,12 @@ main {
     display: none;
     flex: 1;
     overflow: hidden;
+    flex-direction: row;
 }
 
 .tab-content.active {
     display: flex;
+    flex-direction: row;
 }
 
 .bottom-tabs {
@@ -539,11 +541,14 @@ main {
    ============================================ */
 .properties-panel {
     width: 360px;
+    min-width: 360px;
     background: var(--bg-secondary);
     border-left: 2px solid var(--accent-blue);
     padding: 16px;
     overflow-y: auto;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .properties-section { margin-bottom: 20px; }
