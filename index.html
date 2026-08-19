@@ -18,109 +18,166 @@
         </div>
         <div class="header-controls">
             <input type="text" id="searchInput" placeholder="Поиск по диалогам...">
-            <button id="importDialogueBtn">📥 Импорт диалога</button>
-            <button id="importQuestBtn">📥 Импорт квеста</button>
-            <button id="questsBtn">📜 Квесты</button>
-            <button id="exportBtn">💾 Экспорт</button>
-            <button id="validateBtn">✓ Проверить</button>
+            <button id="importDialogueBtn">Импорт диалога</button>
+            <button id="importQuestBtn">Импорт квеста</button>
+            <button id="questsBtn">Квесты</button>
+            <button id="exportBtn">Экспорт</button>
+            <button id="validateBtn">Проверить</button>
             <button id="previewBtn" class="play-btn" title="Предпросмотр">▶</button>
         </div>
     </header>
 
-    <main>
-        <div class="workspace">
-            <div class="toolbar">
-                <button id="addNodeBtn">➕ Добавить диалог</button>
-                <button id="addOptionBtn">➕ Добавить опцию</button>
-                <button id="deleteBtn" class="danger">🗑 Удалить</button>
-                <div class="tool-separator"></div>
-                <button id="zoomInBtn" class="icon-btn">+</button>
-                <button id="zoomOutBtn" class="icon-btn">−</button>
-                <button id="fitToScreenBtn">⤢ По размеру</button>
-                <button id="loadSampleBtn" class="secondary">📖 Загрузить пример</button>
+    <main id="mainWorkspace">
+        <!-- вкладка редактора -->
+        <div id="tabField" class="tab-content active">
+            <div class="workspace">
+                <div class="toolbar">
+                    <button id="addNodeBtn">Добавить диалог</button>
+                    <button id="addOptionBtn">Добавить опцию</button>
+                    <button id="deleteBtn" class="danger">🗑 Удалить</button>
+                    <div class="tool-separator"></div>
+                    <button id="zoomInBtn" class="icon-btn">+</button>
+                    <button id="zoomOutBtn" class="icon-btn">−</button>
+                    <button id="fitToScreenBtn">⤢ По размеру</button>
+                    <button id="loadSampleBtn" class="secondary">Загрузить пример</button>
+                    <div class="tool-separator"></div>
+                    <span class="toolbar-hint">Тяни кружок на опции → к другому узлу, квесту или в пустоту (Конец)</span>
+                </div>
+
+                <div class="canvas-container" id="canvasContainer">
+                    <svg id="connectionLayer">
+                        <defs>
+                            <marker id="arrowhead-orange" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#f39c12"/>
+                            </marker>
+                            <marker id="arrowhead-red" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#e74c3c"/>
+                            </marker>
+                            <marker id="arrowhead-green" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#27ae60"/>
+                            </marker>
+                            <marker id="arrowhead-gray" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#95a5a6"/>
+                            </marker>
+                            <marker id="arrowhead-drawing" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#fff"/>
+                            </marker>
+                        </defs>
+                    </svg>
+                    <div id="nodeContainer" class="node-container"></div>
+                    
+                    <!-- плавающая панель квестов -->
+                    <div id="questPalette" class="quest-palette">
+                        <div class="quest-palette-header">
+                            <span>Квесты</span>
+                            <button id="toggleQuestPalette" class="icon-btn-small">−</button>
+                        </div>
+                        <div id="questPaletteList" class="quest-palette-list"></div>
+                    </div>
+                </div>
             </div>
 
-            <div class="canvas-container">
-                <svg id="connectionLayer">
-                    <defs>
-                        <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-                            <polygon points="0 0, 10 3.5, 0 7" fill="#f39c12"/>
-                        </marker>
-                    </defs>
-                </svg>
-                <div id="nodeContainer" class="node-container"></div>
-            </div>
+            <aside class="properties-panel">
+                <div id="nodeProperties" class="properties-section">
+                    <h3>📝 Диалог NPC</h3>
+                    <div class="form-group">
+                        <label>ID профиля:</label>
+                        <input type="text" id="nodeId" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Текст NPC:</label>
+                        <textarea id="nodeText" class="form-control" rows="4" placeholder="Используй \n для переноса строки и теги &lt;color=#FF0000&gt;...&lt;/color&gt;"></textarea>
+                    </div>
+                    <div class="node-options-section">
+                        <h4>Опции диалога</h4>
+                        <div id="nodeOptionsList" class="options-list"></div>
+                        <button id="addNodeOptionBtn" class="btn-small">+ Добавить опцию</button>
+                    </div>
+                </div>
+
+                <div id="optionProperties" class="properties-section" style="display: none;">
+                    <h3>💬 Опция игрока</h3>
+                    <div class="form-group">
+                        <label>Текст:</label>
+                        <input type="text" id="optionText" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Переход к (ID диалога):</label>
+                        <select id="optionTransition" class="form-control">
+                            <option value="">— Нет —</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Связь с квестом (ID квеста):</label>
+                        <select id="optionQuestLink" class="form-control">
+                            <option value="">— Нет —</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Иконка:</label>
+                            <input type="text" id="optionIcon" class="form-control" placeholder="Hammer, SwordIron...">
+                        </div>
+                        <div class="form-group">
+                            <label>Цвет:</label>
+                            <input type="color" id="optionColor" class="form-control" value="#ffffff">
+                        </div>
+                    </div>
+
+                    <div class="conditions-section">
+                        <h4>⚙ Условия</h4>
+                        <div id="conditionsList"></div>
+                        <button id="addConditionBtn" class="btn-small">+ Добавить условие</button>
+                    </div>
+
+                    <div class="commands-section">
+                        <h4>Команды</h4>
+                        <div id="commandsList"></div>
+                        <button id="addCommandBtn" class="btn-small">+ Добавить команду</button>
+                    </div>
+                </div>
+
+                <div class="properties-section empty-state" id="emptyState">
+                    <p>Выберите узел на холсте или создайте новый диалог</p>
+                </div>
+            </aside>
         </div>
 
-        <aside class="properties-panel">
-            <div id="nodeProperties" class="properties-section">
-                <h3>📝 Диалог NPC</h3>
-                <div class="form-group">
-                    <label>ID профиля:</label>
-                    <input type="text" id="nodeId" class="form-control">
+        <!-- вкладка исходника -->
+        <div id="tabCode" class="tab-content">
+            <div class="code-viewer">
+                <div class="code-tabs">
+                    <button class="code-tab active" data-file="index.html">index.html</button>
+                    <button class="code-tab" data-file="style.css">style.css</button>
+                    <button class="code-tab" data-file="script.js">script.js</button>
                 </div>
-                <div class="form-group">
-                    <label>Текст NPC:</label>
-                    <textarea id="nodeText" class="form-control" rows="4" placeholder="Используй \n для переноса строки и теги &lt;color=#FF0000&gt;...&lt;/color&gt;"></textarea>
+                <div class="code-content">
+                    <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
                 </div>
-                <div class="node-options-section">
-                    <h4>Опции диалога</h4>
-                    <div id="nodeOptionsList" class="options-list"></div>
-                    <button id="addNodeOptionBtn" class="btn-small">+ Добавить опцию</button>
-                </div>
-            </div>
-
-            <div id="optionProperties" class="properties-section" style="display: none;">
-                <h3>💬 Опция игрока</h3>
-                <div class="form-group">
-                    <label>Текст:</label>
-                    <input type="text" id="optionText" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Переход к:</label>
-                    <select id="optionTransition" class="form-control">
-                        <option value="">— Нет —</option>
-                    </select>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Иконка:</label>
-                        <input type="text" id="optionIcon" class="form-control" placeholder="Hammer, SwordIron...">
-                    </div>
-                    <div class="form-group">
-                        <label>Цвет:</label>
-                        <input type="color" id="optionColor" class="form-control" value="#ffffff">
-                    </div>
-                </div>
-
-                <div class="conditions-section">
-                    <h4>⚙ Условия</h4>
-                    <div id="conditionsList"></div>
-                    <button id="addConditionBtn" class="btn-small">+ Добавить условие</button>
-                </div>
-
-                <div class="commands-section">
-                    <h4>⚡ Команды</h4>
-                    <div id="commandsList"></div>
-                    <button id="addCommandBtn" class="btn-small">+ Добавить команду</button>
+                <div class="code-actions">
+                    <button id="copyCodeBtn" class="secondary">Копировать</button>
+                    <button id="downloadCodeBtn" class="secondary">Скачать файл</button>
+                    <span class="code-hint">Изменения здесь не применяются автоматически. Используй для просмотра/копирования.</span>
                 </div>
             </div>
-
-            <div class="properties-section empty-state" id="emptyState">
-                <p>Выберите узел на холсте или создайте новый диалог</p>
-            </div>
-        </aside>
+        </div>
     </main>
 
-    <!-- Скрытые input'ы для импорта -->
+    <!-- нижняя панель вкладок -->
+    <div class="bottom-tabs">
+        <button class="bottom-tab active" data-tab="tabField">Поле</button>
+        <button class="bottom-tab" data-tab="tabCode">Код</button>
+    </div>
+
+    <!-- скрытые инпуты для импорта -->
     <input type="file" id="dialogueFileInput" accept=".cfg,.txt" style="display: none;">
     <input type="file" id="questFileInput" accept=".cfg,.txt" style="display: none;">
 
-    <!-- Модальные окна -->
+    <!-- модальные окна -->
     <div id="previewModal" class="modal">
         <div class="modal-content preview-modal">
             <div class="modal-header">
-                <h2>🎮 Предпросмотр диалога</h2>
+                <h2>Предпросмотр диалога</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
             <div id="previewContent" class="preview-content"></div>
@@ -130,7 +187,7 @@
     <div id="questsModal" class="modal">
         <div class="modal-content quests-modal">
             <div class="modal-header">
-                <h2>📜 Редактор квестов</h2>
+                <h2>Редактор квестов</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
             <div class="quests-container">
@@ -210,7 +267,6 @@
         </div>
     </div>
 
-    <!-- Модальные окна для квестов (были пропущены ранее) -->
     <div id="questTargetModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -290,7 +346,7 @@
     <div id="questPreviewModal" class="modal">
         <div class="modal-content quest-preview-modal">
             <div class="modal-header">
-                <h2>🎮 Предпросмотр квеста</h2>
+                <h2>Предпросмотр квеста</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
             <div id="questPreviewContent"></div>
