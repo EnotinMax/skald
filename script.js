@@ -1,3 +1,8 @@
+// ============================================
+// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.1
+// ============================================
+
+// ITEM SELECTOR
 class ItemSelector {
     constructor(container, initialValue = '') {
         this.container = typeof container === 'string' ? document.getElementById(container) : container;
@@ -26,7 +31,7 @@ class ItemSelector {
 
     async loadData() {
         try {
-            const cacheBuster = `?v=${Date.now()}`; // кэш-бустинг
+            const cacheBuster = `?v=${Date.now()}`;
             const response = await fetch(`${this.baseIconUrl}items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             this.items = await response.json();
@@ -61,7 +66,7 @@ class ItemSelector {
             if (item.name && item.name.toLowerCase().includes(lowerQuery)) return true;
             if (item.id.toLowerCase().includes(lowerQuery)) return true;
             return false;
-        }).slice(0, 50); // максимум 50 элементов, чтобы не грузить
+        }).slice(0, 50);
         this.renderDropdown(filtered);
     }
 
@@ -86,7 +91,7 @@ class ItemSelector {
     selectItem(id) {
         const item = this.items.find(i => i.id === id);
         if (item) {
-            this.selectedId = item.id; // регистр
+            this.selectedId = item.id;
             this.input.value = item.id;
             this.iconImg.src = `${this.baseIconUrl}${item.icon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
@@ -96,13 +101,13 @@ class ItemSelector {
 
     validateAndFinalize(inputValue) {
         const trimmedValue = inputValue.trim();
-        const exactMatch = this.items.find(i => i.id === trimmedValue); // сравнение с учетом регистра
+        const exactMatch = this.items.find(i => i.id === trimmedValue);
         if (exactMatch) {
             this.selectItem(exactMatch.id);
         } else if (trimmedValue !== '') {
             this.selectedId = trimmedValue;
             this.input.value = trimmedValue;
-            this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`; // заглушка для кастомного мода
+            this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
         } else {
             this.selectedId = '';
@@ -271,7 +276,7 @@ class DialogueEditor {
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
-                
+
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.isCanvasDragging = false;
@@ -288,10 +293,10 @@ class DialogueEditor {
         this.currentCfgFile = null;
 
         this.lang = localStorage.getItem('skald_lang') || 'ru';
-        
+
         this.itemSelectorData = [];
         this.loadItemDataForPreview();
-        
+
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
@@ -299,13 +304,13 @@ class DialogueEditor {
         this.render();
     }
 
-async loadItemDataForPreview() {
+    async loadItemDataForPreview() {
         try {
             const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
             if (response.ok) this.itemSelectorData = await response.json();
         } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
     }
-    
+
     cacheElements() {
         const ids = [
             'appTitle', 'appSubtitle', 'searchInput', 'importDialogueBtn', 'importQuestBtn',
@@ -1498,7 +1503,7 @@ async loadItemDataForPreview() {
         `).join('');
     }
 
-       renderQuestEditor() {
+    renderQuestEditor() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) {
             this.els.questEditor.innerHTML = `<div class="no-quest-selected"><p>${translations[this.lang].noQuestSelected}</p></div>`;
@@ -1525,7 +1530,7 @@ async loadItemDataForPreview() {
                         <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
                         <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
                     </select>
-                    <div class="item-selector" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab)}"></div>
+                    <div class="item-selector" style="width: 100%;" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab)}"></div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
                     <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
@@ -1582,10 +1587,7 @@ async loadItemDataForPreview() {
 
         this.bindQuestFormEvents(quest);
 
-        // === ИНИЦИАЛИЗАЦИЯ ITEM SELECTOR ===
-        // делаем это после того, как HTML уже вставлен в DOM
         setTimeout(() => {
-            // инициализация targets
             this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
                 const index = parseInt(container.dataset.index);
                 const selector = new ItemSelector(container, container.dataset.value);
@@ -1597,7 +1599,6 @@ async loadItemDataForPreview() {
                 });
             });
 
-            // инициализация rewards
             this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
                 const index = parseInt(container.dataset.rewardIndex);
                 const selector = new ItemSelector(container, container.dataset.value);
@@ -1609,6 +1610,7 @@ async loadItemDataForPreview() {
                 });
             });
         }, 0);
+    }
 
     bindQuestFormEvents(quest) {
         const qe = this.els.questEditor;
@@ -1632,6 +1634,27 @@ async loadItemDataForPreview() {
         bind('.quest-auto-input', 'autocomplete');
         bind('.quest-cd-input', 'cooldown');
         bind('.quest-tl-input', 'timeLimit');
+
+        qe.querySelectorAll('[data-target-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.targetAmount);
+                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
+            });
+        });
+
+        qe.querySelectorAll('[data-reward-type]').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const index = parseInt(e.target.dataset.rewardType);
+                if (quest.rewards[index]) quest.rewards[index].type = e.target.value;
+            });
+        });
+
+        qe.querySelectorAll('[data-reward-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.rewardAmount);
+                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
+            });
+        });
     }
 
     saveQuestTarget() {
@@ -1698,11 +1721,9 @@ async loadItemDataForPreview() {
         `).join('');
 
         const description = this.processQuestDescription(quest.description);
-                const targetsHtml = quest.targets.map(ti => {            // пытаемся найти данные предмета для иконки и имени. если не нашли (кастомный мод), используем заглушку и ID как имя
-            const itemData = (window.editor && window.editor.itemSelectorData) 
-                ? window.editor.itemSelectorData.find(i => i.id === ti.prefab) 
-                : null;
-            
+        
+        const targetsHtml = quest.targets.map(ti => {
+            const itemData = this.itemSelectorData.find(i => i.id === ti.prefab) || null;
             const displayName = itemData ? (itemData.nameRu || itemData.name) : ti.prefab;
             const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
 
@@ -1716,11 +1737,9 @@ async loadItemDataForPreview() {
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${ti.amount}</span>
             </div>`;
         }).join('');
+
         const rewardsHtml = quest.rewards.map(r => {
-            const itemData = (window.editor && window.editor.itemSelectorData) 
-                ? window.editor.itemSelectorData.find(i => i.id === r.prefab) 
-                : null;
-            
+            const itemData = this.itemSelectorData.find(i => i.id === r.prefab) || null;
             const displayName = itemData ? (itemData.nameRu || itemData.name) : r.prefab;
             const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
 
@@ -1757,7 +1776,6 @@ async loadItemDataForPreview() {
     processQuestDescription(desc) {
         if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
 
-        // сначала извлекаем все изображения
         const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
         let imageHtml = '';
 
@@ -1767,13 +1785,8 @@ async loadItemDataForPreview() {
             ).join('');
         }
 
-        // удаляем теги изображений из текста
         let cleanDesc = desc.replace(/<image=[^>]+>/g, '');
-
-        // экранируем HTML
         cleanDesc = this.escapeHtml(cleanDesc);
-
-        // применяем теги форматирования
         cleanDesc = cleanDesc.replace(/\\n/g, '<br>');
         cleanDesc = cleanDesc.replace(/&lt;color=([^&]+)&gt;([^&]*)&lt;\/color&gt;/g, '<span style="color: $1">$2</span>');
         cleanDesc = cleanDesc.replace(/&lt;size=(\d+)&gt;([^&]*)&lt;\/size&gt;/g, '<span style="font-size: $1px">$2</span>');
