@@ -2,7 +2,7 @@
 
 <div align="center">
 
-  <img src="logo.png" alt="Skald Logo" width="200" height="200">
+  <img src="background.png" alt="Skald Logo" width="200" height="200">
   
   **Динамическая система редактора конфигов диалогов и квестов для KGMarketPlace**
 
