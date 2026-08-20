@@ -4,8 +4,8 @@
 
 const translations = {
     ru: {
-        appTitle: "Кузница Скальда",
-        appSubtitle: "Редактор диалогов и квестов · by OdinSons",
+        appTitle: "Кузница Скальда v2.1",
+        appSubtitle: "Редактор диалогов и квестов · by OdinSons, Enotin",
         searchPlaceholder: "Поиск...",
         importDialogue: "Импорт диалога",
         importQuest: "Импорт квеста",
@@ -75,8 +75,8 @@ const translations = {
         back: "Назад"
     },
     en: {
-        appTitle: "Skald's Forge",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons",
+        appTitle: "Skald's Forge v2.1-en",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons, Enotin",
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
         importQuest: "Import Quest",
