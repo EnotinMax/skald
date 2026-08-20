@@ -1,7 +1,3 @@
-// ============================================
-// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.1
-// ============================================
-
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.1",
@@ -75,7 +71,7 @@ const translations = {
         back: "Назад"
     },
     en: {
-        appTitle: "Skald's Forge v2.1-en",
+        appTitle: "Skald's Forge v2.1",
         appSubtitle: "Dialogue & Quest Editor · by OdinSons, Enotin",
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
@@ -167,7 +163,6 @@ class DialogueEditor {
         this.drawingFromOption = null;
         this.drawingTempPath = null;
 
-        // Хранилище файлов cfg
         this.cfgFiles = {}; 
         this.currentCfgFile = null;
 
@@ -178,8 +173,6 @@ class DialogueEditor {
         this.initEventListeners();
         this.applyLanguage();
         this.render();
-
-        console.log('skald editor v2.1 initialized');
     }
 
     cacheElements() {
@@ -210,7 +203,6 @@ class DialogueEditor {
     }
 
     initEventListeners() {
-        // Toolbar
         this.els.addNodeBtn.addEventListener('click', () => this.addNode());
         this.els.addOptionBtn.addEventListener('click', () => this.addOptionToSelected());
         this.els.deleteBtn.addEventListener('click', () => this.deleteSelected());
@@ -219,7 +211,6 @@ class DialogueEditor {
         this.els.fitToScreenBtn.addEventListener('click', () => this.fitToScreen());
         this.els.loadSampleBtn.addEventListener('click', () => this.loadSampleData());
 
-        // Header
         this.els.searchInput.addEventListener('input', (e) => this.searchDialogue(e.target.value));
         this.els.importDialogueBtn.addEventListener('click', () => this.els.dialogueFileInput.click());
         this.els.importQuestBtn.addEventListener('click', () => this.els.questFileInput.click());
@@ -228,16 +219,13 @@ class DialogueEditor {
         this.els.validateBtn.addEventListener('click', () => this.validateDialogue());
         this.els.previewBtn.addEventListener('click', () => this.showPreview());
 
-        // File inputs
         this.els.dialogueFileInput.addEventListener('change', (e) => this.handleDialogueFileImport(e));
         this.els.questFileInput.addEventListener('change', (e) => this.handleQuestFileImport(e));
 
-        // Node properties
         this.els.nodeId.addEventListener('change', (e) => this.updateNodeProperty('id', e.target.value));
         this.els.nodeText.addEventListener('input', (e) => this.updateNodeProperty('text', e.target.value));
         this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToNode(this.selectedNode));
 
-        // Option properties
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
         this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
         this.els.optionQuestLink.addEventListener('change', (e) => this.updateOptionProperty('questLink', e.target.value));
@@ -246,7 +234,6 @@ class DialogueEditor {
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
 
-        // Modals
         this.els.conditionType.addEventListener('change', () => this.updateConditionParams());
         this.els.saveConditionBtn.addEventListener('click', () => this.saveCondition());
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
@@ -263,7 +250,6 @@ class DialogueEditor {
             this.els.toggleQuestPalette.textContent = this.els.questPalette.classList.contains('collapsed') ? '+' : '−';
         });
 
-        // Canvas
         this.els.canvasContainer.addEventListener('mousedown', (e) => this.startCanvasDrag(e));
         window.addEventListener('mousemove', (e) => this.canvasDrag(e));
         window.addEventListener('mouseup', (e) => this.stopCanvasDrag(e));
@@ -272,33 +258,27 @@ class DialogueEditor {
             this.zoom(e.deltaY < 0 ? 0.1 : -0.1);
         }, { passive: false });
 
-        // Drawing
         window.addEventListener('mousemove', (e) => this.onDrawMouseMove(e));
         window.addEventListener('mouseup', (e) => this.onDrawMouseUp(e));
 
-        // Global click
         document.addEventListener('click', (e) => this.handleGlobalClick(e));
 
-        // вкладки
         this.els.tabFieldBtn.addEventListener('click', () => this.switchTab('tabField'));
         this.els.tabCodeBtn.addEventListener('click', () => this.switchTab('tabCode'));
 
-        // Code actions
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
 
-        // смена языка
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.lang = btn.dataset.lang;
                 localStorage.setItem('skald_lang', this.lang);
                 this.applyLanguage();
-                this.render(); // перерисовать интерфейс с новыми текстами
+                this.render();
             });
         });
 
-        // клава
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') {
                 if (this.isDrawingCurve) this.cancelDrawing();
@@ -312,12 +292,10 @@ class DialogueEditor {
         const t = translations[this.lang];
         if (!t) return;
 
-        // простая замена текстов по ID
         for (const [key, value] of Object.entries(t)) {
             if (this.els[key]) {
                 if (this.els[key].tagName === 'INPUT' || this.els[key].tagName === 'TEXTAREA') {
                     if (key.includes('Placeholder')) this.els[key].placeholder = value;
-                    else this.els[key].value = value; // осторожно с value
                 } else if (this.els[key].tagName === 'BUTTON') {
                     this.els[key].textContent = value;
                 } else {
@@ -326,7 +304,6 @@ class DialogueEditor {
             }
         }
         
-        // специфичные случаи
         this.els.appTitle.textContent = t.appTitle;
         this.els.appSubtitle.textContent = t.appSubtitle;
         this.els.hintText.textContent = t.hintText;
@@ -364,7 +341,6 @@ class DialogueEditor {
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
         
-        // обновляем легенду
         const legendItems = document.querySelectorAll('.legend-item');
         if (legendItems.length >= 4) {
             legendItems[0].lastChild.textContent = ' ' + t.legendTransition;
@@ -376,7 +352,6 @@ class DialogueEditor {
         document.documentElement.lang = this.lang;
     }
 
-    // === TABS & FILES ===
     switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
@@ -415,16 +390,15 @@ class DialogueEditor {
         const content = this.els.codeEditor.value;
         this.cfgFiles[this.currentCfgFile] = content;
         
-        // парсим обновленный код
-        this.parseDialogueCfg(content, true); // true = не очищать квесты, если это диалог
-        this.syncCodeView();
-    }
+        // эвристика: если файл содержит ключевые слова квестов, парсим как квест, иначе как диалог
+        const isQuest = /Type:\s*(Kill|Collect|Harvest|Craft|Talk|Build|Move)/i.test(content);
 
-    syncCodeView() {
-        if (this.currentCfgFile) {
-            this.cfgFiles[this.currentCfgFile] = this.generateCfgFromData();
-            this.showCodeFile(this.currentCfgFile);
+        if (isQuest) {
+            this.parseQuestCfg(content);
+        } else {
+            this.parseDialogueCfg(content, true);
         }
+        this.render();
     }
 
     copyCurrentCode() {
@@ -441,7 +415,6 @@ class DialogueEditor {
         }
     }
 
-    // === GLOBAL CLICK ===
     handleGlobalClick(e) {
         if (e.target.matches('.close') || e.target.closest('.close')) {
             this.closeAllModals();
@@ -499,7 +472,6 @@ class DialogueEditor {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
 
-    // === NODES ===
     addNode(id = null, x = null, y = null) {
         const nodeId = id || `Node_${Date.now()}`;
         if (this.nodes.has(nodeId)) return null;
@@ -640,7 +612,6 @@ class DialogueEditor {
         const option = node.options.find(o => o.id === this.selectedOption);
         if (!option) return;
 
-        // одна кнопка = одно действие
         if (property === 'transition' && value) {
             option.questLink = '';
             this.els.optionQuestLink.value = '';
@@ -699,7 +670,6 @@ class DialogueEditor {
         });
     }
 
-    // === RENDER ===
     render() { this.renderNodes(); this.renderQuestPalette(); }
 
     renderNodes() {
@@ -819,7 +789,6 @@ class DialogueEditor {
         });
     }
 
-    // === DRAWING CURVES ===
     startDrawing(e, nodeId, optionId) {
         this.isDrawingCurve = true;
         this.drawingFromOption = { nodeId, optionId };
@@ -928,9 +897,24 @@ class DialogueEditor {
         `).join('');
     }
 
-    // === CONNECTIONS ===
     renderConnections() {
+        // динамическое расширение холста, чтобы стрелки не обрезались
+        let maxX = 1000, maxY = 1000;
+        this.nodes.forEach(node => {
+            if (node.x + 400 > maxX) maxX = node.x + 400;
+            if (node.y + 400 > maxY) maxY = node.y + 400;
+        });
+
         const svg = this.els.connectionLayer;
+        const container = this.els.canvasContainer;
+        const targetWidth = Math.max(container.clientWidth, maxX + 500);
+        const targetHeight = Math.max(container.clientHeight, maxY + 500);
+
+        svg.style.width = `${targetWidth}px`;
+        svg.style.height = `${targetHeight}px`;
+        this.els.nodeContainer.style.width = `${targetWidth}px`;
+        this.els.nodeContainer.style.height = `${targetHeight}px`;
+
         svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
 
         this.nodes.forEach(node => {
@@ -1142,7 +1126,6 @@ class DialogueEditor {
         svg.appendChild(g);
     }
 
-    // === QUEST PALETTE ===
     renderQuestPalette() {
         this.els.questPaletteList.innerHTML = Array.from(this.quests.values()).map(q => `
             <div class="quest-palette-item" data-quest-id="${q.id}">
@@ -1152,7 +1135,6 @@ class DialogueEditor {
         `).join('');
     }
 
-    // === CANVAS ===
     startCanvasDrag(e) {
         if (e.target.closest('.dialogue-node') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
         this.isCanvasDragging = true;
@@ -1188,7 +1170,6 @@ class DialogueEditor {
         this.applyCanvasTransform();
     }
 
-    // === PREVIEW ===
     showPreview() {
         if (!this.selectedNode) { alert('Select a dialogue first'); return; }
         this.previewHistory = [];
@@ -1259,20 +1240,12 @@ class DialogueEditor {
     processTextForPreview(text) {
         if (!text) return '';
         let processed = text.replace(/\\n/g, '<br>');
-        
-        // обработка тегов цвета
         processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
-        
-        // обработка тегов размера (примерная реализация, так как точный синтаксис может варьироваться)
         processed = processed.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
-        
-        // обработка изображений
         processed = processed.replace(/<image=([^>]+)>/g, '<br><img src="$1" style="max-width: 100%; border-radius: 4px; margin: 5px 0;"><br>');
-        
         return processed;
     }
 
-    // === CONDITIONS & COMMANDS ===
     updateConditionParams() {
         this.renderParamInputs(this.els.conditionParams, this.getConditionParams(this.els.conditionType.value));
     }
@@ -1381,7 +1354,6 @@ class DialogueEditor {
         if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); this.renderNodes(); this.syncCodeView(); }
     }
 
-    // === QUESTS ===
     addQuest() {
         const id = `Quest_${Date.now()}`;
         this.quests.set(id, {
@@ -1597,14 +1569,23 @@ class DialogueEditor {
 
     processQuestDescription(desc) {
         if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
-        const imageMatch = desc.match(/<image=([^>]+)>/);
+
+        // применяем ту же логику обработки тегов, что и в диалогах
+        let processed = desc.replace(/\\n/g, '<br>');
+        processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
+        processed = processed.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
+
+        // извлекаем изображения
+        const imageMatches = [...processed.matchAll(/<image=([^>]+)>/g)];
         let imageHtml = '';
-        let cleanDesc = desc;
-        if (imageMatch) {
-            imageHtml = `<div class="quest-preview-image"><img src="${imageMatch[1]}" alt="Quest" onerror="this.style.display='none'"></div>`;
-            cleanDesc = desc.replace(/<image=[^>]+>/, '');
+        if (imageMatches.length > 0) {
+            imageHtml = imageMatches.map(match =>
+                `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
+            ).join('');
+            processed = processed.replace(/<image=[^>]+>/g, '');
         }
-        return `<div class="quest-preview-description">${this.escapeHtml(cleanDesc).replace(/\\n/g, '<br>')}</div>${imageHtml}`;
+
+        return `<div class="quest-preview-description">${processed}</div>${imageHtml}`;
     }
 
     previewSelectQuest(id) {
@@ -1613,8 +1594,6 @@ class DialogueEditor {
         this.els.questPreviewContent.innerHTML = this.generateQuestPreview();
     }
 
-    // === EXPORT / IMPORT / CFG GENERATION ===
-    
     generateCfgFromData() {
         let cfg = '';
         this.nodes.forEach(node => {
@@ -1669,9 +1648,14 @@ class DialogueEditor {
         const reader = new FileReader();
         reader.onload = (ev) => {
             const content = ev.target.result;
-            // для квестов можно хранить отдельно или просто парсить
+            // сохраняем исходный код квеста во вкладку "код"
+            this.cfgFiles[file.name] = content;
+            this.currentCfgFile = file.name;
+            this.renderCodeTabs();
+            this.showCodeFile(file.name);
+            
             this.parseQuestCfg(content);
-            alert(`Quests from ${file.name} imported successfully`);
+            this.switchTab('tabField');
         };
         reader.readAsText(file);
         e.target.value = '';
@@ -1691,9 +1675,6 @@ class DialogueEditor {
             const nodeId = firstLine.slice(1, -1).trim();
             if (!nodeId) return;
             
-            // если узел уже есть и мы не очищаем, пропускаем или обновляем? 
-            // для простоты: если keepExisting, то обновляем только если нет, или перезаписываем?
-            // сделаем перезапись для надежности при импорте
             if (this.nodes.has(nodeId) && !keepExisting) return; 
 
             const node = {
@@ -1768,7 +1749,6 @@ class DialogueEditor {
     }
 
     parseQuestCfg(content) {
-        // логика парсинга квестов
         const lines = content.split('\n');
         let i = 0;
         while (i < lines.length) {
@@ -1927,6 +1907,13 @@ class DialogueEditor {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
+    }
+
+    syncCodeView() {
+        if (this.currentCfgFile) {
+            this.cfgFiles[this.currentCfgFile] = this.generateCfgFromData();
+            this.showCodeFile(this.currentCfgFile);
+        }
     }
 }
 
