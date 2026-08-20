@@ -1,15 +1,10 @@
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.1",
-        appSubtitle: "Редактор диалогов и квестов · by OdinSons, Enotin",
+        appSubtitle: "Редактор диалогов и квестов · by OdinSons&Enotin",
         searchPlaceholder: "Поиск...",
         importDialogue: "Импорт диалога",
         importQuest: "Импорт квеста",
-        importDialogue: "Импорт диалога",
-        importQuest: "Импорт квеста",
-        quests: "Квесты",
-        export: "Экспорт",
-        validate: "Проверить",
         quests: "Квесты",
         export: "Экспорт",
         validate: "Проверить",
@@ -56,7 +51,6 @@ const translations = {
         rewardModalTitle: "Добавить награду",
         reqModalTitle: "Добавить требование",
         questPreviewTitle: "Предпросмотр квеста",
-        previewQuestBtn: "Предпросмотр квеста",
         save: "Сохранить",
         noQuestSelected: "Выберите квест для редактирования",
         basic: "Основное",
@@ -74,19 +68,15 @@ const translations = {
         noRewards: "Нет наград",
         noReqs: "Нет требований",
         noDesc: "Нет описания",
-        back: "Назад"
+        back: "Назад",
+        previewQuestBtn: "Предпросмотр квеста"
     },
     en: {
-        appTitle: "Skald's Forge v2.1",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons, Enotin",
+        appTitle: "Skald's Forge v2.1-en",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons&Enotin",
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
         importQuest: "Import Quest",
-        importDialogue: "Import Dialogue",
-        importQuest: "Import Quest",
-        quests: "Quests",
-        export: "Export",
-        validate: "Validate",
         quests: "Quests",
         export: "Export",
         validate: "Validate",
@@ -133,7 +123,6 @@ const translations = {
         rewardModalTitle: "Add Reward",
         reqModalTitle: "Add Requirement",
         questPreviewTitle: "Quest Preview",
-        previewQuestBtn: "Preview Quest", 
         save: "Save",
         noQuestSelected: "Select a quest to edit",
         basic: "Basic",
@@ -151,7 +140,8 @@ const translations = {
         noRewards: "No rewards",
         noReqs: "No requirements",
         noDesc: "No description",
-        back: "Back"
+        back: "Back",
+        previewQuestBtn: "Preview Quest"
     }
 };
 
@@ -175,11 +165,11 @@ class DialogueEditor {
         this.drawingFromOption = null;
         this.drawingTempPath = null;
 
-        this.cfgFiles = {}; 
+        this.cfgFiles = {};
         this.currentCfgFile = null;
 
         this.lang = localStorage.getItem('skald_lang') || 'ru';
-        
+
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
@@ -304,20 +294,19 @@ class DialogueEditor {
         const t = translations[this.lang];
         if (!t) return;
 
-        for (const [key, value] of Object.entries(t)) {
-            if (this.els[key]) {
-                if (this.els[key].tagName === 'INPUT' || this.els[key].tagName === 'TEXTAREA') {
-                    if (key.includes('Placeholder')) this.els[key].placeholder = value;
-                } else if (this.els[key].tagName === 'BUTTON') {
-                    this.els[key].textContent = value;
-                } else {
-                    this.els[key].textContent = value;
-                }
-            }
-        }
-        
         this.els.appTitle.textContent = t.appTitle;
         this.els.appSubtitle.textContent = t.appSubtitle;
+        this.els.searchInput.placeholder = t.searchPlaceholder;
+        this.els.importDialogueBtn.textContent = t.importDialogue;
+        this.els.importQuestBtn.textContent = t.importQuest;
+        this.els.questsBtn.textContent = t.quests;
+        this.els.exportBtn.textContent = t.export;
+        this.els.validateBtn.textContent = t.validate;
+        this.els.addNodeBtn.textContent = t.addNode;
+        this.els.addOptionBtn.textContent = t.addOption;
+        this.els.deleteBtn.textContent = t.delete;
+        this.els.fitToScreenBtn.textContent = t.fitToScreen;
+        this.els.loadSampleBtn.textContent = t.loadSample;
         this.els.hintText.textContent = t.hintText;
         this.els.paletteTitle.textContent = t.paletteTitle;
         this.els.propNodeTitle.textContent = t.propNodeTitle;
@@ -352,14 +341,7 @@ class DialogueEditor {
         this.els.rewardModalTitle.textContent = t.rewardModalTitle;
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
-        this.els.importDialogueBtn.textContent = t.importDialogue;
-        this.els.importQuestBtn.textContent = t.importQuest;
-        this.els.questsBtn.textContent = t.quests;
-        this.els.exportBtn.textContent = t.export;
-        this.els.validateBtn.textContent = t.validate;
 
-        document.documentElement.lang = this.lang;
-        
         const legendItems = document.querySelectorAll('.legend-item');
         if (legendItems.length >= 4) {
             legendItems[0].lastChild.textContent = ' ' + t.legendTransition;
@@ -408,8 +390,7 @@ class DialogueEditor {
         if (!this.currentCfgFile) return;
         const content = this.els.codeEditor.value;
         this.cfgFiles[this.currentCfgFile] = content;
-        
-        // эвристика: если файл содержит ключевые слова квестов, парсим как квест, иначе как диалог
+
         const isQuest = /Type:\s*(Kill|Collect|Harvest|Craft|Talk|Build|Move)/i.test(content);
 
         if (isQuest) {
@@ -767,9 +748,9 @@ class DialogueEditor {
 
         const onMouseDown = (e) => {
             if (e.target.closest('[data-draw-handle]') || e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            
+
             this.selectNode(node.id);
-            
+
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
@@ -917,8 +898,8 @@ class DialogueEditor {
     }
 
     renderConnections() {
-        // динамическое расширение холста, чтобы стрелки не обрезались
-       svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
+        const svg = this.els.connectionLayer;
+        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
 
         this.nodes.forEach(node => {
             const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
@@ -1048,8 +1029,8 @@ class DialogueEditor {
             const midY = sy + vertDir * loopOffset;
 
             return `M ${sx} ${sy} ` +
-                   `C ${sx + loopOffset} ${sy}, ${sx + loopOffset} ${midY}, ${(sx + tx) / 2} ${midY} ` +
-                   `S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
+                `C ${sx + loopOffset} ${sy}, ${sx + loopOffset} ${midY}, ${(sx + tx) / 2} ${midY} ` +
+                `S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
         }
     }
 
@@ -1426,7 +1407,7 @@ class DialogueEditor {
                     <div class="form-group">
                         <label>Type:</label>
                         <select class="form-control quest-type-input">
-                            ${['Kill','Collect','Harvest','Craft','Talk','Build','Move'].map(tp => `<option value="${tp}" ${quest.type === tp ? 'selected' : ''}>${tp}</option>`).join('')}
+                            ${['Kill', 'Collect', 'Harvest', 'Craft', 'Talk', 'Build', 'Move'].map(tp => `<option value="${tp}" ${quest.type === tp ? 'selected' : ''}>${tp}</option>`).join('')}
                         </select>
                     </div>
                     <div class="form-group"><label>Name:</label><input type="text" class="form-control quest-name-input" value="${this.escapeHtml(quest.name)}"></div>
@@ -1454,7 +1435,7 @@ class DialogueEditor {
                     <div class="form-group"><label>${t.timeLimit}</label><input type="number" class="form-control quest-tl-input" value="${quest.timeLimit}"></div>
                 </div>
                 <button class="quest-preview-btn" data-action="show-quest-preview">${t.previewQuestBtn}</button>
-                </div>
+            </div>
         `;
 
         this.bindQuestFormEvents(quest);
@@ -1570,32 +1551,32 @@ class DialogueEditor {
         `;
     }
 
-processQuestDescription(desc) {
-    if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
+    processQuestDescription(desc) {
+        if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
 
-    // сначала извлекаем все изображения
-    const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
-    let imageHtml = '';
-    
-    if (imageMatches.length > 0) {
-        imageHtml = imageMatches.map(match =>
-            `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
-        ).join('');
+        // сначала извлекаем все изображения
+        const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
+        let imageHtml = '';
+
+        if (imageMatches.length > 0) {
+            imageHtml = imageMatches.map(match =>
+                `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
+            ).join('');
+        }
+
+        // удаляем теги изображений из текста
+        let cleanDesc = desc.replace(/<image=[^>]+>/g, '');
+
+        // экранируем HTML
+        cleanDesc = this.escapeHtml(cleanDesc);
+
+        // применяем теги форматирования
+        cleanDesc = cleanDesc.replace(/\\n/g, '<br>');
+        cleanDesc = cleanDesc.replace(/&lt;color=([^&]+)&gt;([^&]*)&lt;\/color&gt;/g, '<span style="color: $1">$2</span>');
+        cleanDesc = cleanDesc.replace(/&lt;size=(\d+)&gt;([^&]*)&lt;\/size&gt;/g, '<span style="font-size: $1px">$2</span>');
+
+        return `<div class="quest-preview-description">${cleanDesc}</div>${imageHtml}`;
     }
-    
-    // удаляем теги изображений из текста
-    let cleanDesc = desc.replace(/<image=[^>]+>/g, '');
-    
-    // экранируем HTML
-    cleanDesc = this.escapeHtml(cleanDesc);
-    
-    // применяем теги форматирования
-    cleanDesc = cleanDesc.replace(/\\n/g, '<br>');
-    cleanDesc = cleanDesc.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
-    cleanDesc = cleanDesc.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
-
-    return `<div class="quest-preview-description">${cleanDesc}</div>${imageHtml}`;
-}
 
     previewSelectQuest(id) {
         this.selectedQuest = id;
@@ -1657,12 +1638,11 @@ processQuestDescription(desc) {
         const reader = new FileReader();
         reader.onload = (ev) => {
             const content = ev.target.result;
-            // сохраняем исходный код квеста во вкладку "код"
             this.cfgFiles[file.name] = content;
             this.currentCfgFile = file.name;
             this.renderCodeTabs();
             this.showCodeFile(file.name);
-            
+
             this.parseQuestCfg(content);
             this.switchTab('tabField');
         };
@@ -1673,18 +1653,18 @@ processQuestDescription(desc) {
     parseDialogueCfg(content, keepExisting = false) {
         if (!keepExisting) this.nodes.clear();
         const blocks = content.split(/\n(?=\[)/);
-        
+
         blocks.forEach(block => {
             const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
             if (lines.length === 0) return;
-            
+
             const firstLine = lines[0];
             if (!firstLine.startsWith('[') || !firstLine.endsWith(']')) return;
-            
+
             const nodeId = firstLine.slice(1, -1).trim();
             if (!nodeId) return;
-            
-            if (this.nodes.has(nodeId) && !keepExisting) return; 
+
+            if (this.nodes.has(nodeId) && !keepExisting) return;
 
             const node = {
                 id: nodeId,
@@ -1694,20 +1674,20 @@ processQuestDescription(desc) {
                 y: 100 + Math.floor(this.nodes.size / 5) * 300,
                 collapsed: false
             };
-            
+
             if (lines.length > 1 && !lines[1].startsWith('Text:')) {
                 node.text = lines[1];
             }
-            
+
             for (let i = 2; i < lines.length; i++) {
                 if (lines[i].startsWith('Text:')) {
                     this.parseOptionLine(node, lines[i]);
                 }
             }
-            
+
             this.nodes.set(nodeId, node);
         });
-        
+
         this.renderNodes();
         this.updateTransitionsList();
         this.renderQuestPalette();
@@ -1829,9 +1809,9 @@ processQuestDescription(desc) {
         this.nodes.forEach((node, id) => {
             if (!node.text || !node.text.trim()) errors.push(`"${id}": no NPC text`);
             node.options.forEach((opt, i) => {
-                if (!opt.text || !opt.text.trim()) errors.push(`"${id}" #${i+1}: no option text`);
-                if (opt.transition && !this.nodes.has(opt.transition)) errors.push(`"${id}" #${i+1}: invalid transition "${opt.transition}"`);
-                if (opt.questLink && !this.quests.has(opt.questLink)) errors.push(`"${id}" #${i+1}: invalid quest link "${opt.questLink}"`);
+                if (!opt.text || !opt.text.trim()) errors.push(`"${id}" #${i + 1}: no option text`);
+                if (opt.transition && !this.nodes.has(opt.transition)) errors.push(`"${id}" #${i + 1}: invalid transition "${opt.transition}"`);
+                if (opt.questLink && !this.quests.has(opt.questLink)) errors.push(`"${id}" #${i + 1}: invalid quest link "${opt.questLink}"`);
             });
         });
         if (errors.length === 0) alert('No errors found!');
