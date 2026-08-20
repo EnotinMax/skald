@@ -1,8 +1,5 @@
-// ============================================
 // КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.1
-// ============================================
 
-// ITEM SELECTOR
 class ItemSelector {
     constructor(container, initialValue = '') {
         this.container = typeof container === 'string' ? document.getElementById(container) : container;
@@ -196,7 +193,7 @@ const translations = {
         previewQuestBtn: "Предпросмотр квеста"
     },
     en: {
-        appTitle: "Skald's Forge v2.1-en",
+        appTitle: "Skald's Forge v2.1",
         appSubtitle: "Dialogue & Quest Editor · by OdinSons&Enotin",
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
@@ -297,6 +294,8 @@ class DialogueEditor {
         this.itemSelectorData = [];
         this.loadItemDataForPreview();
 
+        this.optionIconSelector = null;
+
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
@@ -322,7 +321,7 @@ class DialogueEditor {
             'propNodeTitle', 'labelNodeId', 'nodeId', 'labelNodeText', 'nodeText',
             'propOptionsTitle', 'nodeOptionsList', 'addNodeOptionBtn',
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
-            'labelQuestLink', 'optionQuestLink', 'labelIcon', 'labelColor', 'optionColor',
+            'labelQuestLink', 'optionQuestLink', 'optionIconSelector', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
             'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
@@ -365,7 +364,6 @@ class DialogueEditor {
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
         this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
         this.els.optionQuestLink.addEventListener('change', (e) => this.updateOptionProperty('questLink', e.target.value));
-        this.els.optionIcon.addEventListener('input', (e) => this.updateOptionProperty('icon', e.target.value));
         this.els.optionColor.addEventListener('input', (e) => this.updateOptionProperty('color', e.target.value));
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
@@ -650,7 +648,7 @@ class DialogueEditor {
         }
     }
 
-        selectOption(optionId) {
+    selectOption(optionId) {
         this.selectedOption = optionId;
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
@@ -666,22 +664,22 @@ class DialogueEditor {
         this.els.optionQuestLink.value = option.questLink || '';
         this.els.optionColor.value = option.color || '#ffffff';
 
-        setTimeout(() => {
-            const container = document.getElementById('optionIconSelector');
-            if (container && !container.itemSelectorInstance) {
-                container.itemSelectorInstance = new ItemSelector(container, option.icon || '');
-                container.itemSelectorInstance.input.addEventListener('change', (e) => {
-                    this.updateOptionProperty('icon', e.target.value.trim());
-                });
-            } else if (container && container.itemSelectorInstance) {
-                container.itemSelectorInstance.setValue(option.icon || '');
-            }
-        }, 0);
-
         this.renderConditionsList(option.conditions);
         this.renderCommandsList(option.commands);
         this.renderNodeOptionsList();
         this.updateQuestLinksList();
+
+        // Создаем ItemSelector для иконки
+        if (this.optionIconSelector) {
+            this.optionIconSelector.container.innerHTML = '';
+        }
+        this.optionIconSelector = new ItemSelector(this.els.optionIconSelector, option.icon || '');
+        this.optionIconSelector.input.addEventListener('change', (e) => {
+            option.icon = e.target.value.trim();
+            this.renderNodes();
+            this.renderNodeOptionsList();
+            this.syncCodeView();
+        });
     }
 
     addOptionToSelected() {
@@ -851,11 +849,12 @@ class DialogueEditor {
                 <div class="node-text">${previewText}</div>
                 ${node.options.map((opt) => {
                     const handleClass = this.getOptionHandleClass(opt);
+                    const iconHtml = opt.icon ? this.getIconHtml(opt.icon, 16) : '';
                     return `
                     <div class="option ${opt.id === this.selectedOption ? 'selected' : ''} ${this.getOptionClass(opt)}" 
                          data-action="select-option" 
                          data-option-id="${opt.id}">
-                        ${opt.icon ? `<div class="option-icon" title="${this.escapeHtml(opt.icon)}"></div>` : ''}
+                        ${iconHtml}
                         <span class="option-text">${this.escapeHtml(opt.text.length > 25 ? opt.text.substring(0, 25) + '...' : opt.text)}</span>
                         <div class="option-draw-handle ${handleClass}" 
                              data-draw-handle 
@@ -870,6 +869,12 @@ class DialogueEditor {
         this.setupNodeDrag(div, node);
         this.setupDrawHandles(div, node);
         return div;
+    }
+
+    getIconHtml(iconId, size = 16) {
+        const itemData = this.itemSelectorData.find(i => i.id === iconId);
+        const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        return `<img src="${iconUrl}" class="option-icon" style="width: ${size}px; height: ${size}px;" alt="${iconId}" title="${iconId}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">`;
     }
 
     getOptionClass(opt) {
@@ -1336,9 +1341,11 @@ class DialogueEditor {
                 onClickAttr = '';
             }
 
+            const iconHtml = option.icon ? this.getIconHtml(option.icon, 18) : '';
+
             html += `
                 <div class="preview-option" ${onClickAttr}>
-                    ${option.icon ? `<div class="preview-option-icon" title="${this.escapeHtml(option.icon)}"></div>` : ''}
+                    ${iconHtml}
                     <span class="preview-option-number">${index + 1})</span>
                     <span class="preview-option-text" ${colorStyle}>${processedOptionText}</span>
                     ${transitionText ? `<span class="preview-option-transition">${transitionText}</span>` : ''}
@@ -2059,7 +2066,7 @@ class DialogueEditor {
         });
     }
 
-    loadSampleData() {
+loadSampleData() {
         if (this.nodes.size > 0 && !confirm('Replace current data with sample?')) return;
         this.nodes.clear();
         this.quests.clear();
