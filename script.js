@@ -322,7 +322,7 @@ class DialogueEditor {
             'propNodeTitle', 'labelNodeId', 'nodeId', 'labelNodeText', 'nodeText',
             'propOptionsTitle', 'nodeOptionsList', 'addNodeOptionBtn',
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
-            'labelQuestLink', 'optionQuestLink', 'labelIcon', 'optionIcon', 'labelColor', 'optionColor',
+            'labelQuestLink', 'optionQuestLink', 'labelIcon', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
             'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
@@ -650,7 +650,7 @@ class DialogueEditor {
         }
     }
 
-    selectOption(optionId) {
+        selectOption(optionId) {
         this.selectedOption = optionId;
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
@@ -664,8 +664,19 @@ class DialogueEditor {
         this.els.optionText.value = option.text || '';
         this.els.optionTransition.value = option.transition || '';
         this.els.optionQuestLink.value = option.questLink || '';
-        this.els.optionIcon.value = option.icon || '';
         this.els.optionColor.value = option.color || '#ffffff';
+
+        setTimeout(() => {
+            const container = document.getElementById('optionIconSelector');
+            if (container && !container.itemSelectorInstance) {
+                container.itemSelectorInstance = new ItemSelector(container, option.icon || '');
+                container.itemSelectorInstance.input.addEventListener('change', (e) => {
+                    this.updateOptionProperty('icon', e.target.value.trim());
+                });
+            } else if (container && container.itemSelectorInstance) {
+                container.itemSelectorInstance.setValue(option.icon || '');
+            }
+        }, 0);
 
         this.renderConditionsList(option.conditions);
         this.renderCommandsList(option.commands);
