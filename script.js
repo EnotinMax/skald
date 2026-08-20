@@ -266,21 +266,12 @@ const translations = {
 
 class DialogueEditor {
     constructor() {
-        this.itemSelectorData = [];
-        this.loadItemDataForPreview();
         this.nodes = new Map();
         this.quests = new Map();
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
-
-        async loadItemDataForPreview() {
-        try {
-            const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
-            if (response.ok) this.itemSelectorData = await response.json();
-        } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
-    }
-        
+                
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.isCanvasDragging = false;
@@ -297,7 +288,10 @@ class DialogueEditor {
         this.currentCfgFile = null;
 
         this.lang = localStorage.getItem('skald_lang') || 'ru';
-
+        
+        this.itemSelectorData = [];
+        this.loadItemDataForPreview();
+        
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
@@ -305,6 +299,13 @@ class DialogueEditor {
         this.render();
     }
 
+async loadItemDataForPreview() {
+        try {
+            const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
+            if (response.ok) this.itemSelectorData = await response.json();
+        } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
+    }
+    
     cacheElements() {
         const ids = [
             'appTitle', 'appSubtitle', 'searchInput', 'importDialogueBtn', 'importQuestBtn',
@@ -1497,7 +1498,7 @@ class DialogueEditor {
         `).join('');
     }
 
-    renderQuestEditor() {
+       renderQuestEditor() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) {
             this.els.questEditor.innerHTML = `<div class="no-quest-selected"><p>${translations[this.lang].noQuestSelected}</p></div>`;
@@ -1517,9 +1518,19 @@ class DialogueEditor {
         `).join('');
 
         const rewardsHtml = quest.rewards.map((r, i) => `
-            <div class="quest-reward-item">
-                <span>${r.type}: ${this.escapeHtml(r.prefab)} x${r.amount}</span>
-                <button data-action="delete-quest-reward" data-index="${i}">×</button>
+            <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                    <select class="form-control" style="width: 100%;" data-reward-type="${i}">
+                        <option value="Item" ${r.type === 'Item' ? 'selected' : ''}>Item</option>
+                        <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
+                        <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
+                    </select>
+                    <input type="text" class="form-control" style="width: 100%;" value="${this.escapeHtml(r.prefab)}" data-reward-prefab="${i}" placeholder="Prefab">
+                </div>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
+                </div>
+                <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
             </div>
         `).join('');
 
@@ -1548,17 +1559,17 @@ class DialogueEditor {
                 <div class="quest-form-section">
                     <h4>${t.targets}</h4>
                     <div class="quest-targets">${targetsHtml || `<p>${t.noTargets}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-target-modal">+ Target</button>
+                    <button class="btn-small" data-action="show-quest-target-modal" style="margin-top: 8px;">+ Target</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.rewards}</h4>
                     <div class="quest-rewards">${rewardsHtml || `<p>${t.noRewards}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-reward-modal">+ Reward</button>
+                    <button class="btn-small" data-action="show-quest-reward-modal" style="margin-top: 8px;">+ Reward</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.requirements}</h4>
                     <div class="quest-requirements">${reqsHtml || `<p>${t.noReqs}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-req-modal">+ Requirement</button>
+                    <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ Requirement</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.time}</h4>
@@ -1570,14 +1581,21 @@ class DialogueEditor {
         `;
 
         this.bindQuestFormEvents(quest);
-            this.els.questEditor.querySelectorAll('.item-selector').forEach(container => {      // инициализация ItemSelector для всех целей
-            const index = parseInt(container.dataset.index);
-            const selector = new ItemSelector(container, container.dataset.value);
-            
-            selector.input.addEventListener('change', (e) => {                                  // при изменении значения сразу обновляем объект квеста
-                quest.targets[index].prefab = e.target.value.trim();
+
+        // === ИНИЦИАЛИЗАЦИЯ ITEM SELECTOR ===
+        // делаем это после того, как HTML уже вставлен в DOM
+        setTimeout(() => {
+            this.els.questEditor.querySelectorAll('.item-selector').forEach(container => {
+                const index = parseInt(container.dataset.index);
+                const selector = new ItemSelector(container, container.dataset.value);
+                
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.targets[index]) {
+                        quest.targets[index].prefab = e.target.value.trim();
+                    }
+                });
             });
-        });
+        }, 0);
     }
 
     bindQuestFormEvents(quest) {
