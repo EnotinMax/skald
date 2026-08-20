@@ -816,7 +816,7 @@ class DialogueEditor {
 
     cacheElements() {
         const ids = [
-            'appTitle', 'appSubtitle', 'searchInput', 'importDialogueBtn', 'importQuestBtn',
+           'appTitle', 'appSubtitle', 'searchInput', 'importDialogueBtn', 'importQuestBtn',
             'questsBtn', 'exportBtn', 'validateBtn', 'previewBtn', 'addNodeBtn', 'addOptionBtn',
             'deleteBtn', 'zoomInBtn', 'zoomOutBtn', 'fitToScreenBtn', 'loadSampleBtn',
             'hintText', 'paletteTitle', 'questPalette', 'questPaletteList', 'toggleQuestPalette',
@@ -836,7 +836,8 @@ class DialogueEditor {
             'questRewardModal', 'rewardType', 'rewardPrefab', 'rewardAmount', 'saveQuestRewardBtn', 'rewardModalTitle',
             'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn', 'reqModalTitle',
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
-            'dialogueFileInput', 'questFileInput'
+            'dialogueFileInput', 'questFileInput',
+            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
@@ -978,18 +979,15 @@ class DialogueEditor {
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
 
-        const legendItems = document.querySelectorAll('.legend-item');
-        if (legendItems.length >= 4) {
-            legendItems[0].lastChild.textContent = ' ' + t.legendTransition;
-            legendItems[1].lastChild.textContent = ' ' + t.legendCondition;
-            legendItems[2].lastChild.textContent = ' ' + t.legendCommand;
-            legendItems[3].lastChild.textContent = ' ' + t.legendEnd;
-        }
-        
-            document.querySelectorAll('.lang-btn').forEach(btn => {
+        if (this.els.legendTransition) this.els.legendTransition.textContent = t.legendTransition;
+        if (this.els.legendCondition) this.els.legendCondition.textContent = t.legendCondition;
+        if (this.els.legendCommand) this.els.legendCommand.textContent = t.legendCommand;
+        if (this.els.legendEnd) this.els.legendEnd.textContent = t.legendEnd;
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === this.lang);
         });
-        
+
         document.documentElement.lang = this.lang;
     }
 
