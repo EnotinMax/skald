@@ -56,6 +56,7 @@ const translations = {
         rewardModalTitle: "Добавить награду",
         reqModalTitle: "Добавить требование",
         questPreviewTitle: "Предпросмотр квеста",
+        previewQuestBtn: "Предпросмотр квеста",
         save: "Сохранить",
         noQuestSelected: "Выберите квест для редактирования",
         basic: "Основное",
@@ -132,6 +133,7 @@ const translations = {
         rewardModalTitle: "Add Reward",
         reqModalTitle: "Add Requirement",
         questPreviewTitle: "Quest Preview",
+        previewQuestBtn: "Preview Quest", 
         save: "Save",
         noQuestSelected: "Select a quest to edit",
         basic: "Basic",
@@ -350,6 +352,13 @@ class DialogueEditor {
         this.els.rewardModalTitle.textContent = t.rewardModalTitle;
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
+        this.els.importDialogueBtn.textContent = t.importDialogue;
+        this.els.importQuestBtn.textContent = t.importQuest;
+        this.els.questsBtn.textContent = t.quests;
+        this.els.exportBtn.textContent = t.export;
+        this.els.validateBtn.textContent = t.validate;
+
+        document.documentElement.lang = this.lang;
         
         const legendItems = document.querySelectorAll('.legend-item');
         if (legendItems.length >= 4) {
@@ -1061,7 +1070,7 @@ class DialogueEditor {
         g.appendChild(rect);
 
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x + 40);
+        text.setAttribute('x', x + 20);
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('fill', '#bdc3c7');
@@ -1444,8 +1453,8 @@ class DialogueEditor {
                     <div class="form-group"><label>${t.cooldown}</label><input type="number" class="form-control quest-cd-input" value="${quest.cooldown}"></div>
                     <div class="form-group"><label>${t.timeLimit}</label><input type="number" class="form-control quest-tl-input" value="${quest.timeLimit}"></div>
                 </div>
-                <button class="quest-preview-btn" data-action="show-quest-preview">Preview Quest</button>
-            </div>
+                <button class="quest-preview-btn" data-action="show-quest-preview">${t.previewQuestBtn}</button>
+                </div>
         `;
 
         this.bindQuestFormEvents(quest);
