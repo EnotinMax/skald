@@ -122,7 +122,7 @@ class ItemSelector {
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.1",
-        appSubtitle: "Редактор диалогов и квестов · by OdinSons&Enotin",
+        appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
         searchPlaceholder: "Поиск...",
         importDialogue: "Импорт диалога",
         importQuest: "Импорт квеста",
