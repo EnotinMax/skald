@@ -1,1788 +1,683 @@
 [
-  {
-    "id": "AxeBlackMetal",
-    "name": "Black metal axe",
-    "nameRu": "Чернометаллический топор",
-    "category": "tools",
-    "icon": "AxeBlackMetal.png"
-  },
-  {
-    "id": "AxeBronze",
-    "name": "Bronze axe",
-    "nameRu": "Бронзовый топор",
-    "category": "tools",
-    "icon": "AxeBronze.png"
-  },
-  {
-    "id": "AxeFlint",
-    "name": "Flint axe",
-    "nameRu": "Кремневый топор",
-    "category": "tools",
-    "icon": "AxeFlint.png"
-  },
-  {
-    "id": "AxeIron",
-    "name": "Iron axe",
-    "nameRu": "Железный топор",
-    "category": "tools",
-    "icon": "AxeIron.png"
-  },
-  {
-    "id": "AxeStone",
-    "name": "Stone axe",
-    "nameRu": "Каменный топор",
-    "category": "tools",
-    "icon": "AxeStone.png"
-  },
-  {
-    "id": "PickaxeAntler",
-    "name": "Antler pickaxe",
-    "nameRu": "Оленья кирка",
-    "category": "tools",
-    "icon": "PickaxeAntler.png"
-  },
-  {
-    "id": "PickaxeBronze",
-    "name": "Bronze pickaxe",
-    "nameRu": "Бронзовая кирка",
-    "category": "tools",
-    "icon": "PickaxeBronze.png"
-  },
-  {
-    "id": "PickaxeIron",
-    "name": "Iron pickaxe",
-    "nameRu": "Железная кирка",
-    "category": "tools",
-    "icon": "PickaxeIron.png"
-  },
-  {
-    "id": "PickaxeBlackMetal",
-    "name": "Black metal pickaxe",
-    "nameRu": "Чернометаллическая кирка",
-    "category": "tools",
-    "icon": "PickaxeBlackMetal.png"
-  },
-  {
-    "id": "Hammer",
-    "name": "Hammer",
-    "nameRu": "Молот",
-    "category": "tools",
-    "icon": "Hammer.png"
-  },
-  {
-    "id": "Hoe",
-    "name": "Hoe",
-    "nameRu": "Мотыга",
-    "category": "tools",
-    "icon": "Hoe.png"
-  },
-  {
-    "id": "Cultivator",
-    "name": "Cultivator",
-    "nameRu": "Культиватор",
-    "category": "tools",
-    "icon": "Cultivator.png"
-  },
-  {
-    "id": "FishingRod",
-    "name": "Fishing rod",
-    "nameRu": "Удочка",
-    "category": "tools",
-    "icon": "FishingRod.png"
-  },
-  {
-    "id": "SwordBronze",
-    "name": "Bronze sword",
-    "nameRu": "Бронзовый меч",
-    "category": "weapons",
-    "icon": "SwordBronze.png"
-  },
-  {
-    "id": "SwordIron",
-    "name": "Iron sword",
-    "nameRu": "Железный меч",
-    "category": "weapons",
-    "icon": "SwordIron.png"
-  },
-  {
-    "id": "SwordSilver",
-    "name": "Silver sword",
-    "nameRu": "Серебряный меч",
-    "category": "weapons",
-    "icon": "SwordSilver.png"
-  },
-  {
-    "id": "SwordBlackmetal",
-    "name": "Black metal sword",
-    "nameRu": "Чернометаллический меч",
-    "nameRu": "Чернометаллический меч",
-    "category": "weapons",
-    "icon": "SwordBlackmetal.png"
-  },
-  {
-    "id": "MaceBronze",
-    "name": "Bronze mace",
-    "nameRu": "Бронзовая булава",
-    "category": "weapons",
-    "icon": "MaceBronze.png"
-  },
-  {
-    "id": "MaceIron",
-    "name": "Iron mace",
-    "nameRu": "Железная булава",
-    "category": "weapons",
-    "icon": "MaceIron.png"
-  },
-  {
-    "id": "MaceSilver",
-    "name": "Frostner",
-    "nameRu": "Фростнер",
-    "category": "weapons",
-    "icon": "MaceSilver.png"
-  },
-  {
-    "id": "Club",
-    "name": "Club",
-    "nameRu": "Дубина",
-    "category": "weapons",
-    "icon": "Club.png"
-  },
-  {
-    "id": "KnifeFlint",
-    "name": "Flint knife",
-    "nameRu": "Кремневый нож",
-    "category": "weapons",
-    "icon": "KnifeFlint.png"
-  },
-  {
-    "id": "KnifeCopper",
-    "name": "Copper knife",
-    "nameRu": "Медный нож",
-    "category": "weapons",
-    "icon": "KnifeCopper.png"
-  },
-  {
-    "id": "KnifeBlackMetal",
-    "name": "Black metal knife",
-    "nameRu": "Чернометаллический нож",
-    "category": "weapons",
-    "icon": "KnifeBlackMetal.png"
-  },
-  {
-    "id": "KnifeSilver",
-    "name": "Silver knife",
-    "nameRu": "Серебряный нож",
-    "category": "weapons",
-    "icon": "KnifeSilver.png"
-  },
-  {
-    "id": "SpearFlint",
-    "name": "Flint spear",
-    "nameRu": "Кремневое копьё",
-    "category": "weapons",
-    "icon": "SpearFlint.png"
-  },
-  {
-    "id": "SpearBronze",
-    "name": "Bronze spear",
-    "nameRu": "Бронзовое копьё",
-    "category": "weapons",
-    "icon": "SpearBronze.png"
-  },
-  {
-    "id": "SpearElderbark",
-    "name": "Ancient bark spear",
-    "nameRu": "Копьё из древней коры",
-    "category": "weapons",
-    "icon": "SpearElderbark.png"
-  },
-  {
-    "id": "SpearWolfFang",
-    "name": "Fang spear",
-    "nameRu": "Копьё с клыком",
-    "category": "weapons",
-    "icon": "SpearWolfFang.png"
-  },
-  {
-    "id": "AtgeirBronze",
-    "name": "Bronze atgeir",
-    "nameRu": "Бронзовый атгейр",
-    "category": "weapons",
-    "icon": "AtgeirBronze.png"
-  },
-  {
-    "id": "AtgeirIron",
-    "name": "Iron atgeir",
-    "nameRu": "Железный атгейр",
-    "category": "weapons",
-    "icon": "AtgeirIron.png"
-  },
-  {
-    "id": "AtgeirBlackmetal",
-    "name": "Black metal atgeir",
-    "nameRu": "Чернометаллический атгейр",
-    "category": "weapons",
-    "icon": "AtgeirBlackmetal.png"
-  },
-  {
-    "id": "Battleaxe",
-    "name": "Battleaxe",
-    "nameRu": "Боевой топор",
-    "category": "weapons",
-    "icon": "Battleaxe.png"
-  },
-  {
-    "id": "BattleaxeCrystal",
-    "name": "Crystal battleaxe",
-    "nameRu": "Кристальный боевой топор",
-    "category": "weapons",
-    "icon": "BattleaxeCrystal.png"
-  },
-  {
-    "id": "Bow",
-    "name": "Crude bow",
-    "nameRu": "Простой лук",
-    "category": "weapons",
-    "icon": "Bow.png"
-  },
-  {
-    "id": "BowHuntsman",
-    "name": "Huntsman bow",
-    "nameRu": "Охотничий лук",
-    "category": "weapons",
-    "icon": "BowHuntsman.png"
-  },
-  {
-    "id": "BowFineWood",
-    "name": "Finewood bow",
-    "nameRu": "Лук из тонкого дерева",
-    "category": "weapons",
-    "icon": "BowFineWood.png"
-  },
-  {
-    "id": "BowDraugrFang",
-    "name": "Draugr fang",
-    "nameRu": "Клык драугра",
-    "category": "weapons",
-    "icon": "BowDraugrFang.png"
-  },
-  {
-    "id": "BowSpineSnap",
-    "name": "Spinesnap",
-    "nameRu": "Хребтолом",
-    "category": "weapons",
-    "icon": "BowSpineSnap.png"
-  },
-  {
-    "id": "ShieldWood",
-    "name": "Wood shield",
-    "nameRu": "Деревянный щит",
-    "category": "weapons",
-    "icon": "ShieldWood.png"
-  },
-  {
-    "id": "ShieldWoodTower",
-    "name": "Wood tower shield",
-    "nameRu": "Деревянный башенный щит",
-    "category": "weapons",
-    "icon": "ShieldWoodTower.png"
-  },
-  {
-    "id": "ShieldBronzeBuckler",
-    "name": "Bronze buckler",
-    "nameRu": "Бронзовый баклер",
-    "category": "weapons",
-    "icon": "ShieldBronzeBuckler.png"
-  },
-  {
-    "id": "ShieldBanded",
-    "name": "Banded shield",
-    "nameRu": "Усиленный щит",
-    "category": "weapons",
-    "icon": "ShieldBanded.png"
-  },
-  {
-    "id": "ShieldIronSquare",
-    "name": "Iron shield",
-    "nameRu": "Железный щит",
-    "category": "weapons",
-    "icon": "ShieldIronSquare.png"
-  },
-  {
-    "id": "ShieldIronTower",
-    "name": "Iron tower shield",
-    "nameRu": "Железный башенный щит",
-    "category": "weapons",
-    "icon": "ShieldIronTower.png"
-  },
-  {
-    "id": "ShieldSilver",
-    "name": "Silver shield",
-    "nameRu": "Серебряный щит",
-    "category": "weapons",
-    "icon": "ShieldSilver.png"
-  },
-  {
-    "id": "ShieldBlackmetal",
-    "name": "Black metal shield",
-    "nameRu": "Чернометаллический щит",
-    "category": "weapons",
-    "icon": "ShieldBlackmetal.png"
-  },
-  {
-    "id": "ShieldBlackmetalTower",
-    "name": "Black metal tower shield",
-    "nameRu": "Чернометаллический башенный щит",
-    "category": "weapons",
-    "icon": "ShieldBlackmetalTower.png"
-  },
-  {
-    "id": "SledgeStagbreaker",
-    "name": "Stagbreaker",
-    "nameRu": "Оленелом",
-    "category": "weapons",
-    "icon": "SledgeStagbreaker.png"
-  },
-  {
-    "id": "SledgeIron",
-    "name": "Iron sledge",
-    "nameRu": "Железная кувалда",
-    "category": "weapons",
-    "icon": "SledgeIron.png"
-  },
-  {
-    "id": "StaffFireball",
-    "name": "Staff of Embers",
-    "nameRu": "Посох углей",
-    "category": "weapons",
-    "icon": "StaffFireball.png"
-  },
-  {
-    "id": "StaffFrost",
-    "name": "Staff of Frost",
-    "nameRu": "Посох инея",
-    "category": "weapons",
-    "icon": "StaffFrost.png"
-  },
-  {
-    "id": "StaffGreenRoots",
-    "name": "Staff of the Wild",
-    "nameRu": "Посох дикой природы",
-    "category": "weapons",
-    "icon": "StaffGreenRoots.png"
-  },
-  {
-    "id": "StaffIceShards",
-    "name": "Staff of Ice",
-    "nameRu": "Посох льда",
-    "category": "weapons",
-    "icon": "StaffIceShards.png"
-  },
-  {
-    "id": "StaffLightning",
-    "name": "Dundr",
-    "nameRu": "Дундр",
-    "category": "weapons",
-    "icon": "StaffLightning.png"
-  },
-  {
-    "id": "StaffShield",
-    "name": "Staff of Protection",
-    "nameRu": "Посох защиты",
-    "category": "weapons",
-    "icon": "StaffShield.png"
-  },
-  {
-    "id": "ArmorLeatherChest",
-    "name": "Leather tunic",
-    "nameRu": "Кожаная туника",
-    "category": "armor",
-    "icon": "ArmorLeatherChest.png"
-  },
-  {
-    "id": "ArmorLeatherLegs",
-    "name": "Leather pants",
-    "nameRu": "Кожаные штаны",
-    "category": "armor",
-    "icon": "ArmorLeatherLegs.png"
-  },
-  {
-    "id": "ArmorBronzeChest",
-    "name": "Bronze plate cuirass",
-    "nameRu": "Бронзовый кирас",
-    "category": "armor",
-    "icon": "ArmorBronzeChest.png"
-  },
-  {
-    "id": "ArmorBronzeLegs",
-    "name": "Bronze plate leggings",
-    "nameRu": "Бронзовые поножи",
-    "category": "armor",
-    "icon": "ArmorBronzeLegs.png"
-  },
-  {
-    "id": "ArmorTrollLeatherChest",
-    "name": "Troll leather tunic",
-    "nameRu": "Троллья кожаная туника",
-    "category": "armor",
-    "icon": "ArmorTrollLeatherChest.png"
-  },
-  {
-    "id": "ArmorTrollLeatherLegs",
-    "name": "Troll leather pants",
-    "nameRu": "Тролльи кожаные штаны",
-    "category": "armor",
-    "icon": "ArmorTrollLeatherLegs.png"
-  },
-  {
-    "id": "ArmorIronChest",
-    "name": "Iron scale mail",
-    "nameRu": "Железная чешуйчатая броня",
-    "category": "armor",
-    "icon": "ArmorIronChest.png"
-  },
-  {
-    "id": "ArmorIronLegs",
-    "name": "Iron greaves",
-    "nameRu": "Железные поножи",
-    "category": "armor",
-    "icon": "ArmorIronLegs.png"
-  },
-  {
-    "id": "ArmorRootChest",
-    "name": "Root harnesk",
-    "nameRu": "Корневая броня",
-    "category": "armor",
-    "icon": "ArmorRootChest.png"
-  },
-  {
-    "id": "ArmorRootLegs",
-    "name": "Root leggings",
-    "nameRu": "Корневые поножи",
-    "category": "armor",
-    "icon": "ArmorRootLegs.png"
-  },
-  {
-    "id": "ArmorPaddedCuirass",
-    "name": "Padded cuirass",
-    "nameRu": "Стеганая кираса",
-    "category": "armor",
-    "icon": "ArmorPaddedCuirass.png"
-  },
-  {
-    "id": "ArmorPaddedGreaves",
-    "name": "Padded greaves",
-    "nameRu": "Стеганые поножи",
-    "category": "armor",
-    "icon": "ArmorPaddedGreaves.png"
-  },
-  {
-    "id": "ArmorWolfChest",
-    "name": "Wolf armor chest",
-    "nameRu": "Волчья броня (нагрудник)",
-    "category": "armor",
-    "icon": "ArmorWolfChest.png"
-  },
-  {
-    "id": "ArmorWolfLegs",
-    "name": "Wolf armor legs",
-    "nameRu": "Волчья броня (поножи)",
-    "category": "armor",
-    "icon": "ArmorWolfLegs.png"
-  },
-  {
-    "id": "ArmorFenringChest",
-    "name": "Fenris coat",
-    "nameRu": "Фенрисова накидка",
-    "category": "armor",
-    "icon": "ArmorFenringChest.png"
-  },
-  {
-    "id": "ArmorFenringLegs",
-    "name": "Fenris leggings",
-    "nameRu": "Фенрисовы поножи",
-    "category": "armor",
-    "icon": "ArmorFenringLegs.png"
-  },
-  {
-    "id": "ArmorCarapaceChest",
-    "name": "Carapace breastplate",
-    "nameRu": "Карапасный нагрудник",
-    "category": "armor",
-    "icon": "ArmorCarapaceChest.png"
-  },
-  {
-    "id": "ArmorCarapaceLegs",
-    "name": "Carapace greaves",
-    "nameRu": "Карапасные поножи",
-    "category": "armor",
-    "icon": "ArmorCarapaceLegs.png"
-  },
-  {
-    "id": "HelmetLeather",
-    "name": "Leather helmet",
-    "nameRu": "Кожаный шлем",
-    "category": "armor",
-    "icon": "HelmetLeather.png"
-  },
-  {
-    "id": "HelmetBronze",
-    "name": "Bronze helmet",
-    "nameRu": "Бронзовый шлем",
-    "category": "armor",
-    "icon": "HelmetBronze.png"
-  },
-  {
-    "id": "HelmetTrollLeather",
-    "name": "Troll leather helmet",
-    "nameRu": "Троллий кожаный шлем",
-    "category": "armor",
-    "icon": "HelmetTrollLeather.png"
-  },
-  {
-    "id": "HelmetIron",
-    "name": "Iron helmet",
-    "nameRu": "Железный шлем",
-    "category": "armor",
-    "icon": "HelmetIron.png"
-  },
-  {
-    "id": "HelmetDrake",
-    "name": "Drake helmet",
-    "nameRu": "Шлем из шкуры дрейка",
-    "category": "armor",
-    "icon": "HelmetDrake.png"
-  },
-  {
-    "id": "HelmetRoot",
-    "name": "Root mask",
-    "nameRu": "Корневая маска",
-    "category": "armor",
-    "icon": "HelmetRoot.png"
-  },
-  {
-    "id": "HelmetPadded",
-    "name": "Padded helmet",
-    "nameRu": "Стеганый шлем",
-    "category": "armor",
-    "icon": "HelmetPadded.png"
-  },
-  {
-    "id": "HelmetFenring",
-    "name": "Fenris hood",
-    "nameRu": "Фенрисов капюшон",
-    "category": "armor",
-    "icon": "HelmetFenring.png"
-  },
-  {
-    "id": "HelmetCarapace",
-    "name": "Carapace helmet",
-    "nameRu": "Карапасный шлем",
-    "category": "armor",
-    "icon": "HelmetCarapace.png"
-  },
-  {
-    "id": "HelmetDverger",
-    "name": "Dverger circlet",
-    "nameRu": "Двергский обруч",
-    "category": "armor",
-    "icon": "HelmetDverger.png"
-  },
-  {
-    "id": "HelmetMage",
-    "name": "Eitr-weave hood",
-    "nameRu": "Эйтровый капюшон",
-    "category": "armor",
-    "icon": "HelmetMage.png"
-  },
-  {
-    "id": "HelmetMage_Ashlands",
-    "name": "Hood of Embla",
-    "nameRu": "Капюшон Эмблы",
-    "category": "armor",
-    "icon": "HelmetMage_Ashlands.png"
-  },
-  {
-    "id": "ArmorMageChest",
-    "name": "Eitr-weave robe",
-    "nameRu": "Эйтровая мантия",
-    "category": "armor",
-    "icon": "ArmorMageChest.png"
-  },
-  {
-    "id": "ArmorMageChest_Ashlands",
-    "name": "Robes of Embla",
-    "nameRu": "Мантия Эмблы",
-    "category": "armor",
-    "icon": "ArmorMageChest_Ashlands.png"
-  },
-  {
-    "id": "ArmorMageLegs",
-    "name": "Eitr-weave trousers",
-    "nameRu": "Эйтровые штаны",
-    "category": "armor",
-    "icon": "ArmorMageLegs.png"
-  },
-  {
-    "id": "ArmorMageLegs_Ashlands",
-    "name": "Trousers of Embla",
-    "nameRu": "Штаны Эмблы",
-    "category": "armor",
-    "icon": "ArmorMageLegs_Ashlands.png"
-  },
-  {
-    "id": "ArmorFlametalChest",
-    "name": "Flametal breastplate",
-    "nameRu": "Пламометаллический нагрудник",
-    "category": "armor",
-    "icon": "ArmorFlametalChest.png"
-  },
-  {
-    "id": "ArmorFlametalLegs",
-    "name": "Flametal greaves",
-    "nameRu": "Пламометаллические поножи",
-    "category": "armor",
-    "icon": "ArmorFlametalLegs.png"
-  },
-  {
-    "id": "HelmetFlametal",
-    "name": "Flametal helmet",
-    "nameRu": "Пламометаллический шлем",
-    "category": "armor",
-    "icon": "HelmetFlametal.png"
-  },
-  {
-    "id": "ArmorAshlandsMediumChest",
-    "name": "Breastplate of Ask",
-    "nameRu": "Нагрудник Аска",
-    "category": "armor",
-    "icon": "ArmorAshlandsMediumChest.png"
-  },
-  {
-    "id": "ArmorAshlandsMediumlegs",
-    "name": "Trousers of Ask",
-    "nameRu": "Штаны Аска",
-    "category": "armor",
-    "icon": "ArmorAshlandsMediumlegs.png"
-  },
-  {
-    "id": "HelmetAshlandsMediumHood",
-    "name": "Hood of Ask",
-    "nameRu": "Капюшон Аска",
-    "category": "armor",
-    "icon": "HelmetAshlandsMediumHood.png"
-  },
-  {
-    "id": "CapeDeerHide",
-    "name": "Deer hide cape",
-    "nameRu": "Плащ из оленьей шкуры",
-    "category": "armor",
-    "icon": "CapeDeerHide.png"
-  },
-  {
-    "id": "CapeTrollHide",
-    "name": "Troll hide cape",
-    "nameRu": "Плащ из тролльей шкуры",
-    "category": "armor",
-    "icon": "CapeTrollHide.png"
-  },
-  {
-    "id": "CapeWolf",
-    "name": "Wolf fur cape",
-    "nameRu": "Плащ из волчьего меха",
-    "category": "armor",
-    "icon": "CapeWolf.png"
-  },
-  {
-    "id": "CapeLox",
-    "name": "Lox cape",
-    "nameRu": "Плащ из шкуры локся",
-    "category": "armor",
-    "icon": "CapeLox.png"
-  },
-  {
-    "id": "CapeFeather",
-    "name": "Feather cape",
-    "nameRu": "Перьевой плащ",
-    "category": "armor",
-    "icon": "CapeFeather.png"
-  },
-  {
-    "id": "CapeLinen",
-    "name": "Linen cape",
-    "nameRu": "Льняной плащ",
-    "category": "armor",
-    "icon": "CapeLinen.png"
-  },
-  {
-    "id": "BeltStrength",
-    "name": "Megingjord",
-    "nameRu": "Мегингъёрд",
-    "category": "armor",
-    "icon": "BeltStrength.png"
-  },
-  {
-    "id": "Wishbone",
-    "name": "Wishbone",
-    "nameRu": "Вилочка",
-    "category": "tools",
-    "icon": "Wishbone.png"
-  },
-  {
-    "id": "Wood",
-    "name": "Wood",
-    "nameRu": "Дерево",
-    "category": "materials",
-    "icon": "Wood.png"
-  },
-  {
-    "id": "Stone",
-    "name": "Stone",
-    "nameRu": "Камень",
-    "category": "materials",
-    "icon": "Stone.png"
-  },
-  {
-    "id": "Flint",
-    "name": "Flint",
-    "nameRu": "Кремень",
-    "category": "materials",
-    "icon": "Flint.png"
-  },
-  {
-    "id": "FineWood",
-    "name": "Finewood",
-    "nameRu": "Тонкое дерево",
-    "category": "materials",
-    "icon": "FineWood.png"
-  },
-  {
-    "id": "Corewood",
-    "name": "Corewood",
-    "nameRu": "Ядреное дерево",
-    "category": "materials",
-    "icon": "RoundLog.png"
-  },
-  {
-    "id": "ElderBark",
-    "name": "Ancient bark",
-    "nameRu": "Древняя кора",
-    "category": "materials",
-    "icon": "ElderBark.png"
-  },
-  {
-    "id": "YggdrasilWood",
-    "name": "Yggdrasil wood",
-    "nameRu": "Древесина Иггдрасиля",
-    "category": "materials",
-    "icon": "YggdrasilWood.png"
-  },
-  {
-    "id": "Blackwood",
-    "name": "Ashwood",
-    "nameRu": "Ясеневое дерево",
-    "category": "materials",
-    "icon": "Blackwood.png"
-  },
-  {
-    "id": "Copper",
-    "name": "Copper",
-    "nameRu": "Медь",
-    "category": "metals",
-    "icon": "Copper.png"
-  },
-  {
-    "id": "Tin",
-    "name": "Tin",
-    "nameRu": "Олово",
-    "category": "metals",
-    "icon": "Tin.png"
-  },
-  {
-    "id": "Bronze",
-    "name": "Bronze",
-    "nameRu": "Бронза",
-    "category": "metals",
-    "icon": "Bronze.png"
-  },
-  {
-    "id": "Iron",
-    "name": "Iron",
-    "nameRu": "Железо",
-    "category": "metals",
-    "icon": "Iron.png"
-  },
-  {
-    "id": "Silver",
-    "name": "Silver",
-    "nameRu": "Серебро",
-    "category": "metals",
-    "icon": "Silver.png"
-  },
-  {
-    "id": "BlackMetal",
-    "name": "Black metal",
-    "nameRu": "Черный металл",
-    "category": "metals",
-    "icon": "BlackMetal.png"
-  },
-  {
-    "id": "Flametalnew",
-    "name": "Flametal",
-    "nameRu": "Пламометалл",
-    "category": "metals",
-    "icon": "Flametalnew.png"
-  },
-  {
-    "id": "Coal",
-    "name": "Coal",
-    "nameRu": "Уголь",
-    "category": "materials",
-    "icon": "Coal.png"
-  },
-  {
-    "id": "SurtlingCore",
-    "name": "Surtling core",
-    "nameRu": "Ядро суртлинга",
-    "category": "materials",
-    "icon": "SurtlingCore.png"
-  },
-  {
-    "id": "DeerHide",
-    "name": "Deer hide",
-    "nameRu": "Оленья шкура",
-    "category": "materials",
-    "icon": "DeerHide.png"
-  },
-  {
-    "id": "LeatherScraps",
-    "name": "Leather scraps",
-    "nameRu": "Обрезки кожи",
-    "category": "materials",
-    "icon": "LeatherScraps.png"
-  },
-  {
-    "id": "TrollHide",
-    "name": "Troll hide",
-    "nameRu": "Троллья шкура",
-    "category": "materials",
-    "icon": "TrollHide.png"
-  },
-  {
-    "id": "WolfPelt",
-    "name": "Wolf pelt",
-    "nameRu": "Волчья шкура",
-    "category": "materials",
-    "icon": "WolfPelt.png"
-  },
-  {
-    "id": "LoxPelt",
-    "name": "Lox pelt",
-    "nameRu": "Шкура локся",
-    "category": "materials",
-    "icon": "LoxPelt.png"
-  },
-  {
-    "id": "Feathers",
-    "name": "Feathers",
-    "nameRu": "Перья",
-    "category": "materials",
-    "icon": "Feathers.png"
-  },
-  {
-    "id": "LinenThread",
-    "name": "Linen thread",
-    "nameRu": "Льняная нить",
-    "category": "materials",
-    "icon": "LinenThread.png"
-  },
-  {
-    "id": "ScaleHide",
-    "name": "Scale hide",
-    "nameRu": "Чешуйчатая шкура",
-    "category": "materials",
-    "icon": "ScaleHide.png"
-  },
-  {
-    "id": "SerpentScale",
-    "name": "Serpent scale",
-    "nameRu": "Чешуя змея",
-    "category": "materials",
-    "icon": "SerpentScale.png"
-  },
-  {
-    "id": "Root",
-    "name": "Root",
-    "nameRu": "Корень",
-    "category": "materials",
-    "icon": "Root.png"
-  },
-  {
-    "id": "Chitin",
-    "name": "Chitin",
-    "nameRu": "Хитин",
-    "category": "materials",
-    "icon": "Chitin.png"
-  },
-  {
-    "id": "carapace",
-    "name": "Carapace",
-    "nameRu": "Карапас",
-    "category": "materials",
-    "icon": "carapace.png"
-  },
-  {
-    "id": "Mandible",
-    "name": "Mandible",
-    "nameRu": "Мандибула",
-    "category": "materials",
-    "icon": "Mandible.png"
-  },
-  {
-    "id": "Needle",
-    "name": "Needle",
-    "nameRu": "Игла",
-    "category": "materials",
-    "icon": "Needle.png"
-  },
-  {
-    "id": "Guck",
-    "name": "Guck",
-    "nameRu": "Гук",
-    "category": "materials",
-    "icon": "Guck.png"
-  },
-  {
-    "id": "Resin",
-    "name": "Resin",
-    "nameRu": "Смола",
-    "category": "materials",
-    "icon": "Resin.png"
-  },
-  {
-    "id": "Obsidian",
-    "name": "Obsidian",
-    "nameRu": "Обсидиан",
-    "category": "materials",
-    "icon": "Obsidian.png"
-  },
-  {
-    "id": "Crystal",
-    "name": "Crystal",
-    "nameRu": "Кристалл",
-    "category": "materials",
-    "icon": "Crystal.png"
-  },
-  {
-    "id": "BoneFragments",
-    "name": "Bone fragments",
-    "nameRu": "Фрагменты костей",
-    "category": "materials",
-    "icon": "BoneFragments.png"
-  },
-  {
-    "id": "GreydwarfEye",
-    "name": "Greydwarf eye",
-    "nameRu": "Глаз серолюда",
-    "category": "materials",
-    "icon": "GreydwarfEye.png"
-  },
-  {
-    "id": "HardAntler",
-    "name": "Hard antler",
-    "nameRu": "Твердый рог",
-    "category": "materials",
-    "icon": "HardAntler.png"
-  },
-  {
-    "id": "WolfFang",
-    "name": "Wolf fang",
-    "nameRu": "Волчий клык",
-    "category": "materials",
-    "icon": "WolfFang.png"
-  },
-  {
-    "id": "WolfClaw",
-    "name": "Fenris claw",
-    "nameRu": "Фенрисов коготь",
-    "category": "materials",
-    "icon": "WolfClaw.png"
-  },
-  {
-    "id": "WolfHairBundle",
-    "name": "Fenris hair",
-    "nameRu": "Фенрисов волос",
-    "category": "materials",
-    "icon": "WolfHairBundle.png"
-  },
-  {
-    "id": "FreezeGland",
-    "name": "Freeze gland",
-    "nameRu": "Ледяная железа",
-    "category": "materials",
-    "icon": "FreezeGland.png"
-  },
-  {
-    "id": "DragonTear",
-    "name": "Dragon tear",
-    "nameRu": "Слеза дракона",
-    "category": "materials",
-    "icon": "DragonTear.png"
-  },
-  {
-    "id": "Bloodbag",
-    "name": "Bloodbag",
-    "nameRu": "Мешок с кровью",
-    "category": "materials",
-    "icon": "Bloodbag.png"
-  },
-  {
-    "id": "Bilebag",
-    "name": "Bilebag",
-    "nameRu": "Мешок с желчью",
-    "category": "materials",
-    "icon": "Bilebag.png"
-  },
-  {
-    "id": "QueenBee",
-    "name": "Queen bee",
-    "nameRu": "Пчелиная матка",
-    "category": "materials",
-    "icon": "QueenBee.png"
-  },
-  {
-    "id": "Honey",
-    "name": "Honey",
-    "nameRu": "Мёд",
-    "category": "food",
-    "icon": "Honey.png"
-  },
-  {
-    "id": "RawMeat",
-    "name": "Boar meat",
-    "nameRu": "Сырое мясо кабана",
-    "category": "food",
-    "icon": "RawMeat.png"
-  },
-  {
-    "id": "CookedMeat",
-    "name": "Cooked boar meat",
-    "nameRu": "Жареное мясо кабана",
-    "category": "food",
-    "icon": "CookedMeat.png"
-  },
-  {
-    "id": "DeerMeat",
-    "name": "Deer meat",
-    "nameRu": "Мясо оленя",
-    "category": "food",
-    "icon": "DeerMeat.png"
-  },
-  {
-    "id": "CookedDeerMeat",
-    "name": "Cooked deer meat",
-    "nameRu": "Жареное мясо оленя",
-    "category": "food",
-    "icon": "CookedDeerMeat.png"
-  },
-  {
-    "id": "WolfMeat",
-    "name": "Wolf meat",
-    "nameRu": "Волчье мясо",
-    "category": "food",
-    "icon": "WolfMeat.png"
-  },
-  {
-    "id": "CookedWolfMeat",
-    "name": "Cooked wolf meat",
-    "nameRu": "Жареное волчье мясо",
-    "category": "food",
-    "icon": "CookedWolfMeat.png"
-  },
-  {
-    "id": "LoxMeat",
-    "name": "Lox meat",
-    "nameRu": "Мясо локся",
-    "category": "food",
-    "icon": "LoxMeat.png"
-  },
-  {
-    "id": "CookedLoxMeat",
-    "name": "Cooked lox meat",
-    "nameRu": "Жареное мясо локся",
-    "category": "food",
-    "icon": "CookedLoxMeat.png"
-  },
-  {
-    "id": "SerpentMeat",
-    "name": "Serpent meat",
-    "nameRu": "Мясо змея",
-    "category": "food",
-    "icon": "SerpentMeat.png"
-  },
-  {
-    "id": "SerpentMeatCooked",
-    "name": "Cooked serpent meat",
-    "nameRu": "Жареное мясо змея",
-    "category": "food",
-    "icon": "SerpentMeatCooked.png"
-  },
-  {
-    "id": "FishRaw",
-    "name": "Raw fish",
-    "nameRu": "Сырая рыба",
-    "category": "food",
-    "icon": "FishRaw.png"
-  },
-  {
-    "id": "FishCooked",
-    "name": "Cooked fish",
-    "nameRu": "Жареная рыба",
-    "category": "food",
-    "icon": "FishCooked.png"
-  },
-  {
-    "id": "Mushroom",
-    "name": "Mushroom",
-    "nameRu": "Гриб",
-    "category": "food",
-    "icon": "Mushroom.png"
-  },
-  {
-    "id": "MushroomBlue",
-    "name": "Blue mushroom",
-    "nameRu": "Синий гриб",
-    "category": "food",
-    "icon": "MushroomBlue.png"
-  },
-  {
-    "id": "MushroomYellow",
-    "name": "Yellow mushroom",
-    "nameRu": "Желтый гриб",
-    "category": "food",
-    "icon": "MushroomYellow.png"
-  },
-  {
-    "id": "Blueberries",
-    "name": "Blueberries",
-    "nameRu": "Черника",
-    "category": "food",
-    "icon": "Blueberries.png"
-  },
-  {
-    "id": "Raspberry",
-    "name": "Raspberry",
-    "nameRu": "Малина",
-    "category": "food",
-    "icon": "Raspberry.png"
-  },
-  {
-    "id": "Cloudberry",
-    "name": "Cloudberries",
-    "nameRu": "Морошка",
-    "category": "food",
-    "icon": "Cloudberry.png"
-  },
-  {
-    "id": "Carrot",
-    "name": "Carrot",
-    "nameRu": "Морковь",
-    "category": "food",
-    "icon": "Carrot.png"
-  },
-  {
-    "id": "Turnip",
-    "name": "Turnip",
-    "nameRu": "Репа",
-    "category": "food",
-    "icon": "Turnip.png"
-  },
-  {
-    "id": "Onion",
-    "name": "Onion",
-    "nameRu": "Лук",
-    "category": "food",
-    "icon": "Onion.png"
-  },
-  {
-    "id": "NeckTail",
-    "name": "Neck tail",
-    "nameRu": "Хвост ящера",
-    "category": "food",
-    "icon": "NeckTail.png"
-  },
-  {
-    "id": "NeckTailGrilled",
-    "name": "Grilled neck tail",
-    "nameRu": "Жареный хвост ящера",
-    "category": "food",
-    "icon": "NeckTailGrilled.png"
-  },
-  {
-    "id": "Bread",
-    "name": "Bread",
-    "nameRu": "Хлеб",
-    "category": "food",
-    "icon": "Bread.png"
-  },
-  {
-    "id": "Sausages",
-    "name": "Sausages",
-    "nameRu": "Колбасы",
-    "category": "food",
-    "icon": "Sausages.png"
-  },
-  {
-    "id": "BoarJerky",
-    "name": "Boar jerky",
-    "nameRu": "Вяленое мясо кабана",
-    "category": "food",
-    "icon": "BoarJerky.png"
-  },
-  {
-    "id": "WolfJerky",
-    "name": "Wolf jerky",
-    "nameRu": "Вяленое волчье мясо",
-    "category": "food",
-    "icon": "WolfJerky.png"
-  },
-  {
-    "id": "DeerStew",
-    "name": "Deer stew",
-    "nameRu": "Оленье рагу",
-    "category": "food",
-    "icon": "DeerStew.png"
-  },
-  {
-    "id": "LoxPie",
-    "name": "Lox meat pie",
-    "nameRu": "Пирог с мясом локся",
-    "category": "food",
-    "icon": "LoxPie.png"
-  },
-  {
-    "id": "SerpentStew",
-    "name": "Serpent stew",
-    "nameRu": "Змеиное рагу",
-    "category": "food",
-    "icon": "SerpentStew.png"
-  },
-  {
-    "id": "FishWraps",
-    "name": "Fish wraps",
-    "nameRu": "Рыбные роллы",
-    "category": "food",
-    "icon": "FishWraps.png"
-  },
-  {
-    "id": "WolfMeatSkewer",
-    "name": "Wolf skewer",
-    "nameRu": "Волчий шашлык",
-    "category": "food",
-    "icon": "WolfMeatSkewer.png"
-  },
-  {
-    "id": "Eyescream",
-    "name": "Eyescream",
-    "nameRu": "Глазороженое",
-    "category": "food",
-    "icon": "Eyescream.png"
-  },
-  {
-    "id": "QueensJam",
-    "name": "Queen's jam",
-    "nameRu": "Королевское варенье",
-    "category": "food",
-    "icon": "QueensJam.png"
-  },
-  {
-    "id": "BloodPudding",
-    "name": "Blood pudding",
-    "nameRu": "Кровяной пудинг",
-    "category": "food",
-    "icon": "BloodPudding.png"
-  },
-  {
-    "id": "CarrotSoup",
-    "name": "Carrot soup",
-    "nameRu": "Морковный суп",
-    "category": "food",
-    "icon": "CarrotSoup.png"
-  },
-  {
-    "id": "OnionSoup",
-    "name": "Onion soup",
-    "nameRu": "Луковый суп",
-    "category": "food",
-    "icon": "OnionSoup.png"
-  },
-  {
-    "id": "TurnipStew",
-    "name": "Turnip stew",
-    "nameRu": "Реповое рагу",
-    "category": "food",
-    "icon": "TurnipStew.png"
-  },
-  {
-    "id": "MinceMeatSauce",
-    "name": "Minced meat sauce",
-    "nameRu": "Мясной фарш с соусом",
-    "category": "food",
-    "icon": "MinceMeatSauce.png"
-  },
-  {
-    "id": "ShocklateSmoothie",
-    "name": "Muckshake",
-    "nameRu": "Грязевой коктейль",
-    "category": "food",
-    "icon": "ShocklateSmoothie.png"
-  },
-  {
-    "id": "Barley",
-    "name": "Barley",
-    "nameRu": "Ячмень",
-    "category": "materials",
-    "icon": "Barley.png"
-  },
-  {
-    "id": "Flax",
-    "name": "Flax",
-    "nameRu": "Лён",
-    "category": "materials",
-    "icon": "Flax.png"
-  },
-  {
-    "id": "BarleyFlour",
-    "name": "Barley flour",
-    "nameRu": "Ячменная мука",
-    "category": "materials",
-    "icon": "BarleyFlour.png"
-  },
-  {
-    "id": "BreadDough",
-    "name": "Bread dough",
-    "nameRu": "Тесто для хлеба",
-    "category": "materials",
-    "icon": "BreadDough.png"
-  },
-  {
-    "id": "Dandelion",
-    "name": "Dandelion",
-    "nameRu": "Одуванчик",
-    "category": "materials",
-    "icon": "Dandelion.png"
-  },
-  {
-    "id": "Thistle",
-    "name": "Thistle",
-    "nameRu": "Чертополох",
-    "category": "materials",
-    "icon": "Thistle.png"
-  },
-  {
-    "id": "Acorn",
-    "name": "Acorns",
-    "nameRu": "Жёлуди",
-    "category": "seeds",
-    "icon": "Acorn.png"
-  },
-  {
-    "id": "BeechSeeds",
-    "name": "Beech seeds",
-    "nameRu": "Семена бука",
-    "category": "seeds",
-    "icon": "BeechSeeds.png"
-  },
-  {
-    "id": "BirchSeeds",
-    "name": "Birch seeds",
-    "nameRu": "Семена березы",
-    "category": "seeds",
-    "icon": "BirchSeeds.png"
-  },
-  {
-    "id": "FirCone",
-    "name": "Fir cone",
-    "nameRu": "Еловая шишка",
-    "category": "seeds",
-    "icon": "FirCone.png"
-  },
-  {
-    "id": "PineCone",
-    "name": "Pine cone",
-    "nameRu": "Сосновая шишка",
-    "category": "seeds",
-    "icon": "PineCone.png"
-  },
-  {
-    "id": "CarrotSeeds",
-    "name": "Carrot seeds",
-    "nameRu": "Семена моркови",
-    "category": "seeds",
-    "icon": "CarrotSeeds.png"
-  },
-  {
-    "id": "OnionSeeds",
-    "name": "Onion seeds",
-    "nameRu": "Семена лука",
-    "category": "seeds",
-    "icon": "OnionSeeds.png"
-  },
-  {
-    "id": "TurnipSeeds",
-    "name": "Turnip seeds",
-    "nameRu": "Семена репы",
-    "category": "seeds",
-    "icon": "TurnipSeeds.png"
-  },
-  {
-    "id": "MeadHealthMinor",
-    "name": "Minor healing mead",
-    "nameRu": "Слабое лечащее варево",
-    "category": "meads",
-    "icon": "MeadHealthMinor.png"
-  },
-  {
-    "id": "MeadHealthMedium",
-    "name": "Medium healing mead",
-    "nameRu": "Среднее лечащее варево",
-    "category": "meads",
-    "icon": "MeadHealthMedium.png"
-  },
-  {
-    "id": "MeadStaminaMinor",
-    "name": "Minor stamina mead",
-    "nameRu": "Слабое варево выносливости",
-    "category": "meads",
-    "icon": "MeadStaminaMinor.png"
-  },
-  {
-    "id": "MeadStaminaMedium",
-    "name": "Medium stamina mead",
-    "nameRu": "Среднее варево выносливости",
-    "category": "meads",
-    "icon": "MeadStaminaMedium.png"
-  },
-  {
-    "id": "MeadFrostResist",
-    "name": "Frost resistance mead",
-    "nameRu": "Варево защиты от холода",
-    "category": "meads",
-    "icon": "MeadFrostResist.png"
-  },
-  {
-    "id": "MeadPoisonResist",
-    "name": "Poison resistance mead",
-    "nameRu": "Варево защиты от яда",
-    "category": "meads",
-    "icon": "MeadPoisonResist.png"
-  },
-  {
-    "id": "MeadTasty",
-    "name": "Tasty mead",
-    "nameRu": "Вкусное варево",
-    "category": "meads",
-    "icon": "MeadTasty.png"
-  },
-  {
-    "id": "BarleyWine",
-    "name": "Fire resistance barley wine",
-    "nameRu": "Ячменное вино защиты от огня",
-    "category": "meads",
-    "icon": "BarleyWine.png"
-  },
-  {
-    "id": "TrophyEikthyr",
-    "name": "Eikthyr trophy",
-    "nameRu": "Трофей: Эйктюр",
-    "category": "trophies",
-    "icon": "TrophyEikthyr.png"
-  },
-  {
-    "id": "TrophyTheElder",
-    "name": "The Elder trophy",
-    "nameRu": "Трофей: Древний",
-    "category": "trophies",
-    "icon": "TrophyTheElder.png"
-  },
-  {
-    "id": "TrophyBonemass",
-    "name": "Bonemass trophy",
-    "nameRu": "Трофей: Костепасть",
-    "category": "trophies",
-    "icon": "TrophyBonemass.png"
-  },
-  {
-    "id": "TrophyDragonQueen",
-    "name": "Moder trophy",
-    "nameRu": "Трофей: Модер",
-    "category": "trophies",
-    "icon": "TrophyDragonQueen.png"
-  },
-  {
-    "id": "TrophyGoblinKing",
-    "name": "Yagluth trophy",
-    "nameRu": "Трофей: Йаглюта",
-    "category": "trophies",
-    "icon": "TrophyGoblinKing.png"
-  },
-  {
-    "id": "TrophySeekerQueen",
-    "name": "The Queen trophy",
-    "nameRu": "Трофей: Королева",
-    "category": "trophies",
-    "icon": "TrophySeekerQueen.png"
-  },
-  {
-    "id": "TrophyDeer",
-    "name": "Deer trophy",
-    "nameRu": "Трофей: Олень",
-    "category": "trophies",
-    "icon": "TrophyDeer.png"
-  },
-  {
-    "id": "TrophyBoar",
-    "name": "Boar trophy",
-    "nameRu": "Трофей: Кабан",
-    "category": "trophies",
-    "icon": "TrophyBoar.png"
-  },
-  {
-    "id": "TrophyNeck",
-    "name": "Neck trophy",
-    "nameRu": "Трофей: Ящер",
-    "category": "trophies",
-    "icon": "TrophyNeck.png"
-  },
-  {
-    "id": "TrophyGreydwarf",
-    "name": "Greydwarf trophy",
-    "nameRu": "Трофей: Серолюд",
-    "category": "trophies",
-    "icon": "TrophyGreydwarf.png"
-  },
-  {
-    "id": "TrophyGreydwarfBrute",
-    "name": "Greydwarf Brute trophy",
-    "nameRu": "Трофей: Здоровяк серолюдов",
-    "category": "trophies",
-    "icon": "TrophyGreydwarfBrute.png"
-  },
-  {
-    "id": "TrophyGreydwarfShaman",
-    "name": "Greydwarf Shaman trophy",
-    "nameRu": "Трофей: Шаман серолюдов",
-    "category": "trophies",
-    "icon": "TrophyGreydwarfShaman.png"
-  },
-  {
-    "id": "TrophySkeleton",
-    "name": "Skeleton trophy",
-    "nameRu": "Трофей: Скелет",
-    "category": "trophies",
-    "icon": "TrophySkeleton.png"
-  },
-  {
-    "id": "TrophyTroll",
-    "name": "Troll trophy",
-    "nameRu": "Трофей: Тролль",
-    "category": "trophies",
-    "icon": "TrophyForestTroll.png"
-  },
-  {
-    "id": "TrophyBlob",
-    "name": "Blob trophy",
-    "nameRu": "Трофей: Слизень",
-    "category": "trophies",
-    "icon": "TrophyBlob.png"
-  },
-  {
-    "id": "TrophyDraugr",
-    "name": "Draugr trophy",
-    "nameRu": "Трофей: Драугр",
-    "category": "trophies",
-    "icon": "TrophyDraugr.png"
-  },
-  {
-    "id": "TrophyDraugrElite",
-    "name": "Draugr Elite trophy",
-    "nameRu": "Трофей: Элитный драугр",
-    "category": "trophies",
-    "icon": "TrophyDraugrElite.png"
-  },
-  {
-    "id": "TrophyAbomination",
-    "name": "Abomination trophy",
-    "nameRu": "Трофей: Мерзость",
-    "category": "trophies",
-    "icon": "TrophyAbomination.png"
-  },
-  {
-    "id": "TrophyWolf",
-    "name": "Wolf trophy",
-    "nameRu": "Трофей: Волк",
-    "category": "trophies",
-    "icon": "TrophyWolf.png"
-  },
-  {
-    "id": "TrophyFenring",
-    "name": "Fenring trophy",
-    "nameRu": "Трофей: Фенринг",
-    "category": "trophies",
-    "icon": "TrophyFenring.png"
-  },
-  {
-    "id": "TrophyHatchling",
-    "name": "Drake trophy",
-    "nameRu": "Трофей: Дрейк",
-    "category": "trophies",
-    "icon": "TrophyHatchling.png"
-  },
-  {
-    "id": "TrophyLox",
-    "name": "Lox trophy",
-    "nameRu": "Трофей: Локсь",
-    "category": "trophies",
-    "icon": "TrophyLox.png"
-  },
-  {
-    "id": "TrophySerpent",
-    "name": "Serpent trophy",
-    "nameRu": "Трофей: Змей",
-    "category": "trophies",
-    "icon": "TrophySerpent.png"
-  },
-  {
-    "id": "TrophyGoblin",
-    "name": "Fuling trophy",
-    "nameRu": "Трофей: Фулинг",
-    "category": "trophies",
-    "icon": "TrophyGoblin.png"
-  },
-  {
-    "id": "TrophyGoblinBrute",
-    "name": "Fuling berserker trophy",
-    "nameRu": "Трофей: Фулинг-берсерк",
-    "category": "trophies",
-    "icon": "TrophyGoblinBrute.png"
-  },
-  {
-    "id": "TrophyGoblinShaman",
-    "name": "Fuling shaman trophy",
-    "nameRu": "Трофей: Фулинг-шаман",
-    "category": "trophies",
-    "icon": "TrophyGoblinShaman.png"
-  },
-  {
-    "id": "TrophyDeathsquito",
-    "name": "Deathsquito trophy",
-    "nameRu": "Трофей: Смерткомар",
-    "category": "trophies",
-    "icon": "TrophyDeathsquito.png"
-  },
-  {
-    "id": "TrophyLeech",
-    "name": "Leech trophy",
-    "nameRu": "Трофей: Пиявка",
-    "category": "trophies",
-    "icon": "TrophyLeech.png"
-  },
-  {
-    "id": "TrophySGolem",
-    "name": "Stone Golem trophy",
-    "nameRu": "Трофей: Каменный голем",
-    "category": "trophies",
-    "icon": "TrophySGolem.png"
-  },
-  {
-    "id": "TrophySurtling",
-    "name": "Surtling trophy",
-    "nameRu": "Трофей: Суртлинг",
-    "category": "trophies",
-    "icon": "TrophySurtling.png"
-  },
-  {
-    "id": "TrophyWraith",
-    "name": "Wraith trophy",
-    "nameRu": "Трофей: Призрак",
-    "category": "trophies",
-    "icon": "TrophyWraith.png"
-  },
-  {
-    "id": "ArrowWood",
-    "name": "Wood arrow",
-    "nameRu": "Деревянная стрела",
-    "category": "ammo",
-    "icon": "ArrowWood.png"
-  },
-  {
-    "id": "ArrowFlint",
-    "name": "Flinthead arrow",
-    "nameRu": "Кремневая стрела",
-    "category": "ammo",
-    "icon": "ArrowFlint.png"
-  },
-  {
-    "id": "ArrowBronze",
-    "name": "Bronzehead arrow",
-    "nameRu": "Бронзовая стрела",
-    "category": "ammo",
-    "icon": "ArrowBronze.png"
-  },
-  {
-    "id": "ArrowIron",
-    "name": "Ironhead arrow",
-    "nameRu": "Железная стрела",
-    "category": "ammo",
-    "icon": "ArrowIron.png"
-  },
-  {
-    "id": "ArrowSilver",
-    "name": "Silver arrow",
-    "nameRu": "Серебряная стрела",
-    "category": "ammo",
-    "icon": "ArrowSilver.png"
-  },
-  {
-    "id": "ArrowObsidian",
-    "name": "Obsidian arrow",
-    "nameRu": "Обсидиановая стрела",
-    "category": "ammo",
-    "icon": "ArrowObsidian.png"
-  },
-  {
-    "id": "ArrowNeedle",
-    "name": "Needle arrow",
-    "nameRu": "Стрела с иглой",
-    "category": "ammo",
-    "icon": "ArrowNeedle.png"
-  },
-  {
-    "id": "ArrowCarapace",
-    "name": "Carapace arrow",
-    "nameRu": "Карапасная стрела",
-    "category": "ammo",
-    "icon": "ArrowCarapace.png"
-  },
-  {
-    "id": "ArrowFire",
-    "name": "Fire arrow",
-    "nameRu": "Огненная стрела",
-    "category": "ammo",
-    "icon": "ArrowFire.png"
-  },
-  {
-    "id": "ArrowFrost",
-    "name": "Frost arrow",
-    "nameRu": "Ледяная стрела",
-    "category": "ammo",
-    "icon": "ArrowFrost.png"
-  },
-  {
-    "id": "ArrowPoison",
-    "name": "Poison arrow",
-    "nameRu": "Ядовитая стрела",
-    "category": "ammo",
-    "icon": "ArrowPoison.png"
-  }
+  {"id": "Acorn", "name": "Acorns", "nameRu": "Жёлуди", "category": "seeds", "icon": "Acorn.png"},
+  {"id": "Amber", "name": "Amber", "nameRu": "Янтарь", "category": "valuables", "icon": "Amber.png"},
+  {"id": "AmberPearl", "name": "Amber Pearl", "nameRu": "Янтарная жемчужина", "category": "valuables", "icon": "AmberPearl.png"},
+  {"id": "AncientSeed", "name": "Ancient Seed", "nameRu": "Древнее семя", "category": "valuables", "icon": "AncientSeed.png"},
+  {"id": "ArmorAshlandsMediumChest", "name": "Breastplate of Ask", "nameRu": "Нагрудник Аска", "category": "armor", "icon": "ArmorAshlandsMediumChest.png"},
+  {"id": "ArmorAshlandsMediumLegs", "name": "Trousers of Ask", "nameRu": "Штаны Аска", "category": "armor", "icon": "ArmorAshlandsMediumLegs.png"},
+  {"id": "ArmorBerserkerChest", "name": "Patterns of the Bear", "nameRu": "Узоры медведя", "category": "armor", "icon": "ArmorBerserkerChest.png"},
+  {"id": "ArmorBerserkerLegs", "name": "Loincloth of the Bear", "nameRu": "Набедренная повязка медведя", "category": "armor", "icon": "ArmorBerserkerLegs.png"},
+  {"id": "ArmorBerserkerUndeadChest", "name": "Vilebone Cage", "nameRu": "Клетка из скверных костей", "category": "armor", "icon": "ArmorBerserkerUndeadChest.png"},
+  {"id": "ArmorBerserkerUndeadLegs", "name": "Vilebone Drapes", "nameRu": "Драпировка из скверных костей", "category": "armor", "icon": "ArmorBerserkerUndeadLegs.png"},
+  {"id": "ArmorBronzeChest", "name": "Bronze Plate Tunic", "nameRu": "Бронзовый кирас", "category": "armor", "icon": "ArmorBronzeChest.png"},
+  {"id": "ArmorBronzeLegs", "name": "Bronze Plate Leggings", "nameRu": "Бронзовые поножи", "category": "armor", "icon": "ArmorBronzeLegs.png"},
+  {"id": "ArmorCarapaceChest", "name": "Carapace Breastplate", "nameRu": "Карапасный нагрудник", "category": "armor", "icon": "ArmorCarapaceChest.png"},
+  {"id": "ArmorCarapaceLegs", "name": "Carapace Greaves", "nameRu": "Карапасные поножи", "category": "armor", "icon": "ArmorCarapaceLegs.png"},
+  {"id": "ArmorDress1", "name": "Plain Brown Dress", "nameRu": "Простое коричневое платье", "category": "armor", "icon": "ArmorDress1.png"},
+  {"id": "ArmorDress2", "name": "Brown Dress with Shawl", "nameRu": "Коричневое платье с шалью", "category": "armor", "icon": "ArmorDress2.png"},
+  {"id": "ArmorDress3", "name": "Brown Dress with Beads", "nameRu": "Коричневое платье с бусами", "category": "armor", "icon": "ArmorDress3.png"},
+  {"id": "ArmorDress4", "name": "Plain Blue Dress", "nameRu": "Простое синее платье", "category": "armor", "icon": "ArmorDress4.png"},
+  {"id": "ArmorDress5", "name": "Blue Dress with Shawl", "nameRu": "Синее платье с шалью", "category": "armor", "icon": "ArmorDress5.png"},
+  {"id": "ArmorDress6", "name": "Blue Dress with Beads", "nameRu": "Синее платье с бусами", "category": "armor", "icon": "ArmorDress6.png"},
+  {"id": "ArmorDress7", "name": "Plain Yellow Dress", "nameRu": "Простое жёлтое платье", "category": "armor", "icon": "ArmorDress7.png"},
+  {"id": "ArmorDress8", "name": "Yellow Dress with Shawl", "nameRu": "Жёлтое платье с шалью", "category": "armor", "icon": "ArmorDress8.png"},
+  {"id": "ArmorDress9", "name": "Yellow Dress with Beads", "nameRu": "Жёлтое платье с бусами", "category": "armor", "icon": "ArmorDress9.png"},
+  {"id": "ArmorDress10", "name": "Simple Undyed Dress", "nameRu": "Простое неокрашенное платье", "category": "armor", "icon": "ArmorDress10.png"},
+  {"id": "ArmorFenringChest", "name": "Fenris Coat", "nameRu": "Фенрисова накидка", "category": "armor", "icon": "ArmorFenringChest.png"},
+  {"id": "ArmorFenringLegs", "name": "Fenris Leggings", "nameRu": "Фенрисовы поножи", "category": "armor", "icon": "ArmorFenringLegs.png"},
+  {"id": "ArmorFlametalChest", "name": "Flametal Breastplate", "nameRu": "Огнеметаллический нагрудник", "category": "armor", "icon": "ArmorFlametalChest.png"},
+  {"id": "ArmorFlametalLegs", "name": "Flametal Greaves", "nameRu": "Огнеметаллические поножи", "category": "armor", "icon": "ArmorFlametalLegs.png"},
+  {"id": "ArmorHarvester1", "name": "Harvest Tunic", "nameRu": "Туника жнеца", "category": "armor", "icon": "ArmorHarvester1.png"},
+  {"id": "ArmorHarvester2", "name": "Harvest Dress", "nameRu": "Платье жнеца", "category": "armor", "icon": "ArmorHarvester2.png"},
+  {"id": "ArmorIronChest", "name": "Iron Scale Mail", "nameRu": "Железная чешуйчатая броня", "category": "armor", "icon": "ArmorIronChest.png"},
+  {"id": "ArmorIronLegs", "name": "Iron Greaves", "nameRu": "Железные поножи", "category": "armor", "icon": "ArmorIronLegs.png"},
+  {"id": "ArmorLeatherChest", "name": "Leather Tunic", "nameRu": "Кожаная туника", "category": "armor", "icon": "ArmorLeatherChest.png"},
+  {"id": "ArmorLeatherLegs", "name": "Leather Trousers", "nameRu": "Кожаные штаны", "category": "armor", "icon": "ArmorLeatherLegs.png"},
+  {"id": "ArmorMageChest", "name": "Eitr-weave Robe", "nameRu": "Эйтровая мантия", "category": "armor", "icon": "ArmorMageChest.png"},
+  {"id": "ArmorMageChest_Ashlands", "name": "Robes of Embla", "nameRu": "Мантия Эмблы", "category": "armor", "icon": "ArmorMageChest_Ashlands.png"},
+  {"id": "ArmorMageLegs", "name": "Eitr-weave Trousers", "nameRu": "Эйтровые штаны", "category": "armor", "icon": "ArmorMageLegs.png"},
+  {"id": "ArmorMageLegs_Ashlands", "name": "Trousers of Embla", "nameRu": "Штаны Эмблы", "category": "armor", "icon": "ArmorMageLegs_Ashlands.png"},
+  {"id": "ArmorPaddedCuirass", "name": "Padded Cuirass", "nameRu": "Стеганая кираса", "category": "armor", "icon": "ArmorPaddedCuirass.png"},
+  {"id": "ArmorPaddedGreaves", "name": "Padded Greaves", "nameRu": "Стеганые поножи", "category": "armor", "icon": "ArmorPaddedGreaves.png"},
+  {"id": "ArmorRagsChest", "name": "Rag Tunic", "nameRu": "Рваная туника", "category": "armor", "icon": "ArmorRagsChest.png"},
+  {"id": "ArmorRagsLegs", "name": "Rag Trousers", "nameRu": "Рваные штаны", "category": "armor", "icon": "ArmorRagsLegs.png"},
+  {"id": "ArmorRootChest", "name": "Root Harnesk", "nameRu": "Корневая броня", "category": "armor", "icon": "ArmorRootChest.png"},
+  {"id": "ArmorRootLegs", "name": "Root Leggings", "nameRu": "Корневые поножи", "category": "armor", "icon": "ArmorRootLegs.png"},
+  {"id": "ArmorTrollLeatherChest", "name": "Troll Leather Tunic", "nameRu": "Троллья кожаная туника", "category": "armor", "icon": "ArmorTrollLeatherChest.png"},
+  {"id": "ArmorTrollLeatherLegs", "name": "Troll Leather Trousers", "nameRu": "Тролльи кожаные штаны", "category": "armor", "icon": "ArmorTrollLeatherLegs.png"},
+  {"id": "ArmorTunic1", "name": "Plain Blue Tunic", "nameRu": "Простая синяя туника", "category": "armor", "icon": "ArmorTunic1.png"},
+  {"id": "ArmorTunic2", "name": "Blue Tunic with Cape", "nameRu": "Синяя туника с плащом", "category": "armor", "icon": "ArmorTunic2.png"},
+  {"id": "ArmorTunic3", "name": "Blue Tunic with Beads", "nameRu": "Синяя туника с бусами", "category": "armor", "icon": "ArmorTunic3.png"},
+  {"id": "ArmorTunic4", "name": "Plain Red Tunic", "nameRu": "Простая красная туника", "category": "armor", "icon": "ArmorTunic4.png"},
+  {"id": "ArmorTunic5", "name": "Red Tunic with Cape", "nameRu": "Красная туника с плащом", "category": "armor", "icon": "ArmorTunic5.png"},
+  {"id": "ArmorTunic6", "name": "Red Tunic with Beads", "nameRu": "Красная туника с бусами", "category": "armor", "icon": "ArmorTunic6.png"},
+  {"id": "ArmorTunic7", "name": "Plain Yellow Tunic", "nameRu": "Простая жёлтая туника", "category": "armor", "icon": "ArmorTunic7.png"},
+  {"id": "ArmorTunic8", "name": "Yellow Tunic with Cape", "nameRu": "Жёлтая туника с плащом", "category": "armor", "icon": "ArmorTunic8.png"},
+  {"id": "ArmorTunic9", "name": "Yellow Tunic with Beads", "nameRu": "Жёлтая туника с бусами", "category": "armor", "icon": "ArmorTunic9.png"},
+  {"id": "ArmorTunic10", "name": "Simple Undyed Tunic", "nameRu": "Простая неокрашенная туника", "category": "armor", "icon": "ArmorTunic10.png"},
+  {"id": "ArmorWolfChest", "name": "Wolf Hide Chestpiece", "nameRu": "Волчий нагрудник", "category": "armor", "icon": "ArmorWolfChest.png"},
+  {"id": "ArmorWolfLegs", "name": "Wolf Hide Trousers", "nameRu": "Волчьи штаны", "category": "armor", "icon": "ArmorWolfLegs.png"},
+  {"id": "ArrowBronze", "name": "Bronzehead Arrow", "nameRu": "Бронзовая стрела", "category": "ammo", "icon": "ArrowBronze.png"},
+  {"id": "ArrowCarapace", "name": "Carapace Arrow", "nameRu": "Карапасная стрела", "category": "ammo", "icon": "ArrowCarapace.png"},
+  {"id": "ArrowCharred", "name": "Charred Arrow", "nameRu": "Обугленная стрела", "category": "ammo", "icon": "ArrowCharred.png"},
+  {"id": "ArrowFire", "name": "Fire Arrow", "nameRu": "Огненная стрела", "category": "ammo", "icon": "ArrowFire.png"},
+  {"id": "ArrowFlint", "name": "Flinthead Arrow", "nameRu": "Кремневая стрела", "category": "ammo", "icon": "ArrowFlint.png"},
+  {"id": "ArrowFrost", "name": "Frost Arrow", "nameRu": "Ледяная стрела", "category": "ammo", "icon": "ArrowFrost.png"},
+  {"id": "ArrowIron", "name": "Ironhead Arrow", "nameRu": "Железная стрела", "category": "ammo", "icon": "ArrowIron.png"},
+  {"id": "ArrowNeedle", "name": "Needle Arrow", "nameRu": "Стрела с иглой", "category": "ammo", "icon": "ArrowNeedle.png"},
+  {"id": "ArrowObsidian", "name": "Obsidian Arrow", "nameRu": "Обсидиановая стрела", "category": "ammo", "icon": "ArrowObsidian.png"},
+  {"id": "ArrowPoison", "name": "Poison Arrow", "nameRu": "Ядовитая стрела", "category": "ammo", "icon": "ArrowPoison.png"},
+  {"id": "ArrowSilver", "name": "Silver Arrow", "nameRu": "Серебряная стрела", "category": "ammo", "icon": "ArrowSilver.png"},
+  {"id": "ArrowWood", "name": "Wood Arrow", "nameRu": "Деревянная стрела", "category": "ammo", "icon": "ArrowWood.png"},
+  {"id": "AskBladder", "name": "Asksvin Bladder", "nameRu": "Мочевой пузырь асксвина", "category": "materials", "icon": "AskBladder.png"},
+  {"id": "AskHide", "name": "Asksvin Hide", "nameRu": "Шкура асксвина", "category": "materials", "icon": "AskHide.png"},
+  {"id": "AsksvinCarrionNeck", "name": "Asksvin Neck", "nameRu": "Шея асксвина", "category": "materials", "icon": "AsksvinCarrionNeck.png"},
+  {"id": "AsksvinCarrionPelvic", "name": "Asksvin Pelvis", "nameRu": "Таз асксвина", "category": "materials", "icon": "AsksvinCarrionPelvic.png"},
+  {"id": "AsksvinCarrionRibcage", "name": "Asksvin Ribcage", "nameRu": "Грудная клетка асксвина", "category": "materials", "icon": "AsksvinCarrionRibcage.png"},
+  {"id": "AsksvinCarrionSkull", "name": "Asksvin Skull", "nameRu": "Череп асксвина", "category": "materials", "icon": "AsksvinCarrionSkull.png"},
+  {"id": "AsksvinEgg", "name": "Asksvin Egg", "nameRu": "Яйцо асксвина", "category": "misc", "icon": "AsksvinEgg.png"},
+  {"id": "AsksvinMeat", "name": "Asksvin Tail", "nameRu": "Мясо асксвина", "category": "materials", "icon": "AsksvinMeat.png"},
+  {"id": "AtgeirBlackmetal", "name": "Black Metal Atgeir", "nameRu": "Чернометаллический атгейр", "category": "weapons", "icon": "AtgeirBlackmetal.png"},
+  {"id": "AtgeirBronze", "name": "Bronze Atgeir", "nameRu": "Бронзовый атгейр", "category": "weapons", "icon": "AtgeirBronze.png"},
+  {"id": "AtgeirHimminAfl", "name": "Himminafl", "nameRu": "Химминафль", "category": "weapons", "icon": "AtgeirHimminAfl.png"},
+  {"id": "AtgeirIron", "name": "Iron Atgeir", "nameRu": "Железный атгейр", "category": "weapons", "icon": "AtgeirIron.png"},
+  {"id": "AtgeirWood", "name": "Wooden Atgeir", "nameRu": "Деревянный атгейр", "category": "weapons", "icon": "AtgeirWood.png"},
+  {"id": "AxeBerzerkr", "name": "Berserkir Axes", "nameRu": "Топоры берсерка", "category": "weapons", "icon": "AxeBerzerkr.png"},
+  {"id": "AxeBerzerkrBlood", "name": "Bleeding Berserkir Axes", "nameRu": "Кровавые топоры берсерка", "category": "weapons", "icon": "AxeBerzerkrBlood.png"},
+  {"id": "AxeBerzerkrLightning", "name": "Thundering Berserkir Axes", "nameRu": "Громовые топоры берсерка", "category": "weapons", "icon": "AxeBerzerkrLightning.png"},
+  {"id": "AxeBerzerkrNature", "name": "Primal Berserkir Axes", "nameRu": "Первозданные топоры берсерка", "category": "weapons", "icon": "AxeBerzerkrNature.png"},
+  {"id": "AxeBlackMetal", "name": "Black Metal Axe", "nameRu": "Чернометаллический топор", "category": "tools", "icon": "AxeBlackMetal.png"},
+  {"id": "AxeBronze", "name": "Bronze Axe", "nameRu": "Бронзовый топор", "category": "tools", "icon": "AxeBronze.png"},
+  {"id": "AxeFlint", "name": "Flint Axe", "nameRu": "Кремневый топор", "category": "tools", "icon": "AxeFlint.png"},
+  {"id": "AxeHead1", "name": "Curious Axe Head", "nameRu": "Любопытный наконечник топора", "category": "materials", "icon": "AxeHead1.png"},
+  {"id": "AxeHead2", "name": "Mysterious Axe Head", "nameRu": "Таинственный наконечник топора", "category": "materials", "icon": "AxeHead2.png"},
+  {"id": "AxeIron", "name": "Iron Axe", "nameRu": "Железный топор", "category": "tools", "icon": "AxeIron.png"},
+  {"id": "AxeJotunBane", "name": "Jotun Bane", "nameRu": "Гибель ётунов", "category": "tools", "icon": "AxeJotunBane.png"},
+  {"id": "AxeStone", "name": "Stone Axe", "nameRu": "Каменный топор", "category": "tools", "icon": "AxeStone.png"},
+  {"id": "AxeWood", "name": "Wooden Axe", "nameRu": "Деревянный топор", "category": "tools", "icon": "AxeWood.png"},
+  {"id": "Barberkit", "name": "Barber Kit", "nameRu": "Набор цирюльника", "category": "misc", "icon": "Barberkit.png"},
+  {"id": "Barley", "name": "Barley", "nameRu": "Ячмень", "category": "materials", "icon": "Barley.png"},
+  {"id": "BarleyFlour", "name": "Barley Flour", "nameRu": "Ячменная мука", "category": "materials", "icon": "BarleyFlour.png"},
+  {"id": "BarleyWine", "name": "Fire Resistance Barley Wine", "nameRu": "Ячменное вино защиты от огня", "category": "meads", "icon": "BarleyWine.png"},
+  {"id": "BarleyWineBase", "name": "Barley Wine Base", "nameRu": "Основа ячменного вина", "category": "materials", "icon": "BarleyWineBase.png"},
+  {"id": "BarrelRings", "name": "Barrel Hoops", "nameRu": "Обручи для бочки", "category": "materials", "icon": "BarrelRings.png"},
+  {"id": "Battleaxe", "name": "Battleaxe", "nameRu": "Боевой топор", "category": "weapons", "icon": "Battleaxe.png"},
+  {"id": "BattleaxeBlackmetal", "name": "Black Metal Battleaxe", "nameRu": "Чернометаллический боевой топор", "category": "weapons", "icon": "BattleaxeBlackmetal.png"},
+  {"id": "BattleaxeCrystal", "name": "Crystal Battleaxe", "nameRu": "Кристальный боевой топор", "category": "weapons", "icon": "BattleaxeCrystal.png"},
+  {"id": "BattleaxeSkullSplittur", "name": "Skull Splittur", "nameRu": "Черепоруб", "category": "weapons", "icon": "BattleaxeSkullSplittur.png"},
+  {"id": "BattleaxeWood", "name": "Wooden Battleaxe", "nameRu": "Деревянный боевой топор", "category": "weapons", "icon": "BattleaxeWood.png"},
+  {"id": "BeechSeeds", "name": "Beech Seeds", "nameRu": "Семена бука", "category": "seeds", "icon": "BeechSeeds.png"},
+  {"id": "Bell", "name": "Bell", "nameRu": "Колокол", "category": "misc", "icon": "Bell.png"},
+  {"id": "BellFragment", "name": "Bell Fragment", "nameRu": "Фрагмент колокола", "category": "misc", "icon": "BellFragment.png"},
+  {"id": "BeltStrength", "name": "Megingjord", "nameRu": "Мегингъёрд", "category": "accessories", "icon": "BeltStrength.png"},
+  {"id": "Bilebag", "name": "Bilebag", "nameRu": "Желчный мешок", "category": "materials", "icon": "Bilebag.png"},
+  {"id": "BirchSeeds", "name": "Birch Seeds", "nameRu": "Семена берёзы", "category": "seeds", "icon": "BirchSeeds.png"},
+  {"id": "BjornHide", "name": "Bjorn Hide", "nameRu": "Шкура бьорна", "category": "materials", "icon": "BjornHide.png"},
+  {"id": "BjornMeat", "name": "Bjorn Meat", "nameRu": "Мясо бьорна", "category": "materials", "icon": "BjornMeat.png"},
+  {"id": "BjornPaw", "name": "Bjorn Paw", "nameRu": "Лапа бьорна", "category": "materials", "icon": "BjornPaw.png"},
+  {"id": "BlackCore", "name": "Black Core", "nameRu": "Чёрное ядро", "category": "materials", "icon": "BlackCore.png"},
+  {"id": "BlackMarble", "name": "Black Marble", "nameRu": "Чёрный мрамор", "category": "materials", "icon": "BlackMarble.png"},
+  {"id": "BlackMetal", "name": "Black Metal", "nameRu": "Чёрный металл", "category": "metals", "icon": "BlackMetal.png"},
+  {"id": "BlackMetalScrap", "name": "Black Metal Scrap", "nameRu": "Кусок чёрного металла", "category": "ores", "icon": "BlackMetalScrap.png"},
+  {"id": "BlackSoup", "name": "Black Soup", "nameRu": "Чёрный суп", "category": "food", "icon": "BlackSoup.png"},
+  {"id": "BlackWood", "name": "Black Wood", "nameRu": "Чёрное дерево", "category": "materials", "icon": "BlackWood.png"},
+  {"id": "BlobVial", "name": "Blob Vial", "nameRu": "Флакон со слизью", "category": "materials", "icon": "BlobVial.png"},
+  {"id": "BloodPudding", "name": "Blood Pudding", "nameRu": "Кровяной пудинг", "category": "food", "icon": "BloodPudding.png"},
+  {"id": "Bloodbag", "name": "Bloodbag", "nameRu": "Мешок с кровью", "category": "materials", "icon": "Bloodbag.png"},
+  {"id": "Blueberries", "name": "Blueberries", "nameRu": "Черника", "category": "food", "icon": "Blueberries.png"},
+  {"id": "BoarJerky", "name": "Boar Jerky", "nameRu": "Вяленое мясо кабана", "category": "food", "icon": "BoarJerky.png"},
+  {"id": "BoltBlackmetal", "name": "Black Metal Bolt", "nameRu": "Чернометаллический болт", "category": "ammo", "icon": "BoltBlackmetal.png"},
+  {"id": "BoltBone", "name": "Bone Bolt", "nameRu": "Костяной болт", "category": "ammo", "icon": "BoltBone.png"},
+  {"id": "BoltCarapace", "name": "Carapace Bolt", "nameRu": "Карапасный болт", "category": "ammo", "icon": "BoltCarapace.png"},
+  {"id": "BoltCharred", "name": "Charred Bolt", "nameRu": "Обугленный болт", "category": "ammo", "icon": "BoltCharred.png"},
+  {"id": "BoltIron", "name": "Iron Bolt", "nameRu": "Железный болт", "category": "ammo", "icon": "BoltIron.png"},
+  {"id": "BombBile", "name": "Bile Bomb", "nameRu": "Желчная бомба", "category": "weapons", "icon": "BombBile.png"},
+  {"id": "BombBlob_Frost", "name": "Frost Blob Bomb", "nameRu": "Морозная бомба", "category": "weapons", "icon": "BombBlob_Frost.png"},
+  {"id": "BombBlob_Lava", "name": "Lava Blob Bomb", "nameRu": "Лавовая бомба", "category": "weapons", "icon": "BombBlob_Lava.png"},
+  {"id": "BombBlob_Poison", "name": "Poison Blob Bomb", "nameRu": "Ядовитая бомба", "category": "weapons", "icon": "BombBlob_Poison.png"},
+  {"id": "BombBlob_PoisonElite", "name": "Elite Poison Blob Bomb", "nameRu": "Элитная ядовитая бомба", "category": "weapons", "icon": "BombBlob_PoisonElite.png"},
+  {"id": "BombBlob_Tar", "name": "Tar Blob Bomb", "nameRu": "Дёгтевая бомба", "category": "weapons", "icon": "BombBlob_Tar.png"},
+  {"id": "BombLava", "name": "Lava Bomb", "nameRu": "Лавовая бомба", "category": "weapons", "icon": "BombLava.png"},
+  {"id": "BombOoze", "name": "Ooze Bomb", "nameRu": "Бомба из жижи", "category": "weapons", "icon": "BombOoze.png"},
+  {"id": "BombSiege", "name": "Siege Bomb", "nameRu": "Осадная бомба", "category": "weapons", "icon": "BombSiege.png"},
+  {"id": "BombSmoke", "name": "Smoke Bomb", "nameRu": "Дымовая бомба", "category": "weapons", "icon": "BombSmoke.png"},
+  {"id": "BoneFragments", "name": "Bone Fragments", "nameRu": "Обломки костей", "category": "materials", "icon": "BoneFragments.png"},
+  {"id": "BoneMawSerpentMeat", "name": "Bonemaw Serpent Meat", "nameRu": "Мясо костозмея", "category": "food", "icon": "BoneMawSerpentMeat.png"},
+  {"id": "BonemawSerpentTooth", "name": "Bonemaw Serpent Tooth", "nameRu": "Зуб костозмея", "category": "materials", "icon": "BonemawSerpentTooth.png"},
+  {"id": "Bow", "name": "Crude Bow", "nameRu": "Простой лук", "category": "weapons", "icon": "Bow.png"},
+  {"id": "BowAshlands", "name": "Ashlands Bow", "nameRu": "Пепельный лук", "category": "weapons", "icon": "BowAshlands.png"},
+  {"id": "BowAshlandsBlood", "name": "Blood Ashlands Bow", "nameRu": "Кровавый пепельный лук", "category": "weapons", "icon": "BowAshlandsBlood.png"},
+  {"id": "BowAshlandsRoot", "name": "Root Ashlands Bow", "nameRu": "Корневой пепельный лук", "category": "weapons", "icon": "BowAshlandsRoot.png"},
+  {"id": "BowAshlandsStorm", "name": "Storm Ashlands Bow", "nameRu": "Штормовой пепельный лук", "category": "weapons", "icon": "BowAshlandsStorm.png"},
+  {"id": "BowDraugrFang", "name": "Draugr Fang", "nameRu": "Клык драугра", "category": "weapons", "icon": "BowDraugrFang.png"},
+  {"id": "BowFineWood", "name": "Finewood Bow", "nameRu": "Лук из тонкого дерева", "category": "weapons", "icon": "BowFineWood.png"},
+  {"id": "BowHuntsman", "name": "Huntsman Bow", "nameRu": "Охотничий лук", "category": "weapons", "icon": "BowHuntsman.png"},
+  {"id": "BowSpineSnap", "name": "Spinesnap", "nameRu": "Хребтолом", "category": "weapons", "icon": "BowSpineSnap.png"},
+  {"id": "Bread", "name": "Bread", "nameRu": "Хлеб", "category": "food", "icon": "Bread.png"},
+  {"id": "BreadDough", "name": "Bread Dough", "nameRu": "Тесто для хлеба", "category": "materials", "icon": "BreadDough.png"},
+  {"id": "Bronze", "name": "Bronze", "nameRu": "Бронза", "category": "metals", "icon": "Bronze.png"},
+  {"id": "BronzeNails", "name": "Bronze Nails", "nameRu": "Бронзовые гвозди", "category": "materials", "icon": "BronzeNails.png"},
+  {"id": "BronzeScrap", "name": "Bronze Scrap", "nameRu": "Бронзовый лом", "category": "materials", "icon": "BronzeScrap.png"},
+  {"id": "BugMeat", "name": "Seeker Meat", "nameRu": "Мясо искателя", "category": "food", "icon": "BugMeat.png"},
+  {"id": "CandleWick", "name": "Candle Wick", "nameRu": "Фитиль для свечи", "category": "materials", "icon": "CandleWick.png"},
+  {"id": "CapeAsh", "name": "Ash Cape", "nameRu": "Пепельный плащ", "category": "armor", "icon": "CapeAsh.png"},
+  {"id": "CapeAsksvin", "name": "Asksvin Cape", "nameRu": "Плащ из шкуры асксвина", "category": "armor", "icon": "CapeAsksvin.png"},
+  {"id": "CapeDeerHide", "name": "Deer Hide Cape", "nameRu": "Плащ из оленьей шкуры", "category": "armor", "icon": "CapeDeerHide.png"},
+  {"id": "CapeFeather", "name": "Feather Cape", "nameRu": "Перьевой плащ", "category": "armor", "icon": "CapeFeather.png"},
+  {"id": "CapeLinen", "name": "Linen Cape", "nameRu": "Льняной плащ", "category": "armor", "icon": "CapeLinen.png"},
+  {"id": "CapeLox", "name": "Lox Cape", "nameRu": "Плащ из шкуры быкоящера", "category": "armor", "icon": "CapeLox.png"},
+  {"id": "CapeOdin", "name": "Cape of Odin", "nameRu": "Плащ Одина", "category": "armor", "icon": "CapeOdin.png"},
+  {"id": "CapeTrollHide", "name": "Troll Hide Cape", "nameRu": "Плащ из тролльей шкуры", "category": "armor", "icon": "CapeTrollHide.png"},
+  {"id": "CapeWolf", "name": "Wolf Fur Cape", "nameRu": "Плащ из волчьего меха", "category": "armor", "icon": "CapeWolf.png"},
+  {"id": "Carapace", "name": "Carapace", "nameRu": "Панцирь", "category": "materials", "icon": "Carapace.png"},
+  {"id": "Carrot", "name": "Carrot", "nameRu": "Морковь", "category": "materials", "icon": "Carrot.png"},
+  {"id": "CarrotSeeds", "name": "Carrot Seeds", "nameRu": "Семена моркови", "category": "seeds", "icon": "CarrotSeeds.png"},
+  {"id": "CarrotSoup", "name": "Carrot Soup", "nameRu": "Морковный суп", "category": "food", "icon": "CarrotSoup.png"},
+  {"id": "Catapult_ammo", "name": "Catapult Ammo", "nameRu": "Боеприпас для катапульты", "category": "ammo", "icon": "Catapult_ammo.png"},
+  {"id": "CelestialFeather", "name": "Celestial Feather", "nameRu": "Небесное перо", "category": "materials", "icon": "CelestialFeather.png"},
+  {"id": "CeramicPlate", "name": "Ceramic Plate", "nameRu": "Керамическая пластина", "category": "materials", "icon": "CeramicPlate.png"},
+  {"id": "Chain", "name": "Chain", "nameRu": "Цепь", "category": "materials", "icon": "Chain.png"},
+  {"id": "CharcoalResin", "name": "Charcoal Resin", "nameRu": "Угольная смола", "category": "materials", "icon": "CharcoalResin.png"},
+  {"id": "CharredBone", "name": "Charred Bone", "nameRu": "Обугленная кость", "category": "materials", "icon": "CharredBone.png"},
+  {"id": "CharredCogwheel", "name": "Charred Cogwheel", "nameRu": "Обугленная шестерня", "category": "materials", "icon": "CharredCogwheel.png"},
+  {"id": "CharredSkull", "name": "Charred Skull", "nameRu": "Обугленный череп", "category": "materials", "icon": "CharredSkull.png"},
+  {"id": "ChickenEgg", "name": "Chicken Egg", "nameRu": "Куриное яйцо", "category": "food", "icon": "ChickenEgg.png"},
+  {"id": "ChickenMeat", "name": "Chicken Meat", "nameRu": "Куриное мясо", "category": "food", "icon": "ChickenMeat.png"},
+  {"id": "Chitin", "name": "Chitin", "nameRu": "Хитин", "category": "materials", "icon": "Chitin.png"},
+  {"id": "Cloudberry", "name": "Cloudberries", "nameRu": "Морошка", "category": "food", "icon": "Cloudberry.png"},
+  {"id": "Club", "name": "Club", "nameRu": "Дубина", "category": "weapons", "icon": "Club.png"},
+  {"id": "Coal", "name": "Coal", "nameRu": "Уголь", "category": "materials", "icon": "Coal.png"},
+  {"id": "Coins", "name": "Coins", "nameRu": "Монеты", "category": "valuables", "icon": "Coins.png"},
+  {"id": "CookedAsksvinMeat", "name": "Cooked Asksvin Meat", "nameRu": "Жареное мясо асксвина", "category": "food", "icon": "CookedAsksvinMeat.png"},
+  {"id": "CookedBjornMeat", "name": "Cooked Bjorn Meat", "nameRu": "Жареное мясо бьорна", "category": "food", "icon": "CookedBjornMeat.png"},
+  {"id": "CookedBoneMawSerpentMeat", "name": "Cooked Bonemaw Serpent Meat", "nameRu": "Жареное мясо костозмея", "category": "food", "icon": "CookedBoneMawSerpentMeat.png"},
+  {"id": "CookedBugMeat", "name": "Cooked Seeker Meat", "nameRu": "Жареное мясо искателя", "category": "food", "icon": "CookedBugMeat.png"},
+  {"id": "CookedChickenMeat", "name": "Cooked Chicken Meat", "nameRu": "Жареная курятина", "category": "food", "icon": "CookedChickenMeat.png"},
+  {"id": "CookedDeerMeat", "name": "Cooked Deer Meat", "nameRu": "Жареное мясо оленя", "category": "food", "icon": "CookedDeerMeat.png"},
+  {"id": "CookedEgg", "name": "Cooked Egg", "nameRu": "Жареное яйцо", "category": "food", "icon": "CookedEgg.png"},
+  {"id": "CookedHareMeat", "name": "Cooked Hare Meat", "nameRu": "Жареное мясо зайца", "category": "food", "icon": "CookedHareMeat.png"},
+  {"id": "CookedLoxMeat", "name": "Cooked Lox Meat", "nameRu": "Жареное мясо быкоящера", "category": "food", "icon": "CookedLoxMeat.png"},
+  {"id": "CookedMeat", "name": "Cooked Boar Meat", "nameRu": "Жареное мясо кабана", "category": "food", "icon": "CookedMeat.png"},
+  {"id": "CookedVoltureMeat", "name": "Cooked Volture Meat", "nameRu": "Жареное мясо стервулканника", "category": "food", "icon": "CookedVoltureMeat.png"},
+  {"id": "CookedWolfMeat", "name": "Cooked Wolf Meat", "nameRu": "Жареное волчье мясо", "category": "food", "icon": "CookedWolfMeat.png"},
+  {"id": "Copper", "name": "Copper", "nameRu": "Медь", "category": "metals", "icon": "Copper.png"},
+  {"id": "CopperOre", "name": "Copper Ore", "nameRu": "Медная руда", "category": "ores", "icon": "CopperOre.png"},
+  {"id": "CopperScrap", "name": "Copper Scrap", "nameRu": "Медный лом", "category": "materials", "icon": "CopperScrap.png"},
+  {"id": "CrossbowArbalest", "name": "Arbalest", "nameRu": "Арбалет", "category": "weapons", "icon": "CrossbowArbalest.png"},
+  {"id": "CrossbowRipper", "name": "Ripper", "nameRu": "Потрошитель", "category": "weapons", "icon": "CrossbowRipper.png"},
+  {"id": "CrossbowRipperBlood", "name": "Bloody Ripper", "nameRu": "Кровавый потрошитель", "category": "weapons", "icon": "CrossbowRipperBlood.png"},
+  {"id": "CrossbowRipperLightning", "name": "Thundering Ripper", "nameRu": "Громовой потрошитель", "category": "weapons", "icon": "CrossbowRipperLightning.png"},
+  {"id": "CrossbowRipperNature", "name": "Primal Ripper", "nameRu": "Первозданный потрошитель", "category": "weapons", "icon": "CrossbowRipperNature.png"},
+  {"id": "CryptKey", "name": "Swamp Key", "nameRu": "Ключ от болота", "category": "misc", "icon": "CryptKey.png"},
+  {"id": "Crystal", "name": "Crystal", "nameRu": "Кристалл", "category": "materials", "icon": "Crystal.png"},
+  {"id": "Cultivator", "name": "Cultivator", "nameRu": "Культиватор", "category": "tools", "icon": "Cultivator.png"},
+  {"id": "CuredSquirrelHamstring", "name": "Cured Squirrel Hamstring", "nameRu": "Вяленое сухожилие белки", "category": "food", "icon": "CuredSquirrelHamstring.png"},
+  {"id": "Dandelion", "name": "Dandelion", "nameRu": "Одуванчик", "category": "materials", "icon": "Dandelion.png"},
+  {"id": "DeerHide", "name": "Deer Hide", "nameRu": "Шкура оленя", "category": "materials", "icon": "DeerHide.png"},
+  {"id": "DeerMeat", "name": "Deer Meat", "nameRu": "Мясо оленя", "category": "food", "icon": "DeerMeat.png"},
+  {"id": "DeerStew", "name": "Deer Stew", "nameRu": "Оленье рагу", "category": "food", "icon": "DeerStew.png"},
+  {"id": "Demister", "name": "Wisplight", "nameRu": "Светлячок", "category": "accessories", "icon": "Demister.png"},
+  {"id": "DragonEgg", "name": "Dragon Egg", "nameRu": "Яйцо дракона", "category": "valuables", "icon": "DragonEgg.png"},
+  {"id": "DragonTear", "name": "Dragon Tear", "nameRu": "Драконья слеза", "category": "materials", "icon": "DragonTear.png"},
+  {"id": "DvergrKey", "name": "Dvergr Key", "nameRu": "Ключ двергов", "category": "misc", "icon": "DvergrKey.png"},
+  {"id": "DvergrKeyFragment", "name": "Sealbreaker Fragment", "nameRu": "Фрагмент разрушителя печатей", "category": "misc", "icon": "DvergrKeyFragment.png"},
+  {"id": "DvergrNeedle", "name": "Dvergr Extractor", "nameRu": "Экстрактор двергов", "category": "misc", "icon": "DvergrNeedle.png"},
+  {"id": "DyrnwynBladeFragment", "name": "Dyrnwyn Blade Fragment", "nameRu": "Фрагмент клинка Дюрнвина", "category": "materials", "icon": "DyrnwynBladeFragment.png"},
+  {"id": "DyrnwynHiltFragment", "name": "Dyrnwyn Hilt Fragment", "nameRu": "Фрагмент рукояти Дюрнвина", "category": "materials", "icon": "DyrnwynHiltFragment.png"},
+  {"id": "DyrnwynTipFragment", "name": "Dyrnwyn Tip Fragment", "nameRu": "Фрагмент острия Дюрнвина", "category": "materials", "icon": "DyrnwynTipFragment.png"},
+  {"id": "Early_Axes", "name": "Early Axes", "nameRu": "Древние топоры", "category": "weapons", "icon": "Early_Axes.png"},
+  {"id": "Ectoplasm", "name": "Ectoplasm", "nameRu": "Эктоплазма", "category": "materials", "icon": "Ectoplasm.png"},
+  {"id": "Eitr", "name": "Refined Eitr", "nameRu": "Переработанный Эйтр", "category": "materials", "icon": "Eitr.png"},
+  {"id": "ElderBark", "name": "Ancient Bark", "nameRu": "Древняя кора", "category": "materials", "icon": "ElderBark.png"},
+  {"id": "Entrails", "name": "Entrails", "nameRu": "Внутренности", "category": "materials", "icon": "Entrails.png"},
+  {"id": "Eyescream", "name": "Eyescream", "nameRu": "Глазороженое", "category": "food", "icon": "Eyescream.png"},
+  {"id": "FaderDrop", "name": "Fader Drop", "nameRu": "Трофей Фейдера", "category": "materials", "icon": "FaderDrop.png"},
+  {"id": "FeastAshlands", "name": "Ashlands Feast", "nameRu": "Пир Пепельных земель", "category": "food", "icon": "FeastAshlands.png"},
+  {"id": "FeastBlackforest", "name": "Black Forest Feast", "nameRu": "Пир Чёрного леса", "category": "food", "icon": "FeastBlackforest.png"},
+  {"id": "FeastMeadows", "name": "Meadows Feast", "nameRu": "Пир Луга", "category": "food", "icon": "FeastMeadows.png"},
+  {"id": "FeastMistlands", "name": "Mistlands Feast", "nameRu": "Пир Туманных земель", "category": "food", "icon": "FeastMistlands.png"},
+  {"id": "FeastMountains", "name": "Mountains Feast", "nameRu": "Пир Гор", "category": "food", "icon": "FeastMountains.png"},
+  {"id": "FeastOceans", "name": "Oceans Feast", "nameRu": "Пир Океанов", "category": "food", "icon": "FeastOceans.png"},
+  {"id": "FeastPlains", "name": "Plains Feast", "nameRu": "Пир Равнин", "category": "food", "icon": "FeastPlains.png"},
+  {"id": "FeastSwamps", "name": "Swamps Feast", "nameRu": "Пир Болот", "category": "food", "icon": "FeastSwamps.png"},
+  {"id": "Feaster", "name": "Feaster", "nameRu": "Праздничное блюдо", "category": "food", "icon": "Feaster.png"},
+  {"id": "Feathers", "name": "Feathers", "nameRu": "Перья", "category": "materials", "icon": "Feathers.png"},
+  {"id": "Fiddleheadfern", "name": "Fiddlehead Fern", "nameRu": "Папоротник", "category": "food", "icon": "Fiddleheadfern.png"},
+  {"id": "FierySvinstew", "name": "Fiery Svinstew", "nameRu": "Огненное рагу", "category": "food", "icon": "FierySvinstew.png"},
+  {"id": "FineWood", "name": "Fine Wood", "nameRu": "Тонкое дерево", "category": "materials", "icon": "FineWood.png"},
+  {"id": "FirCone", "name": "Fir Cone", "nameRu": "Еловая шишка", "category": "seeds", "icon": "FirCone.png"},
+  {"id": "FireworksRocket_Blue", "name": "Blue Fireworks Rocket", "nameRu": "Синяя фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Blue.png"},
+  {"id": "FireworksRocket_Cyan", "name": "Cyan Fireworks Rocket", "nameRu": "Бирюзовая фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Cyan.png"},
+  {"id": "FireworksRocket_Green", "name": "Green Fireworks Rocket", "nameRu": "Зелёная фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Green.png"},
+  {"id": "FireworksRocket_Purple", "name": "Purple Fireworks Rocket", "nameRu": "Фиолетовая фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Purple.png"},
+  {"id": "FireworksRocket_Red", "name": "Red Fireworks Rocket", "nameRu": "Красная фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Red.png"},
+  {"id": "FireworksRocket_White", "name": "White Fireworks Rocket", "nameRu": "Белая фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_White.png"},
+  {"id": "FireworksRocket_Yellow", "name": "Yellow Fireworks Rocket", "nameRu": "Жёлтая фейерверк-ракета", "category": "misc", "icon": "FireworksRocket_Yellow.png"},
+  {"id": "Fish1", "name": "Perch", "nameRu": "Окунь", "category": "food", "icon": "Fish1.png"},
+  {"id": "Fish2", "name": "Pike", "nameRu": "Щука", "category": "food", "icon": "Fish2.png"},
+  {"id": "Fish3", "name": "Tuna", "nameRu": "Тунец", "category": "food", "icon": "Fish3.png"},
+  {"id": "Fish4_cave", "name": "Tetra", "nameRu": "Тетра", "category": "food", "icon": "Fish4_cave.png"},
+  {"id": "Fish5", "name": "Trollfish", "nameRu": "Тролль-рыба", "category": "food", "icon": "Fish5.png"},
+  {"id": "Fish6", "name": "Giant Herring", "nameRu": "Гигантская сельдь", "category": "food", "icon": "Fish6.png"},
+  {"id": "Fish7", "name": "Grouper", "nameRu": "Группер", "category": "food", "icon": "Fish7.png"},
+  {"id": "Fish8", "name": "Coral Cod", "nameRu": "Коралловая треска", "category": "food", "icon": "Fish8.png"},
+  {"id": "Fish9", "name": "Anglerfish", "nameRu": "Удильщик", "category": "food", "icon": "Fish9.png"},
+  {"id": "Fish10", "name": "Northern Salmon", "nameRu": "Северный лосось", "category": "food", "icon": "Fish10.png"},
+  {"id": "Fish11", "name": "Magmafish", "nameRu": "Магмариб", "category": "food", "icon": "Fish11.png"},
+  {"id": "Fish12", "name": "Pufferfish", "nameRu": "Иглобрюх", "category": "food", "icon": "Fish12.png"},
+  {"id": "FishCooked", "name": "Cooked Fish", "nameRu": "Жареная рыба", "category": "food", "icon": "FishCooked.png"},
+  {"id": "FishRaw", "name": "Raw Fish", "nameRu": "Сырая рыба", "category": "food", "icon": "FishRaw.png"},
+  {"id": "FishWraps", "name": "Fish Wraps", "nameRu": "Рыбные роллы", "category": "food", "icon": "FishWraps.png"},
+  {"id": "FishandBread", "name": "Fish and Bread", "nameRu": "Рыба с хлебом", "category": "food", "icon": "FishandBread.png"},
+  {"id": "FishandBreadUncooked", "name": "Uncooked Fish and Bread", "nameRu": "Сырая рыба с хлебом", "category": "food", "icon": "FishandBreadUncooked.png"},
+  {"id": "FishingBait", "name": "Fishing Bait", "nameRu": "Рыболовная наживка", "category": "misc", "icon": "FishingBait.png"},
+  {"id": "FishingBaitAshlands", "name": "Ashlands Fishing Bait", "nameRu": "Наживка для Пепельных земель", "category": "misc", "icon": "FishingBaitAshlands.png"},
+  {"id": "FishingBaitCave", "name": "Cave Fishing Bait", "nameRu": "Пещерная наживка", "category": "misc", "icon": "FishingBaitCave.png"},
+  {"id": "FishingBaitDeepNorth", "name": "Deep North Fishing Bait", "nameRu": "Наживка для Глубокого Севера", "category": "misc", "icon": "FishingBaitDeepNorth.png"},
+  {"id": "FishingBaitForest", "name": "Forest Fishing Bait", "nameRu": "Лесная наживка", "category": "misc", "icon": "FishingBaitForest.png"},
+  {"id": "FishingBaitMistlands", "name": "Mistlands Fishing Bait", "nameRu": "Наживка для Туманных земель", "category": "misc", "icon": "FishingBaitMistlands.png"},
+  {"id": "FishingBaitOcean", "name": "Ocean Fishing Bait", "nameRu": "Океанская наживка", "category": "misc", "icon": "FishingBaitOcean.png"},
+  {"id": "FishingBaitPlains", "name": "Plains Fishing Bait", "nameRu": "Наживка для Равнин", "category": "misc", "icon": "FishingBaitPlains.png"},
+  {"id": "FishingBaitSwamp", "name": "Swamp Fishing Bait", "nameRu": "Болотная наживка", "category": "misc", "icon": "FishingBaitSwamp.png"},
+  {"id": "FishingRod", "name": "Fishing Rod", "nameRu": "Удочка", "category": "tools", "icon": "FishingRod.png"},
+  {"id": "FistBjornClaw", "name": "Paws of the Bear", "nameRu": "Лапы медведя", "category": "weapons", "icon": "FistBjornClaw.png"},
+  {"id": "FistBjornUndeadClaw", "name": "Vilebone Maulclaws", "nameRu": "Когти из скверных костей", "category": "weapons", "icon": "FistBjornUndeadClaw.png"},
+  {"id": "FistFenrirClaw", "name": "Flesh Rippers", "nameRu": "Плотораздиратели", "category": "weapons", "icon": "FistFenrirClaw.png"},
+  {"id": "Flametal", "name": "Flametal", "nameRu": "Огнеметалл", "category": "metals", "icon": "Flametal.png"},
+  {"id": "FlametalNew", "name": "Flametal", "nameRu": "Огнеметалл", "category": "metals", "icon": "FlametalNew.png"},
+  {"id": "FlametalOre", "name": "Flametal Ore", "nameRu": "Огнеметаллическая руда", "category": "ores", "icon": "FlametalOre.png"},
+  {"id": "FlametalOreNew", "name": "Flametal Ore", "nameRu": "Огнеметаллическая руда", "category": "ores", "icon": "FlametalOreNew.png"},
+  {"id": "Flax", "name": "Flax", "nameRu": "Лён", "category": "materials", "icon": "Flax.png"},
+  {"id": "Flint", "name": "Flint", "nameRu": "Кремень", "category": "materials", "icon": "Flint.png"},
+  {"id": "FragrantBundle", "name": "Fragrant Bundle", "nameRu": "Ароматный букет", "category": "materials", "icon": "FragrantBundle.png"},
+  {"id": "FreezeGland", "name": "Freeze Gland", "nameRu": "Морозная железа", "category": "materials", "icon": "FreezeGland.png"},
+  {"id": "FreshSeaweed", "name": "Fresh Seaweed", "nameRu": "Свежие водоросли", "category": "food", "icon": "FreshSeaweed.png"},
+  {"id": "GemstoneBlue", "name": "Iolite", "nameRu": "Иолит", "category": "valuables", "icon": "GemstoneBlue.png"},
+  {"id": "GemstoneGreen", "name": "Jade", "nameRu": "Нефрит", "category": "valuables", "icon": "GemstoneGreen.png"},
+  {"id": "GemstoneRed", "name": "Bloodstone", "nameRu": "Кровавый камень", "category": "valuables", "icon": "GemstoneRed.png"},
+  {"id": "GiantBloodSack", "name": "Blood Clot", "nameRu": "Сгусток крови", "category": "materials", "icon": "GiantBloodSack.png"},
+  {"id": "GoblinTotem", "name": "Fuling Totem", "nameRu": "Тотем фулингов", "category": "valuables", "icon": "GoblinTotem.png"},
+  {"id": "Grausten", "name": "Grausten", "nameRu": "Граустен", "category": "materials", "icon": "Grausten.png"},
+  {"id": "GreydwarfEye", "name": "Greydwarf Eye", "nameRu": "Глаз грейдворфа", "category": "materials", "icon": "GreydwarfEye.png"},
+  {"id": "Guck", "name": "Guck", "nameRu": "Слизь", "category": "materials", "icon": "Guck.png"},
+  {"id": "Hammer", "name": "Hammer", "nameRu": "Молот", "category": "tools", "icon": "Hammer.png"},
+  {"id": "HardAntler", "name": "Hard Antler", "nameRu": "Твёрдый рог", "category": "materials", "icon": "HardAntler.png"},
+  {"id": "HareMeat", "name": "Hare Meat", "nameRu": "Мясо зайца", "category": "food", "icon": "HareMeat.png"},
+  {"id": "HelmetAshlandsMediumHood", "name": "Hood of Ask", "nameRu": "Капюшон Аска", "category": "armor", "icon": "HelmetAshlandsMediumHood.png"},
+  {"id": "HelmetBerserkerHood", "name": "Berserker Hood", "nameRu": "Капюшон берсерка", "category": "armor", "icon": "HelmetBerserkerHood.png"},
+  {"id": "HelmetBerserkerUndead", "name": "Vilebone Helm", "nameRu": "Шлем из скверных костей", "category": "armor", "icon": "HelmetBerserkerUndead.png"},
+  {"id": "HelmetBronze", "name": "Bronze Helmet", "nameRu": "Бронзовый шлем", "category": "armor", "icon": "HelmetBronze.png"},
+  {"id": "HelmetCarapace", "name": "Carapace Helmet", "nameRu": "Карапасный шлем", "category": "armor", "icon": "HelmetCarapace.png"},
+  {"id": "HelmetCelebration", "name": "Celebration Hat", "nameRu": "Праздничная шляпа", "category": "armor", "icon": "HelmetCelebration.png"},
+  {"id": "HelmetDrake", "name": "Drake Helmet", "nameRu": "Шлем из шкуры дрейка", "category": "armor", "icon": "HelmetDrake.png"},
+  {"id": "HelmetDverger", "name": "Dverger Circlet", "nameRu": "Двергский обруч", "category": "armor", "icon": "HelmetDverger.png"},
+  {"id": "HelmetFenring", "name": "Fenris Hood", "nameRu": "Фенрисов капюшон", "category": "armor", "icon": "HelmetFenring.png"},
+  {"id": "HelmetFishingHat", "name": "Fishing Hat", "nameRu": "Рыбацкая шляпа", "category": "armor", "icon": "HelmetFishingHat.png"},
+  {"id": "HelmetFlametal", "name": "Flametal Helmet", "nameRu": "Огнеметаллический шлем", "category": "armor", "icon": "HelmetFlametal.png"},
+  {"id": "HelmetHat1", "name": "Hat 1", "nameRu": "Синий платок", "category": "armor", "icon": "HelmetHat1.png"},
+  {"id": "HelmetHat2", "name": "Hat 2", "nameRu": "Зелёный скрученный платок", "category": "armor", "icon": "HelmetHat2.png"},
+  {"id": "HelmetHat3", "name": "Hat 3", "nameRu": "Коричневая меховая шапка", "category": "armor", "icon": "HelmetHat3.png"},
+  {"id": "HelmetHat4", "name": "Hat 4", "nameRu": "Причудливая зелёная шапка", "category": "armor", "icon": "HelmetHat4.png"},
+  {"id": "HelmetHat5", "name": "Hat 5", "nameRu": "Простая красная шапка", "category": "armor", "icon": "HelmetHat5.png"},
+  {"id": "HelmetHat6", "name": "Hat 6", "nameRu": "Жёлтый платок", "category": "armor", "icon": "HelmetHat6.png"},
+  {"id": "HelmetHat7", "name": "Hat 7", "nameRu": "Красный скрученный платок", "category": "armor", "icon": "HelmetHat7.png"},
+  {"id": "HelmetHat8", "name": "Hat 8", "nameRu": "Серая меховая шапка", "category": "armor", "icon": "HelmetHat8.png"},
+  {"id": "HelmetHat9", "name": "Hat 9", "nameRu": "Причудливая оранжевая шапка", "category": "armor", "icon": "HelmetHat9.png"},
+  {"id": "HelmetHat10", "name": "Hat 10", "nameRu": "Простая фиолетовая шапка", "category": "armor", "icon": "HelmetHat10.png"},
+  {"id": "HelmetIron", "name": "Iron Helmet", "nameRu": "Железный шлем", "category": "armor", "icon": "HelmetIron.png"},
+  {"id": "HelmetLeather", "name": "Leather Helmet", "nameRu": "Кожаный шлем", "category": "armor", "icon": "HelmetLeather.png"},
+  {"id": "HelmetMage", "name": "Eitr-weave Hood", "nameRu": "Эйтровый капюшон", "category": "armor", "icon": "HelmetMage.png"},
+  {"id": "HelmetMage_Ashlands", "name": "Hood of Embla", "nameRu": "Капюшон Эмблы", "category": "armor", "icon": "HelmetMage_Ashlands.png"},
+  {"id": "HelmetMidsummerCrown", "name": "Midsummer Crown", "nameRu": "Венец середины лета", "category": "armor", "icon": "HelmetMidsummerCrown.png"},
+  {"id": "HelmetOdin", "name": "Hood of Odin", "nameRu": "Капюшон Одина", "category": "armor", "icon": "HelmetOdin.png"},
+  {"id": "HelmetPadded", "name": "Padded Helmet", "nameRu": "Стеганый шлем", "category": "armor", "icon": "HelmetPadded.png"},
+  {"id": "HelmetPointyHat", "name": "Pointy Hat", "nameRu": "Остроконечная шляпа", "category": "armor", "icon": "HelmetPointyHat.png"},
+  {"id": "HelmetRoot", "name": "Root Mask", "nameRu": "Корневая маска", "category": "armor", "icon": "HelmetRoot.png"},
+  {"id": "HelmetStrawHat", "name": "Straw Hat", "nameRu": "Соломенная шляпа", "category": "armor", "icon": "HelmetStrawHat.png"},
+  {"id": "HelmetSweatBand", "name": "Sweat Band", "nameRu": "Повязка на голову", "category": "armor", "icon": "HelmetSweatBand.png"},
+  {"id": "HelmetTrollLeather", "name": "Troll Leather Helmet", "nameRu": "Троллий кожаный шлем", "category": "armor", "icon": "HelmetTrollLeather.png"},
+  {"id": "HelmetYule", "name": "Yule Hat", "nameRu": "Йольская шапка", "category": "armor", "icon": "HelmetYule.png"},
+  {"id": "HildirKey_forestcrypt", "name": "Hildir Key (Forest Crypt)", "nameRu": "Ключ Хильдир (Лесной склеп)", "category": "misc", "icon": "HildirKey_forestcrypt.png"},
+  {"id": "HildirKey_mountaincave", "name": "Hildir Key (Mountain Cave)", "nameRu": "Ключ Хильдир (Горная пещера)", "category": "misc", "icon": "HildirKey_mountaincave.png"},
+  {"id": "HildirKey_plainsfortress", "name": "Hildir Key (Plains Fortress)", "nameRu": "Ключ Хильдир (Крепость на равнинах)", "category": "misc", "icon": "HildirKey_plainsfortress.png"},
+  {"id": "Hoe", "name": "Hoe", "nameRu": "Мотыга", "category": "tools", "icon": "Hoe.png"},
+  {"id": "Honey", "name": "Honey", "nameRu": "Мёд", "category": "food", "icon": "Honey.png"},
+  {"id": "HoneyGlazedChicken", "name": "Honey Glazed Chicken", "nameRu": "Курица в медовой глазури", "category": "food", "icon": "HoneyGlazedChicken.png"},
+  {"id": "HoneyGlazedChickenUncooked", "name": "Uncooked Honey Glazed Chicken", "nameRu": "Сырая курица в медовой глазури", "category": "food", "icon": "HoneyGlazedChickenUncooked.png"},
+  {"id": "Iron", "name": "Iron", "nameRu": "Железо", "category": "metals", "icon": "Iron.png"},
+  {"id": "IronNails", "name": "Iron Nails", "nameRu": "Железные гвозди", "category": "materials", "icon": "IronNails.png"},
+  {"id": "IronOre", "name": "Iron Ore", "nameRu": "Железная руда", "category": "ores", "icon": "IronOre.png"},
+  {"id": "IronScrap", "name": "Scrap Iron", "nameRu": "Металлолом", "category": "ores", "icon": "IronScrap.png"},
+  {"id": "Ironpit", "name": "Iron Pit", "nameRu": "Железная яма", "category": "misc", "icon": "Ironpit.png"},
+  {"id": "JuteBlue", "name": "Blue Jute", "nameRu": "Синяя джутовая ткань", "category": "materials", "icon": "JuteBlue.png"},
+  {"id": "JuteRed", "name": "Red Jute", "nameRu": "Красная джутовая ткань", "category": "materials", "icon": "JuteRed.png"},
+  {"id": "KnifeBlackMetal", "name": "Black Metal Knife", "nameRu": "Чернометаллический нож", "category": "weapons", "icon": "KnifeBlackMetal.png"},
+  {"id": "KnifeButcher", "name": "Butcher Knife", "nameRu": "Нож мясника", "category": "weapons", "icon": "KnifeButcher.png"},
+  {"id": "KnifeChitin", "name": "Abyssal Razor", "nameRu": "Бездонная бритва", "category": "weapons", "icon": "KnifeChitin.png"},
+  {"id": "KnifeCopper", "name": "Copper Knife", "nameRu": "Медный нож", "category": "weapons", "icon": "KnifeCopper.png"},
+  {"id": "KnifeFlint", "name": "Flint Knife", "nameRu": "Кремневый нож", "category": "weapons", "icon": "KnifeFlint.png"},
+  {"id": "KnifeSilver", "name": "Silver Knife", "nameRu": "Серебряный нож", "category": "weapons", "icon": "KnifeSilver.png"},
+  {"id": "KnifeSkollAndHati", "name": "Skoll and Hati", "nameRu": "Сколль и Хати", "category": "weapons", "icon": "KnifeSkollAndHati.png"},
+  {"id": "KnifeWood", "name": "Wooden Knife", "nameRu": "Деревянный нож", "category": "weapons", "icon": "KnifeWood.png"},
+  {"id": "LeatherScraps", "name": "Leather Scraps", "nameRu": "Кожаные обрывки", "category": "materials", "icon": "LeatherScraps.png"},
+  {"id": "LinenThread", "name": "Linen Thread", "nameRu": "Льняная нить", "category": "materials", "icon": "LinenThread.png"},
+  {"id": "LoxMeat", "name": "Lox Meat", "nameRu": "Мясо быкоящера", "category": "food", "icon": "LoxMeat.png"},
+  {"id": "LoxPelt", "name": "Lox Pelt", "nameRu": "Шкура быкоящера", "category": "materials", "icon": "LoxPelt.png"},
+  {"id": "LoxPie", "name": "Lox Meat Pie", "nameRu": "Пирог с мясом быкоящера", "category": "food", "icon": "LoxPie.png"},
+  {"id": "LoxPieUncooked", "name": "Uncooked Lox Meat Pie", "nameRu": "Сырой пирог с мясом быкоящера", "category": "food", "icon": "LoxPieUncooked.png"},
+  {"id": "MaceBronze", "name": "Bronze Mace", "nameRu": "Бронзовая булава", "category": "weapons", "icon": "MaceBronze.png"},
+  {"id": "MaceEldner", "name": "Eldner", "nameRu": "Эльднер", "category": "weapons", "icon": "MaceEldner.png"},
+  {"id": "MaceEldnerBlood", "name": "Bloody Eldner", "nameRu": "Кровавый Эльднер", "category": "weapons", "icon": "MaceEldnerBlood.png"},
+  {"id": "MaceEldnerLightning", "name": "Thundering Eldner", "nameRu": "Громовой Эльднер", "category": "weapons", "icon": "MaceEldnerLightning.png"},
+  {"id": "MaceEldnerNature", "name": "Primal Eldner", "nameRu": "Первозданный Эльднер", "category": "weapons", "icon": "MaceEldnerNature.png"},
+  {"id": "MaceIron", "name": "Iron Mace", "nameRu": "Железная булава", "category": "weapons", "icon": "MaceIron.png"},
+  {"id": "MaceNeedle", "name": "Porcupine", "nameRu": "Дикобраз", "category": "weapons", "icon": "MaceNeedle.png"},
+  {"id": "MaceSilver", "name": "Frostner", "nameRu": "Фростнер", "category": "weapons", "icon": "MaceSilver.png"},
+  {"id": "MaceWood", "name": "Wooden Mace", "nameRu": "Деревянная булава", "category": "weapons", "icon": "MaceWood.png"},
+  {"id": "MagicallyStuffedShroom", "name": "Magically Stuffed Shroom", "nameRu": "Волшебный фаршированный гриб", "category": "food", "icon": "MagicallyStuffedShroom.png"},
+  {"id": "MagicallyStuffedShroomUncooked", "name": "Uncooked Magically Stuffed Shroom", "nameRu": "Сырой волшебный фаршированный гриб", "category": "food", "icon": "MagicallyStuffedShroomUncooked.png"},
+  {"id": "Mandible", "name": "Mandible", "nameRu": "Мандибула", "category": "materials", "icon": "Mandible.png"},
+  {"id": "MarinatedGreens", "name": "Marinated Greens", "nameRu": "Маринованная зелень", "category": "food", "icon": "MarinatedGreens.png"},
+  {"id": "MashedMeat", "name": "Mashed Meat", "nameRu": "Мясное пюре", "category": "food", "icon": "MashedMeat.png"},
+  {"id": "MeadBaseBugRepellent", "name": "Mead Base: Bug Repellent", "nameRu": "Основа варева от насекомых", "category": "materials", "icon": "MeadBaseBugRepellent.png"},
+  {"id": "MeadBaseBzerker", "name": "Mead Base: Berserkir", "nameRu": "Основа варева берсерка", "category": "materials", "icon": "MeadBaseBzerker.png"},
+  {"id": "MeadBaseEitrLingering", "name": "Mead Base: Lingering Eitr", "nameRu": "Основа варева эйтра", "category": "materials", "icon": "MeadBaseEitrLingering.png"},
+  {"id": "MeadBaseEitrMinor", "name": "Mead Base: Minor Eitr", "nameRu": "Основа слабого варева эйтра", "category": "materials", "icon": "MeadBaseEitrMinor.png"},
+  {"id": "MeadBaseFrostResist", "name": "Mead Base: Frost Resistance", "nameRu": "Основа варева защиты от холода", "category": "materials", "icon": "MeadBaseFrostResist.png"},
+  {"id": "MeadBaseHasty", "name": "Mead Base: Hasty", "nameRu": "Основа варева поспешности", "category": "materials", "icon": "MeadBaseHasty.png"},
+  {"id": "MeadBaseHealthLingering", "name": "Mead Base: Lingering Health", "nameRu": "Основа варева длительного лечения", "category": "materials", "icon": "MeadBaseHealthLingering.png"},
+  {"id": "MeadBaseHealthMajor", "name": "Mead Base: Major Healing", "nameRu": "Основа сильного лечащего варева", "category": "materials", "icon": "MeadBaseHealthMajor.png"},
+  {"id": "MeadBaseHealthMedium", "name": "Mead Base: Medium Healing", "nameRu": "Основа среднего лечащего варева", "category": "materials", "icon": "MeadBaseHealthMedium.png"},
+  {"id": "MeadBaseHealthMinor", "name": "Mead Base: Minor Healing", "nameRu": "Основа слабого лечащего варева", "category": "materials", "icon": "MeadBaseHealthMinor.png"},
+  {"id": "MeadBaseLightfoot", "name": "Mead Base: Lightfoot", "nameRu": "Основа варева лёгкости", "category": "materials", "icon": "MeadBaseLightfoot.png"},
+  {"id": "MeadBasePoisonResist", "name": "Mead Base: Poison Resistance", "nameRu": "Основа варева защиты от яда", "category": "materials", "icon": "MeadBasePoisonResist.png"},
+  {"id": "MeadBaseStaminaLingering", "name": "Mead Base: Lingering Stamina", "nameRu": "Основа варева длительной выносливости", "category": "materials", "icon": "MeadBaseStaminaLingering.png"},
+  {"id": "MeadBaseStaminaMedium", "name": "Mead Base: Medium Stamina", "nameRu": "Основа среднего варева выносливости", "category": "materials", "icon": "MeadBaseStaminaMedium.png"},
+  {"id": "MeadBaseStaminaMinor", "name": "Mead Base: Minor Stamina", "nameRu": "Основа слабого варева выносливости", "category": "materials", "icon": "MeadBaseStaminaMinor.png"},
+  {"id": "MeadBaseStrength", "name": "Mead Base: Strength", "nameRu": "Основа варева силы", "category": "materials", "icon": "MeadBaseStrength.png"},
+  {"id": "MeadBaseSwimmer", "name": "Mead Base: Swimmer", "nameRu": "Основа варева пловца", "category": "materials", "icon": "MeadBaseSwimmer.png"},
+  {"id": "MeadBaseTamer", "name": "Mead Base: Tamer", "nameRu": "Основа варева укротителя", "category": "materials", "icon": "MeadBaseTamer.png"},
+  {"id": "MeadBaseTasty", "name": "Mead Base: Tasty", "nameRu": "Основа вкусного варева", "category": "materials", "icon": "MeadBaseTasty.png"},
+  {"id": "MeadBugRepellent", "name": "Bug Repellent Mead", "nameRu": "Варево от насекомых", "category": "meads", "icon": "MeadBugRepellent.png"},
+  {"id": "MeadBzerker", "name": "Berserkir Mead", "nameRu": "Варево берсерка", "category": "meads", "icon": "MeadBzerker.png"},
+  {"id": "MeadEitrLingering", "name": "Lingering Eitr Mead", "nameRu": "Варево эйтра", "category": "meads", "icon": "MeadEitrLingering.png"},
+  {"id": "MeadEitrMinor", "name": "Minor Eitr Mead", "nameRu": "Слабое варево эйтра", "category": "meads", "icon": "MeadEitrMinor.png"},
+  {"id": "MeadFrostResist", "name": "Frost Resistance Mead", "nameRu": "Варево защиты от холода", "category": "meads", "icon": "MeadFrostResist.png"},
+  {"id": "MeadHasty", "name": "Hasty Mead", "nameRu": "Варево поспешности", "category": "meads", "icon": "MeadHasty.png"},
+  {"id": "MeadHealthLingering", "name": "Lingering Health Mead", "nameRu": "Варево длительного лечения", "category": "meads", "icon": "MeadHealthLingering.png"},
+  {"id": "MeadHealthMajor", "name": "Major Healing Mead", "nameRu": "Сильное лечащее варево", "category": "meads", "icon": "MeadHealthMajor.png"},
+  {"id": "MeadHealthMedium", "name": "Medium Healing Mead", "nameRu": "Среднее лечащее варево", "category": "meads", "icon": "MeadHealthMedium.png"},
+  {"id": "MeadHealthMinor", "name": "Minor Healing Mead", "nameRu": "Слабое лечащее варево", "category": "meads", "icon": "MeadHealthMinor.png"},
+  {"id": "MeadLightfoot", "name": "Lightfoot Mead", "nameRu": "Варево лёгкости", "category": "meads", "icon": "MeadLightfoot.png"},
+  {"id": "MeadPoisonResist", "name": "Poison Resistance Mead", "nameRu": "Варево защиты от яда", "category": "meads", "icon": "MeadPoisonResist.png"},
+  {"id": "MeadStaminaLingering", "name": "Lingering Stamina Mead", "nameRu": "Варево длительной выносливости", "category": "meads", "icon": "MeadStaminaLingering.png"},
+  {"id": "MeadStaminaMedium", "name": "Medium Stamina Mead", "nameRu": "Среднее варево выносливости", "category": "meads", "icon": "MeadStaminaMedium.png"},
+  {"id": "MeadStaminaMinor", "name": "Minor Stamina Mead", "nameRu": "Слабое варево выносливости", "category": "meads", "icon": "MeadStaminaMinor.png"},
+  {"id": "MeadStrength", "name": "Strength Mead", "nameRu": "Варево силы", "category": "meads", "icon": "MeadStrength.png"},
+  {"id": "MeadSwimmer", "name": "Swimmer Mead", "nameRu": "Варево пловца", "category": "meads", "icon": "MeadSwimmer.png"},
+  {"id": "MeadTamer", "name": "Tamer Mead", "nameRu": "Варево укротителя", "category": "meads", "icon": "MeadTamer.png"},
+  {"id": "MeadTasty", "name": "Tasty Mead", "nameRu": "Вкусное варево", "category": "meads", "icon": "MeadTasty.png"},
+  {"id": "MeadTrollPheromones", "name": "Troll Pheromones Mead", "nameRu": "Варево с тролльими феромонами", "category": "meads", "icon": "MeadTrollPheromones.png"},
+  {"id": "MeatPlatter", "name": "Meat Platter", "nameRu": "Мясное ассорти", "category": "food", "icon": "MeatPlatter.png"},
+  {"id": "MeatPlatterUncooked", "name": "Uncooked Meat Platter", "nameRu": "Сырое мясное ассорти", "category": "food", "icon": "MeatPlatterUncooked.png"},
+  {"id": "MechanicalSpring", "name": "Mechanical Spring", "nameRu": "Механическая пружина", "category": "materials", "icon": "MechanicalSpring.png"},
+  {"id": "MinceMeatSauce", "name": "Minced Meat Sauce", "nameRu": "Мясной фарш с соусом", "category": "food", "icon": "MinceMeatSauce.png"},
+  {"id": "MisthareSupreme", "name": "Misthare Supreme", "nameRu": "Изысканный заяц из туманов", "category": "food", "icon": "MisthareSupreme.png"},
+  {"id": "MisthareSupremeUncooked", "name": "Uncooked Misthare Supreme", "nameRu": "Сырой изысканный заяц из туманов", "category": "food", "icon": "MisthareSupremeUncooked.png"},
+  {"id": "MoltenCore", "name": "Molten Core", "nameRu": "Расплавленное ядро", "category": "materials", "icon": "MoltenCore.png"},
+  {"id": "MorgenHeart", "name": "Morgen Heart", "nameRu": "Сердце моргена", "category": "materials", "icon": "MorgenHeart.png"},
+  {"id": "MorgenSinew", "name": "Morgen Sinew", "nameRu": "Сухожилие моргена", "category": "materials", "icon": "MorgenSinew.png"},
+  {"id": "Mushroom", "name": "Mushroom", "nameRu": "Гриб", "category": "food", "icon": "Mushroom.png"},
+  {"id": "MushroomBlue", "name": "Blue Mushroom", "nameRu": "Синий гриб", "category": "food", "icon": "MushroomBlue.png"},
+  {"id": "MushroomBzerker", "name": "Berserker Mushroom", "nameRu": "Гриб берсерка", "category": "food", "icon": "MushroomBzerker.png"},
+  {"id": "MushroomJotunpuffs", "name": "Jotun Puffs", "nameRu": "Ётуновы puff-грибы", "category": "food", "icon": "MushroomJotunpuffs.png"},
+  {"id": "MushroomMagecap", "name": "Magecap", "nameRu": "Шляпа мага", "category": "food", "icon": "MushroomMagecap.png"},
+  {"id": "MushroomOmelette", "name": "Mushroom Omelette", "nameRu": "Грибной омлет", "category": "food", "icon": "MushroomOmelette.png"},
+  {"id": "MushroomSmokePuff", "name": "Smoke Puff", "nameRu": "Дымный гриб", "category": "food", "icon": "MushroomSmokePuff.png"},
+  {"id": "MushroomYellow", "name": "Yellow Mushroom", "nameRu": "Жёлтый гриб", "category": "food", "icon": "MushroomYellow.png"},
+  {"id": "NeckTail", "name": "Neck Tail", "nameRu": "Хвост ящера", "category": "food", "icon": "NeckTail.png"},
+  {"id": "NeckTailGrilled", "name": "Grilled Neck Tail", "nameRu": "Жареный хвост ящера", "category": "food", "icon": "NeckTailGrilled.png"},
+  {"id": "Needle", "name": "Needle", "nameRu": "Игла", "category": "materials", "icon": "Needle.png"},
+  {"id": "Obsidian", "name": "Obsidian", "nameRu": "Обсидиан", "category": "materials", "icon": "Obsidian.png"},
+  {"id": "Onion", "name": "Onion", "nameRu": "Лук", "category": "materials", "icon": "Onion.png"},
+  {"id": "OnionSeeds", "name": "Onion Seeds", "nameRu": "Семена лука", "category": "seeds", "icon": "OnionSeeds.png"},
+  {"id": "OnionSoup", "name": "Onion Soup", "nameRu": "Луковый суп", "category": "food", "icon": "OnionSoup.png"},
+  {"id": "Ooze", "name": "Ooze", "nameRu": "Жижа", "category": "materials", "icon": "Ooze.png"},
+  {"id": "Pickable_DvergrLantern", "name": "Dvergr Lantern", "nameRu": "Фонарь двергов", "category": "misc", "icon": "Pickable_DvergrLantern.png"},
+  {"id": "PickaxeAntler", "name": "Antler Pickaxe", "nameRu": "Оленья кирка", "category": "tools", "icon": "PickaxeAntler.png"},
+  {"id": "PickaxeBlackMetal", "name": "Black Metal Pickaxe", "nameRu": "Чернометаллическая кирка", "category": "tools", "icon": "PickaxeBlackMetal.png"},
+  {"id": "PickaxeBronze", "name": "Bronze Pickaxe", "nameRu": "Бронзовая кирка", "category": "tools", "icon": "PickaxeBronze.png"},
+  {"id": "PickaxeIron", "name": "Iron Pickaxe", "nameRu": "Железная кирка", "category": "tools", "icon": "PickaxeIron.png"},
+  {"id": "PickaxeStone", "name": "Stone Pickaxe", "nameRu": "Каменная кирка", "category": "tools", "icon": "PickaxeStone.png"},
+  {"id": "PineCone", "name": "Pine Cone", "nameRu": "Сосновая шишка", "category": "seeds", "icon": "PineCone.png"},
+  {"id": "PiquantPie", "name": "Piquant Pie", "nameRu": "Пикантный пирог", "category": "food", "icon": "PiquantPie.png"},
+  {"id": "PiquantPieUncooked", "name": "Uncooked Piquant Pie", "nameRu": "Сырой пикантный пирог", "category": "food", "icon": "PiquantPieUncooked.png"},
+  {"id": "Pot_Shard_Green", "name": "Green Pot Shard", "nameRu": "Зелёный осколок горшка", "category": "materials", "icon": "Pot_Shard_Green.png"},
+  {"id": "PowderedDragonEgg", "name": "Powdered Dragon Egg", "nameRu": "Порошок из яйца дракона", "category": "materials", "icon": "PowderedDragonEgg.png"},
+  {"id": "ProustitePowder", "name": "Proustite Powder", "nameRu": "Порошок прусти", "category": "materials", "icon": "ProustitePowder.png"},
+  {"id": "Pukeberries", "name": "Pukeberries", "nameRu": "Ягоды-рвотницы", "category": "food", "icon": "Pukeberries.png"},
+  {"id": "PungentPebbles", "name": "Pungent Pebbles", "nameRu": "Едкие камешки", "category": "materials", "icon": "PungentPebbles.png"},
+  {"id": "QueenBee", "name": "Queen Bee", "nameRu": "Пчелиная матка", "category": "materials", "icon": "QueenBee.png"},
+  {"id": "QueenDrop", "name": "Queen Drop", "nameRu": "Трофей Королевы", "category": "materials", "icon": "QueenDrop.png"},
+  {"id": "QueensJam", "name": "Queen's Jam", "nameRu": "Королевское варенье", "category": "food", "icon": "QueensJam.png"},
+  {"id": "Raspberry", "name": "Raspberry", "nameRu": "Малина", "category": "food", "icon": "Raspberry.png"},
+  {"id": "RawMeat", "name": "Boar Meat", "nameRu": "Сырое мясо кабана", "category": "food", "icon": "RawMeat.png"},
+  {"id": "Resin", "name": "Resin", "nameRu": "Смола", "category": "materials", "icon": "Resin.png"},
+  {"id": "RoastedCrustPie", "name": "Roasted Crust Pie", "nameRu": "Пирог с хрустящей корочкой", "category": "food", "icon": "RoastedCrustPie.png"},
+  {"id": "RoastedCrustPieUncooked", "name": "Uncooked Roasted Crust Pie", "nameRu": "Сырой пирог с хрустящей корочкой", "category": "food", "icon": "RoastedCrustPieUncooked.png"},
+  {"id": "Root", "name": "Root", "nameRu": "Корень", "category": "materials", "icon": "Root.png"},
+  {"id": "RottenMeat", "name": "Rotten Meat", "nameRu": "Испорченное мясо", "category": "materials", "icon": "RottenMeat.png"},
+  {"id": "RoundWood", "name": "Round Wood", "nameRu": "Круглое дерево", "category": "materials", "icon": "RoundWood.png"},
+  {"id": "RoyalJelly", "name": "Royal Jelly", "nameRu": "Маточное молочко", "category": "food", "icon": "RoyalJelly.png"},
+  {"id": "Ruby", "name": "Ruby", "nameRu": "Рубин", "category": "valuables", "icon": "Ruby.png"},
+  {"id": "SaddleAsksvin", "name": "Asksvin Saddle", "nameRu": "Седло для асксвина", "category": "misc", "icon": "SaddleAsksvin.png"},
+  {"id": "SaddleLox", "name": "Lox Saddle", "nameRu": "Седло для быкоящера", "category": "misc", "icon": "SaddleLox.png"},
+  {"id": "Salad", "name": "Salad", "nameRu": "Салат", "category": "food", "icon": "Salad.png"},
+  {"id": "Sap", "name": "Sap", "nameRu": "Живица", "category": "materials", "icon": "Sap.png"},
+  {"id": "Sausages", "name": "Sausages", "nameRu": "Колбасы", "category": "food", "icon": "Sausages.png"},
+  {"id": "ScaleHide", "name": "Scale Hide", "nameRu": "Чешуйчатая шкура", "category": "materials", "icon": "ScaleHide.png"},
+  {"id": "ScorchingMedley", "name": "Scorching Medley", "nameRu": "Обжигающее ассорти", "category": "food", "icon": "ScorchingMedley.png"},
+  {"id": "Scythe", "name": "Scythe", "nameRu": "Коса", "category": "tools", "icon": "Scythe.png"},
+  {"id": "ScytheHandle", "name": "Scythe Handle", "nameRu": "Рукоять косы", "category": "materials", "icon": "ScytheHandle.png"},
+  {"id": "SeekerAspic", "name": "Seeker Aspic", "nameRu": "Холодец из искателя", "category": "food", "icon": "SeekerAspic.png"},
+  {"id": "SerpentMeat", "name": "Serpent Meat", "nameRu": "Мясо змея", "category": "food", "icon": "SerpentMeat.png"},
+  {"id": "SerpentMeatCooked", "name": "Cooked Serpent Meat", "nameRu": "Жареное мясо змея", "category": "food", "icon": "SerpentMeatCooked.png"},
+  {"id": "SerpentScale", "name": "Serpent Scale", "nameRu": "Чешуя змея", "category": "materials", "icon": "SerpentScale.png"},
+  {"id": "SerpentStew", "name": "Serpent Stew", "nameRu": "Змеиное рагу", "category": "food", "icon": "SerpentStew.png"},
+  {"id": "SharpeningStone", "name": "Sharpening Stone", "nameRu": "Точильный камень", "category": "materials", "icon": "SharpeningStone.png"},
+  {"id": "ShieldBanded", "name": "Banded Shield", "nameRu": "Усиленный щит", "category": "weapons", "icon": "ShieldBanded.png"},
+  {"id": "ShieldBlackmetal", "name": "Black Metal Shield", "nameRu": "Чернометаллический щит", "category": "weapons", "icon": "ShieldBlackmetal.png"},
+  {"id": "ShieldBlackmetalTower", "name": "Black Metal Tower Shield", "nameRu": "Чернометаллический башенный щит", "category": "weapons", "icon": "ShieldBlackmetalTower.png"},
+  {"id": "ShieldBoneTower", "name": "Bone Tower Shield", "nameRu": "Костяной башенный щит", "category": "weapons", "icon": "ShieldBoneTower.png"},
+  {"id": "ShieldBronzeBuckler", "name": "Bronze Buckler", "nameRu": "Бронзовый баклер", "category": "weapons", "icon": "ShieldBronzeBuckler.png"},
+  {"id": "ShieldCarapace", "name": "Carapace Shield", "nameRu": "Карапасный щит", "category": "weapons", "icon": "ShieldCarapace.png"},
+  {"id": "ShieldCarapaceBuckler", "name": "Carapace Buckler", "nameRu": "Карапасный баклер", "category": "weapons", "icon": "ShieldCarapaceBuckler.png"},
+  {"id": "ShieldCore", "name": "Shield Core", "nameRu": "Ядро щита", "category": "materials", "icon": "ShieldCore.png"},
+  {"id": "ShieldFlametal", "name": "Flametal Shield", "nameRu": "Огнеметаллический щит", "category": "weapons", "icon": "ShieldFlametal.png"},
+  {"id": "ShieldFlametalTower", "name": "Flametal Tower Shield", "nameRu": "Огнеметаллический башенный щит", "category": "weapons", "icon": "ShieldFlametalTower.png"},
+  {"id": "ShieldIronBuckler", "name": "Iron Buckler", "nameRu": "Железный баклер", "category": "weapons", "icon": "ShieldIronBuckler.png"},
+  {"id": "ShieldIronTower", "name": "Iron Tower Shield", "nameRu": "Железный башенный щит", "category": "weapons", "icon": "ShieldIronTower.png"},
+  {"id": "ShieldKnight", "name": "Knight Shield", "nameRu": "Рыцарский щит", "category": "weapons", "icon": "ShieldKnight.png"},
+  {"id": "ShieldSerpentscale", "name": "Serpent Scale Shield", "nameRu": "Щит из чешуи змея", "category": "weapons", "icon": "ShieldSerpentscale.png"},
+  {"id": "ShieldSilver", "name": "Silver Shield", "nameRu": "Серебряный щит", "category": "weapons", "icon": "ShieldSilver.png"},
+  {"id": "ShieldWood", "name": "Wood Shield", "nameRu": "Деревянный щит", "category": "weapons", "icon": "ShieldWood.png"},
+  {"id": "ShieldWoodTower", "name": "Wood Tower Shield", "nameRu": "Деревянный башенный щит", "category": "weapons", "icon": "ShieldWoodTower.png"},
+  {"id": "ShocklateSmoothie", "name": "Muckshake", "nameRu": "Грязевой коктейль", "category": "food", "icon": "ShocklateSmoothie.png"},
+  {"id": "Silver", "name": "Silver", "nameRu": "Серебро", "category": "metals", "icon": "Silver.png"},
+  {"id": "SilverNecklace", "name": "Silver Necklace", "nameRu": "Серебряное колье", "category": "valuables", "icon": "SilverNecklace.png"},
+  {"id": "SilverOre", "name": "Silver Ore", "nameRu": "Серебряная руда", "category": "ores", "icon": "SilverOre.png"},
+  {"id": "SizzlingBerryBroth", "name": "Sizzling Berry Broth", "nameRu": "Шипящий ягодный бульон", "category": "food", "icon": "SizzlingBerryBroth.png"},
+  {"id": "SledgeCheat", "name": "Cheat Sledge", "nameRu": "Чит-кувалда", "category": "weapons", "icon": "SledgeCheat.png"},
+  {"id": "SledgeDemolisher", "name": "Demolisher", "nameRu": "Разрушитель", "category": "weapons", "icon": "SledgeDemolisher.png"},
+  {"id": "SledgeIron", "name": "Iron Sledge", "nameRu": "Железная кувалда", "category": "weapons", "icon": "SledgeIron.png"},
+  {"id": "SledgeStagbreaker", "name": "Stagbreaker", "nameRu": "Оленелом", "category": "weapons", "icon": "SledgeStagbreaker.png"},
+  {"id": "SledgeWood", "name": "Wooden Sledge", "nameRu": "Деревянная кувалда", "category": "weapons", "icon": "SledgeWood.png"},
+  {"id": "SoftTissue", "name": "Soft Tissue", "nameRu": "Мягкая ткань", "category": "materials", "icon": "SoftTissue.png"},
+  {"id": "Sparkler", "name": "Sparkler", "nameRu": "Бенгальский огонь", "category": "misc", "icon": "Sparkler.png"},
+  {"id": "SparklingShroomshake", "name": "Sparkling Shroomshake", "nameRu": "Игристый грибной коктейль", "category": "food", "icon": "SparklingShroomshake.png"},
+  {"id": "SpearBronze", "name": "Bronze Spear", "nameRu": "Бронзовое копьё", "category": "weapons", "icon": "SpearBronze.png"},
+  {"id": "SpearCarapace", "name": "Carapace Spear", "nameRu": "Карапасное копьё", "category": "weapons", "icon": "SpearCarapace.png"},
+  {"id": "SpearChitin", "name": "Abyssal Harpoon", "nameRu": "Бездонный гарпун", "category": "tools", "icon": "SpearChitin.png"},
+  {"id": "SpearElderbark", "name": "Ancient Bark Spear", "nameRu": "Копьё из древней коры", "category": "weapons", "icon": "SpearElderbark.png"},
+  {"id": "SpearFlint", "name": "Flint Spear", "nameRu": "Кремневое копьё", "category": "weapons", "icon": "SpearFlint.png"},
+  {"id": "SpearSplitner", "name": "Splitnir", "nameRu": "Скозлуп", "category": "weapons", "icon": "SpearSplitner.png"},
+  {"id": "SpearSplitner_Blood", "name": "Splitnir the Bleeding", "nameRu": "Кровавый Скозлуп", "category": "weapons", "icon": "SpearSplitner_Blood.png"},
+  {"id": "SpearSplitner_Lightning", "name": "Splitnir the Storming", "nameRu": "Штормовой Скозлуп", "category": "weapons", "icon": "SpearSplitner_Lightning.png"},
+  {"id": "SpearSplitner_Nature", "name": "Splitnir the Primal", "nameRu": "Первозданный Скозлуп", "category": "weapons", "icon": "SpearSplitner_Nature.png"},
+  {"id": "SpearWolfFang", "name": "Fang Spear", "nameRu": "Копьё с клыком", "category": "weapons", "icon": "SpearWolfFang.png"},
+  {"id": "SpearWood", "name": "Wooden Spear", "nameRu": "Деревянное копьё", "category": "weapons", "icon": "SpearWood.png"},
+  {"id": "SpiceAshlands", "name": "Ashlands Spice", "nameRu": "Специя Пепельных земель", "category": "materials", "icon": "SpiceAshlands.png"},
+  {"id": "SpiceForests", "name": "Forest Spice", "nameRu": "Лесная специя", "category": "materials", "icon": "SpiceForests.png"},
+  {"id": "SpiceMistlands", "name": "Mistlands Spice", "nameRu": "Специя Туманных земель", "category": "materials", "icon": "SpiceMistlands.png"},
+  {"id": "SpiceMountains", "name": "Mountain Spice", "nameRu": "Горная специя", "category": "materials", "icon": "SpiceMountains.png"},
+  {"id": "SpiceOceans", "name": "Ocean Spice", "nameRu": "Океанская специя", "category": "materials", "icon": "SpiceOceans.png"},
+  {"id": "SpicePlains", "name": "Plains Spice", "nameRu": "Специя Равнин", "category": "materials", "icon": "SpicePlains.png"},
+  {"id": "SpicyMarmalade", "name": "Spicy Marmalade", "nameRu": "Острый мармелад", "category": "food", "icon": "SpicyMarmalade.png"},
+  {"id": "StaffClusterBomb", "name": "Staff of Fracturing", "nameRu": "Посох разрушения", "category": "weapons", "icon": "StaffClusterBomb.png"},
+  {"id": "StaffFireball", "name": "Staff of Embers", "nameRu": "Посох углей", "category": "weapons", "icon": "StaffFireball.png"},
+  {"id": "StaffGreenRoots", "name": "Staff of the Wild", "nameRu": "Посох дикой природы", "category": "weapons", "icon": "StaffGreenRoots.png"},
+  {"id": "StaffIceShards", "name": "Staff of Frost", "nameRu": "Посох инея", "category": "weapons", "icon": "StaffIceShards.png"},
+  {"id": "StaffLightning", "name": "Dundr", "nameRu": "Дундр", "category": "weapons", "icon": "StaffLightning.png"},
+  {"id": "StaffRedTroll", "name": "Trollstav", "nameRu": "Тролльстав", "category": "weapons", "icon": "StaffRedTroll.png"},
+  {"id": "StaffShield", "name": "Staff of Protection", "nameRu": "Посох защиты", "category": "weapons", "icon": "StaffShield.png"},
+  {"id": "StaffSkeleton", "name": "Dead Raiser", "nameRu": "Подниматель мертвых", "category": "weapons", "icon": "StaffSkeleton.png"},
+  {"id": "Stone", "name": "Stone", "nameRu": "Камень", "category": "materials", "icon": "Stone.png"},
+  {"id": "Stonerock", "name": "Stonerock", "nameRu": "Каменистая порода", "category": "materials", "icon": "Stonerock.png"},
+  {"id": "SulfurStone", "name": "Sulfur Rock", "nameRu": "Серный камень", "category": "materials", "icon": "SulfurStone.png"},
+  {"id": "SurtlingCore", "name": "Surtling Core", "nameRu": "Ядро суртлинга", "category": "materials", "icon": "SurtlingCore.png"},
+  {"id": "SwordBlackmetal", "name": "Black Metal Sword", "nameRu": "Чернометаллический меч", "category": "weapons", "icon": "SwordBlackmetal.png"},
+  {"id": "SwordBronze", "name": "Bronze Sword", "nameRu": "Бронзовый меч", "category": "weapons", "icon": "SwordBronze.png"},
+  {"id": "SwordCheat", "name": "Cheat Sword", "nameRu": "Чит-меч", "category": "weapons", "icon": "SwordCheat.png"},
+  {"id": "SwordDyrnwyn", "name": "Dyrnwyn", "nameRu": "Дюрнвин", "category": "weapons", "icon": "SwordDyrnwyn.png"},
+  {"id": "SwordIron", "name": "Iron Sword", "nameRu": "Железный меч", "category": "weapons", "icon": "SwordIron.png"},
+  {"id": "SwordIronFire", "name": "Dyrnwyn", "nameRu": "Дюрнвин", "category": "weapons", "icon": "SwordIronFire.png"},
+  {"id": "SwordMistwalker", "name": "Mistwalker", "nameRu": "Туманный странник", "category": "weapons", "icon": "SwordMistwalker.png"},
+  {"id": "SwordNiedhogg", "name": "Nidhögg", "nameRu": "Нидхёгг", "category": "weapons", "icon": "SwordNiedhogg.png"},
+  {"id": "SwordNiedhoggBlood", "name": "Bloody Nidhögg", "nameRu": "Кровавый Нидхёгг", "category": "weapons", "icon": "SwordNiedhoggBlood.png"},
+  {"id": "SwordNiedhoggLightning", "name": "Thundering Nidhögg", "nameRu": "Громовой Нидхёгг", "category": "weapons", "icon": "SwordNiedhoggLightning.png"},
+  {"id": "SwordNiedhoggNature", "name": "Primal Nidhögg", "nameRu": "Первозданный Нидхёгг", "category": "weapons", "icon": "SwordNiedhoggNature.png"},
+  {"id": "SwordSilver", "name": "Silver Sword", "nameRu": "Серебряный меч", "category": "weapons", "icon": "SwordSilver.png"},
+  {"id": "SwordWood", "name": "Wooden Sword", "nameRu": "Деревянный меч", "category": "weapons", "icon": "SwordWood.png"},
+  {"id": "THSwordKrom", "name": "Krom", "nameRu": "Кром", "category": "weapons", "icon": "THSwordKrom.png"},
+  {"id": "THSwordSlayer", "name": "Slayer", "nameRu": "Истребитель", "category": "weapons", "icon": "THSwordSlayer.png"},
+  {"id": "THSwordSlayerBlood", "name": "Brutal Slayer", "nameRu": "Жестокий истребитель", "category": "weapons", "icon": "THSwordSlayerBlood.png"},
+  {"id": "THSwordSlayerLightning", "name": "Scourging Slayer", "nameRu": "Карающий истребитель", "category": "weapons", "icon": "THSwordSlayerLightning.png"},
+  {"id": "THSwordSlayerNature", "name": "Primal Slayer", "nameRu": "Первозданный истребитель", "category": "weapons", "icon": "THSwordSlayerNature.png"},
+  {"id": "THSwordWood", "name": "Wooden Greatsword", "nameRu": "Деревянный двуручный меч", "category": "weapons", "icon": "THSwordWood.png"},
+  {"id": "Tankard", "name": "Tankard", "nameRu": "Кружка", "category": "misc", "icon": "Tankard.png"},
+  {"id": "TankardAnniversary", "name": "Anniversary Tankard", "nameRu": "Юбилейная кружка", "category": "misc", "icon": "TankardAnniversary.png"},
+  {"id": "TankardOdin", "name": "Mead Horn of Odin", "nameRu": "Медовый рог Одина", "category": "misc", "icon": "TankardOdin.png"},
+  {"id": "Tankard_dvergr", "name": "Dvergr Tankard", "nameRu": "Двергская кружка", "category": "misc", "icon": "Tankard_dvergr.png"},
+  {"id": "Tar", "name": "Tar", "nameRu": "Дёготь", "category": "materials", "icon": "Tar.png"},
+  {"id": "Thistle", "name": "Thistle", "nameRu": "Чертополох", "category": "materials", "icon": "Thistle.png"},
+  {"id": "ThunderStone", "name": "Thunder Stone", "nameRu": "Громовой камень", "category": "materials", "icon": "ThunderStone.png"},
+  {"id": "Tin", "name": "Tin", "nameRu": "Олово", "category": "metals", "icon": "Tin.png"},
+  {"id": "TinOre", "name": "Tin Ore", "nameRu": "Оловянная руда", "category": "ores", "icon": "TinOre.png"},
+  {"id": "Torch", "name": "Torch", "nameRu": "Факел", "category": "tools", "icon": "Torch.png"},
+  {"id": "TrinketBlackDamageHealth", "name": "Bracelets of the Brave", "nameRu": "Браслеты храбрых", "category": "trinkets", "icon": "TrinketBlackDamageHealth.png"},
+  {"id": "TrinketBlackStamina", "name": "Evasion Mantle", "nameRu": "Мантия уклонения", "category": "trinkets", "icon": "TrinketBlackStamina.png"},
+  {"id": "TrinketBronzeHealth", "name": "Heart of the Forest", "nameRu": "Сердце леса", "category": "trinkets", "icon": "TrinketBronzeHealth.png"},
+  {"id": "TrinketBronzeStamina", "name": "Bronze Pendant", "nameRu": "Бронзовый кулон", "category": "trinkets", "icon": "TrinketBronzeStamina.png"},
+  {"id": "TrinketCarapaceEitr", "name": "Pulsating Earrings", "nameRu": "Пульсирующие серьги", "category": "trinkets", "icon": "TrinketCarapaceEitr.png"},
+  {"id": "TrinketChitinSwim", "name": "Fins of Destiny", "nameRu": "Плавники судьбы", "category": "trinkets", "icon": "TrinketChitinSwim.png"},
+  {"id": "TrinketFlametalEitr", "name": "Jrmundling", "nameRu": "Йормундлинг", "category": "trinkets", "icon": "TrinketFlametalEitr.png"},
+  {"id": "TrinketFlametalStaminaHealth", "name": "Brimstone", "nameRu": "Сера", "category": "trinkets", "icon": "TrinketFlametalStaminaHealth.png"},
+  {"id": "TrinketIronHealth", "name": "Iron Brooch", "nameRu": "Железная брошь", "category": "trinkets", "icon": "TrinketIronHealth.png"},
+  {"id": "TrinketIronStamina", "name": "Nimble Anklet", "nameRu": "Ловкий браслет на ногу", "category": "trinkets", "icon": "TrinketIronStamina.png"},
+  {"id": "TrinketScaleStaminaDamage", "name": "Resounding Shackle", "nameRu": "Гремящие оковы", "category": "trinkets", "icon": "TrinketScaleStaminaDamage.png"},
+  {"id": "TrinketSilverDamage", "name": "Wolf Sight", "nameRu": "Волчий взгляд", "category": "trinkets", "icon": "TrinketSilverDamage.png"},
+  {"id": "TrinketSilverResist", "name": "Crystal Heart", "nameRu": "Кристальное сердце", "category": "trinkets", "icon": "TrinketSilverResist.png"},
+  {"id": "TrollHide", "name": "Troll Hide", "nameRu": "Шкура тролля", "category": "materials", "icon": "TrollHide.png"},
+  {"id": "TrophyAbomination", "name": "Abomination Trophy", "nameRu": "Трофей: Мерзость", "category": "trophies", "icon": "TrophyAbomination.png"},
+  {"id": "TrophyAsksvin", "name": "Asksvin Trophy", "nameRu": "Трофей: Асксвин", "category": "trophies", "icon": "TrophyAsksvin.png"},
+  {"id": "TrophyBjorn", "name": "Bear Trophy", "nameRu": "Трофей: Медведь", "category": "trophies", "icon": "TrophyBjorn.png"},
+  {"id": "TrophyBjornUndead", "name": "Vile Trophy", "nameRu": "Трофей: Скверный медведь", "category": "trophies", "icon": "TrophyBjornUndead.png"},
+  {"id": "TrophyBlob", "name": "Blob Trophy", "nameRu": "Трофей: Слизень", "category": "trophies", "icon": "TrophyBlob.png"},
+  {"id": "TrophyBoar", "name": "Boar Trophy", "nameRu": "Трофей: Кабан", "category": "trophies", "icon": "TrophyBoar.png"},
+  {"id": "TrophyBonemass", "name": "Bonemass Trophy", "nameRu": "Трофей: Костепасть", "category": "trophies", "icon": "TrophyBonemass.png"},
+  {"id": "TrophyBonemawSerpent", "name": "Bonemaw Trophy", "nameRu": "Трофей: Костозмей", "category": "trophies", "icon": "TrophyBonemawSerpent.png"},
+  {"id": "TrophyCharredArcher", "name": "Marksman Trophy", "nameRu": "Трофей: Меткий стрелок", "category": "trophies", "icon": "TrophyCharredArcher.png"},
+  {"id": "TrophyCharredMage", "name": "Warlock Trophy", "nameRu": "Трофей: Колдун", "category": "trophies", "icon": "TrophyCharredMage.png"},
+  {"id": "TrophyCharredMelee", "name": "Warrior Trophy", "nameRu": "Трофей: Воин", "category": "trophies", "icon": "TrophyCharredMelee.png"},
+  {"id": "TrophyCultist", "name": "Cultist Trophy", "nameRu": "Трофей: Культист", "category": "trophies", "icon": "TrophyCultist.png"},
+  {"id": "TrophyCultist_Hildir", "name": "Geirrhafa Trophy", "nameRu": "Трофей: Гейррхава", "category": "trophies", "icon": "TrophyCultist_Hildir.png"},
+  {"id": "TrophyDeathsquito", "name": "Deathsquito Trophy", "nameRu": "Трофей: Смерткомар", "category": "trophies", "icon": "TrophyDeathsquito.png"},
+  {"id": "TrophyDeer", "name": "Deer Trophy", "nameRu": "Трофей: Олень", "category": "trophies", "icon": "TrophyDeer.png"},
+  {"id": "TrophyDragonQueen", "name": "Moder Trophy", "nameRu": "Трофей: Модер", "category": "trophies", "icon": "TrophyDragonQueen.png"},
+  {"id": "TrophyDraugr", "name": "Draugr Trophy", "nameRu": "Трофей: Драугр", "category": "trophies", "icon": "TrophyDraugr.png"},
+  {"id": "TrophyDraugrElite", "name": "Draugr Elite Trophy", "nameRu": "Трофей: Элитный драугр", "category": "trophies", "icon": "TrophyDraugrElite.png"},
+  {"id": "TrophyDraugrFem", "name": "Draugr Trophy", "nameRu": "Трофей: Драугр (жен.)", "category": "trophies", "icon": "TrophyDraugrFem.png"},
+  {"id": "TrophyDvergr", "name": "Dvergr Trophy", "nameRu": "Трофей: Дверг", "category": "trophies", "icon": "TrophyDvergr.png"},
+  {"id": "TrophyEikthyr", "name": "Eikthyr Trophy", "nameRu": "Трофей: Эйктюр", "category": "trophies", "icon": "TrophyEikthyr.png"},
+  {"id": "TrophyFader", "name": "Fader Trophy", "nameRu": "Трофей: Фейдер", "category": "trophies", "icon": "TrophyFader.png"},
+  {"id": "TrophyFallenValkyrie", "name": "Fallen Valkyrie Trophy", "nameRu": "Трофей: Павшая валькирия", "category": "trophies", "icon": "TrophyFallenValkyrie.png"},
+  {"id": "TrophyFenring", "name": "Fenring Trophy", "nameRu": "Трофей: Фенринг", "category": "trophies", "icon": "TrophyFenring.png"},
+  {"id": "TrophyForestTroll", "name": "Troll Trophy", "nameRu": "Трофей: Тролль", "category": "trophies", "icon": "TrophyForestTroll.png"},
+  {"id": "TrophyFrostTroll", "name": "Troll Trophy", "nameRu": "Трофей: Морозный тролль", "category": "trophies", "icon": "TrophyFrostTroll.png"},
+  {"id": "TrophyGhost", "name": "Ghost Trophy", "nameRu": "Трофей: Призрак", "category": "trophies", "icon": "TrophyGhost.png"},
+  {"id": "TrophyGjall", "name": "Gjall Trophy", "nameRu": "Трофей: Гьялль", "category": "trophies", "icon": "TrophyGjall.png"},
+  {"id": "TrophyGoblin", "name": "Fuling Trophy", "nameRu": "Трофей: Фулинг", "category": "trophies", "icon": "TrophyGoblin.png"},
+  {"id": "TrophyGoblinBrute", "name": "Fuling Berserker Trophy", "nameRu": "Трофей: Фулинг-берсерк", "category": "trophies", "icon": "TrophyGoblinBrute.png"},
+  {"id": "TrophyGoblinBruteBrosBrute", "name": "Thungr Trophy", "nameRu": "Трофей: Тунгр", "category": "trophies", "icon": "TrophyGoblinBruteBrosBrute.png"},
+  {"id": "TrophyGoblinBruteBrosShaman", "name": "Zil Trophy", "nameRu": "Трофей: Зил", "category": "trophies", "icon": "TrophyGoblinBruteBrosShaman.png"},
+  {"id": "TrophyGoblinKing", "name": "Yagluth Trophy", "nameRu": "Трофей: Яглут", "category": "trophies", "icon": "TrophyGoblinKing.png"},
+  {"id": "TrophyGoblinShaman", "name": "Fuling Shaman Trophy", "nameRu": "Трофей: Фулинг-шаман", "category": "trophies", "icon": "TrophyGoblinShaman.png"},
+  {"id": "TrophyGreydwarf", "name": "Greydwarf Trophy", "nameRu": "Трофей: Серолюд", "category": "trophies", "icon": "TrophyGreydwarf.png"},
+  {"id": "TrophyGreydwarfBrute", "name": "Greydwarf Brute Trophy", "nameRu": "Трофей: Здоровяк серолюдов", "category": "trophies", "icon": "TrophyGreydwarfBrute.png"},
+  {"id": "TrophyGreydwarfShaman", "name": "Greydwarf Shaman Trophy", "nameRu": "Трофей: Шаман серолюдов", "category": "trophies", "icon": "TrophyGreydwarfShaman.png"},
+  {"id": "TrophyGrowth", "name": "Growth Trophy", "nameRu": "Трофей: Нарост", "category": "trophies", "icon": "TrophyGrowth.png"},
+  {"id": "TrophyHare", "name": "Hare Trophy", "nameRu": "Трофей: Заяц", "category": "trophies", "icon": "TrophyHare.png"},
+  {"id": "TrophyHatchling", "name": "Drake Trophy", "nameRu": "Трофей: Дрейк", "category": "trophies", "icon": "TrophyHatchling.png"},
+  {"id": "TrophyKvastur", "name": "Kvastur", "nameRu": "Трофей: Квастур", "category": "trophies", "icon": "TrophyKvastur.png"},
+  {"id": "TrophyLeech", "name": "Leech Trophy", "nameRu": "Трофей: Пиявка", "category": "trophies", "icon": "TrophyLeech.png"},
+  {"id": "TrophyLox", "name": "Lox Trophy", "nameRu": "Трофей: Быкоящер", "category": "trophies", "icon": "TrophyLox.png"},
+  {"id": "TrophyMorgen", "name": "Morgen Trophy", "nameRu": "Трофей: Морген", "category": "trophies", "icon": "TrophyMorgen.png"},
+  {"id": "TrophyNeck", "name": "Neck Trophy", "nameRu": "Трофей: Ящер", "category": "trophies", "icon": "TrophyNeck.png"},
+  {"id": "TrophySGolem", "name": "Stone Golem Trophy", "nameRu": "Трофей: Каменный голем", "category": "trophies", "icon": "TrophySGolem.png"},
+  {"id": "TrophySeeker", "name": "Seeker Trophy", "nameRu": "Трофей: Искатель", "category": "trophies", "icon": "TrophySeeker.png"},
+  {"id": "TrophySeekerBrute", "name": "Seeker Soldier Trophy", "nameRu": "Трофей: Солдат искателей", "category": "trophies", "icon": "TrophySeekerBrute.png"},
+  {"id": "TrophySeekerQueen", "name": "The Queen Trophy", "nameRu": "Трофей: Королева", "category": "trophies", "icon": "TrophySeekerQueen.png"},
+  {"id": "TrophySerpent", "name": "Serpent Trophy", "nameRu": "Трофей: Змей", "category": "trophies", "icon": "TrophySerpent.png"},
+  {"id": "TrophySkeleton", "name": "Skeleton Trophy", "nameRu": "Трофей: Скелет", "category": "trophies", "icon": "TrophySkeleton.png"},
+  {"id": "TrophySkeletonHildir", "name": "Brenna Trophy", "nameRu": "Трофей: Бренна", "category": "trophies", "icon": "TrophySkeletonHildir.png"},
+  {"id": "TrophySkeletonPoison", "name": "Rancid Remains Trophy", "nameRu": "Трофей: Зловонные останки", "category": "trophies", "icon": "TrophySkeletonPoison.png"},
+  {"id": "TrophySurtling", "name": "Surtling Trophy", "nameRu": "Трофей: Суртлинг", "category": "trophies", "icon": "TrophySurtling.png"},
+  {"id": "TrophyTheElder", "name": "The Elder Trophy", "nameRu": "Трофей: Древний", "category": "trophies", "icon": "TrophyTheElder.png"},
+  {"id": "TrophyTick", "name": "Tick Trophy", "nameRu": "Трофей: Клещ", "category": "trophies", "icon": "TrophyTick.png"},
+  {"id": "TrophyUlv", "name": "Ulv Trophy", "nameRu": "Трофей: Ульв", "category": "trophies", "icon": "TrophyUlv.png"},
+  {"id": "TrophyVolture", "name": "Volture Trophy", "nameRu": "Трофей: Стервулканник", "category": "trophies", "icon": "TrophyVolture.png"},
+  {"id": "TrophyWolf", "name": "Wolf Trophy", "nameRu": "Трофей: Волк", "category": "trophies", "icon": "TrophyWolf.png"},
+  {"id": "TrophyWraith", "name": "Wraith Trophy", "nameRu": "Трофей: Призрак", "category": "trophies", "icon": "TrophyWraith.png"},
+  {"id": "Turnip", "name": "Turnip", "nameRu": "Репа", "category": "materials", "icon": "Turnip.png"},
+  {"id": "TurnipSeeds", "name": "Turnip Seeds", "nameRu": "Семена репы", "category": "seeds", "icon": "TurnipSeeds.png"},
+  {"id": "TurnipStew", "name": "Turnip Stew", "nameRu": "Реповое рагу", "category": "food", "icon": "TurnipStew.png"},
+  {"id": "TurretBolt", "name": "Black Metal Missile", "nameRu": "Чернометаллическая ракета", "category": "ammo", "icon": "TurretBolt.png"},
+  {"id": "TurretBoltFlametal", "name": "Flametal Missile", "nameRu": "Огнеметаллическая ракета", "category": "ammo", "icon": "TurretBoltFlametal.png"},
+  {"id": "TurretBoltWood", "name": "Wooden Missile", "nameRu": "Деревянная ракета", "category": "ammo", "icon": "TurretBoltWood.png"},
+  {"id": "UndeadBjornRibcage", "name": "Vile Ribcage", "nameRu": "Грудная клетка из скверных костей", "category": "materials", "icon": "UndeadBjornRibcage.png"},
+  {"id": "VikingCupcake", "name": "Frosted Sweetbread", "nameRu": "Сладкий кекс с глазурью", "category": "food", "icon": "VikingCupcake.png"},
+  {"id": "VikingCupcakeUncooked", "name": "Unbaked Sweetbread", "nameRu": "Сырой сладкий кекс", "category": "food", "icon": "VikingCupcakeUncooked.png"},
+  {"id": "VineGreenSeeds", "name": "Ivy Seeds", "nameRu": "Семена плюща", "category": "seeds", "icon": "VineGreenSeeds.png"},
+  {"id": "Vineberry", "name": "Vineberry Cluster", "nameRu": "Гроздь лиановых ягод", "category": "food", "icon": "Vineberry.png"},
+  {"id": "VineberrySeeds", "name": "Vineberry Seeds", "nameRu": "Семена лиановых ягод", "category": "seeds", "icon": "VineberrySeeds.png"},
+  {"id": "VoltureEgg", "name": "Volture Egg", "nameRu": "Яйцо стервулканника", "category": "misc", "icon": "VoltureEgg.png"},
+  {"id": "VoltureMeat", "name": "Volture Meat", "nameRu": "Мясо стервулканника", "category": "food", "icon": "VoltureMeat.png"},
+  {"id": "Wishbone", "name": "Wishbone", "nameRu": "Вилочка", "category": "tools", "icon": "Wishbone.png"},
+  {"id": "Wisp", "name": "Wisp", "nameRu": "Блуждающий огонёк", "category": "materials", "icon": "Wisp.png"},
+  {"id": "WitheredBone", "name": "Withered Bone", "nameRu": "Иссохшая кость", "category": "valuables", "icon": "WitheredBone.png"},
+  {"id": "WolfClaw", "name": "Fenris Claw", "nameRu": "Коготь Фенриса", "category": "materials", "icon": "WolfClaw.png"},
+  {"id": "WolfFang", "name": "Wolf Fang", "nameRu": "Волчий клык", "category": "materials", "icon": "WolfFang.png"},
+  {"id": "WolfHairBundle", "name": "Fenris Hair", "nameRu": "Шерсть Фенриса", "category": "materials", "icon": "WolfHairBundle.png"},
+  {"id": "WolfJerky", "name": "Wolf Jerky", "nameRu": "Вяленое волчье мясо", "category": "food", "icon": "WolfJerky.png"},
+  {"id": "WolfMeat", "name": "Wolf Meat", "nameRu": "Волчье мясо", "category": "food", "icon": "WolfMeat.png"},
+  {"id": "WolfMeatSkewer", "name": "Wolf Skewer", "nameRu": "Волчий шашлык", "category": "food", "icon": "WolfMeatSkewer.png"},
+  {"id": "WolfPelt", "name": "Wolf Pelt", "nameRu": "Шкура волка", "category": "materials", "icon": "WolfPelt.png"},
+  {"id": "Wood", "name": "Wood", "nameRu": "Дерево", "category": "materials", "icon": "Wood.png"},
+  {"id": "YagluthDrop", "name": "Torn Spirit", "nameRu": "Разорванный дух", "category": "materials", "icon": "YagluthDrop.png"},
+  {"id": "YggdrasilPorridge", "name": "Yggdrasil Porridge", "nameRu": "Иггдрасильская каша", "category": "food", "icon": "YggdrasilPorridge.png"},
+  {"id": "YggdrasilWood", "name": "Yggdrasil Wood", "nameRu": "Древесина Иггдрасиля", "category": "materials", "icon": "YggdrasilWood.png"},
+  {"id": "YmirRemains", "name": "Ymir Flesh", "nameRu": "Плоть Имира", "category": "materials", "icon": "YmirRemains.png"},
+  {"id": "chest_hildir1", "name": "Hildir's Chest 1", "nameRu": "Медный сундук Хильдир", "category": "misc", "icon": "chest_hildir1.png"},
+  {"id": "chest_hildir2", "name": "Hildir's Chest 2", "nameRu": "Серебряный сундук Хильдир", "category": "misc", "icon": "chest_hildir2.png"},
+  {"id": "chest_hildir3", "name": "Hildir's Chest 3", "nameRu": "Бронзовый сундук Хильдир", "category": "misc", "icon": "chest_hildir3.png"}
 ]
