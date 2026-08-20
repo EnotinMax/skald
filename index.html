@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кузница Скальда — Редактор диалогов KGMarketplace</title>
+    <title>Кузница Скальда — Редактор диалогов</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png" type="image/png">
 </head>
@@ -12,237 +12,342 @@
         <div class="header-brand">
             <img src="logo.png" alt="Logo" class="logo">
             <div class="header-text">
-                <h1>Кузница Скальда</h1>
-                <span class="subtitle">Редактор диалогов и квестов для KGMarketplace · <span class="author">by OdinSons, Enotin</span></span>
+                <h1 id="appTitle">Кузница Скальда</h1>
+                <span class="subtitle" id="appSubtitle">Редактор диалогов и квестов · by OdinSons</span>
             </div>
         </div>
         <div class="header-controls">
-            <input type="text" id="searchInput" placeholder="Поиск по диалогам...">
+            <input type="text" id="searchInput" placeholder="Поиск...">
             <button id="importDialogueBtn">Импорт диалога</button>
             <button id="importQuestBtn">Импорт квеста</button>
             <button id="questsBtn">Квесты</button>
-            <button id="exportBtn">Экспорт CFG</button>
+            <button id="exportBtn">Экспорт</button>
             <button id="validateBtn">Проверить</button>
-            <button id="previewBtn" class="play-btn" title="Предпросмотр">▶</button>
+            <button id="previewBtn" class="play-btn">▶</button>
         </div>
     </header>
 
     <main id="mainWorkspace">
-        <!-- ВКЛАДКА: ПОЛЕ -->
+        <!-- поле -->
         <div id="tabField" class="tab-content active">
             <div class="workspace">
                 <div class="toolbar">
-                    <button id="addNodeBtn">Добавить диалог</button>
-                    <button id="addOptionBtn">Добавить опцию</button>
+                    <button id="addNodeBtn">+ Диалог</button>
+                    <button id="addOptionBtn">+ Опция</button>
                     <button id="deleteBtn" class="danger">Удалить</button>
                     <div class="tool-separator"></div>
                     <button id="zoomInBtn" class="icon-btn">+</button>
                     <button id="zoomOutBtn" class="icon-btn">−</button>
                     <button id="fitToScreenBtn">По размеру</button>
                     <button id="loadSampleBtn" class="secondary">Пример</button>
-                    <span class="toolbar-hint">Тяни кружок на опции → к узлу, квесту или в пустоту</span>
+                    <div class="tool-separator"></div>
+                    <span class="toolbar-hint" id="hintText">Тяни кружок на опции → к узлу, квесту или в пустоту</span>
+                    
+                    <!-- легенда поля -->
+                    <div class="legend">
+                        <div class="legend-item"><span class="dot orange"></span> Переход</div>
+                        <div class="legend-item"><span class="dot red"></span> Условие</div>
+                        <div class="legend-item"><span class="dot green"></span> Команда</div>
+                        <div class="legend-item"><span class="dot gray dashed"></span> Конец</div>
+                    </div>
                 </div>
 
                 <div class="canvas-container" id="canvasContainer">
-                    <!-- динамо-SVG -->
-                    <svg id="connectionLayer" width="10000" height="10000">
+                    <svg id="connectionLayer">
                         <defs>
-                            <marker id="arrowhead-orange" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 12 4, 0 8" fill="#f39c12"/></marker>
-                            <marker id="arrowhead-red" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 12 4, 0 8" fill="#e74c3c"/></marker>
-                            <marker id="arrowhead-green" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 12 4, 0 8" fill="#27ae60"/></marker>
-                            <marker id="arrowhead-gray" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 12 4, 0 8" fill="#95a5a6"/></marker>
-                            <marker id="arrowhead-drawing" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse"><polygon points="0 0, 12 4, 0 8" fill="#fff"/></marker>
+                            <marker id="arrowhead-orange" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#f39c12"/>
+                            </marker>
+                            <marker id="arrowhead-red" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#e74c3c"/>
+                            </marker>
+                            <marker id="arrowhead-green" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#27ae60"/>
+                            </marker>
+                            <marker id="arrowhead-gray" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#95a5a6"/>
+                            </marker>
+                            <marker id="arrowhead-drawing" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#fff"/>
+                            </marker>
                         </defs>
                     </svg>
                     <div id="nodeContainer" class="node-container"></div>
                     
-                    <!-- легенда -->
-                    <div class="canvas-legend">
-                        <div class="legend-title">Связи</div>
-                        <div class="legend-item"><span class="legend-color orange"></span> Переход</div>
-                        <div class="legend-item"><span class="legend-color red"></span> С условием</div>
-                        <div class="legend-item"><span class="legend-color green"></span> С командой</div>
-                        <div class="legend-item"><span class="legend-color gray-dashed"></span> Конец</div>
-                    </div>
-
-                    <!-- палитра квестов -->
+                    <!-- панель квестов -->
                     <div id="questPalette" class="quest-palette">
                         <div class="quest-palette-header">
-                            <span>Квесты</span>
+                            <span id="paletteTitle">Квесты</span>
                             <button id="toggleQuestPalette" class="icon-btn-small">−</button>
                         </div>
                         <div id="questPaletteList" class="quest-palette-list"></div>
-                    </div
+                    </div>
                 </div>
             </div>
 
             <aside class="properties-panel">
                 <div id="nodeProperties" class="properties-section">
-                    <h3>Диалог NPC</h3>
+                    <h3 id="propNodeTitle">Диалог NPC</h3>
                     <div class="form-group">
-                        <label>ID профиля:</label>
+                        <label id="labelNodeId">ID профиля:</label>
                         <input type="text" id="nodeId" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label>Текст NPC:</label>
-                        <textarea id="nodeText" class="form-control" rows="4" placeholder="Используй \n, &lt;color=#FF0000&gt;, &lt;size=20&gt;, &lt;image=url&gt;"></textarea>
+                        <label id="labelNodeText">Текст NPC:</label>
+                        <textarea id="nodeText" class="form-control" rows="4"></textarea>
                     </div>
                     <div class="node-options-section">
-                        <h4>Опции диалога</h4>
+                        <h4 id="propOptionsTitle">Опции диалога</h4>
                         <div id="nodeOptionsList" class="options-list"></div>
                         <button id="addNodeOptionBtn" class="btn-small">+ Добавить опцию</button>
                     </div>
                 </div>
 
                 <div id="optionProperties" class="properties-section" style="display: none;">
-                    <h3>Опция игрока</h3>
+                    <h3 id="propOptionTitle">Опция игрока</h3>
                     <div class="form-group">
-                        <label>Текст:</label>
+                        <label id="labelOptionText">Текст:</label>
                         <input type="text" id="optionText" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label>Переход к (ID диалога):</label>
-                        <select id="optionTransition" class="form-control"><option value="">— Нет —</option></select>
+                        <label id="labelTransition">Переход к (ID):</label>
+                        <select id="optionTransition" class="form-control">
+                            <option value="">— Нет —</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label>Связь с квестом (ID квеста):</label>
-                        <select id="optionQuestLink" class="form-control"><option value="">— Нет —</option></select>
+                        <label id="labelQuestLink">Связь с квестом (ID):</label>
+                        <select id="optionQuestLink" class="form-control">
+                            <option value="">— Нет —</option>
+                        </select>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Иконка:</label>
-                            <input type="text" id="optionIcon" class="form-control" placeholder="Hammer...">
+                            <label id="labelIcon">Иконка:</label>
+                            <input type="text" id="optionIcon" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>Цвет:</label>
+                            <label id="labelColor">Цвет:</label>
                             <input type="color" id="optionColor" class="form-control" value="#ffffff">
                         </div>
                     </div>
+
                     <div class="conditions-section">
-                        <h4>⚙ Условия</h4>
+                        <h4 id="propCondTitle">Условия</h4>
                         <div id="conditionsList"></div>
-                        <button id="addConditionBtn" class="btn-small">+ Добавить условие</button>
+                        <button id="addConditionBtn" class="btn-small">+ Условие</button>
                     </div>
+
                     <div class="commands-section">
-                        <h4>Команды</h4>
+                        <h4 id="propCmdTitle">Команды</h4>
                         <div id="commandsList"></div>
-                        <button id="addCommandBtn" class="btn-small">+ Добавить команду</button>
+                        <button id="addCommandBtn" class="btn-small">+ Команда</button>
                     </div>
                 </div>
 
                 <div class="properties-section empty-state" id="emptyState">
-                    <p>Выберите узел на холсте или создайте новый диалог</p>
+                    <p id="emptyStateText">Выберите узел или создайте новый</p>
                 </div>
             </aside>
         </div>
 
-        <!-- ВКЛАДКА: КОД (CFG) -->
+        <!-- код -->
         <div id="tabCode" class="tab-content">
             <div class="code-viewer">
-                <div class="code-header">
-                    <span class="code-title">Сгенерированный CFG (Диалоги + Квесты)</span>
-                    <div class="code-actions">
-                        <button id="applyCodeBtn" class="success">Применить изменения в редактор</button>
-                        <button id="copyCodeBtn" class="secondary">Копировать</button>
-                        <button id="downloadCodeBtn" class="secondary">Скачать .cfg</button>
-                    </div>
+                <div class="code-tabs" id="fileTabs">
+                    <!-- вкладки файлов генерируются js -->
                 </div>
                 <div class="code-content">
-                    <textarea id="codeEditor" class="code-editor" spellcheck="false" placeholder="Здесь будет отображаться CFG-код..."></textarea>
+                    <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
                 </div>
-                <div class="code-hint-bar">
-                    ⚠ Изменения в этом поле применяются только после нажатия кнопки "Применить изменения в редактор".
-                </div
+                <div class="code-actions">
+                    <button id="applyCodeBtn" class="secondary">Применить изменения</button>
+                    <button id="copyCodeBtn" class="secondary">Копировать</button>
+                    <button id="downloadCodeBtn" class="secondary">Скачать файл</button>
+                    <span class="code-hint" id="codeHint">Изменения применяются по кнопке "Применить"</span>
+                </div>
             </div>
         </div>
     </main>
 
+    <!-- нижняя панель вкладок -->
     <div class="bottom-tabs">
-        <button class="bottom-tab active" data-tab="tabField">Поле</button>
-        <button class="bottom-tab" data-tab="tabCode">CFG Код</button>
+        <button class="bottom-tab active" data-tab="tabField" id="tabFieldBtn">Поле</button>
+        <button class="bottom-tab" data-tab="tabCode" id="tabCodeBtn">Код</button>
+        
+        <!-- языки -->
+        <div class="lang-switcher">
+            <button class="lang-btn" data-lang="ru" title="Русский">🇷🇺</button>
+            <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+        </div>
     </div>
 
-    <!-- Скрытые input'ы -->
+    <!-- скрытые инпуты -->
     <input type="file" id="dialogueFileInput" accept=".cfg,.txt" style="display: none;">
     <input type="file" id="questFileInput" accept=".cfg,.txt" style="display: none;">
 
-    <!-- Модальные окна -->
+    <!-- модальные окна -->
     <div id="previewModal" class="modal">
         <div class="modal-content preview-modal">
-            <div class="modal-header"><h2>Предпросмотр диалога</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="previewTitle">Предпросмотр</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div id="previewContent" class="preview-content"></div>
         </div>
     </div>
+
     <div id="questsModal" class="modal">
         <div class="modal-content quests-modal">
-            <div class="modal-header"><h2>Редактор квестов</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="questEditorTitle">Редактор квестов</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="quests-container">
                 <div class="quests-sidebar">
-                    <div class="quests-header"><h3>Квесты</h3><button id="addQuestBtn" class="btn-small">+ Новый</button></div>
+                    <div class="quests-header">
+                        <h3 id="questListTitle">Квесты</h3>
+                        <button id="addQuestBtn" class="btn-small">+ Новый</button>
+                    </div>
                     <div id="questsList" class="quests-list"></div>
                 </div>
-                <div class="quest-editor"><div id="questEditor" class="quest-editor-content"><div class="no-quest-selected"><p>Выберите квест</p></div></div></div>
+                <div class="quest-editor">
+                    <div id="questEditor" class="quest-editor-content"></div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- остальные модальные окна (condition, command, quest details) аналогичными предыдущей версии, но с ID для локализации -->
     <div id="conditionModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Добавить условие</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="condModalTitle">Добавить условие</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="modal-body">
-                <div class="form-group"><label>Тип:</label><select id="conditionType" class="form-control"><option value="HasItem">HasItem</option><option value="QuestFinished">QuestFinished</option><option value="GlobalKey">GlobalKey</option></select></div>
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="conditionType" class="form-control">
+                        <option value="HasItem">HasItem</option>
+                        <option value="NotHasItem">NotHasItem</option>
+                        <option value="SkillMore">SkillMore</option>
+                        <option value="QuestFinished">QuestFinished</option>
+                        <option value="NotFinished">NotFinished</option>
+                        <option value="HasQuest">HasQuest</option>
+                        <option value="NotHasQuest">NotHasQuest</option>
+                        <option value="GlobalKey">GlobalKey</option>
+                        <option value="NotGlobalKey">NotGlobalKey</option>
+                    </select>
+                </div>
                 <div id="conditionParams"></div>
                 <button id="saveConditionBtn">Сохранить</button>
             </div>
         </div>
     </div>
+
     <div id="commandModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Добавить команду</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="cmdModalTitle">Добавить команду</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="modal-body">
-                <div class="form-group"><label>Тип:</label><select id="commandType" class="form-control"><option value="GiveItem">GiveItem</option><option value="GiveQuest">GiveQuest</option><option value="PlaySound">PlaySound</option></select></div>
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="commandType" class="form-control">
+                        <option value="GiveItem">GiveItem</option>
+                        <option value="RemoveItem">RemoveItem</option>
+                        <option value="GiveQuest">GiveQuest</option>
+                        <option value="FinishQuest">FinishQuest</option>
+                        <option value="RemoveQuest">RemoveQuest</option>
+                        <option value="OpenUI">OpenUI</option>
+                        <option value="PlaySound">PlaySound</option>
+                        <option value="Spawn">Spawn</option>
+                        <option value="Teleport">Teleport</option>
+                        <option value="Damage">Damage</option>
+                        <option value="Heal">Heal</option>
+                        <option value="GiveBuff">GiveBuff</option>
+                        <option value="AddPin">AddPin</option>
+                    </select>
+                </div>
                 <div id="commandParams"></div>
                 <button id="saveCommandBtn">Сохранить</button>
             </div>
         </div>
     </div>
+
     <div id="questTargetModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Цель квеста</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="targetModalTitle">Добавить цель</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="modal-body">
                 <div class="form-group"><label>Префаб:</label><input type="text" id="targetPrefab" class="form-control"></div>
-                <div class="form-group"><label>Кол-во:</label><input type="number" id="targetAmount" class="form-control" value="1"></div>
+                <div class="form-group"><label>Количество:</label><input type="number" id="targetAmount" class="form-control" value="1"></div>
+                <div class="form-group"><label>Уровень:</label><input type="number" id="targetLevel" class="form-control"></div>
                 <button id="saveQuestTargetBtn">Сохранить</button>
             </div>
         </div>
     </div>
+
     <div id="questRewardModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Награда квеста</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="rewardModalTitle">Добавить награду</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="modal-body">
-                <div class="form-group"><label>Тип:</label><select id="rewardType" class="form-control"><option value="Item">Предмет</option><option value="Coins">Монеты</option></select></div>
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="rewardType" class="form-control">
+                        <option value="Item">Предмет</option>
+                        <option value="Coins">Монеты</option>
+                        <option value="Exp">Опыт</option>
+                    </select>
+                </div>
                 <div class="form-group"><label>Префаб:</label><input type="text" id="rewardPrefab" class="form-control"></div>
-                <div class="form-group"><label>Кол-во:</label><input type="number" id="rewardAmount" class="form-control" value="1"></div>
+                <div class="form-group"><label>Количество:</label><input type="number" id="rewardAmount" class="form-control" value="1"></div>
                 <button id="saveQuestRewardBtn">Сохранить</button>
             </div>
         </div>
     </div>
+
     <div id="questRequirementModal" class="modal">
         <div class="modal-content">
-            <div class="modal-header"><h2>Требование квеста</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="reqModalTitle">Добавить требование</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div class="modal-body">
-                <div class="form-group"><label>Тип:</label><select id="requirementType" class="form-control"><option value="HasItem">HasItem</option><option value="QuestFinished">QuestFinished</option></select></div>
+                <div class="form-group">
+                    <label>Тип:</label>
+                    <select id="requirementType" class="form-control">
+                        <option value="HasItem">HasItem</option>
+                        <option value="NotHasItem">NotHasItem</option>
+                        <option value="SkillMore">SkillMore</option>
+                        <option value="QuestFinished">QuestFinished</option>
+                        <option value="HasQuest">HasQuest</option>
+                        <option value="GlobalKey">GlobalKey</option>
+                    </select>
+                </div>
                 <div id="requirementParams"></div>
                 <button id="saveQuestRequirementBtn">Сохранить</button>
             </div>
         </div>
     </div>
+
     <div id="questPreviewModal" class="modal">
         <div class="modal-content quest-preview-modal">
-            <div class="modal-header"><h2>Предпросмотр квеста</h2><span class="close" data-action="close-modal">&times;</span></div>
+            <div class="modal-header">
+                <h2 id="questPreviewTitle">Предпросмотр квеста</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
             <div id="questPreviewContent"></div>
         </div>
     </div>
 
     <script src="script.js"></script>
 </body>
-</html>
+</html><!DOCTYPE html>
