@@ -1070,7 +1070,7 @@ class DialogueEditor {
         g.appendChild(rect);
 
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', x + 20);
+        text.setAttribute('x', x + 40);
         text.setAttribute('y', y + 4);
         text.setAttribute('text-anchor', 'middle');
         text.setAttribute('fill', '#bdc3c7');
