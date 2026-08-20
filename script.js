@@ -5,6 +5,11 @@ const translations = {
         searchPlaceholder: "Поиск...",
         importDialogue: "Импорт диалога",
         importQuest: "Импорт квеста",
+        importDialogue: "Импорт диалога",
+        importQuest: "Импорт квеста",
+        quests: "Квесты",
+        export: "Экспорт",
+        validate: "Проверить",
         quests: "Квесты",
         export: "Экспорт",
         validate: "Проверить",
@@ -76,6 +81,11 @@ const translations = {
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
         importQuest: "Import Quest",
+        importDialogue: "Import Dialogue",
+        importQuest: "Import Quest",
+        quests: "Quests",
+        export: "Export",
+        validate: "Validate",
         quests: "Quests",
         export: "Export",
         validate: "Validate",
@@ -899,23 +909,7 @@ class DialogueEditor {
 
     renderConnections() {
         // динамическое расширение холста, чтобы стрелки не обрезались
-        let maxX = 1000, maxY = 1000;
-        this.nodes.forEach(node => {
-            if (node.x + 400 > maxX) maxX = node.x + 400;
-            if (node.y + 400 > maxY) maxY = node.y + 400;
-        });
-
-        const svg = this.els.connectionLayer;
-        const container = this.els.canvasContainer;
-        const targetWidth = Math.max(container.clientWidth, maxX + 500);
-        const targetHeight = Math.max(container.clientHeight, maxY + 500);
-
-        svg.style.width = `${targetWidth}px`;
-        svg.style.height = `${targetHeight}px`;
-        this.els.nodeContainer.style.width = `${targetWidth}px`;
-        this.els.nodeContainer.style.height = `${targetHeight}px`;
-
-        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
+       svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
 
         this.nodes.forEach(node => {
             const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
@@ -1567,26 +1561,32 @@ class DialogueEditor {
         `;
     }
 
-    processQuestDescription(desc) {
-        if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
+processQuestDescription(desc) {
+    if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
 
-        // применяем ту же логику обработки тегов, что и в диалогах
-        let processed = desc.replace(/\\n/g, '<br>');
-        processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
-        processed = processed.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
-
-        // извлекаем изображения
-        const imageMatches = [...processed.matchAll(/<image=([^>]+)>/g)];
-        let imageHtml = '';
-        if (imageMatches.length > 0) {
-            imageHtml = imageMatches.map(match =>
-                `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
-            ).join('');
-            processed = processed.replace(/<image=[^>]+>/g, '');
-        }
-
-        return `<div class="quest-preview-description">${processed}</div>${imageHtml}`;
+    // сначала извлекаем все изображения
+    const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
+    let imageHtml = '';
+    
+    if (imageMatches.length > 0) {
+        imageHtml = imageMatches.map(match =>
+            `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
+        ).join('');
     }
+    
+    // удаляем теги изображений из текста
+    let cleanDesc = desc.replace(/<image=[^>]+>/g, '');
+    
+    // экранируем HTML
+    cleanDesc = this.escapeHtml(cleanDesc);
+    
+    // применяем теги форматирования
+    cleanDesc = cleanDesc.replace(/\\n/g, '<br>');
+    cleanDesc = cleanDesc.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
+    cleanDesc = cleanDesc.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
+
+    return `<div class="quest-preview-description">${cleanDesc}</div>${imageHtml}`;
+}
 
     previewSelectQuest(id) {
         this.selectedQuest = id;
