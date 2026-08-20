@@ -266,12 +266,21 @@ const translations = {
 
 class DialogueEditor {
     constructor() {
+        this.itemSelectorData = [];
+        this.loadItemDataForPreview();
         this.nodes = new Map();
         this.quests = new Map();
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
 
+        async loadItemDataForPreview() {
+        try {
+            const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
+            if (response.ok) this.itemSelectorData = await response.json();
+        } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
+    }
+        
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.isCanvasDragging = false;
@@ -1498,9 +1507,12 @@ class DialogueEditor {
         const t = translations[this.lang];
 
         const targetsHtml = quest.targets.map((t_item, i) => `
-            <div class="quest-target-item">
-                <span>${this.escapeHtml(t_item.prefab)} x${t_item.amount}</span>
-                <button data-action="delete-quest-target" data-index="${i}">×</button>
+            <div class="quest-target-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
+                <div class="item-selector" style="flex: 1;" data-index="${i}" data-value="${this.escapeHtml(t_item.prefab)}"></div>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <input type="number" class="form-control" style="width: 60px;" value="${t_item.amount}" data-target-amount="${i}">
+                </div>
+                <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
             </div>
         `).join('');
 
@@ -1558,6 +1570,14 @@ class DialogueEditor {
         `;
 
         this.bindQuestFormEvents(quest);
+            this.els.questEditor.querySelectorAll('.item-selector').forEach(container => {      // инициализация ItemSelector для всех целей
+            const index = parseInt(container.dataset.index);
+            const selector = new ItemSelector(container, container.dataset.value);
+            
+            selector.input.addEventListener('change', (e) => {                                  // при изменении значения сразу обновляем объект квеста
+                quest.targets[index].prefab = e.target.value.trim();
+            });
+        });
     }
 
     bindQuestFormEvents(quest) {
@@ -1648,7 +1668,24 @@ class DialogueEditor {
         `).join('');
 
         const description = this.processQuestDescription(quest.description);
-        const targetsHtml = quest.targets.map(ti => `<div class="quest-preview-objective"><span>${this.escapeHtml(ti.prefab)}</span><span>x${ti.amount}</span></div>`).join('');
+                const targetsHtml = quest.targets.map(ti => {            // пытаемся найти данные предмета для иконки и имени. если не нашли (кастомный мод), используем заглушку и ID как имя
+            const itemData = (window.editor && window.editor.itemSelectorData) 
+                ? window.editor.itemSelectorData.find(i => i.id === ti.prefab) 
+                : null;
+            
+            const displayName = itemData ? (itemData.nameRu || itemData.name) : ti.prefab;
+            const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+
+            return `
+            <div class="quest-preview-item-row">
+                <img src="${iconUrl}" class="item-preview-icon" alt="${ti.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                <div class="quest-preview-item-info">
+                    <span class="quest-preview-item-name">${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-id">${this.escapeHtml(ti.prefab)}</span>
+                </div>
+                <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${ti.amount}</span>
+            </div>`;
+        }).join('');
         const rewardsHtml = quest.rewards.map(r => `<div class="quest-preview-reward"><span>${this.escapeHtml(r.prefab)}</span><span>x${r.amount}</span></div>`).join('');
 
         return `
