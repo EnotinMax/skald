@@ -269,3 +269,25 @@ input[type="color"].form-control { padding: 3px; height: 36px; cursor: pointer; 
 ::-webkit-scrollbar-track { background: var(--bg-primary); }
 ::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 4px; }
 ::-webkit-scrollbar-thumb:hover { background: #2980b9; }
+
+/* === ITEM SELECTOR COMPONENT (16x16 для редактора) === */
+.item-selector { position: relative; width: 100%; font-family: inherit; }
+.item-selector-input-wrapper { display: flex; align-items: center; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; transition: border-color 0.2s; }
+.item-selector-input-wrapper:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px rgba(243, 156, 18, 0.2); }
+.item-selector-icon { width: 16px; height: 16px; margin: 0 8px; object-fit: contain; flex-shrink: 0; image-rendering: pixelated; }
+.item-selector-input { flex: 1; background: transparent; border: none; color: var(--text-primary); padding: 7px 8px 7px 0; font-size: 13px; outline: none; min-width: 0; }
+.item-selector-dropdown { position: absolute; top: calc(100% + 4px); left: 0; right: 0; max-height: 220px; overflow-y: auto; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 4px; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 1000; display: none; padding: 4px 0; }
+.item-selector-dropdown.active { display: block; }
+.item-option { display: flex; align-items: center; padding: 6px 10px; cursor: pointer; color: var(--text-primary); font-size: 13px; transition: background 0.15s; }
+.item-option:hover, .item-option.highlighted { background: var(--bg-tertiary); }
+.item-option img { width: 16px; height: 16px; margin-right: 10px; object-fit: contain; image-rendering: pixelated; flex-shrink: 0; }
+.item-option-text { display: flex; flex-direction: column; }
+.item-option-id { font-family: monospace; color: var(--text-secondary); font-size: 11px; }
+.item-option-name { font-weight: 500; }
+
+/* === QUEST PREVIEW LARGE ICON (64x64 для предпросмотра) === */
+.quest-preview-item-row { display: flex; align-items: center; padding: 8px; background: rgba(139, 115, 85, 0.2); border-radius: 4px; margin-bottom: 6px; border: 1px solid #8b7355; }
+.item-preview-icon { width: 64px; height: 64px; object-fit: contain; image-rendering: pixelated; margin-right: 12px; flex-shrink: 0; background: rgba(0,0,0,0.2); border-radius: 4px; border: 1px solid #8b7355; }
+.quest-preview-item-info { display: flex; flex-direction: column; flex: 1; }
+.quest-preview-item-id { font-family: monospace; font-size: 12px; color: #d4af37; }
+.quest-preview-item-name { font-size: 14px; color: #e8d8a3; }
