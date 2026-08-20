@@ -31,7 +31,7 @@ To make the creation and management of complex dialogue trees and quest configur
 *   **Zero Setup:** Runs entirely in your browser. No need to install external software or learn complex configuration syntax.
 
 #### Using the Web Utility (For Modders & Admins)
-1. Open the [KGMarketPlace Web Utility](https://enotinmax.github.io/skald/).
+1. Open the [Skald's Forge Web Utility](https://enotinmax.github.io/skald/).
 2. Create your dialogue nodes or quest steps using the visual tree.
 3. Use the text editor to apply in-game formatting (e.g., rich text tags).
 4. Click **Export** to download your `.cfg` file.
@@ -58,7 +58,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 
 
 #### Использование веб-утилиты (Для мододелов и админов)
-1. Откройте [Веб-утилиту KGMarketPlace](https://enotinmax.github.io/skald/).
+1. Откройте [Веб-утилиту Кузница Скальда](https://enotinmax.github.io/skald/).
 2. Создайте ноды диалогов или шаги квестов, используя визуальное дерево.
 3. Используйте текстовый редактор для применения внутриигрового форматирования (например, теги форматированного текста).
 4. Нажмите **Экспорт**, чтобы скачать ваш `.cfg` файл.
