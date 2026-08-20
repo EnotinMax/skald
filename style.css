@@ -102,8 +102,8 @@ main { flex: 1; overflow: hidden; display: flex; }
 .canvas-container:active { cursor: grabbing; }
 .canvas-container.drawing-mode { cursor: crosshair; }
 
-#connectionLayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-.node-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+#connectionLayer { position: absolute; top: 0; left: 0; width: 10000px; height: 10000px; pointer-events: none; z-index: 5; }
+.node-container { position: absolute; top: 0; left: 0; width: 10000px; height: 10000px; }
 
 /* === NODES === */
 .dialogue-node { position: absolute; min-width: 220px; max-width: 320px; background: var(--bg-secondary); border: 2px solid var(--accent-blue); border-radius: 8px; cursor: move; box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: visible; }
