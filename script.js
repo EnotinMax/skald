@@ -1,3 +1,122 @@
+class ItemSelector {
+    constructor(container, initialValue = '') {
+        this.container = typeof container === 'string' ? document.getElementById(container) : container;
+        this.items = [];
+        this.selectedId = initialValue;
+        this.baseIconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
+        this.unknownIcon = 'unknown.png';
+        this.initDOM();
+        this.loadData();
+        this.bindEvents();
+        if (this.selectedId) { this.input.value = this.selectedId; this.updateIcon(this.selectedId); }
+    }
+
+    initDOM() {
+        this.container.innerHTML = `
+            <div class="item-selector-input-wrapper">
+                <img src="${this.baseIconUrl}${this.unknownIcon}" class="item-selector-icon" alt="icon">
+                <input type="text" class="item-selector-input" placeholder="Поиск (ID или название)..." autocomplete="off">
+            </div>
+            <ul class="item-selector-dropdown"></ul>`;
+        this.wrapper = this.container.querySelector('.item-selector-input-wrapper');
+        this.iconImg = this.container.querySelector('.item-selector-icon');
+        this.input = this.container.querySelector('.item-selector-input');
+        this.dropdown = this.container.querySelector('.item-selector-dropdown');
+    }
+
+    async loadData() {
+        try {
+            const cacheBuster = `?v=${Date.now()}`; // кэш-бустинг
+            const response = await fetch(`${this.baseIconUrl}items.json${cacheBuster}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            this.items = await response.json();
+        } catch (error) {
+            console.warn('[ItemSelector] Ошибка загрузки items.json, работаем в режиме кастомного ввода:', error);
+        }
+    }
+
+    bindEvents() {
+        this.input.addEventListener('input', () => this.filterAndRender(this.input.value));
+        this.input.addEventListener('focus', () => { if (this.input.value.length > 0) this.filterAndRender(this.input.value); });
+        this.input.addEventListener('blur', () => { setTimeout(() => { this.validateAndFinalize(this.input.value); this.dropdown.classList.remove('active'); }, 150); });
+        this.input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const highlighted = this.dropdown.querySelector('.highlighted');
+                if (highlighted) { highlighted.click(); } else { this.validateAndFinalize(this.input.value); this.dropdown.classList.remove('active'); this.input.blur(); }
+            } else if (e.key === 'Escape') { this.dropdown.classList.remove('active'); this.input.blur(); }
+        });
+        this.dropdown.addEventListener('mousedown', (e) => {
+            const option = e.target.closest('.item-option');
+            if (option) { e.preventDefault(); this.selectItem(option.dataset.id); }
+        });
+    }
+
+    filterAndRender(query) {
+        if (!query) { this.dropdown.classList.remove('active'); return; }
+        const lowerQuery = query.toLowerCase();
+        const filtered = this.items.filter(item => {
+            if (item.id.toLowerCase() === lowerQuery) return true;
+            if (item.nameRu && item.nameRu.toLowerCase().includes(lowerQuery)) return true;
+            if (item.name && item.name.toLowerCase().includes(lowerQuery)) return true;
+            if (item.id.toLowerCase().includes(lowerQuery)) return true;
+            return false;
+        }).slice(0, 50); // максимум 50 элементов, чтобы не грузить
+        this.renderDropdown(filtered);
+    }
+
+    renderDropdown(items) {
+        this.dropdown.innerHTML = '';
+        if (items.length === 0) {
+            const li = document.createElement('li');
+            li.className = 'item-option'; li.style.color = 'var(--text-secondary)'; li.style.fontStyle = 'italic';
+            li.textContent = 'Не найдено (сохранится как кастомный ID)';
+            this.dropdown.appendChild(li); this.dropdown.classList.add('active'); return;
+        }
+        items.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'item-option'; li.dataset.id = item.id;
+            li.innerHTML = `<img src="${this.baseIconUrl}${item.icon}" alt="${item.id}" onerror="this.src='${this.baseIconUrl}${this.unknownIcon}'">
+                <div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+            this.dropdown.appendChild(li);
+        });
+        this.dropdown.classList.add('active');
+    }
+
+    selectItem(id) {
+        const item = this.items.find(i => i.id === id);
+        if (item) {
+            this.selectedId = item.id; // регистр
+            this.input.value = item.id;
+            this.iconImg.src = `${this.baseIconUrl}${item.icon}`;
+            this.input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+        this.dropdown.classList.remove('active');
+    }
+
+    validateAndFinalize(inputValue) {
+        const trimmedValue = inputValue.trim();
+        const exactMatch = this.items.find(i => i.id === trimmedValue); // сравнение с учетом регистра
+        if (exactMatch) {
+            this.selectItem(exactMatch.id);
+        } else if (trimmedValue !== '') {
+            this.selectedId = trimmedValue;
+            this.input.value = trimmedValue;
+            this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`; // заглушка для кастомного мода
+            this.input.dispatchEvent(new Event('change', { bubbles: true }));
+        } else {
+            this.selectedId = '';
+            this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
+            this.input.dispatchEvent(new Event('change', { bubbles: true }));
+        }
+    }
+
+    updateIcon(id) {
+        const item = this.items.find(i => i.id === id);
+        this.iconImg.src = item ? `${this.baseIconUrl}${item.icon}` : `${this.baseIconUrl}${this.unknownIcon}`;
+    }
+}
+
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.1",
