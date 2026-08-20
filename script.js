@@ -2055,29 +2055,29 @@ class DialogueEditor {
         this.cfgFiles = {};
         this.currentCfgFile = 'sample_dialogue.cfg';
 
-        const n1 = this.addNode('Start', 100, 150);
-        n1.text = 'Greetings, traveler!\nHow can I help?';
-        const o1 = this.addOptionToNode('Start', 'Tell me about yourself'); o1.transition = 'About';
-        const o2 = this.addOptionToNode('Start', '<color=#f1c40f>Any work?</color>'); o2.transition = 'QuestOffer'; o2.color = '#f1c40f'; o2.icon = 'Hammer';
-        const o3 = this.addOptionToNode('Start', 'Farewell');
+        const n1 = this.addNode('лапшеслав', 100, 150);
+        n1.text = 'Приветствую, путник!\nХочешь перекусить?';
+        const o1 = this.addOptionToNode('лапшеслав', 'А ты кто вообще, воин?'); o1.transition = 'лапшеслав_о_себе';
+        const o2 = this.addOptionToNode('лапшеслав', '<color=#f1c40f>Может помочь?</color>'); o2.transition = 'лапшеслав_просьба'; o2.color = '#f1c40f'; o2.icon = 'Hammer';
+        const o3 = this.addOptionToNode('лапшеслав', '(уйти)');
 
-        const n2 = this.addNode('About', 500, 100);
-        n2.text = 'I am a blacksmith.\nI can forge any weapon.';
-        const o4 = this.addOptionToNode('About', 'Back'); o4.transition = 'Start';
+        const n2 = this.addNode('лапшеслав_о_себе', 500, 100);
+        n2.text = 'Я Лапшеслав, повар.\nГотовлю рамен. Вон меню.';
+        const o4 = this.addOptionToNode('лапшеслав_о_себе', 'Сомнительно, я не буду.'); o4.transition = 'лапшеслав';
 
-        const n3 = this.addNode('QuestOffer', 500, 300);
-        n3.text = 'I have a job...\nBring me <color=#e74c3c>10 boar hides</color>.';
-        const o5 = this.addOptionToNode('QuestOffer', 'I will do it!'); o5.questLink = 'BoarHunt';
-        const o6 = this.addOptionToNode('QuestOffer', 'Not now'); o6.transition = 'Start';
+        const n3 = this.addNode('лапшеслав_просьба', 500, 300);
+        n3.text = 'Да, помощь нужна.\nДля рамена со свининой не хватает одного ингредиента.\nПринеси, пожалуйста <color=#e74c3c>10кусков свинины</color>.';
+        const o5 = this.addOptionToNode('лапшеслав_просьба', 'Хорошо'); o5.questLink = 'лапшеслав_квест';
+        const o6 = this.addOptionToNode('лапшеслав_просьба', 'В другой раз'); o6.transition = 'лапшеслав';
 
-        const n4 = this.addNode('Accepted', 900, 300);
-        n4.text = 'Great! I await your return.';
-        this.addOptionToNode('Accepted', 'See you');
+        const n4 = this.addNode('лапшеслав_квествзят', 900, 300);
+        n4.text = 'Отлично! Я пока поставлю воду для бульона.';
+        this.addOptionToNode('лапшеслав_квествзят', 'Вернусь через пару минут');
 
-        this.quests.set('BoarHunt', {
-            id: 'BoarHunt', type: 'Kill', name: 'Boar Hunt',
-            description: 'Bring the blacksmith 10 boar hides.\n<image=https://example.com/boar.jpg>',
-            targets: [{ prefab: 'Boar', amount: '10', level: '' }],
+        this.quests.set('лапшеслав_квест', {
+            id: 'лапшеслав_квест', type: 'Kill', name: 'Недоставющий ингридиент',
+            description: 'Принести для варева 10 кусков сырой кабанины.',
+            targets: [{ prefab: 'RawMeat', amount: '10', level: '' }],
             rewards: [{ type: 'Item', prefab: 'Coins', amount: '100' }],
             cooldown: '1', timeLimit: '', requirements: [], autocomplete: false
         });
