@@ -1525,7 +1525,7 @@ async loadItemDataForPreview() {
                         <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
                         <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
                     </select>
-                    <input type="text" class="form-control" style="width: 100%;" value="${this.escapeHtml(r.prefab)}" data-reward-prefab="${i}" placeholder="Prefab">
+                    <div class="item-selector" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab)}"></div>
                 </div>
                 <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
                     <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
@@ -1585,7 +1585,8 @@ async loadItemDataForPreview() {
         // === ИНИЦИАЛИЗАЦИЯ ITEM SELECTOR ===
         // делаем это после того, как HTML уже вставлен в DOM
         setTimeout(() => {
-            this.els.questEditor.querySelectorAll('.item-selector').forEach(container => {
+            // инициализация targets
+            this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
                 const index = parseInt(container.dataset.index);
                 const selector = new ItemSelector(container, container.dataset.value);
                 
@@ -1595,8 +1596,19 @@ async loadItemDataForPreview() {
                     }
                 });
             });
+
+            // инициализация rewards
+            this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
+                const index = parseInt(container.dataset.rewardIndex);
+                const selector = new ItemSelector(container, container.dataset.value);
+                
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.rewards[index]) {
+                        quest.rewards[index].prefab = e.target.value.trim();
+                    }
+                });
+            });
         }, 0);
-    }
 
     bindQuestFormEvents(quest) {
         const qe = this.els.questEditor;
@@ -1704,7 +1716,24 @@ async loadItemDataForPreview() {
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${ti.amount}</span>
             </div>`;
         }).join('');
-        const rewardsHtml = quest.rewards.map(r => `<div class="quest-preview-reward"><span>${this.escapeHtml(r.prefab)}</span><span>x${r.amount}</span></div>`).join('');
+        const rewardsHtml = quest.rewards.map(r => {
+            const itemData = (window.editor && window.editor.itemSelectorData) 
+                ? window.editor.itemSelectorData.find(i => i.id === r.prefab) 
+                : null;
+            
+            const displayName = itemData ? (itemData.nameRu || itemData.name) : r.prefab;
+            const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+
+            return `
+            <div class="quest-preview-item-row">
+                <img src="${iconUrl}" class="item-preview-icon" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                <div class="quest-preview-item-info">
+                    <span class="quest-preview-item-name">${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-id">${r.type}: ${this.escapeHtml(r.prefab)}</span>
+                </div>
+                <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${r.amount}</span>
+            </div>`;
+        }).join('');
 
         return `
             <div class="quest-preview-content">
