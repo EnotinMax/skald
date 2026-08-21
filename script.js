@@ -108,10 +108,6 @@ class ItemSelector {
         const item = this.items.find(i => i.id === id);
         this.iconImg.src = item ? `${this.baseIconUrl}${item.icon}` : `${this.baseIconUrl}${this.unknownIcon}`;
     }
-    setValue(id) {
-        this.input.value = id;
-        this.updateIcon(id);
-    }
 }
 
 const translations = {
@@ -847,12 +843,11 @@ class DialogueEditor {
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
             'commandModal', 'commandType', 'commandParams', 'saveCommandBtn', 'cmdModalTitle',
             'questTargetModal', 'targetPrefabSelector', 'targetAmount', 'targetLevel', 'saveQuestTargetBtn', 'targetModalTitle',
-            'questRewardModal', 'rewardType', 'rewardPrefabSelector', 'rewardAmount', 'saveQuestRewardBtn', 'rewardModalTitle',
+            'questRewardModal', 'rewardType', 'rewardPrefabSelector', 'rewardPrefabDisplay', 'rewardAmount', 'saveQuestRewardBtn', 'rewardModalTitle',
             'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn', 'reqModalTitle',
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
             'dialogueFileInput', 'questFileInput',
-            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd',
-            'rewardPrefabDisplay'
+            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
@@ -1048,6 +1043,7 @@ class DialogueEditor {
         }
     }
     handleGlobalClick(e) {
+        // Исправление: закрываем только конкретное модальное окно
         if (e.target.matches('.close') || e.target.closest('.close')) {
             const modal = e.target.closest('.modal');
             if (modal) modal.classList.remove('open');
@@ -1967,8 +1963,8 @@ class DialogueEditor {
                 <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
                     ${iconHtml}
                     <div style="flex: 1;">
-                        <div style="font-size: 13px; color: var(--text-primary);">${reward.type}: ${displayName} x${reward.amount}</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">${reward.type}: ${reward.prefab}</div>
+                        <div style="font-size: 13px; color: var(--text-primary);">Item: ${displayName} x${reward.amount}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">Item: ${reward.prefab}</div>
                     </div>
                     <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
                 </div>
@@ -2066,7 +2062,8 @@ class DialogueEditor {
         const prefab = this.targetSelector ? this.targetSelector.input.value.trim() : '';
         if (!prefab) { alert('Enter prefab'); return; }
         quest.targets.push({ prefab, amount: this.els.targetAmount.value || '1', level: this.els.targetLevel.value || '' });
-        this.closeAllModals();
+        // Исправление: закрываем только модальное окно цели
+        document.getElementById('questTargetModal').classList.remove('open');
         this.renderQuestEditor();
     }
     saveQuestReward() {
@@ -2082,8 +2079,10 @@ class DialogueEditor {
             prefab = 'Exp';
         }
         if (!prefab) { alert('Enter prefab'); return; }
-        quest.rewards.push({ type: rewardType, prefab, amount: this.els.rewardAmount.value || '1' });
-        this.closeAllModals();
+        // Исправление: всегда используем тип 'Item' для отображения
+        quest.rewards.push({ type: 'Item', prefab, amount: this.els.rewardAmount.value || '1' });
+        // Исправление: закрываем только модальное окно награды
+        document.getElementById('questRewardModal').classList.remove('open');
         this.renderQuestEditor();
     }
     saveQuestRequirement() {
@@ -2161,8 +2160,8 @@ class DialogueEditor {
             <div class="quest-preview-item-row">
                 ${iconHtml}
                 <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">${r.type}: ${this.escapeHtml(displayName)}</span>
-                    <span class="quest-preview-item-id">${r.type}: ${this.escapeHtml(r.prefab)}</span>
+                    <span class="quest-preview-item-name">Item: ${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-id">Item: ${this.escapeHtml(r.prefab)}</span>
                 </div>
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${r.amount}</span>
             </div>`;
