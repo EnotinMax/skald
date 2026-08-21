@@ -919,11 +919,21 @@ class DialogueEditor {
         });
 
         document.addEventListener('keydown', (e) => {
+            const activeEl = document.activeElement;
+            const isTyping = activeEl && (
+                activeEl.tagName === 'INPUT' || 
+                activeEl.tagName === 'TEXTAREA' || 
+                activeEl.isContentEditable ||
+                activeEl.classList.contains('item-selector-input')
+            );
+
             if (e.key === 'Escape') {
                 if (this.isDrawingCurve) this.cancelDrawing();
                 else this.closeAllModals();
             }
-            if (e.key === 'Delete' && this.selectedNode) this.deleteSelected();
+            if (e.key === 'Delete' && this.selectedNode && !isTyping) {
+                this.deleteSelected();
+            }
         });
     }
 
