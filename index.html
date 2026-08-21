@@ -301,27 +301,34 @@
         </div>
     </div>
 
-    <div id="questRewardModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="rewardModalTitle">Добавить награду</h2>
-                <span class="close" data-action="close-modal">&times;</span>
+<div id="questRewardModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="rewardModalTitle">Добавить награду</h2>
+            <span class="close" data-action="close-modal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Тип:</label>
+                <select id="rewardType" class="form-control" onchange="editor.updateRewardModalUI()">
+                    <option value="Item">Предмет</option>
+                    <option value="Coins">Монеты</option>
+                    <option value="Exp">Опыт</option>
+                </select>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Тип:</label>
-                    <select id="rewardType" class="form-control">
-                        <option value="Item">Предмет</option>
-                        <option value="Coins">Монеты</option>
-                        <option value="Exp">Опыт</option>
-                    </select>
-                </div>
-                <div class="form-group"><label>Префаб:</label><div id="rewardPrefabSelector" class="item-selector"></div></div>
-                <div class="form-group"><label>Количество:</label><input type="number" id="rewardAmount" class="form-control" value="1"></div>
-                <button id="saveQuestRewardBtn">Сохранить</button>
+            <div class="form-group" id="rewardPrefabSelectorGroup">
+                <label>Префаб:</label>
+                <div id="rewardPrefabSelector" class="item-selector"></div>
             </div>
+            <div class="form-group" id="rewardPrefabDisplay" style="display: none;"></div>
+            <div class="form-group">
+                <label>Количество:</label>
+                <input type="number" id="rewardAmount" class="form-control" value="1">
+            </div>
+            <button id="saveQuestRewardBtn">Сохранить</button>
         </div>
     </div>
+</div>
 
     <div id="questRequirementModal" class="modal">
         <div class="modal-content">
