@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кузница Скальда — Редактор диалогов</title>
+    <title>Кузница Скальда — Редактор диалогов KGMarketplace</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png" type="image/png">
 </head>
@@ -12,7 +12,7 @@
         <div class="header-brand">
             <img src="logo.png" alt="Logo" class="logo">
             <div class="header-text">
-                <h1 id="appTitle">Кузница Скальда v2.1</h1>
+                <h1 id="appTitle">Кузница Скальда</h1>
                 <span class="subtitle" id="appSubtitle">Редактор диалогов и квестов · by OdinSons</span>
             </div>
         </div>
@@ -28,7 +28,7 @@
     </header>
 
     <main id="mainWorkspace">
-        <!-- поле -->
+        <!-- Вкладка: Поле -->
         <div id="tabField" class="tab-content active">
             <div class="workspace">
                 <div class="toolbar">
@@ -43,16 +43,18 @@
                     <div class="tool-separator"></div>
                     <span class="toolbar-hint" id="hintText">Тяни кружок на опции → к узлу, квесту или в пустоту</span>
                     
-                    <!-- легенда поля -->
+                    <!-- Легенда -->
                     <div class="legend">
                         <div class="legend-item"><span class="dot orange"></span><span class="legend-text" id="legendTransition">Переход</span></div>
                         <div class="legend-item"><span class="dot red"></span><span class="legend-text" id="legendCondition">Условие</span></div>
                         <div class="legend-item"><span class="dot green"></span><span class="legend-text" id="legendCommand">Команда</span></div>
                         <div class="legend-item"><span class="dot gray dashed"></span><span class="legend-text" id="legendEnd">Конец</span></div>
                     </div>
-                
+                </div>
+
                 <div class="canvas-container" id="canvasContainer">
-                    <svg id="connectionLayer">
+                    <!-- SVG слой для стрелок и облачков -->
+                    <svg id="connectionLayer" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="arrowhead-orange" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
                                 <polygon points="0 0, 12 4, 0 8" fill="#f39c12"/>
@@ -71,9 +73,11 @@
                             </marker>
                         </defs>
                     </svg>
+                    
+                    <!-- Контейнер для узлов диалогов -->
                     <div id="nodeContainer" class="node-container"></div>
                     
-                    <!-- панель квестов -->
+                    <!-- Плавающая панель квестов -->
                     <div id="questPalette" class="quest-palette">
                         <div class="quest-palette-header">
                             <span id="paletteTitle">Квесты</span>
@@ -150,11 +154,11 @@
             </aside>
         </div>
 
-        <!-- код -->
+        <!-- Вкладка: Код (CFG) -->
         <div id="tabCode" class="tab-content">
             <div class="code-viewer">
                 <div class="code-tabs" id="fileTabs">
-                    <!-- вкладки файлов генерируются js -->
+                    <!-- Вкладки файлов генерируются JS -->
                 </div>
                 <div class="code-content">
                     <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
@@ -169,30 +173,30 @@
         </div>
     </main>
 
-    <!-- нижняя панель вкладок -->
+    <!-- Нижняя панель вкладок -->
     <div class="bottom-tabs">
         <button class="bottom-tab active" data-tab="tabField" id="tabFieldBtn">Поле</button>
         <button class="bottom-tab" data-tab="tabCode" id="tabCodeBtn">Код</button>
         
-        <!-- языки -->
+        <!-- Переключатель языка -->
         <div class="lang-switcher">
-    <button class="lang-btn" data-lang="ru" title="Русский">🇷🇺</button>
-    <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
-    <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
-    <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
-    <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
-    <button class="lang-btn" data-lang="pl" title="Polski">🇵🇱</button>
-    <button class="lang-btn" data-lang="pt" title="Português">🇵🇹</button>
-    <button class="lang-btn" data-lang="sv" title="Svenska">🇸🇪</button>
-    <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵</button>
+            <button class="lang-btn" data-lang="ru" title="Русский">🇷🇺</button>
+            <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
+            <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+            <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
+            <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
+            <button class="lang-btn" data-lang="pl" title="Polski">🇵🇱</button>
+            <button class="lang-btn" data-lang="pt" title="Português">🇵🇹</button>
+            <button class="lang-btn" data-lang="sv" title="Svenska">🇸🇪</button>
+            <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵</button>
         </div>
     </div>
 
-    <!-- скрытые инпуты -->
+    <!-- Скрытые input'ы для импорта -->
     <input type="file" id="dialogueFileInput" accept=".cfg,.txt" style="display: none;">
     <input type="file" id="questFileInput" accept=".cfg,.txt" style="display: none;">
 
-    <!-- модальные окна -->
+    <!-- Модальные окна -->
     <div id="previewModal" class="modal">
         <div class="modal-content preview-modal">
             <div class="modal-header">
@@ -224,7 +228,6 @@
         </div>
     </div>
 
-    <!-- остальные модальные окна (condition, command, quest details) аналогичными предыдущей версии, но с ID для локализации -->
     <div id="conditionModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -356,4 +359,4 @@
 
     <script src="script.js"></script>
 </body>
-</html><!DOCTYPE html>
+</html>
