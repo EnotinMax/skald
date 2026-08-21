@@ -30,7 +30,7 @@ class ItemSelector {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             this.items = await response.json();
         } catch (error) {
-            console.warn('[ItemSelector] Ошибка загрузки items.json, работаем в режиме кастомного ввода:', error);
+            console.warn('[ItemSelector] Ошибка загрузки items.json:', error);
         }
     }
     bindEvents() {
@@ -822,7 +822,7 @@ class DialogueEditor {
         try {
             const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
             if (response.ok) this.itemSelectorData = await response.json();
-        } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
+        } catch (e) { console.warn('Не удалось загрузить данные предметов'); }
     }
     cacheElements() {
         const ids = [
@@ -1043,7 +1043,6 @@ class DialogueEditor {
         }
     }
     handleGlobalClick(e) {
-        // Исправление: закрываем только конкретное модальное окно
         if (e.target.matches('.close') || e.target.closest('.close')) {
             const modal = e.target.closest('.modal');
             if (modal) modal.classList.remove('open');
@@ -2037,24 +2036,6 @@ class DialogueEditor {
         bind('.quest-auto-input', 'autocomplete');
         bind('.quest-cd-input', 'cooldown');
         bind('.quest-tl-input', 'timeLimit');
-        qe.querySelectorAll('[data-target-amount]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.dataset.targetAmount);
-                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
-            });
-        });
-        qe.querySelectorAll('[data-reward-type]').forEach(select => {
-            select.addEventListener('change', (e) => {
-                const index = parseInt(e.target.dataset.rewardType);
-                if (quest.rewards[index]) quest.rewards[index].type = e.target.value;
-            });
-        });
-        qe.querySelectorAll('[data-reward-amount]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.dataset.rewardAmount);
-                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
-            });
-        });
     }
     saveQuestTarget() {
         const quest = this.quests.get(this.selectedQuest);
@@ -2062,7 +2043,6 @@ class DialogueEditor {
         const prefab = this.targetSelector ? this.targetSelector.input.value.trim() : '';
         if (!prefab) { alert('Enter prefab'); return; }
         quest.targets.push({ prefab, amount: this.els.targetAmount.value || '1', level: this.els.targetLevel.value || '' });
-        // Исправление: закрываем только модальное окно цели
         document.getElementById('questTargetModal').classList.remove('open');
         this.renderQuestEditor();
     }
@@ -2079,9 +2059,7 @@ class DialogueEditor {
             prefab = 'Exp';
         }
         if (!prefab) { alert('Enter prefab'); return; }
-        // Исправление: всегда используем тип 'Item' для отображения
         quest.rewards.push({ type: 'Item', prefab, amount: this.els.rewardAmount.value || '1' });
-        // Исправление: закрываем только модальное окно награды
         document.getElementById('questRewardModal').classList.remove('open');
         this.renderQuestEditor();
     }
