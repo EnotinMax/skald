@@ -11,7 +11,6 @@ class ItemSelector {
         this.bindEvents();
         if (this.selectedId) { this.input.value = this.selectedId; this.updateIcon(this.selectedId); }
     }
-
     initDOM() {
         this.container.innerHTML = `
             <div class="item-selector-input-wrapper">
@@ -24,7 +23,6 @@ class ItemSelector {
         this.input = this.container.querySelector('.item-selector-input');
         this.dropdown = this.container.querySelector('.item-selector-dropdown');
     }
-
     async loadData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
@@ -35,7 +33,6 @@ class ItemSelector {
             console.warn('[ItemSelector] Ошибка загрузки items.json, работаем в режиме кастомного ввода:', error);
         }
     }
-
     bindEvents() {
         this.input.addEventListener('input', () => this.filterAndRender(this.input.value));
         this.input.addEventListener('focus', () => { if (this.input.value.length > 0) this.filterAndRender(this.input.value); });
@@ -52,7 +49,6 @@ class ItemSelector {
             if (option) { e.preventDefault(); this.selectItem(option.dataset.id); }
         });
     }
-
     filterAndRender(query) {
         if (!query) { this.dropdown.classList.remove('active'); return; }
         const lowerQuery = query.toLowerCase();
@@ -65,7 +61,6 @@ class ItemSelector {
         }).slice(0, 50);
         this.renderDropdown(filtered);
     }
-
     renderDropdown(items) {
         this.dropdown.innerHTML = '';
         if (items.length === 0) {
@@ -83,7 +78,6 @@ class ItemSelector {
         });
         this.dropdown.classList.add('active');
     }
-
     selectItem(id) {
         const item = this.items.find(i => i.id === id);
         if (item) {
@@ -94,7 +88,6 @@ class ItemSelector {
         }
         this.dropdown.classList.remove('active');
     }
-
     validateAndFinalize(inputValue) {
         const trimmedValue = inputValue.trim();
         const exactMatch = this.items.find(i => i.id === trimmedValue);
@@ -111,10 +104,13 @@ class ItemSelector {
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
         }
     }
-
     updateIcon(id) {
         const item = this.items.find(i => i.id === id);
         this.iconImg.src = item ? `${this.baseIconUrl}${item.icon}` : `${this.baseIconUrl}${this.unknownIcon}`;
+    }
+    setValue(id) {
+        this.input.value = id;
+        this.updateIcon(id);
     }
 }
 
@@ -189,11 +185,14 @@ const translations = {
         noReqs: "Нет требований",
         noDesc: "Нет описания",
         back: "Назад",
-        previewQuestBtn: "Предпросмотр квеста"
+        previewQuestBtn: "Предпросмотр квеста",
+        rewardTypeItem: "Предмет",
+        rewardTypeCoins: "Монеты",
+        rewardTypeExp: "Опыт"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons &Enotin",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
         searchPlaceholder: "Search...",
         importDialogue: "Import Dialogue",
         importQuest: "Import Quest",
@@ -261,11 +260,14 @@ const translations = {
         noReqs: "No requirements",
         noDesc: "No description",
         back: "Back",
-        previewQuestBtn: "Preview Quest"
+        previewQuestBtn: "Preview Quest",
+        rewardTypeItem: "Item",
+        rewardTypeCoins: "Coins",
+        rewardTypeExp: "Experience"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.1",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons &Enotin",
+        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
         searchPlaceholder: "Suche...",
         importDialogue: "Dialog importieren",
         importQuest: "Quest importieren",
@@ -333,11 +335,14 @@ const translations = {
         noReqs: "Keine Anforderungen",
         noDesc: "Keine Beschreibung",
         back: "Zurück",
-        previewQuestBtn: "Quest-Vorschau"
+        previewQuestBtn: "Quest-Vorschau",
+        rewardTypeItem: "Gegenstand",
+        rewardTypeCoins: "Münzen",
+        rewardTypeExp: "Erfahrung"
     },
     es: {
         appTitle: "Forja del Escaldo v2.1",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons &Enotin",
+        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
         searchPlaceholder: "Buscar...",
         importDialogue: "Importar diálogo",
         importQuest: "Importar misión",
@@ -405,11 +410,14 @@ const translations = {
         noReqs: "Sin requisitos",
         noDesc: "Sin descripción",
         back: "Atrás",
-        previewQuestBtn: "Vista previa de misión"
+        previewQuestBtn: "Vista previa de misión",
+        rewardTypeItem: "Objeto",
+        rewardTypeCoins: "Monedas",
+        rewardTypeExp: "Experiencia"
     },
     fr: {
         appTitle: "Forge du Skalde v2.1",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons &Enotin",
+        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
         searchPlaceholder: "Rechercher...",
         importDialogue: "Importer dialogue",
         importQuest: "Importer quête",
@@ -477,11 +485,14 @@ const translations = {
         noReqs: "Pas d'exigences",
         noDesc: "Pas de description",
         back: "Retour",
-        previewQuestBtn: "Aperçu de quête"
+        previewQuestBtn: "Aperçu de quête",
+        rewardTypeItem: "Objet",
+        rewardTypeCoins: "Pièces",
+        rewardTypeExp: "Expérience"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.1",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons &Enotin",
+        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
         searchPlaceholder: "Szukaj...",
         importDialogue: "Importuj dialog",
         importQuest: "Importuj zadanie",
@@ -549,11 +560,14 @@ const translations = {
         noReqs: "Brak wymagań",
         noDesc: "Brak opisu",
         back: "Wstecz",
-        previewQuestBtn: "Podgląd zadania"
+        previewQuestBtn: "Podgląd zadania",
+        rewardTypeItem: "Przedmiot",
+        rewardTypeCoins: "Monety",
+        rewardTypeExp: "Doświadczenie"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.1",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons &Enotin",
+        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
         searchPlaceholder: "Pesquisar...",
         importDialogue: "Importar diálogo",
         importQuest: "Importar missão",
@@ -621,11 +635,14 @@ const translations = {
         noReqs: "Sem requisitos",
         noDesc: "Sem descrição",
         back: "Voltar",
-        previewQuestBtn: "Pré-visualização da missão"
+        previewQuestBtn: "Pré-visualização da missão",
+        rewardTypeItem: "Item",
+        rewardTypeCoins: "Moedas",
+        rewardTypeExp: "Experiência"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.1",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons &Enotin",
+        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
         searchPlaceholder: "Sök...",
         importDialogue: "Importera dialog",
         importQuest: "Importera uppdrag",
@@ -682,7 +699,7 @@ const translations = {
         rewards: "Belöningar",
         requirements: "Krav",
         time: "Tid",
-        cooldown: "Nedkyldning (dagar):",
+        cooldown: "Nedkylning (dagar):",
         timeLimit: "Tidsgräns (sek):",
         autocomplete: "Autoslutförande",
         whatToDo: "Vad som ska göras:",
@@ -693,7 +710,10 @@ const translations = {
         noReqs: "Inga krav",
         noDesc: "Ingen beskrivning",
         back: "Tillbaka",
-        previewQuestBtn: "Uppdragsförhandsgranskning"
+        previewQuestBtn: "Uppdragsförhandsgranskning",
+        rewardTypeItem: "Föremål",
+        rewardTypeCoins: "Mynt",
+        rewardTypeExp: "Erfarenhet"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 2.1",
@@ -765,7 +785,10 @@ const translations = {
         noReqs: "要件なし",
         noDesc: "説明なし",
         back: "戻る",
-        previewQuestBtn: "クエストプレビュー"
+        previewQuestBtn: "クエストプレビュー",
+        rewardTypeItem: "アイテム",
+        rewardTypeCoins: "コイン",
+        rewardTypeExp: "経験値"
     }
 };
 
@@ -776,45 +799,35 @@ class DialogueEditor {
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
-        
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.isCanvasDragging = false;
         this.canvasStartPos = { x: 0, y: 0 };
-        
         this.previewHistory = [];
         this.currentPreviewNode = null;
-        
         this.isDrawingCurve = false;
         this.drawingFromOption = null;
         this.drawingTempPath = null;
-        
         this.cfgFiles = {};
         this.currentCfgFile = null;
-        
         this.lang = localStorage.getItem('skald_lang') || 'ru';
-        
         this.itemSelectorData = [];
         this.loadItemDataForPreview();
-        
         this.optionIconSelector = null;
         this.targetSelector = null;
         this.rewardSelector = null;
-        
         this.els = {};
         this.cacheElements();
         this.initEventListeners();
         this.applyLanguage();
         this.render();
     }
-
     async loadItemDataForPreview() {
         try {
             const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json?v=${Date.now()}`);
             if (response.ok) this.itemSelectorData = await response.json();
         } catch (e) { console.warn('Не удалось загрузить данные предметов для предпросмотра'); }
     }
-
     cacheElements() {
         const ids = [
             'appTitle', 'appSubtitle', 'searchInput', 'importDialogueBtn', 'importQuestBtn',
@@ -838,11 +851,11 @@ class DialogueEditor {
             'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn', 'reqModalTitle',
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
             'dialogueFileInput', 'questFileInput',
-            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd'
+            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd',
+            'rewardPrefabDisplay'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
-
     initEventListeners() {
         this.els.addNodeBtn.addEventListener('click', () => this.addNode());
         this.els.addOptionBtn.addEventListener('click', () => this.addOptionToSelected());
@@ -851,7 +864,6 @@ class DialogueEditor {
         this.els.zoomOutBtn.addEventListener('click', () => this.zoom(-0.1));
         this.els.fitToScreenBtn.addEventListener('click', () => this.fitToScreen());
         this.els.loadSampleBtn.addEventListener('click', () => this.loadSampleData());
-        
         this.els.searchInput.addEventListener('input', (e) => this.searchDialogue(e.target.value));
         this.els.importDialogueBtn.addEventListener('click', () => this.els.dialogueFileInput.click());
         this.els.importQuestBtn.addEventListener('click', () => this.els.questFileInput.click());
@@ -859,37 +871,30 @@ class DialogueEditor {
         this.els.exportBtn.addEventListener('click', () => this.exportCurrentCfg());
         this.els.validateBtn.addEventListener('click', () => this.validateDialogue());
         this.els.previewBtn.addEventListener('click', () => this.showPreview());
-        
         this.els.dialogueFileInput.addEventListener('change', (e) => this.handleDialogueFileImport(e));
         this.els.questFileInput.addEventListener('change', (e) => this.handleQuestFileImport(e));
-        
         this.els.nodeId.addEventListener('change', (e) => this.updateNodeProperty('id', e.target.value));
         this.els.nodeText.addEventListener('input', (e) => this.updateNodeProperty('text', e.target.value));
         this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToNode(this.selectedNode));
-        
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
         this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
         this.els.optionQuestLink.addEventListener('change', (e) => this.updateOptionProperty('questLink', e.target.value));
         this.els.optionColor.addEventListener('input', (e) => this.updateOptionProperty('color', e.target.value));
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
-        
         this.els.conditionType.addEventListener('change', () => this.updateConditionParams());
         this.els.saveConditionBtn.addEventListener('click', () => this.saveCondition());
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
         this.els.saveCommandBtn.addEventListener('click', () => this.saveCommand());
-        
         this.els.addQuestBtn.addEventListener('click', () => this.addQuest());
         this.els.saveQuestTargetBtn.addEventListener('click', () => this.saveQuestTarget());
         this.els.saveQuestRewardBtn.addEventListener('click', () => this.saveQuestReward());
         this.els.requirementType.addEventListener('change', () => this.updateRequirementParams());
         this.els.saveQuestRequirementBtn.addEventListener('click', () => this.saveQuestRequirement());
-        
         this.els.toggleQuestPalette.addEventListener('click', () => {
             this.els.questPalette.classList.toggle('collapsed');
             this.els.toggleQuestPalette.textContent = this.els.questPalette.classList.contains('collapsed') ? '+' : '−';
         });
-        
         this.els.canvasContainer.addEventListener('mousedown', (e) => this.startCanvasDrag(e));
         window.addEventListener('mousemove', (e) => this.canvasDrag(e));
         window.addEventListener('mouseup', (e) => this.stopCanvasDrag(e));
@@ -897,19 +902,14 @@ class DialogueEditor {
             e.preventDefault();
             this.zoom(e.deltaY < 0 ? 0.1 : -0.1);
         }, { passive: false });
-        
         window.addEventListener('mousemove', (e) => this.onDrawMouseMove(e));
         window.addEventListener('mouseup', (e) => this.onDrawMouseUp(e));
-        
         document.addEventListener('click', (e) => this.handleGlobalClick(e));
-        
         this.els.tabFieldBtn.addEventListener('click', () => this.switchTab('tabField'));
         this.els.tabCodeBtn.addEventListener('click', () => this.switchTab('tabCode'));
-        
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
-        
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.lang = btn.dataset.lang;
@@ -918,20 +918,26 @@ class DialogueEditor {
                 this.render();
             });
         });
-        
         document.addEventListener('keydown', (e) => {
+            const activeEl = document.activeElement;
+            const isTyping = activeEl && (
+                activeEl.tagName === 'INPUT' ||
+                activeEl.tagName === 'TEXTAREA' ||
+                activeEl.isContentEditable ||
+                activeEl.classList.contains('item-selector-input')
+            );
             if (e.key === 'Escape') {
                 if (this.isDrawingCurve) this.cancelDrawing();
                 else this.closeAllModals();
             }
-            if (e.key === 'Delete' && this.selectedNode) this.deleteSelected();
+            if (e.key === 'Delete' && this.selectedNode && !isTyping) {
+                this.deleteSelected();
+            }
         });
     }
-
     applyLanguage() {
         const t = translations[this.lang];
         if (!t) return;
-        
         this.els.appTitle.textContent = t.appTitle;
         this.els.appSubtitle.textContent = t.appSubtitle;
         this.els.searchInput.placeholder = t.searchPlaceholder;
@@ -979,31 +985,25 @@ class DialogueEditor {
         this.els.rewardModalTitle.textContent = t.rewardModalTitle;
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
-        
         if (this.els.legendTransition) this.els.legendTransition.textContent = t.legendTransition;
         if (this.els.legendCondition) this.els.legendCondition.textContent = t.legendCondition;
         if (this.els.legendCommand) this.els.legendCommand.textContent = t.legendCommand;
         if (this.els.legendEnd) this.els.legendEnd.textContent = t.legendEnd;
-        
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === this.lang);
         });
-        
         document.documentElement.lang = this.lang;
     }
-
     switchTab(tabId) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
-        
         if (tabId === 'tabCode') {
             this.renderCodeTabs();
             if (this.currentCfgFile) this.showCodeFile(this.currentCfgFile);
         }
     }
-
     renderCodeTabs() {
         const container = this.els.fileTabs;
         container.innerHTML = '';
@@ -1020,11 +1020,9 @@ class DialogueEditor {
             container.appendChild(btn);
         });
     }
-
     showCodeFile(filename) {
         this.els.codeEditor.value = this.cfgFiles[filename] || '';
     }
-
     applyCodeFromEditor() {
         if (!this.currentCfgFile) return;
         const content = this.els.codeEditor.value;
@@ -1037,7 +1035,6 @@ class DialogueEditor {
         }
         this.render();
     }
-
     copyCurrentCode() {
         this.els.codeEditor.select();
         document.execCommand('copy');
@@ -1045,31 +1042,30 @@ class DialogueEditor {
         this.els.copyCodeBtn.textContent = 'OK';
         setTimeout(() => { this.els.copyCodeBtn.textContent = originalText; }, 1500);
     }
-
     downloadCurrentCode() {
         if (this.currentCfgFile) {
             this.downloadFile(this.currentCfgFile, this.els.codeEditor.value);
         }
     }
-
     handleGlobalClick(e) {
         if (e.target.matches('.close') || e.target.closest('.close')) {
-            this.closeAllModals();
+            const modal = e.target.closest('.modal');
+            if (modal) modal.classList.remove('open');
             return;
         }
         if (e.target.classList.contains('modal')) {
-            this.closeAllModals();
+            e.target.classList.remove('open');
             return;
         }
-        
         const actionTarget = e.target.closest('[data-action]');
         if (!actionTarget) return;
-        
         const action = actionTarget.dataset.action;
         const data = actionTarget.dataset;
-        
         switch (action) {
-            case 'close-modal': this.closeAllModals(); break;
+            case 'close-modal':
+                const modal = actionTarget.closest('.modal');
+                if (modal) modal.classList.remove('open');
+                break;
             case 'select-node': this.selectNode(data.id); break;
             case 'select-option': this.selectOption(data.optionId); break;
             case 'navigate': this.previewNavigate(data.target); break;
@@ -1090,39 +1086,59 @@ class DialogueEditor {
             case 'open-quest-link': this.openQuestLink(data.questId); break;
         }
     }
-
     openQuestLink(questId) {
         this.selectQuest(questId);
         this.openModal('questsModal');
     }
-
     openModal(id) {
         const modal = document.getElementById(id);
         if (modal) {
             modal.classList.add('open');
             if (id === 'conditionModal') this.updateConditionParams();
             if (id === 'commandModal') this.updateCommandParams();
-            
-            // Инициализация ItemSelector для модальных окон
             if (id === 'questTargetModal') {
-                if (this.targetSelector) {
-                    this.targetSelector.container.innerHTML = '';
-                }
+                if (this.targetSelector) this.targetSelector.container.innerHTML = '';
                 this.targetSelector = new ItemSelector(this.els.targetPrefabSelector, '');
             }
             if (id === 'questRewardModal') {
-                if (this.rewardSelector) {
-                    this.rewardSelector.container.innerHTML = '';
-                }
+                if (this.rewardSelector) this.rewardSelector.container.innerHTML = '';
                 this.rewardSelector = new ItemSelector(this.els.rewardPrefabSelector, '');
+                this.updateRewardModalUI();
             }
         }
     }
-
+    updateRewardModalUI() {
+        const rewardType = this.els.rewardType.value;
+        const selectorContainer = this.els.rewardPrefabSelector;
+        const displayContainer = this.els.rewardPrefabDisplay;
+        if (rewardType === 'Item') {
+            selectorContainer.style.display = 'block';
+            displayContainer.style.display = 'none';
+        } else if (rewardType === 'Coins') {
+            selectorContainer.style.display = 'none';
+            displayContainer.style.display = 'block';
+            const coinsData = this.itemSelectorData.find(i => i.id === 'Coins');
+            const iconUrl = coinsData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            displayContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
+                    <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="Coins">
+                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Coins</div>
+                </div>
+            `;
+        } else if (rewardType === 'Exp') {
+            selectorContainer.style.display = 'none';
+            displayContainer.style.display = 'block';
+            displayContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
+                    <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>
+                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Exp</div>
+                </div>
+            `;
+        }
+    }
     closeAllModals() {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
-
     addNode(id = null, x = null, y = null) {
         const nodeId = id || `Node_${Date.now()}`;
         if (this.nodes.has(nodeId)) return null;
@@ -1141,7 +1157,6 @@ class DialogueEditor {
         this.syncCodeView();
         return node;
     }
-
     selectNode(nodeId) {
         this.selectedNode = nodeId;
         this.selectedOption = null;
@@ -1162,7 +1177,6 @@ class DialogueEditor {
             }
         }
     }
-
     selectOption(optionId) {
         this.selectedOption = optionId;
         const node = this.nodes.get(this.selectedNode);
@@ -1179,7 +1193,6 @@ class DialogueEditor {
         this.renderCommandsList(option.commands);
         this.renderNodeOptionsList();
         this.updateQuestLinksList();
-        
         if (this.optionIconSelector) {
             this.optionIconSelector.container.innerHTML = '';
         }
@@ -1191,12 +1204,10 @@ class DialogueEditor {
             this.syncCodeView();
         });
     }
-
     addOptionToSelected() {
         if (!this.selectedNode) { alert('Select a node first!'); return; }
         this.addOptionToNode(this.selectedNode);
     }
-
     addOptionToNode(nodeId, text = 'New option') {
         const node = this.nodes.get(nodeId);
         if (!node) return null;
@@ -1217,7 +1228,6 @@ class DialogueEditor {
         this.syncCodeView();
         return option;
     }
-
     deleteOptionFromNode(optionId) {
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
@@ -1231,12 +1241,10 @@ class DialogueEditor {
         this.renderNodeOptionsList();
         this.syncCodeView();
     }
-
     toggleCollapse(nodeId) {
         const node = this.nodes.get(nodeId);
         if (node) { node.collapsed = !node.collapsed; this.renderNodes(); }
     }
-
     updateNodeProperty(property, value) {
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
@@ -1255,7 +1263,6 @@ class DialogueEditor {
         }
         this.syncCodeView();
     }
-
     updateOptionProperty(property, value) {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
@@ -1273,7 +1280,6 @@ class DialogueEditor {
         this.renderNodeOptionsList();
         this.syncCodeView();
     }
-
     deleteSelected() {
         if (this.selectedOption) {
             this.deleteOptionFromNode(this.selectedOption);
@@ -1293,7 +1299,6 @@ class DialogueEditor {
             this.syncCodeView();
         }
     }
-
     updateTransitionsList() {
         const select = this.els.optionTransition;
         select.innerHTML = '<option value="">— None —</option>';
@@ -1306,7 +1311,6 @@ class DialogueEditor {
             }
         });
     }
-
     updateQuestLinksList() {
         const select = this.els.optionQuestLink;
         select.innerHTML = '<option value="">— None —</option>';
@@ -1317,9 +1321,7 @@ class DialogueEditor {
             select.appendChild(opt);
         });
     }
-
     render() { this.renderNodes(); this.renderQuestPalette(); }
-
     renderNodes() {
         const container = this.els.nodeContainer;
         container.innerHTML = '';
@@ -1329,7 +1331,6 @@ class DialogueEditor {
         });
         requestAnimationFrame(() => this.renderConnections());
     }
-
     createNodeElement(node) {
         const div = document.createElement('div');
         div.className = `dialogue-node ${node.id === this.selectedNode ? 'selected' : ''} ${node.collapsed ? 'collapsed' : ''}`;
@@ -1352,14 +1353,14 @@ class DialogueEditor {
                     const handleClass = this.getOptionHandleClass(opt);
                     const iconHtml = opt.icon ? this.getIconHtml(opt.icon, 16) : '';
                     return `
-                    <div class="option ${opt.id === this.selectedOption ? 'selected' : ''} ${this.getOptionClass(opt)}" 
-                         data-action="select-option" 
+                    <div class="option ${opt.id === this.selectedOption ? 'selected' : ''} ${this.getOptionClass(opt)}"
+                         data-action="select-option"
                          data-option-id="${opt.id}">
                         ${iconHtml}
                         <span class="option-text">${this.escapeHtml(opt.text.length > 25 ? opt.text.substring(0, 25) + '...' : opt.text)}</span>
-                        <div class="option-draw-handle ${handleClass}" 
-                             data-draw-handle 
-                             data-node-id="${node.id}" 
+                        <div class="option-draw-handle ${handleClass}"
+                             data-draw-handle
+                             data-node-id="${node.id}"
                              data-option-id="${opt.id}"></div>
                     </div>
                 `;
@@ -1370,27 +1371,23 @@ class DialogueEditor {
         this.setupDrawHandles(div, node);
         return div;
     }
-
     getIconHtml(iconId, size = 16) {
         const itemData = this.itemSelectorData.find(i => i.id === iconId);
         const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
         return `<img src="${iconUrl}" class="option-icon" style="width: ${size}px; height: ${size}px;" alt="${iconId}" title="${iconId}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">`;
     }
-
     getOptionClass(opt) {
         if (opt.conditions.length > 0) return 'has-conditions';
         if (opt.commands.length > 0) return 'has-commands';
         if (opt.transition || opt.questLink) return 'has-transition';
         return 'is-end';
     }
-
     getOptionHandleClass(opt) {
         if (opt.conditions.length > 0) return 'has-conditions';
         if (opt.commands.length > 0) return 'has-commands';
         if (opt.transition || opt.questLink) return 'has-transition';
         return 'is-end';
     }
-
     setupNodeDrag(element, node) {
         let isDragging = false;
         let startX = 0, startY = 0;
@@ -1421,7 +1418,6 @@ class DialogueEditor {
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
     }
-
     setupDrawHandles(element, node) {
         const handles = element.querySelectorAll('[data-draw-handle]');
         handles.forEach(handle => {
@@ -1432,7 +1428,6 @@ class DialogueEditor {
             });
         });
     }
-
     startDrawing(e, nodeId, optionId) {
         this.isDrawingCurve = true;
         this.drawingFromOption = { nodeId, optionId };
@@ -1447,7 +1442,6 @@ class DialogueEditor {
         this.drawingTempPath.setAttribute('opacity', '0.8');
         svg.appendChild(this.drawingTempPath);
     }
-
     onDrawMouseMove(e) {
         if (!this.isDrawingCurve || !this.drawingTempPath) return;
         const containerRect = this.els.canvasContainer.getBoundingClientRect();
@@ -1463,7 +1457,6 @@ class DialogueEditor {
         const pathD = this.getCurvePath(sx, sy, mouseX, mouseY);
         this.drawingTempPath.setAttribute('d', pathD);
     }
-
     onDrawMouseUp(e) {
         if (!this.isDrawingCurve) return;
         const target = this.findDrawTarget(e);
@@ -1490,7 +1483,6 @@ class DialogueEditor {
             this.els.optionQuestLink.value = option.questLink;
         }
     }
-
     findDrawTarget(e) {
         const nodeEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('.dialogue-node');
         if (nodeEl && nodeEl.dataset.nodeId !== this.drawingFromOption.nodeId) {
@@ -1502,7 +1494,6 @@ class DialogueEditor {
         }
         return { type: 'end' };
     }
-
     cancelDrawing() {
         this.isDrawingCurve = false;
         this.drawingFromOption = null;
@@ -1512,13 +1503,12 @@ class DialogueEditor {
             this.drawingTempPath = null;
         }
     }
-
     renderNodeOptionsList() {
         const node = this.nodes.get(this.selectedNode);
         if (!node) return;
         this.els.nodeOptionsList.innerHTML = node.options.map((opt, i) => `
-            <div class="option-list-item ${opt.id === this.selectedOption ? 'selected' : ''}" 
-                 data-action="select-option" 
+            <div class="option-list-item ${opt.id === this.selectedOption ? 'selected' : ''}"
+                 data-action="select-option"
                  data-option-id="${opt.id}">
                 <span class="option-list-text">${i + 1}. ${this.escapeHtml(opt.text)}</span>
                 <div class="option-list-buttons">
@@ -1527,7 +1517,6 @@ class DialogueEditor {
             </div>
         `).join('');
     }
-
     renderConnections() {
         const svg = this.els.connectionLayer;
         svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
@@ -1620,14 +1609,12 @@ class DialogueEditor {
             });
         });
     }
-
     getOptionColorInfo(opt) {
         if (opt.conditions.length > 0) return { color: '#e74c3c', marker: 'red' };
         if (opt.commands.length > 0) return { color: '#27ae60', marker: 'green' };
         if (opt.transition || opt.questLink) return { color: '#f39c12', marker: 'orange' };
         return { color: '#95a5a6', marker: 'gray' };
     }
-
     getCurvePath(sx, sy, tx, ty) {
         const dx = tx - sx;
         const dy = ty - sy;
@@ -1644,7 +1631,6 @@ class DialogueEditor {
                 `S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
         }
     }
-
     renderEndCloud(x, y, svg) {
         const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'end-cloud-group');
@@ -1671,7 +1657,6 @@ class DialogueEditor {
         g.appendChild(text);
         svg.appendChild(g);
     }
-
     renderQuestCloud(x, y, questId, svg) {
         const quest = this.quests.get(questId);
         if (!quest) return;
@@ -1695,7 +1680,7 @@ class DialogueEditor {
         icon.setAttribute('x', x + 14);
         icon.setAttribute('y', y + 5);
         icon.setAttribute('font-size', '14');
-        icon.textContent = '';
+        icon.textContent = '📜';
         g.appendChild(icon);
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', x + 52);
@@ -1711,7 +1696,6 @@ class DialogueEditor {
         g.appendChild(title);
         svg.appendChild(g);
     }
-
     renderQuestPalette() {
         this.els.questPaletteList.innerHTML = Array.from(this.quests.values()).map(q => `
             <div class="quest-palette-item" data-quest-id="${q.id}">
@@ -1720,22 +1704,18 @@ class DialogueEditor {
             </div>
         `).join('');
     }
-
     startCanvasDrag(e) {
         if (e.target.closest('.dialogue-node') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
         this.isCanvasDragging = true;
         this.canvasStartPos = { x: e.clientX - this.canvasOffset.x, y: e.clientY - this.canvasOffset.y };
     }
-
     canvasDrag(e) {
         if (!this.isCanvasDragging) return;
         this.canvasOffset.x = e.clientX - this.canvasStartPos.x;
         this.canvasOffset.y = e.clientY - this.canvasStartPos.y;
         this.applyCanvasTransform();
     }
-
     stopCanvasDrag() { this.isCanvasDragging = false; }
-
     applyCanvasTransform() {
         const transform = `translate(${this.canvasOffset.x}px, ${this.canvasOffset.y}px) scale(${this.currentZoom})`;
         const origin = '0 0';
@@ -1744,18 +1724,15 @@ class DialogueEditor {
         this.els.nodeContainer.style.transform = transform;
         this.els.nodeContainer.style.transformOrigin = origin;
     }
-
     zoom(delta) {
         this.currentZoom = Math.max(0.2, Math.min(3, this.currentZoom + delta));
         this.applyCanvasTransform();
     }
-
     fitToScreen() {
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
         this.applyCanvasTransform();
     }
-
     showPreview() {
         if (!this.selectedNode) { alert('Select a dialogue first'); return; }
         this.previewHistory = [];
@@ -1763,7 +1740,6 @@ class DialogueEditor {
         this.els.previewContent.innerHTML = this.generatePreview(this.currentPreviewNode, true);
         this.openModal('previewModal');
     }
-
     generatePreview(node, isRoot = false) {
         const processedText = this.processTextForPreview(node.text);
         let html = '';
@@ -1801,7 +1777,6 @@ class DialogueEditor {
         html += '</div>';
         return html;
     }
-
     previewNavigate(nodeId) {
         const targetNode = this.nodes.get(nodeId);
         if (!targetNode) return;
@@ -1809,7 +1784,6 @@ class DialogueEditor {
         this.currentPreviewNode = targetNode;
         this.els.previewContent.innerHTML = this.generatePreview(targetNode, false);
     }
-
     previewGoBack() {
         if (this.previewHistory.length > 0) {
             this.currentPreviewNode = this.previewHistory.pop();
@@ -1817,7 +1791,6 @@ class DialogueEditor {
             this.els.previewContent.innerHTML = this.generatePreview(this.currentPreviewNode, isRoot);
         }
     }
-
     processTextForPreview(text) {
         if (!text) return '';
         let processed = text.replace(/\\n/g, '<br>');
@@ -1826,19 +1799,15 @@ class DialogueEditor {
         processed = processed.replace(/<image=([^>]+)>/g, '<br><img src="$1" style="max-width: 100%; border-radius: 4px; margin: 5px 0;"><br>');
         return processed;
     }
-
     updateConditionParams() {
         this.renderParamInputs(this.els.conditionParams, this.getConditionParams(this.els.conditionType.value));
     }
-
     updateCommandParams() {
         this.renderParamInputs(this.els.commandParams, this.getCommandParams(this.els.commandType.value));
     }
-
     updateRequirementParams() {
         this.renderParamInputs(this.els.requirementParams, this.getConditionParams(this.els.requirementType.value));
     }
-
     renderParamInputs(container, params) {
         container.innerHTML = params.map(name => `
             <div class="form-group">
@@ -1847,7 +1816,6 @@ class DialogueEditor {
             </div>
         `).join('');
     }
-
     getConditionParams(type) {
         const map = {
             'HasItem': ['ItemPrefab', 'Amount', 'ItemLevel'], 'NotHasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
@@ -1858,7 +1826,6 @@ class DialogueEditor {
         };
         return map[type] || [];
     }
-
     getCommandParams(type) {
         const map = {
             'GiveItem': ['ItemPrefab', 'Amount', 'Level'], 'RemoveItem': ['ItemPrefab', 'Amount'],
@@ -1870,7 +1837,6 @@ class DialogueEditor {
         };
         return map[type] || [];
     }
-
     saveCondition() {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
@@ -1884,7 +1850,6 @@ class DialogueEditor {
         this.renderNodes();
         this.syncCodeView();
     }
-
     saveCommand() {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
@@ -1898,7 +1863,6 @@ class DialogueEditor {
         this.renderNodes();
         this.syncCodeView();
     }
-
     renderConditionsList(conditions) {
         this.els.conditionsList.innerHTML = conditions.map((c, i) => `
             <div class="condition-item">
@@ -1907,7 +1871,6 @@ class DialogueEditor {
             </div>
         `).join('');
     }
-
     renderCommandsList(commands) {
         this.els.commandsList.innerHTML = commands.map((c, i) => `
             <div class="command-item">
@@ -1916,21 +1879,18 @@ class DialogueEditor {
             </div>
         `).join('');
     }
-
     removeCondition(index) {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
         if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); this.renderNodes(); this.syncCodeView(); }
     }
-
     removeCommand(index) {
         const node = this.nodes.get(this.selectedNode);
         if (!node || !this.selectedOption) return;
         const option = node.options.find(o => o.id === this.selectedOption);
         if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); this.renderNodes(); this.syncCodeView(); }
     }
-
     addQuest() {
         const id = `Quest_${Date.now()}`;
         this.quests.set(id, {
@@ -1942,7 +1902,6 @@ class DialogueEditor {
         this.renderQuestPalette();
         this.selectQuest(id);
     }
-
     selectQuest(id) {
         this.selectedQuest = id;
         document.querySelectorAll('.quest-item').forEach(el => {
@@ -1950,18 +1909,16 @@ class DialogueEditor {
         });
         this.renderQuestEditor();
     }
-
     renderQuestsList() {
         this.els.questsList.innerHTML = Array.from(this.quests.values()).map(q => `
-            <div class="quest-item ${q.id === this.selectedQuest ? 'selected' : ''}" 
-                 data-action="select-quest" 
+            <div class="quest-item ${q.id === this.selectedQuest ? 'selected' : ''}"
+                 data-action="select-quest"
                  data-id="${q.id}">
                 <div class="quest-item-name">${this.escapeHtml(q.name)}</div>
                 <div class="quest-item-id">${this.escapeHtml(q.id)}</div>
             </div>
         `).join('');
     }
-
     renderQuestEditor() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) {
@@ -1969,37 +1926,54 @@ class DialogueEditor {
             return;
         }
         const t = translations[this.lang];
-        const targetsHtml = quest.targets.map((t_item, i) => `
-            <div class="quest-target-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
-                <div class="item-selector" style="flex: 1;" data-index="${i}" data-value="${this.escapeHtml(t_item.prefab)}"></div>
-                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                    <input type="number" class="form-control" style="width: 60px;" value="${t_item.amount}" data-target-amount="${i}">
+        const targetsHtml = quest.targets.map((t_item, i) => {
+            const itemData = this.itemSelectorData.find(item => item.id === t_item.prefab);
+            const itemName = itemData ? (itemData.nameRu || itemData.name) : t_item.prefab;
+            const iconUrl = itemData ?
+                `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` :
+                'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            return `
+                <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
+                    <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="${t_item.prefab}">
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: var(--text-primary);">Collect ${itemName} x${t_item.amount}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">${t_item.prefab}</div>
+                    </div>
+                    <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
                 </div>
-                <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
-            </div>
-        `).join('');
-        const rewardsHtml = quest.rewards.map((r, i) => `
-            <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
-                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
-                    <select class="form-control" style="width: 100%;" data-reward-type="${i}">
-                        <option value="Item" ${r.type === 'Item' ? 'selected' : ''}>Item</option>
-                        <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
-                        <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
-                    </select>
-                    <div class="item-selector" style="width: 100%;" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab)}"></div>
+            `;
+        }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
+        const rewardsHtml = quest.rewards.map((reward, i) => {
+            let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            let displayName = reward.prefab;
+            if (reward.type === 'Item') {
+                const itemData = this.itemSelectorData.find(item => item.id === reward.prefab);
+                if (itemData) {
+                    iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}`;
+                    displayName = itemData.nameRu || itemData.name;
+                }
+            } else if (reward.type === 'Coins') {
+                const coinsData = this.itemSelectorData.find(item => item.id === 'Coins');
+                if (coinsData) iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}`;
+                displayName = 'Coins';
+            } else if (reward.type === 'Exp') {
+                iconUrl = '';
+                displayName = 'Exp';
+            }
+            const iconHtml = iconUrl ?
+                `<img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="${reward.prefab}">` :
+                `<div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>`;
+            return `
+                <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
+                    ${iconHtml}
+                    <div style="flex: 1;">
+                        <div style="font-size: 13px; color: var(--text-primary);">${reward.type}: ${displayName} x${reward.amount}</div>
+                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">${reward.type}: ${reward.prefab}</div>
+                    </div>
+                    <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
                 </div>
-                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                    <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
-                </div>
-                <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
-            </div>
-        `).join('');
-        const reqsHtml = quest.requirements.map((r, i) => `
-            <div class="quest-requirement-item">
-                <span>${r.type}(${r.params.join(', ')})</span>
-                <button data-action="delete-quest-req" data-index="${i}">×</button>
-            </div>
-        `).join('');
+            `;
+        }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
         this.els.questEditor.innerHTML = `
             <div class="quest-form">
                 <div class="quest-form-section">
@@ -2017,18 +1991,23 @@ class DialogueEditor {
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.targets}</h4>
-                    <div class="quest-targets">${targetsHtml || `<p>${t.noTargets}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-target-modal" style="margin-top: 8px;">+ Target</button>
+                    <div class="quest-targets">${targetsHtml}</div>
+                    <button class="btn-small" data-action="show-quest-target-modal" style="margin-top: 8px;">+ ${t.targets}</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.rewards}</h4>
-                    <div class="quest-rewards">${rewardsHtml || `<p>${t.noRewards}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-reward-modal" style="margin-top: 8px;">+ Reward</button>
+                    <div class="quest-rewards">${rewardsHtml}</div>
+                    <button class="btn-small" data-action="show-quest-reward-modal" style="margin-top: 8px;">+ ${t.rewards}</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.requirements}</h4>
-                    <div class="quest-requirements">${reqsHtml || `<p>${t.noReqs}</p>`}</div>
-                    <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ Requirement</button>
+                    <div class="quest-requirements">${quest.requirements.map((r, i) => `
+                        <div class="quest-requirement-item">
+                            <span>${r.type}(${r.params.join(', ')})</span>
+                            <button data-action="delete-quest-req" data-index="${i}">×</button>
+                        </div>
+                    `).join('') || `<p>${t.noReqs}</p>`}</div>
+                    <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ ${t.requirements}</button>
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.time}</h4>
@@ -2039,28 +2018,7 @@ class DialogueEditor {
             </div>
         `;
         this.bindQuestFormEvents(quest);
-        setTimeout(() => {
-            this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
-                const index = parseInt(container.dataset.index);
-                const selector = new ItemSelector(container, container.dataset.value);
-                selector.input.addEventListener('change', (e) => {
-                    if (quest.targets[index]) {
-                        quest.targets[index].prefab = e.target.value.trim();
-                    }
-                });
-            });
-            this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
-                const index = parseInt(container.dataset.rewardIndex);
-                const selector = new ItemSelector(container, container.dataset.value);
-                selector.input.addEventListener('change', (e) => {
-                    if (quest.rewards[index]) {
-                        quest.rewards[index].prefab = e.target.value.trim();
-                    }
-                });
-            });
-        }, 0);
     }
-
     bindQuestFormEvents(quest) {
         const qe = this.els.questEditor;
         const bind = (selector, prop, parser = v => v) => {
@@ -2102,7 +2060,6 @@ class DialogueEditor {
             });
         });
     }
-
     saveQuestTarget() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
@@ -2112,17 +2069,23 @@ class DialogueEditor {
         this.closeAllModals();
         this.renderQuestEditor();
     }
-
     saveQuestReward() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        const prefab = this.rewardSelector ? this.rewardSelector.input.value.trim() : '';
+        const rewardType = this.els.rewardType.value;
+        let prefab = '';
+        if (rewardType === 'Item') {
+            prefab = this.rewardSelector ? this.rewardSelector.input.value.trim() : '';
+        } else if (rewardType === 'Coins') {
+            prefab = 'Coins';
+        } else if (rewardType === 'Exp') {
+            prefab = 'Exp';
+        }
         if (!prefab) { alert('Enter prefab'); return; }
-        quest.rewards.push({ type: this.els.rewardType.value, prefab, amount: this.els.rewardAmount.value || '1' });
+        quest.rewards.push({ type: rewardType, prefab, amount: this.els.rewardAmount.value || '1' });
         this.closeAllModals();
         this.renderQuestEditor();
     }
-
     saveQuestRequirement() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
@@ -2133,28 +2096,23 @@ class DialogueEditor {
         this.closeAllModals();
         this.renderQuestEditor();
     }
-
     deleteQuestTarget(index) {
         const quest = this.quests.get(this.selectedQuest);
         if (quest) { quest.targets.splice(index, 1); this.renderQuestEditor(); }
     }
-
     deleteQuestReward(index) {
         const quest = this.quests.get(this.selectedQuest);
         if (quest) { quest.rewards.splice(index, 1); this.renderQuestEditor(); }
     }
-
     deleteQuestRequirement(index) {
         const quest = this.quests.get(this.selectedQuest);
         if (quest) { quest.requirements.splice(index, 1); this.renderQuestEditor(); }
     }
-
     showQuestPreview() {
         if (!this.selectedQuest) { alert('Select a quest'); return; }
         this.els.questPreviewContent.innerHTML = this.generateQuestPreview();
         this.openModal('questPreviewModal');
     }
-
     generateQuestPreview() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return '';
@@ -2180,14 +2138,30 @@ class DialogueEditor {
             </div>`;
         }).join('');
         const rewardsHtml = quest.rewards.map(r => {
-            const itemData = this.itemSelectorData.find(i => i.id === r.prefab) || null;
-            const displayName = itemData ? (itemData.nameRu || itemData.name) : r.prefab;
-            const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            let displayName = r.prefab;
+            if (r.type === 'Item') {
+                const itemData = this.itemSelectorData.find(i => i.id === r.prefab);
+                if (itemData) {
+                    iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}`;
+                    displayName = itemData.nameRu || itemData.name;
+                }
+            } else if (r.type === 'Coins') {
+                const coinsData = this.itemSelectorData.find(i => i.id === 'Coins');
+                if (coinsData) iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}`;
+                displayName = 'Coins';
+            } else if (r.type === 'Exp') {
+                iconUrl = '';
+                displayName = 'Exp';
+            }
+            const iconHtml = iconUrl ?
+                `<img src="${iconUrl}" class="item-preview-icon" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">` :
+                `<div class="item-preview-icon" style="display: flex; align-items: center; justify-content: center; font-size: 32px;">✨</div>`;
             return `
             <div class="quest-preview-item-row">
-                <img src="${iconUrl}" class="item-preview-icon" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                ${iconHtml}
                 <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-name">${r.type}: ${this.escapeHtml(displayName)}</span>
                     <span class="quest-preview-item-id">${r.type}: ${this.escapeHtml(r.prefab)}</span>
                 </div>
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${r.amount}</span>
@@ -2211,7 +2185,6 @@ class DialogueEditor {
             </div>
         `;
     }
-
     processQuestDescription(desc) {
         if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
         const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
@@ -2228,13 +2201,11 @@ class DialogueEditor {
         cleanDesc = cleanDesc.replace(/&lt;size=(\d+)&gt;([^&]*)&lt;\/size&gt;/g, '<span style="font-size: $1px">$2</span>');
         return `<div class="quest-preview-description">${cleanDesc}</div>${imageHtml}`;
     }
-
     previewSelectQuest(id) {
         this.selectedQuest = id;
         this.renderQuestsList();
         this.els.questPreviewContent.innerHTML = this.generateQuestPreview();
     }
-
     generateCfgFromData() {
         let cfg = '';
         this.nodes.forEach(node => {
@@ -2256,7 +2227,6 @@ class DialogueEditor {
         });
         return cfg;
     }
-
     exportCurrentCfg() {
         if (!this.currentCfgFile) {
             alert('No file selected');
@@ -2265,7 +2235,6 @@ class DialogueEditor {
         const content = this.generateCfgFromData();
         this.downloadFile(this.currentCfgFile, content);
     }
-
     handleDialogueFileImport(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -2282,7 +2251,6 @@ class DialogueEditor {
         reader.readAsText(file);
         e.target.value = '';
     }
-
     handleQuestFileImport(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -2299,7 +2267,6 @@ class DialogueEditor {
         reader.readAsText(file);
         e.target.value = '';
     }
-
     parseDialogueCfg(content, keepExisting = false) {
         if (!keepExisting) this.nodes.clear();
         const blocks = content.split(/\n(?=\[)/);
@@ -2336,7 +2303,6 @@ class DialogueEditor {
             this.selectNode(this.nodes.keys().next().value);
         }
     }
-
     parseOptionLine(node, line) {
         const parts = line.split('|').map(p => p.trim());
         const textPart = parts.find(p => p.startsWith('Text:'));
@@ -2364,17 +2330,14 @@ class DialogueEditor {
         });
         node.options.push(option);
     }
-
     parseCondition(option, str) {
         const parts = str.split(',').map(p => p.trim());
         option.conditions.push({ type: parts[0], params: parts.slice(1) });
     }
-
     parseCommand(option, str) {
         const parts = str.split(',').map(p => p.trim());
         option.commands.push({ type: parts[0], params: parts.slice(1) });
     }
-
     parseQuestCfg(content) {
         const lines = content.split('\n');
         let i = 0;
@@ -2437,8 +2400,10 @@ class DialogueEditor {
         }
         this.renderQuestsList();
         this.renderQuestPalette();
+        if (this.quests.size > 0 && !this.selectedQuest) {
+            this.selectQuest(this.quests.keys().next().value);
+        }
     }
-
     validateDialogue() {
         const errors = [];
         this.nodes.forEach((node, id) => {
@@ -2452,7 +2417,6 @@ class DialogueEditor {
         if (errors.length === 0) alert('No errors found!');
         else alert('Errors:\n\n' + errors.join('\n'));
     }
-
     searchDialogue(query) {
         if (!query.trim()) {
             document.querySelectorAll('.dialogue-node').forEach(el => el.style.opacity = '1');
@@ -2466,7 +2430,6 @@ class DialogueEditor {
             el.style.opacity = match ? '1' : '0.25';
         });
     }
-
     loadSampleData() {
         if (this.nodes.size > 0 && !confirm('Replace current data with sample?')) return;
         this.nodes.clear();
@@ -2502,19 +2465,16 @@ class DialogueEditor {
         this.renderCodeTabs();
         this.showCodeFile('sample_dialogue.cfg');
     }
-
     escapeHtml(text) {
         if (!text) return '';
         const div = document.createElement('div');
         div.textContent = text;
         return div.innerHTML;
     }
-
     hexToRgb(hex) {
         const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
         return m ? { r: parseInt(m[1], 16), g: parseInt(m[2], 16), b: parseInt(m[3], 16) } : null;
     }
-
     downloadFile(filename, content) {
         const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
         const url = URL.createObjectURL(blob);
@@ -2526,7 +2486,6 @@ class DialogueEditor {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     }
-
     syncCodeView() {
         if (this.currentCfgFile) {
             this.cfgFiles[this.currentCfgFile] = this.generateCfgFromData();
@@ -2534,7 +2493,6 @@ class DialogueEditor {
         }
     }
 }
-
 document.addEventListener('DOMContentLoaded', () => {
     window.editor = new DialogueEditor();
 });
