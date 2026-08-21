@@ -70,7 +70,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ---
 
 <div align="center">
-  <sub>OdinSons Team</sub>
+  <sub><img src="icons/unknown.png" width="32" height="32">OdinSons Team</sub>
 </div>
 Use Control + Shift + m to toggle the tab key moving focus. Alternatively, use esc then tab to move to the next interactive element on the page.
 Attach files by dragging & dropping, selecting or pasting them.
