@@ -183,7 +183,10 @@ const translations = {
         noReqs: "Нет требований",
         noDesc: "Нет описания",
         back: "Назад",
-        previewQuestBtn: "Предпросмотр квеста"
+        previewQuestBtn: "Предпросмотр квеста",
+        rewardTypeItem: "Предмет",
+        rewardTypeCoins: "Монеты",
+        rewardTypeExp: "Опыт"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
@@ -257,7 +260,10 @@ const translations = {
         noReqs: "No requirements",
         noDesc: "No description",
         back: "Back",
-        previewQuestBtn: "Preview Quest"
+        previewQuestBtn: "Preview Quest",
+        rewardTypeItem: "Item",
+        rewardTypeCoins: "Coins",
+        rewardTypeExp: "Experience"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.1",
@@ -331,7 +337,10 @@ const translations = {
         noReqs: "Keine Anforderungen",
         noDesc: "Keine Beschreibung",
         back: "Zurück",
-        previewQuestBtn: "Quest-Vorschau"
+        previewQuestBtn: "Quest-Vorschau",
+        rewardTypeItem: "Gegenstand",
+        rewardTypeCoins: "Münzen",
+        rewardTypeExp: "Erfahrung"
     },
     es: {
         appTitle: "Forja del Escaldo v2.1",
@@ -405,7 +414,10 @@ const translations = {
         noReqs: "Sin requisitos",
         noDesc: "Sin descripción",
         back: "Atrás",
-        previewQuestBtn: "Vista previa de misión"
+        previewQuestBtn: "Vista previa de misión",
+        rewardTypeItem: "Objeto",
+        rewardTypeCoins: "Monedas",
+        rewardTypeExp: "Experiencia"
     },
     fr: {
         appTitle: "Forge du Skalde v2.1",
@@ -479,7 +491,10 @@ const translations = {
         noReqs: "Pas d'exigences",
         noDesc: "Pas de description",
         back: "Retour",
-        previewQuestBtn: "Aperçu de quête"
+        previewQuestBtn: "Aperçu de quête",
+        rewardTypeItem: "Objet",
+        rewardTypeCoins: "Pièces",
+        rewardTypeExp: "Expérience"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.1",
@@ -553,7 +568,10 @@ const translations = {
         noReqs: "Brak wymagań",
         noDesc: "Brak opisu",
         back: "Wstecz",
-        previewQuestBtn: "Podgląd zadania"
+        previewQuestBtn: "Podgląd zadania",
+        rewardTypeItem: "Przedmiot",
+        rewardTypeCoins: "Monety",
+        rewardTypeExp: "Doświadczenie"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.1",
@@ -627,7 +645,10 @@ const translations = {
         noReqs: "Sem requisitos",
         noDesc: "Sem descrição",
         back: "Voltar",
-        previewQuestBtn: "Pré-visualização da missão"
+        previewQuestBtn: "Pré-visualização da missão",
+        rewardTypeItem: "Item",
+        rewardTypeCoins: "Moedas",
+        rewardTypeExp: "Experiência"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.1",
@@ -690,7 +711,7 @@ const translations = {
         rewards: "Belöningar",
         requirements: "Krav",
         time: "Tid",
-        cooldown: "Nedkylning (dagar):",
+        cooldown: "Nedkyldning (dagar):",
         timeLimit: "Tidsgräns (sek):",
         autocomplete: "Autoslutförande",
         whatToDo: "Vad som ska göras:",
@@ -701,7 +722,10 @@ const translations = {
         noReqs: "Inga krav",
         noDesc: "Ingen beskrivning",
         back: "Tillbaka",
-        previewQuestBtn: "Uppdragsförhandsgranskning"
+        previewQuestBtn: "Uppdragsförhandsgranskning",
+        rewardTypeItem: "Föremål",
+        rewardTypeCoins: "Mynt",
+        rewardTypeExp: "Erfarenhet"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 2.1",
@@ -775,7 +799,10 @@ const translations = {
         noReqs: "要件なし",
         noDesc: "説明なし",
         back: "戻る",
-        previewQuestBtn: "クエストプレビュー"
+        previewQuestBtn: "クエストプレビュー",
+        rewardTypeItem: "アイテム",
+        rewardTypeCoins: "コイン",
+        rewardTypeExp: "経験値"
     }
 };
 
@@ -970,8 +997,8 @@ class DialogueEditor {
         this.els.applyCodeBtn.textContent = t.applyCode;
         this.els.copyCodeBtn.textContent = t.copyCode;
         this.els.downloadCodeBtn.textContent = t.downloadCode;
-        this.els.renameFileBtn.textContent = t.renameFile;
-        this.els.newFileBtn.textContent = t.newFile;
+        if (this.els.renameFileBtn) this.els.renameFileBtn.textContent = t.renameFile;
+        if (this.els.newFileBtn) this.els.newFileBtn.textContent = t.newFile;
         this.els.codeHint.textContent = t.codeHint;
         this.els.previewTitle.textContent = t.previewTitle;
         this.els.questEditorTitle.textContent = t.questEditorTitle;
@@ -998,6 +1025,7 @@ class DialogueEditor {
         document.getElementById(tabId).classList.add('active');
         document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
         if (tabId === 'tabCode') {
+            // При переходе на вкладку "Код" обновляем содержимое текущего файла
             this.syncCodeView();
             this.renderCodeTabs();
             if (this.currentCfgFile) this.showCodeFile(this.currentCfgFile);
@@ -2317,6 +2345,7 @@ class DialogueEditor {
     }
     generateCfgFromData() {
         let cfg = '';
+        // Генерация диалогов
         this.nodes.forEach(node => {
             cfg += `[${node.id}]\n${node.text}\n`;
             node.options.forEach(opt => {
@@ -2334,6 +2363,7 @@ class DialogueEditor {
             });
             cfg += '\n';
         });
+        // Генерация квестов
         this.quests.forEach(quest => {
             const questId = quest.autocomplete ? `${quest.id}=autocomplete` : quest.id;
             cfg += `[${questId}]\n`;
