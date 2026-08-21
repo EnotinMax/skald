@@ -2056,21 +2056,179 @@ class DialogueEditor {
     renderQuestEditor() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) {
-            this.els.questEditor.innerHTML = `<div class="no-quest-selected"><p>${translations[this.lang].noQuestSelected}</p></div>`;
+            this.els.questEditor.innerHTML = `
+                <div class="quest-editor-game">
+                    <div class="quest-game-sidebar">
+                        <div class="quest-game-sidebar-header">
+                            <h3>${translations[this.lang].questListTitle}</h3>
+                            <button class="quest-game-add-btn" data-action="add-quest-inline">+ ${translations[this.lang].newQuest.replace('+ ', '')}</button>
+                        </div>
+                        <div class="quest-game-list">
+                            ${this.renderQuestGameList()}
+                        </div>
+                    </div>
+                    <div class="quest-game-content">
+                        <div class="quest-game-no-selection">${translations[this.lang].noQuestSelected}</div>
+                    </div>
+                </div>
+            `;
+            this.bindQuestGameListEvents();
             return;
         }
 
         const t = translations[this.lang];
+        const itemData = (prefab) => this.itemSelectorData.find(i => i.id === prefab);
+        const getIcon = (prefab) => {
+            const data = itemData(prefab);
+            return data ? `${this.optionIconSelector?.baseIconUrl || 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/'}${data.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        };
 
-        const targetsHtml = quest.targets.map((t_item, i) => `
-            <div class="quest-target-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
-                <div class="item-selector" style="flex: 1;" data-index="${i}" data-value="${this.escapeHtml(t_item.prefab)}"></div>
-                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                    <input type="number" class="form-control" style="width: 60px;" value="${t_item.amount}" data-target-amount="${i}">
+        const targetsHtml = quest.targets.map((ti, i) => {
+            const data = itemData(ti.prefab);
+            const name = data ? (data.nameRu || data.name) : ti.prefab;
+            return `
+                <div class="quest-game-target-item">
+                    <img src="${getIcon(ti.prefab)}" class="quest-game-item-img" alt="${ti.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                    <div class="quest-game-item-details">
+                        <span class="quest-game-item-name-text">${this.escapeHtml(name)}</span>
+                        <span class="quest-game-item-amount">x${ti.amount}</span>
+                        ${ti.level ? `<span class="quest-game-item-level">★${ti.level}</span>` : ''}
+                    </div>
+                    <button class="quest-game-item-delete" data-action="delete-quest-target" data-index="${i}" title="Удалить">×</button>
                 </div>
-                <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
+            `;
+        }).join('');
+
+        const rewardsHtml = quest.rewards.map((r, i) => {
+            const data = itemData(r.prefab);
+            const name = data ? (data.nameRu || data.name) : r.prefab;
+            return `
+                <div class="quest-game-reward-item">
+                    <img src="${getIcon(r.prefab)}" class="quest-game-item-img" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                    <div class="quest-game-item-details">
+                        <span class="quest-game-item-name-text">${r.type}: ${this.escapeHtml(name)}</span>
+                        <span class="quest-game-item-amount">x${r.amount}</span>
+                    </div>
+                    <button class="quest-game-item-delete" data-action="delete-quest-reward" data-index="${i}" title="Удалить">×</button>
+                </div>
+            `;
+        }).join('');
+
+        this.els.questEditor.innerHTML = `
+            <div class="quest-editor-game">
+                <div class="quest-game-sidebar">
+                    <div class="quest-game-sidebar-header">
+                        <h3>${t.questListTitle}</h3>
+                        <button class="quest-game-add-btn" id="questGameAddBtn">+ ${t.newQuest.replace('+ ', '')}</button>
+                    </div>
+                    <div class="quest-game-list">
+                        ${this.renderQuestGameList()}
+                    </div>
+                </div>
+                <div class="quest-game-content">
+                    <div class="quest-game-form">
+                        <!-- Заголовок и описание -->
+                        <div class="quest-game-title-section">
+                            <input type="text" class="quest-game-title-input" value="${this.escapeHtml(quest.name)}" data-quest-field="name" placeholder="Название квеста...">
+                            <textarea class="quest-game-desc-input" data-quest-field="description" placeholder="Описание...">${this.escapeHtml(quest.description)}</textarea>
+                        </div>
+
+                        <!-- Метаданные -->
+                        <div class="quest-game-meta">
+                            <div class="quest-game-meta-item">
+                                <span class="quest-game-meta-label">Type:</span>
+                                <select class="quest-game-type-select" data-quest-field="type">
+                                    ${['Kill','Collect','Harvest','Craft','Talk','Build','Move'].map(tp => 
+                                        `<option value="${tp}" ${quest.type === tp ? 'selected' : ''}>${tp}</option>`
+                                    ).join('')}
+                                </select>
+                            </div>
+                            <div class="quest-game-meta-item">
+                                <span class="quest-game-meta-label">${t.cooldown}</span>
+                                <input type="number" class="quest-game-meta-input" value="${quest.cooldown}" data-quest-field="cooldown">
+                            </div>
+                            <div class="quest-game-meta-item">
+                                <span class="quest-game-meta-label">${t.timeLimit}</span>
+                                <input type="number" class="quest-game-meta-input" value="${quest.timeLimit}" data-quest-field="timeLimit">
+                            </div>
+                            <div class="quest-game-meta-item">
+                                <label style="color: #d4c4a0; font-size: 11px; cursor: pointer;">
+                                    <input type="checkbox" ${quest.autocomplete ? 'checked' : ''} data-quest-field="autocomplete"> ${t.autocomplete}
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Цели -->
+                        <div class="quest-game-section">
+                            <div class="quest-game-section-title">Target</div>
+                            ${targetsHtml || '<div style="color: #6a5540; text-align: center; font-style: italic;">Нет целей</div>'}
+                            <button class="quest-game-add-item-btn" data-action="show-quest-target-modal">+ Добавить цель</button>
+                        </div>
+
+                        <!-- Награды -->
+                        <div class="quest-game-section">
+                            <div class="quest-game-section-title">Reward</div>
+                            ${rewardsHtml || '<div style="color: #6a5540; text-align: center; font-style: italic;">Нет наград</div>'}
+                            <button class="quest-game-add-item-btn" data-action="show-quest-reward-modal">+ Добавить награду</button>
+                        </div>
+
+                        <!-- Кнопка Take Quest -->
+                        <button class="quest-game-take-btn" data-action="show-quest-preview">${t.takeQuest}</button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        this.bindQuestGameEvents(quest);
+    }
+
+    renderQuestGameList() {
+        return Array.from(this.quests.values()).map(q => `
+            <div class="quest-game-item ${q.id === this.selectedQuest ? 'selected' : ''}" 
+                 data-action="select-quest" 
+                 data-id="${q.id}">
+                <span class="quest-game-item-name">${this.escapeHtml(q.name || q.id)}</span>
+                <span class="quest-game-item-icon">📜</span>
             </div>
         `).join('');
+    }
+
+    bindQuestGameEvents(quest) {
+        // Поля ввода
+        this.els.questEditor.querySelectorAll('[data-quest-field]').forEach(el => {
+            const field = el.dataset.questField;
+            const event = el.type === 'checkbox' ? 'change' : (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' ? 'input' : 'change');
+            el.addEventListener(event, (e) => {
+                quest[field] = el.type === 'checkbox' ? el.checked : el.value;
+                if (field === 'name' || field === 'id') {
+                    this.renderQuestsList();
+                    this.renderQuestPalette();
+                }
+            });
+        });
+
+        const addBtn = this.els.questEditor.querySelector('#questGameAddBtn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => this.addQuest());
+        }
+    }
+
+    bindQuestGameListEvents() {
+        this.els.questEditor.querySelectorAll('.quest-game-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const action = item.dataset.action;
+                const id = item.dataset.id;
+                if (action === 'select-quest' && id) {
+                    this.selectQuest(id);
+                }
+            });
+        });
+
+        const addBtn = this.els.questEditor.querySelector('#questGameAddBtn');
+        if (addBtn) {
+            addBtn.addEventListener('click', () => this.addQuest());
+        }
+    }
 
         const rewardsHtml = quest.rewards.map((r, i) => `
             <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
@@ -2259,34 +2417,81 @@ class DialogueEditor {
         this.openModal('questPreviewModal');
     }
 
-    generateQuestPreview() {
+       generateQuestPreview() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return '';
         const t = translations[this.lang];
+        const itemData = (prefab) => this.itemSelectorData.find(i => i.id === prefab);
+        const getIcon = (prefab) => {
+            const data = itemData(prefab);
+            return data ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${data.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        };
 
         const questsList = Array.from(this.quests.values()).map(q => `
-            <div class="quest-preview-list-item ${q.id === quest.id ? 'selected' : ''}" data-action="preview-select-quest" data-id="${q.id}">
-                ${this.escapeHtml(q.name)}
+            <div class="quest-game-item ${q.id === quest.id ? 'selected' : ''}" 
+                 data-action="preview-select-quest" 
+                 data-id="${q.id}">
+                <span class="quest-game-item-name">${this.escapeHtml(q.name || q.id)}</span>
+                <span class="quest-game-item-icon">📜</span>
             </div>
         `).join('');
 
-        const description = this.processQuestDescription(quest.description);
-        
         const targetsHtml = quest.targets.map(ti => {
-            const itemData = this.itemSelectorData.find(i => i.id === ti.prefab) || null;
-            const displayName = itemData ? (itemData.nameRu || itemData.name) : ti.prefab;
-            const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-
+            const data = itemData(ti.prefab);
+            const name = data ? (data.nameRu || data.name) : ti.prefab;
             return `
-            <div class="quest-preview-item-row">
-                <img src="${iconUrl}" class="item-preview-icon" alt="${ti.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
-                <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">${this.escapeHtml(displayName)}</span>
-                    <span class="quest-preview-item-id">${this.escapeHtml(ti.prefab)}</span>
+                <div class="quest-game-target-item">
+                    <img src="${getIcon(ti.prefab)}" class="quest-game-item-img" alt="${ti.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                    <div class="quest-game-item-details">
+                        <span class="quest-game-item-name-text">Collect ${this.escapeHtml(name)} x${ti.amount}</span>
+                    </div>
                 </div>
-                <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${ti.amount}</span>
-            </div>`;
+            `;
         }).join('');
+
+        const rewardsHtml = quest.rewards.map(r => {
+            const data = itemData(r.prefab);
+            const name = data ? (data.nameRu || data.name) : r.prefab;
+            return `
+                <div class="quest-game-reward-item">
+                    <img src="${getIcon(r.prefab)}" class="quest-game-item-img" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
+                    <div class="quest-game-item-details">
+                        <span class="quest-game-item-name-text">${r.type}: ${this.escapeHtml(name)}</span>
+                        <span class="quest-game-item-amount">x${r.amount}</span>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        return `
+            <div class="quest-editor-game" style="height: 500px;">
+                <div class="quest-game-sidebar">
+                    <div class="quest-game-sidebar-header">
+                        <h3>${t.questListTitle}</h3>
+                    </div>
+                    <div class="quest-game-list">
+                        ${questsList}
+                    </div>
+                </div>
+                <div class="quest-game-content">
+                    <div class="quest-game-form">
+                        <div class="quest-game-title-section">
+                            <div style="color: #d4c4a0; font-size: 14px; line-height: 1.5;">${this.escapeHtml(quest.description).replace(/\\n/g, '<br>')}</div>
+                        </div>
+                        <div class="quest-game-section">
+                            <div class="quest-game-section-title">Target</div>
+                            ${targetsHtml || '<div style="color: #6a5540; text-align: center;">Нет целей</div>'}
+                        </div>
+                        <div class="quest-game-section">
+                            <div class="quest-game-section-title">Reward</div>
+                            ${rewardsHtml || '<div style="color: #6a5540; text-align: center;">Нет наград</div>'}
+                        </div>
+                        <button class="quest-game-take-btn">${t.takeQuest}</button>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
 
         const rewardsHtml = quest.rewards.map(r => {
             const itemData = this.itemSelectorData.find(i => i.id === r.prefab) || null;
