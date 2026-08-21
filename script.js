@@ -1554,7 +1554,23 @@ class DialogueEditor {
     }
 
     renderConnections() {
-        const svg = this.els.connectionLayer;
+
+    let maxX = 1000, maxY = 1000;
+    this.nodes.forEach(node => {
+        if (node.x + 400 > maxX) maxX = node.x + 400;
+        if (node.y + 400 > maxY) maxY = node.y + 400;
+    });
+
+    const svg = this.els.connectionLayer;
+    const container = this.els.canvasContainer;
+    const targetWidth = Math.max(container.clientWidth, maxX + 500);
+    const targetHeight = Math.max(container.clientHeight, maxY + 500);
+
+    svg.style.width = `${targetWidth}px`;
+    svg.style.height = `${targetHeight}px`;
+    this.els.nodeContainer.style.width = `${targetWidth}px`;
+    this.els.nodeContainer.style.height = `${targetHeight}px`;
+
         svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
 
         this.nodes.forEach(node => {
