@@ -1061,12 +1061,18 @@ class DialogueEditor {
     }
 
     handleGlobalClick(e) {
+        // ИСПРАВЛЕНИЕ 3: Проверяем, не является ли клик по вложенному модальному окну
         if (e.target.matches('.close') || e.target.closest('.close')) {
-            this.closeAllModals();
+            // Закрываем только конкретное модальное окно, а не все
+            const modal = e.target.closest('.modal');
+            if (modal) {
+                modal.classList.remove('open');
+            }
             return;
         }
         if (e.target.classList.contains('modal')) {
-            this.closeAllModals();
+            // Закрываем только то модальное окно, по которому кликнули
+            e.target.classList.remove('open');
             return;
         }
         
@@ -1077,7 +1083,10 @@ class DialogueEditor {
         const data = actionTarget.dataset;
         
         switch (action) {
-            case 'close-modal': this.closeAllModals(); break;
+            case 'close-modal': 
+                const modal = actionTarget.closest('.modal');
+                if (modal) modal.classList.remove('open');
+                break;
             case 'select-node': this.selectNode(data.id); break;
             case 'select-option': this.selectOption(data.optionId); break;
             case 'navigate': this.previewNavigate(data.target); break;
@@ -1817,7 +1826,7 @@ class DialogueEditor {
         let processed = text.replace(/\\n/g, '<br>');
         processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
         processed = processed.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
-        // Конвертация <image=ссылка> в <img src="ссылка">
+        // ИСПРАВЛЕНИЕ 1: Конвертация <image=ссылка> в <img src="ссылка">
         processed = processed.replace(/<image=([^>]+)>/g, '<br><img src="$1" style="max-width: 100%; border-radius: 4px; margin: 5px 0;"><br>');
         return processed;
     }
@@ -1966,7 +1975,7 @@ class DialogueEditor {
         
         const t = translations[this.lang];
         
-        // Генерация целей (targets) с ItemSelector
+        // ИСПРАВЛЕНИЕ 2: Генерация целей с ItemSelector
         const targetsHtml = quest.targets.map((target, i) => {
             const itemData = this.itemSelectorData.find(item => item.id === target.prefab);
             const itemName = itemData ? (itemData.nameRu || itemData.name) : target.prefab;
@@ -1986,7 +1995,7 @@ class DialogueEditor {
             `;
         }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
         
-        // Генерация наград (rewards) с ItemSelector
+        // ИСПРАВЛЕНИЕ 2: Генерация наград с ItemSelector
         const rewardsHtml = quest.rewards.map((reward, i) => {
             const itemData = this.itemSelectorData.find(item => item.id === reward.prefab);
             const itemName = itemData ? (itemData.nameRu || itemData.name) : reward.prefab;
@@ -2052,9 +2061,29 @@ class DialogueEditor {
         
         this.bindQuestFormEvents(quest);
         
-        // Инициализация ItemSelector для наград (если нужно)
+        // ИСПРАВЛЕНИЕ 2: Инициализация ItemSelector для целей и наград
         setTimeout(() => {
-            // Здесь можно добавить ItemSelector для новых наград при необходимости
+            this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
+                const index = parseInt(container.dataset.index);
+                const selector = new ItemSelector(container, container.dataset.value);
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.targets[index]) {
+                        quest.targets[index].prefab = e.target.value.trim();
+                        this.renderQuestEditor();
+                    }
+                });
+            });
+            
+            this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
+                const index = parseInt(container.dataset.rewardIndex);
+                const selector = new ItemSelector(container, container.dataset.value);
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.rewards[index]) {
+                        quest.rewards[index].prefab = e.target.value.trim();
+                        this.renderQuestEditor();
+                    }
+                });
+            });
         }, 0);
     }
 
@@ -2081,6 +2110,27 @@ class DialogueEditor {
         bind('.quest-auto-input', 'autocomplete');
         bind('.quest-cd-input', 'cooldown');
         bind('.quest-tl-input', 'timeLimit');
+        
+        qe.querySelectorAll('[data-target-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.targetAmount);
+                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
+            });
+        });
+        
+        qe.querySelectorAll('[data-reward-type]').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const index = parseInt(e.target.dataset.rewardType);
+                if (quest.rewards[index]) quest.rewards[index].type = e.target.value;
+            });
+        });
+        
+        qe.querySelectorAll('[data-reward-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.rewardAmount);
+                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
+            });
+        });
     }
 
     saveQuestTarget() {
@@ -2208,6 +2258,8 @@ class DialogueEditor {
 
     processQuestDescription(desc) {
         if (!desc) return `<div class="quest-preview-description">${translations[this.lang].noDesc}</div>`;
+        
+        // ИСПРАВЛЕНИЕ 1: Сначала извлекаем изображения
         const imageMatches = [...desc.matchAll(/<image=([^>]+)>/g)];
         let imageHtml = '';
         if (imageMatches.length > 0) {
@@ -2215,11 +2267,18 @@ class DialogueEditor {
                 `<div class="quest-preview-image"><img src="${match[1]}" alt="Quest" onerror="this.style.display='none'"></div>`
             ).join('');
         }
+        
+        // Удаляем теги изображений из текста
         let cleanDesc = desc.replace(/<image=[^>]+>/g, '');
+        
+        // Экранируем HTML
         cleanDesc = this.escapeHtml(cleanDesc);
+        
+        // Применяем теги форматирования
         cleanDesc = cleanDesc.replace(/\\n/g, '<br>');
         cleanDesc = cleanDesc.replace(/&lt;color=([^&]+)&gt;([^&]*)&lt;\/color&gt;/g, '<span style="color: $1">$2</span>');
         cleanDesc = cleanDesc.replace(/&lt;size=(\d+)&gt;([^&]*)&lt;\/size&gt;/g, '<span style="font-size: $1px">$2</span>');
+        
         return `<div class="quest-preview-description">${cleanDesc}</div>${imageHtml}`;
     }
 
@@ -2431,6 +2490,9 @@ class DialogueEditor {
         }
         this.renderQuestsList();
         this.renderQuestPalette();
+        if (this.quests.size > 0 && !this.selectedQuest) {
+            this.selectQuest(this.quests.keys().next().value);
+        }
     }
 
     validateDialogue() {
@@ -2488,7 +2550,7 @@ class DialogueEditor {
         this.addOptionToNode('лапшеслав_квествзят', 'Вернусь через пару минут');
         
         this.quests.set('лапшеслав_квест', {
-            id: 'лапшеслав_квест', type: 'Kill', name: 'Недоставющий ингридиент',
+            id: 'лапшеслав_квест', type: 'Kill', name: 'Недостающий ингредиент',
             description: 'Принести для варева 10 кусков сырой кабанины.',
             targets: [{ prefab: 'RawMeat', amount: '10', level: '' }],
             rewards: [{ type: 'Item', prefab: 'Coins', amount: '100' }],
