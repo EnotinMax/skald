@@ -189,10 +189,7 @@ const translations = {
         noReqs: "Нет требований",
         noDesc: "Нет описания",
         back: "Назад",
-        previewQuestBtn: "Предпросмотр квеста",
-        targetLabel: "Target",
-        rewardLabel: "Reward",
-        collectText: "Collect"
+        previewQuestBtn: "Предпросмотр квеста"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
@@ -264,10 +261,7 @@ const translations = {
         noReqs: "No requirements",
         noDesc: "No description",
         back: "Back",
-        previewQuestBtn: "Preview Quest",
-        targetLabel: "Target",
-        rewardLabel: "Reward",
-        collectText: "Collect"
+        previewQuestBtn: "Preview Quest"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.1",
@@ -339,10 +333,7 @@ const translations = {
         noReqs: "Keine Anforderungen",
         noDesc: "Keine Beschreibung",
         back: "Zurück",
-        previewQuestBtn: "Quest-Vorschau",
-        targetLabel: "Ziel",
-        rewardLabel: "Belohnung",
-        collectText: "Sammle"
+        previewQuestBtn: "Quest-Vorschau"
     },
     es: {
         appTitle: "Forja del Escaldo v2.1",
@@ -414,10 +405,7 @@ const translations = {
         noReqs: "Sin requisitos",
         noDesc: "Sin descripción",
         back: "Atrás",
-        previewQuestBtn: "Vista previa de misión",
-        targetLabel: "Objetivo",
-        rewardLabel: "Recompensa",
-        collectText: "Recoger"
+        previewQuestBtn: "Vista previa de misión"
     },
     fr: {
         appTitle: "Forge du Skalde v2.1",
@@ -489,10 +477,7 @@ const translations = {
         noReqs: "Pas d'exigences",
         noDesc: "Pas de description",
         back: "Retour",
-        previewQuestBtn: "Aperçu de quête",
-        targetLabel: "Objectif",
-        rewardLabel: "Récompense",
-        collectText: "Collecter"
+        previewQuestBtn: "Aperçu de quête"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.1",
@@ -564,10 +549,7 @@ const translations = {
         noReqs: "Brak wymagań",
         noDesc: "Brak opisu",
         back: "Wstecz",
-        previewQuestBtn: "Podgląd zadania",
-        targetLabel: "Cel",
-        rewardLabel: "Nagroda",
-        collectText: "Zbierz"
+        previewQuestBtn: "Podgląd zadania"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.1",
@@ -639,10 +621,7 @@ const translations = {
         noReqs: "Sem requisitos",
         noDesc: "Sem descrição",
         back: "Voltar",
-        previewQuestBtn: "Pré-visualização da missão",
-        targetLabel: "Objetivo",
-        rewardLabel: "Recompensa",
-        collectText: "Coletar"
+        previewQuestBtn: "Pré-visualização da missão"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.1",
@@ -714,10 +693,7 @@ const translations = {
         noReqs: "Inga krav",
         noDesc: "Ingen beskrivning",
         back: "Tillbaka",
-        previewQuestBtn: "Uppdragsförhandsgranskning",
-        targetLabel: "Mål",
-        rewardLabel: "Belöning",
-        collectText: "Samla"
+        previewQuestBtn: "Uppdragsförhandsgranskning"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 2.1",
@@ -789,10 +765,7 @@ const translations = {
         noReqs: "要件なし",
         noDesc: "説明なし",
         back: "戻る",
-        previewQuestBtn: "クエストプレビュー",
-        targetLabel: "目標",
-        rewardLabel: "報酬",
-        collectText: "収集"
+        previewQuestBtn: "クエストプレビュー"
     }
 };
 
@@ -1844,6 +1817,7 @@ class DialogueEditor {
         let processed = text.replace(/\\n/g, '<br>');
         processed = processed.replace(/<color=([^>]+)>([^<]*)<\/color>/g, '<span style="color: $1">$2</span>');
         processed = processed.replace(/<size=(\d+)>([^<]*)<\/size>/g, '<span style="font-size: $1px">$2</span>');
+        // Конвертация <image=ссылка> в <img src="ссылка">
         processed = processed.replace(/<image=([^>]+)>/g, '<br><img src="$1" style="max-width: 100%; border-radius: 4px; margin: 5px 0;"><br>');
         return processed;
     }
@@ -1991,9 +1965,8 @@ class DialogueEditor {
         }
         
         const t = translations[this.lang];
-        const collectText = t.collectText || 'Collect';
         
-        // Генерация целей (targets)
+        // Генерация целей (targets) с ItemSelector
         const targetsHtml = quest.targets.map((target, i) => {
             const itemData = this.itemSelectorData.find(item => item.id === target.prefab);
             const itemName = itemData ? (itemData.nameRu || itemData.name) : target.prefab;
@@ -2005,7 +1978,7 @@ class DialogueEditor {
                 <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
                     <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="${target.prefab}">
                     <div style="flex: 1;">
-                        <div style="font-size: 13px; color: var(--text-primary);">${collectText} ${itemName} x${target.amount}</div>
+                        <div style="font-size: 13px; color: var(--text-primary);">Collect ${itemName} x${target.amount}</div>
                         <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">${target.prefab}</div>
                     </div>
                     <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
@@ -2013,7 +1986,7 @@ class DialogueEditor {
             `;
         }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
         
-        // Генерация наград (rewards)
+        // Генерация наград (rewards) с ItemSelector
         const rewardsHtml = quest.rewards.map((reward, i) => {
             const itemData = this.itemSelectorData.find(item => item.id === reward.prefab);
             const itemName = itemData ? (itemData.nameRu || itemData.name) : reward.prefab;
@@ -2034,79 +2007,54 @@ class DialogueEditor {
         }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
         
         this.els.questEditor.innerHTML = `
-            <div class="quest-editor-kgmarketplace" style="display: flex; gap: 20px; height: 100%;">
-                <!-- Левая панель: список квестов -->
-                <div class="quest-editor-sidebar" style="width: 250px; background: var(--bg-primary); border-radius: 4px; padding: 12px; overflow-y: auto;">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                        <h3 style="margin: 0; color: var(--accent);">${t.questListTitle}</h3>
-                        <button class="btn-small" data-action="add-quest-inline">+</button>
+            <div class="quest-form">
+                <div class="quest-form-section">
+                    <h4>${t.basic}</h4>
+                    <div class="form-group"><label>ID:</label><input type="text" class="form-control quest-id-input" value="${this.escapeHtml(quest.id)}"></div>
+                    <div class="form-group">
+                        <label>Type:</label>
+                        <select class="form-control quest-type-input">
+                            ${['Kill', 'Collect', 'Harvest', 'Craft', 'Talk', 'Build', 'Move'].map(tp => `<option value="${tp}" ${quest.type === tp ? 'selected' : ''}>${tp}</option>`).join('')}
+                        </select>
                     </div>
-                    <div class="quest-list-kg">
-                        ${Array.from(this.quests.values()).map(q => `
-                            <div class="quest-list-item-kg ${q.id === this.selectedQuest ? 'selected' : ''}" 
-                                 data-action="select-quest" 
-                                 data-id="${q.id}"
-                                 style="padding: 8px; margin-bottom: 4px; background: ${q.id === this.selectedQuest ? 'var(--accent-blue)' : 'var(--bg-tertiary)'}; border-radius: 4px; cursor: pointer; font-size: 13px;">
-                                ${this.escapeHtml(q.name)}
-                            </div>
-                        `).join('')}
-                    </div>
+                    <div class="form-group"><label>Name:</label><input type="text" class="form-control quest-name-input" value="${this.escapeHtml(quest.name)}"></div>
+                    <div class="form-group"><label>Description:</label><textarea class="form-control quest-desc-input" rows="3">${this.escapeHtml(quest.description)}</textarea></div>
+                    <div class="form-group"><label><input type="checkbox" class="quest-auto-input" ${quest.autocomplete ? 'checked' : ''}> ${t.autocomplete}</label></div>
                 </div>
-                
-                <!-- Правая панель: редактирование квеста -->
-                <div class="quest-editor-main" style="flex: 1; display: flex; flex-direction: column;">
-                    <!-- Заголовок квеста -->
-                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-                        <h2 style="margin: 0 0 8px 0; color: var(--accent);">${this.escapeHtml(quest.name)}</h2>
-                        <div style="color: var(--text-secondary); font-size: 14px;">${this.escapeHtml(quest.description)}</div>
-                    </div>
-                    
-                    <!-- Target section -->
-                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">${t.targetLabel || 'Target'}</h3>
-                        ${targetsHtml}
-                        <button class="btn-small" data-action="show-quest-target-modal" style="margin-top: 8px;">+ ${t.targets}</button>
-                    </div>
-                    
-                    <!-- Reward section -->
-                    <div style="background: var(--bg-secondary); padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">${t.rewardLabel || 'Reward'}</h3>
-                        ${rewardsHtml}
-                        <button class="btn-small" data-action="show-quest-reward-modal" style="margin-top: 8px;">+ ${t.rewards}</button>
-                    </div>
-                    
-                    <!-- Кнопка Take Quest -->
-                    <button class="quest-preview-btn" data-action="show-quest-preview" style="padding: 12px 24px; font-size: 16px; background: var(--accent); color: #000; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-top: auto;">
-                        ${t.takeQuest}
-                    </button>
+                <div class="quest-form-section">
+                    <h4>${t.targets}</h4>
+                    <div class="quest-targets">${targetsHtml}</div>
+                    <button class="btn-small" data-action="show-quest-target-modal" style="margin-top: 8px;">+ ${t.targets}</button>
                 </div>
+                <div class="quest-form-section">
+                    <h4>${t.rewards}</h4>
+                    <div class="quest-rewards">${rewardsHtml}</div>
+                    <button class="btn-small" data-action="show-quest-reward-modal" style="margin-top: 8px;">+ ${t.rewards}</button>
+                </div>
+                <div class="quest-form-section">
+                    <h4>${t.requirements}</h4>
+                    <div class="quest-requirements">${quest.requirements.map((r, i) => `
+                        <div class="quest-requirement-item">
+                            <span>${r.type}(${r.params.join(', ')})</span>
+                            <button data-action="delete-quest-req" data-index="${i}">×</button>
+                        </div>
+                    `).join('') || `<p>${t.noReqs}</p>`}</div>
+                    <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ ${t.requirements}</button>
+                </div>
+                <div class="quest-form-section">
+                    <h4>${t.time}</h4>
+                    <div class="form-group"><label>${t.cooldown}</label><input type="number" class="form-control quest-cd-input" value="${quest.cooldown}"></div>
+                    <div class="form-group"><label>${t.timeLimit}</label><input type="number" class="form-control quest-tl-input" value="${quest.timeLimit}"></div>
+                </div>
+                <button class="quest-preview-btn" data-action="show-quest-preview">${t.previewQuestBtn}</button>
             </div>
         `;
         
         this.bindQuestFormEvents(quest);
         
+        // Инициализация ItemSelector для наград (если нужно)
         setTimeout(() => {
-            this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
-                const index = parseInt(container.dataset.index);
-                const selector = new ItemSelector(container, container.dataset.value);
-                selector.input.addEventListener('change', (e) => {
-                    if (quest.targets[index]) {
-                        quest.targets[index].prefab = e.target.value.trim();
-                        this.renderQuestEditor();
-                    }
-                });
-            });
-            
-            this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
-                const index = parseInt(container.dataset.rewardIndex);
-                const selector = new ItemSelector(container, container.dataset.value);
-                selector.input.addEventListener('change', (e) => {
-                    if (quest.rewards[index]) {
-                        quest.rewards[index].prefab = e.target.value.trim();
-                        this.renderQuestEditor();
-                    }
-                });
-            });
+            // Здесь можно добавить ItemSelector для новых наград при необходимости
         }, 0);
     }
 
@@ -2133,27 +2081,6 @@ class DialogueEditor {
         bind('.quest-auto-input', 'autocomplete');
         bind('.quest-cd-input', 'cooldown');
         bind('.quest-tl-input', 'timeLimit');
-        
-        qe.querySelectorAll('[data-target-amount]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.dataset.targetAmount);
-                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
-            });
-        });
-        
-        qe.querySelectorAll('[data-reward-type]').forEach(select => {
-            select.addEventListener('change', (e) => {
-                const index = parseInt(e.target.dataset.rewardType);
-                if (quest.rewards[index]) quest.rewards[index].type = e.target.value;
-            });
-        });
-        
-        qe.querySelectorAll('[data-reward-amount]').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const index = parseInt(e.target.dataset.rewardAmount);
-                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
-            });
-        });
     }
 
     saveQuestTarget() {
@@ -2212,7 +2139,6 @@ class DialogueEditor {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return '';
         const t = translations[this.lang];
-        const collectText = t.collectText || 'Collect';
         
         const questsList = Array.from(this.quests.values()).map(q => `
             <div class="quest-preview-list-item ${q.id === quest.id ? 'selected' : ''}" data-action="preview-select-quest" data-id="${q.id}">
@@ -2231,7 +2157,7 @@ class DialogueEditor {
             <div class="quest-preview-item-row">
                 <img src="${iconUrl}" class="item-preview-icon" alt="${ti.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
                 <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">${collectText} ${displayName} x${ti.amount}</span>
+                    <span class="quest-preview-item-name">Collect ${displayName} x${ti.amount}</span>
                     <span class="quest-preview-item-id">${this.escapeHtml(ti.prefab)}</span>
                 </div>
             </div>`;
@@ -2265,12 +2191,12 @@ class DialogueEditor {
                     </div>
                     
                     <div style="background: var(--bg-secondary); padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">${t.targetLabel || 'Target'}</h3>
+                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">Target</h3>
                         ${targetsHtml || `<p>${t.noTargets}</p>`}
                     </div>
                     
                     <div style="background: var(--bg-secondary); padding: 16px; border-radius: 4px; margin-bottom: 16px;">
-                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">${t.rewardLabel || 'Reward'}</h3>
+                        <h3 style="margin: 0 0 12px 0; color: var(--text-primary); font-size: 16px;">Reward</h3>
                         ${rewardsHtml || `<p>${t.noRewards}</p>`}
                     </div>
                     
@@ -2505,9 +2431,6 @@ class DialogueEditor {
         }
         this.renderQuestsList();
         this.renderQuestPalette();
-        if (this.quests.size > 0 && !this.selectedQuest) {
-            this.selectQuest(this.quests.keys().next().value);
-        }
     }
 
     validateDialogue() {
@@ -2565,7 +2488,7 @@ class DialogueEditor {
         this.addOptionToNode('лапшеслав_квествзят', 'Вернусь через пару минут');
         
         this.quests.set('лапшеслав_квест', {
-            id: 'лапшеслав_квест', type: 'Kill', name: 'Недостающий ингредиент',
+            id: 'лапшеслав_квест', type: 'Kill', name: 'Недоставющий ингридиент',
             description: 'Принести для варева 10 кусков сырой кабанины.',
             targets: [{ prefab: 'RawMeat', amount: '10', level: '' }],
             rewards: [{ type: 'Item', prefab: 'Coins', amount: '100' }],
