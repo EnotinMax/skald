@@ -10,8 +10,6 @@
   [![GitHub](https://img.shields.io/badge/GitHub-EnotinMax/skald-black?style=for-the-badge&logo=github)](https://github.com/EnotinMax/skald/)
   [![Valheim](https://img.shields.io/badge/Game-Valheim-orange?style=for-the-badge)](https://www.valheimgame.com/)
 
-  [🇬🇧 English](#english) | [🇷🇺 Русский](#русский)
-
 </div>
 
 ---
@@ -22,7 +20,7 @@
 ### 📖 About the Project
 **KGMarketPlace** is a comprehensive mod for Valheim that introduces a fully functional marketplace system, complete with interactive NPC dialogues and a quest system. 
 
-To make the creation and management of complex dialogue trees and quest configurations as easy as possible, we have developed a dedicated **Web Utility**. This tool allows modders and server admins to visually design interactions and export them directly into the `.cfg` files required by the mod.
+To make the creation and management of complex dialogue trees and quest configurations as easy as possible, we have developed a dedicated **Web Utility Skald's Forge**. This tool allows modders and server admins to visually design interactions and export them directly into the `.cfg` files required by the mod.
 
 ### 🌟 Web Utility Features
 *   **Visual Node Tree:** Design and view complex dialogue and quest connections in an intuitive, browser-based node editor.
@@ -48,7 +46,7 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ### 📖 О проекте
 **KGMarketPlace** — это масштабный мод для Valheim, который добавляет полноценную систему маркетплейса, включая интерактивные диалоги с NPC и систему квестов.
 
-Чтобы сделать создание и управление сложными деревьями диалогов и настройками квестов максимально простым, мы разработали специализированную **Веб-утилиту**. Этот инструмент позволяет мододелам и администраторам серверов визуально проектировать взаимодействия и экспортировать их напрямую в `.cfg` файлы, необходимые для работы мода.
+Чтобы сделать создание и управление сложными деревьями диалогов и настройками квестов максимально простым, мы разработали специализированную **Веб-утилиту Кузница Скальда**. Этот инструмент позволяет мододелам и администраторам серверов визуально проектировать взаимодействия и экспортировать их напрямую в `.cfg` файлы, необходимые для работы мода.
 
 ### 🌟 Возможности веб-утилиты
 *   **Визуальное дерево связей:** Проектируйте и просматривайте сложные ветки диалогов и квестов в интуитивном визуальном редакторе прямо в браузере.
