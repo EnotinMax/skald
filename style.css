@@ -297,3 +297,348 @@ input[type="color"].form-control { padding: 3px; height: 36px; cursor: pointer; 
 .quest-preview-item-info { display: flex; flex-direction: column; flex: 1; }
 .quest-preview-item-id { font-family: monospace; font-size: 12px; color: #d4af37; }
 .quest-preview-item-name { font-size: 14px; color: #e8d8a3; }
+
+/* === QUEST EDITOR IN-GAME STYLE === */
+.quest-editor-game {
+    display: flex;
+    height: 100%;
+    background: #1a1510;
+    background-image: 
+        radial-gradient(ellipse at center, rgba(60, 45, 30, 0.3) 0%, transparent 70%),
+        linear-gradient(135deg, #2a1f15 0%, #1a1510 100%);
+    border: 3px solid #4a3520;
+    border-radius: 4px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+    font-family: 'Georgia', serif;
+    color: #d4c4a0;
+}
+
+/* Левая панель - список квестов */
+.quest-game-sidebar {
+    width: 220px;
+    background: rgba(20, 15, 10, 0.9);
+    border-right: 3px solid #4a3520;
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}
+
+.quest-game-sidebar-header {
+    padding: 12px;
+    background: linear-gradient(180deg, #3a2a1a 0%, #2a1f15 100%);
+    border-bottom: 2px solid #4a3520;
+    text-align: center;
+}
+
+.quest-game-sidebar-header h3 {
+    color: #f1c40f;
+    font-size: 16px;
+    margin: 0 0 8px 0;
+    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 1px;
+}
+
+.quest-game-add-btn {
+    background: linear-gradient(180deg, #5a4530 0%, #3a2a1a 100%);
+    border: 2px solid #6a5540;
+    color: #f1c40f;
+    padding: 6px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: bold;
+    transition: all 0.2s;
+}
+
+.quest-game-add-btn:hover {
+    background: linear-gradient(180deg, #6a5540 0%, #4a3520 100%);
+    border-color: #f1c40f;
+}
+
+.quest-game-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+}
+
+.quest-game-item {
+    background: linear-gradient(180deg, #2a1f15 0%, #1a1510 100%);
+    border: 2px solid #4a3520;
+    border-radius: 3px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quest-game-item:hover {
+    background: linear-gradient(180deg, #3a2a1a 0%, #2a1f15 100%);
+    border-color: #6a5540;
+}
+
+.quest-game-item.selected {
+    background: linear-gradient(180deg, #4a3520 0%, #3a2a1a 100%);
+    border-color: #f1c40f;
+    box-shadow: 0 0 8px rgba(241, 196, 15, 0.3);
+}
+
+.quest-game-item-name {
+    color: #d4c4a0;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.quest-game-item.selected .quest-game-item-name {
+    color: #f1c40f;
+}
+
+.quest-game-item-icon {
+    font-size: 16px;
+    opacity: 0.7;
+}
+
+/* Правая панель - содержимое квеста */
+.quest-game-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.quest-game-no-selection {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #6a5540;
+    font-style: italic;
+    font-size: 14px;
+}
+
+.quest-game-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex: 1;
+}
+
+/* Заголовок квеста */
+.quest-game-title-section {
+    background: rgba(30, 25, 15, 0.6);
+    border: 2px solid #4a3520;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.quest-game-title-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #4a3520;
+    color: #f1c40f;
+    font-size: 18px;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    width: 100%;
+    padding: 4px 0;
+    outline: none;
+}
+
+.quest-game-title-input:focus {
+    border-bottom-color: #f1c40f;
+}
+
+.quest-game-desc-input {
+    background: transparent;
+    border: none;
+    color: #d4c4a0;
+    font-size: 13px;
+    font-family: 'Georgia', serif;
+    width: 100%;
+    padding: 8px 0;
+    outline: none;
+    resize: vertical;
+    min-height: 60px;
+    line-height: 1.4;
+}
+
+/* Секции Target и Reward */
+.quest-game-section {
+    background: rgba(30, 25, 15, 0.6);
+    border: 2px solid #4a3520;
+    border-radius: 4px;
+    padding: 12px;
+}
+
+.quest-game-section-title {
+    color: #f1c40f;
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #4a3520;
+    padding-bottom: 6px;
+}
+
+.quest-game-target-item,
+.quest-game-reward-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px;
+    background: rgba(20, 15, 10, 0.5);
+    border: 1px solid #4a3520;
+    border-radius: 3px;
+    margin-bottom: 6px;
+}
+
+.quest-game-item-img {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    image-rendering: pixelated;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid #4a3520;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.quest-game-item-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.quest-game-item-name-text {
+    color: #d4c4a0;
+    font-size: 13px;
+}
+
+.quest-game-item-amount {
+    color: #f1c40f;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.quest-game-item-level {
+    color: #27ae60;
+    font-size: 11px;
+}
+
+.quest-game-item-delete {
+    background: #8b0000;
+    border: 1px solid #a00;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.quest-game-item-delete:hover {
+    background: #a00;
+}
+
+.quest-game-add-item-btn {
+    background: linear-gradient(180deg, #3a2a1a 0%, #2a1f15 100%);
+    border: 2px dashed #4a3520;
+    color: #d4c4a0;
+    padding: 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    width: 100%;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+
+.quest-game-add-item-btn:hover {
+    border-color: #f1c40f;
+    color: #f1c40f;
+}
+
+/* Кнопка Take Quest */
+.quest-game-take-btn {
+    background: linear-gradient(180deg, #5a4530 0%, #3a2a1a 100%);
+    border: 2px solid #6a5540;
+    color: #f1c40f;
+    padding: 12px 24px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Georgia', serif;
+    text-align: center;
+    margin-top: auto;
+    transition: all 0.2s;
+    text-shadow: 1px 1px 2px #000;
+}
+
+.quest-game-take-btn:hover {
+    background: linear-gradient(180deg, #6a5540 0%, #4a3520 100%);
+    border-color: #f1c40f;
+    box-shadow: 0 0 10px rgba(241, 196, 15, 0.3);
+}
+
+/* Метаданные квеста (тип, кулдаун) */
+.quest-game-meta {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.quest-game-meta-item {
+    background: rgba(20, 15, 10, 0.5);
+    border: 1px solid #4a3520;
+    border-radius: 3px;
+    padding: 6px 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.quest-game-meta-label {
+    color: #8a7a60;
+    font-size: 11px;
+}
+
+.quest-game-meta-input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #4a3520;
+    color: #d4c4a0;
+    font-size: 12px;
+    width: 80px;
+    outline: none;
+    font-family: 'Georgia', serif;
+}
+
+.quest-game-meta-input:focus {
+    border-bottom-color: #f1c40f;
+}
+
+.quest-game-type-select {
+    background: #1a1510;
+    border: 1px solid #4a3520;
+    color: #d4c4a0;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-family: 'Georgia', serif;
+    font-size: 12px;
+    outline: none;
+}
+
+.quest-game-type-select:focus {
+    border-color: #f1c40f;
+}
