@@ -181,10 +181,7 @@ const translations = {
         noReqs: "Нет требований",
         noDesc: "Нет описания",
         back: "Назад",
-        previewQuestBtn: "Предпросмотр квеста",
-        rewardTypeItem: "Предмет",
-        rewardTypeCoins: "Монеты",
-        rewardTypeExp: "Опыт"
+        previewQuestBtn: "Предпросмотр квеста"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
@@ -256,535 +253,7 @@ const translations = {
         noReqs: "No requirements",
         noDesc: "No description",
         back: "Back",
-        previewQuestBtn: "Preview Quest",
-        rewardTypeItem: "Item",
-        rewardTypeCoins: "Coins",
-        rewardTypeExp: "Experience"
-    },
-    de: {
-        appTitle: "Schmiede des Skalden v2.1",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
-        searchPlaceholder: "Suche...",
-        importDialogue: "Dialog importieren",
-        importQuest: "Quest importieren",
-        quests: "Quests",
-        export: "Exportieren",
-        validate: "Überprüfen",
-        addNode: "+ Dialog",
-        addOption: "+ Option",
-        delete: "Löschen",
-        fitToScreen: "Einpassen",
-        loadSample: "Beispiel",
-        hintText: "Ziehe den Griff an der Option -> zu Knoten, Quest oder Leere",
-        legendTransition: "Übergang",
-        legendCondition: "Bedingung",
-        legendCommand: "Befehl",
-        legendEnd: "Ende",
-        paletteTitle: "Quests",
-        propNodeTitle: "NPC-Dialog",
-        labelNodeId: "Profil-ID:",
-        labelNodeText: "NPC-Text:",
-        propOptionsTitle: "Dialogoptionen",
-        addNodeOption: "+ Option hinzufügen",
-        propOptionTitle: "Spieleroption",
-        labelOptionText: "Text:",
-        labelTransition: "Übergang zu (ID):",
-        labelQuestLink: "Questverknüpfung (ID):",
-        labelIcon: "Symbol:",
-        labelColor: "Farbe:",
-        propCondTitle: "Bedingungen",
-        addCondition: "+ Bedingung",
-        propCmdTitle: "Befehle",
-        addCommand: "+ Befehl",
-        emptyStateText: "Wähle einen Knoten oder erstelle einen neuen",
-        tabField: "Feld",
-        tabCode: "Code",
-        applyCode: "Änderungen übernehmen",
-        copyCode: "Kopieren",
-        downloadCode: "Datei herunterladen",
-        codeHint: "Änderungen werden per 'Übernehmen'-Button angewendet",
-        previewTitle: "Vorschau",
-        questEditorTitle: "Quest-Editor",
-        questListTitle: "Quests",
-        newQuest: "+ Neu",
-        condModalTitle: "Bedingung hinzufügen",
-        cmdModalTitle: "Befehl hinzufügen",
-        targetModalTitle: "Ziel hinzufügen",
-        rewardModalTitle: "Belohnung hinzufügen",
-        reqModalTitle: "Anforderung hinzufügen",
-        questPreviewTitle: "Quest-Vorschau",
-        save: "Speichern",
-        noQuestSelected: "Wähle eine Quest zum Bearbeiten",
-        basic: "Allgemein",
-        targets: "Ziele",
-        rewards: "Belohnungen",
-        requirements: "Anforderungen",
-        time: "Zeit",
-        cooldown: "Abklingzeit (Tage):",
-        timeLimit: "Zeitlimit (Sek):",
-        autocomplete: "Auto-Abschluss",
-        whatToDo: "Was zu tun ist:",
-        reward: "Belohnung:",
-        takeQuest: "Quest annehmen",
-        noTargets: "Keine Ziele",
-        noRewards: "Keine Belohnungen",
-        noReqs: "Keine Anforderungen",
-        noDesc: "Keine Beschreibung",
-        back: "Zurück",
-        previewQuestBtn: "Quest-Vorschau",
-        rewardTypeItem: "Gegenstand",
-        rewardTypeCoins: "Münzen",
-        rewardTypeExp: "Erfahrung"
-    },
-    es: {
-        appTitle: "Forja del Escaldo v2.1",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
-        searchPlaceholder: "Buscar...",
-        importDialogue: "Importar diálogo",
-        importQuest: "Importar misión",
-        quests: "Misiones",
-        export: "Exportar",
-        validate: "Validar",
-        addNode: "+ Diálogo",
-        addOption: "+ Opción",
-        delete: "Eliminar",
-        fitToScreen: "Ajustar",
-        loadSample: "Ejemplo",
-        hintText: "Arrastra el círculo de la opción -> al nodo, misión o vacío",
-        legendTransition: "Transición",
-        legendCondition: "Condición",
-        legendCommand: "Comando",
-        legendEnd: "Fin",
-        paletteTitle: "Misiones",
-        propNodeTitle: "Diálogo del NPC",
-        labelNodeId: "ID de perfil:",
-        labelNodeText: "Texto del NPC:",
-        propOptionsTitle: "Opciones del diálogo",
-        addNodeOption: "+ Añadir opción",
-        propOptionTitle: "Opción del jugador",
-        labelOptionText: "Texto:",
-        labelTransition: "Transición a (ID):",
-        labelQuestLink: "Vínculo con misión (ID):",
-        labelIcon: "Icono:",
-        labelColor: "Color:",
-        propCondTitle: "Condiciones",
-        addCondition: "+ Condición",
-        propCmdTitle: "Comandos",
-        addCommand: "+ Comando",
-        emptyStateText: "Selecciona un nodo o crea uno nuevo",
-        tabField: "Campo",
-        tabCode: "Código",
-        applyCode: "Aplicar cambios",
-        copyCode: "Copiar",
-        downloadCode: "Descargar archivo",
-        codeHint: "Los cambios se aplican con el botón 'Aplicar'",
-        previewTitle: "Vista previa",
-        questEditorTitle: "Editor de misiones",
-        questListTitle: "Misiones",
-        newQuest: "+ Nueva",
-        condModalTitle: "Añadir condición",
-        cmdModalTitle: "Añadir comando",
-        targetModalTitle: "Añadir objetivo",
-        rewardModalTitle: "Añadir recompensa",
-        reqModalTitle: "Añadir requisito",
-        questPreviewTitle: "Vista previa de misión",
-        save: "Guardar",
-        noQuestSelected: "Selecciona una misión para editar",
-        basic: "General",
-        targets: "Objetivos",
-        rewards: "Recompensas",
-        requirements: "Requisitos",
-        time: "Tiempo",
-        cooldown: "Enfriamiento (días):",
-        timeLimit: "Límite (seg):",
-        autocomplete: "Autocompletar",
-        whatToDo: "Qué hay que hacer:",
-        reward: "Recompensa:",
-        takeQuest: "Aceptar misión",
-        noTargets: "Sin objetivos",
-        noRewards: "Sin recompensas",
-        noReqs: "Sin requisitos",
-        noDesc: "Sin descripción",
-        back: "Atrás",
-        previewQuestBtn: "Vista previa de misión",
-        rewardTypeItem: "Objeto",
-        rewardTypeCoins: "Monedas",
-        rewardTypeExp: "Experiencia"
-    },
-    fr: {
-        appTitle: "Forge du Skalde v2.1",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
-        searchPlaceholder: "Rechercher...",
-        importDialogue: "Importer dialogue",
-        importQuest: "Importer quête",
-        quests: "Quêtes",
-        export: "Exporter",
-        validate: "Valider",
-        addNode: "+ Dialogue",
-        addOption: "+ Option",
-        delete: "Supprimer",
-        fitToScreen: "Ajuster",
-        loadSample: "Exemple",
-        hintText: "Fais glisser le cercle de l'option -> vers le nœud, la quête ou le vide",
-        legendTransition: "Transition",
-        legendCondition: "Condition",
-        legendCommand: "Commande",
-        legendEnd: "Fin",
-        paletteTitle: "Quêtes",
-        propNodeTitle: "Dialogue PNJ",
-        labelNodeId: "ID du profil :",
-        labelNodeText: "Texte du PNJ :",
-        propOptionsTitle: "Options du dialogue",
-        addNodeOption: "+ Ajouter option",
-        propOptionTitle: "Option du joueur",
-        labelOptionText: "Texte :",
-        labelTransition: "Transition vers (ID) :",
-        labelQuestLink: "Lien avec quête (ID) :",
-        labelIcon: "Icône :",
-        labelColor: "Couleur :",
-        propCondTitle: "Conditions",
-        addCondition: "+ Condition",
-        propCmdTitle: "Commandes",
-        addCommand: "+ Commande",
-        emptyStateText: "Sélectionnez un nœud ou créez-en un nouveau",
-        tabField: "Champ",
-        tabCode: "Code",
-        applyCode: "Appliquer les modifications",
-        copyCode: "Copier",
-        downloadCode: "Télécharger le fichier",
-        codeHint: "Les modifications sont appliquées via le bouton 'Appliquer'",
-        previewTitle: "Aperçu",
-        questEditorTitle: "Éditeur de quêtes",
-        questListTitle: "Quêtes",
-        newQuest: "+ Nouveau",
-        condModalTitle: "Ajouter condition",
-        cmdModalTitle: "Ajouter commande",
-        targetModalTitle: "Ajouter objectif",
-        rewardModalTitle: "Ajouter récompense",
-        reqModalTitle: "Ajouter exigence",
-        questPreviewTitle: "Aperçu de quête",
-        save: "Enregistrer",
-        noQuestSelected: "Sélectionnez une quête à modifier",
-        basic: "Général",
-        targets: "Objectifs",
-        rewards: "Récompenses",
-        requirements: "Exigences",
-        time: "Temps",
-        cooldown: "Recharge (jours) :",
-        timeLimit: "Limite (sec) :",
-        autocomplete: "Auto-complétion",
-        whatToDo: "Ce qu'il faut faire :",
-        reward: "Récompense :",
-        takeQuest: "Accepter quête",
-        noTargets: "Pas d'objectifs",
-        noRewards: "Pas de récompenses",
-        noReqs: "Pas d'exigences",
-        noDesc: "Pas de description",
-        back: "Retour",
-        previewQuestBtn: "Aperçu de quête",
-        rewardTypeItem: "Objet",
-        rewardTypeCoins: "Pièces",
-        rewardTypeExp: "Expérience"
-    },
-    pl: {
-        appTitle: "Kuźnia Skalda v2.1",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
-        searchPlaceholder: "Szukaj...",
-        importDialogue: "Importuj dialog",
-        importQuest: "Importuj zadanie",
-        quests: "Zadania",
-        export: "Eksportuj",
-        validate: "Sprawdź",
-        addNode: "+ Dialog",
-        addOption: "+ Opcja",
-        delete: "Usuń",
-        fitToScreen: "Dopasuj",
-        loadSample: "Przykład",
-        hintText: "Przeciągnij kółko przy opcji -> do węzła, zadania lub pustki",
-        legendTransition: "Przejście",
-        legendCondition: "Warunek",
-        legendCommand: "Polecenie",
-        legendEnd: "Koniec",
-        paletteTitle: "Zadania",
-        propNodeTitle: "Dialog NPC",
-        labelNodeId: "ID profilu:",
-        labelNodeText: "Tekst NPC:",
-        propOptionsTitle: "Opcje dialogu",
-        addNodeOption: "+ Dodaj opcję",
-        propOptionTitle: "Opcja gracza",
-        labelOptionText: "Tekst:",
-        labelTransition: "Przejście do (ID):",
-        labelQuestLink: "Powiązanie z zadaniem (ID):",
-        labelIcon: "Ikona:",
-        labelColor: "Kolor:",
-        propCondTitle: "Warunki",
-        addCondition: "+ Warunek",
-        propCmdTitle: "Polecenia",
-        addCommand: "+ Polecenie",
-        emptyStateText: "Wybierz węzeł lub utwórz nowy",
-        tabField: "Pole",
-        tabCode: "Kod",
-        applyCode: "Zastosuj zmiany",
-        copyCode: "Kopiuj",
-        downloadCode: "Pobierz plik",
-        codeHint: "Zmiany są stosowane przyciskiem 'Zastosuj'",
-        previewTitle: "Podgląd",
-        questEditorTitle: "Edytor zadań",
-        questListTitle: "Zadania",
-        newQuest: "+ Nowe",
-        condModalTitle: "Dodaj warunek",
-        cmdModalTitle: "Dodaj polecenie",
-        targetModalTitle: "Dodaj cel",
-        rewardModalTitle: "Dodaj nagrodę",
-        reqModalTitle: "Dodaj wymóg",
-        questPreviewTitle: "Podgląd zadania",
-        save: "Zapisz",
-        noQuestSelected: "Wybierz zadanie do edycji",
-        basic: "Ogólne",
-        targets: "Cele",
-        rewards: "Nagrody",
-        requirements: "Wymagania",
-        time: "Czas",
-        cooldown: "Odnowienie (dni):",
-        timeLimit: "Limit (sek):",
-        autocomplete: "Auto-ukończenie",
-        whatToDo: "Co trzeba zrobić:",
-        reward: "Nagroda:",
-        takeQuest: "Przyjmij zadanie",
-        noTargets: "Brak celów",
-        noRewards: "Brak nagród",
-        noReqs: "Brak wymagań",
-        noDesc: "Brak opisu",
-        back: "Wstecz",
-        previewQuestBtn: "Podgląd zadania",
-        rewardTypeItem: "Przedmiot",
-        rewardTypeCoins: "Monety",
-        rewardTypeExp: "Doświadczenie"
-    },
-    pt: {
-        appTitle: "Forja do Escaldo v2.1",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
-        searchPlaceholder: "Pesquisar...",
-        importDialogue: "Importar diálogo",
-        importQuest: "Importar missão",
-        quests: "Missões",
-        export: "Exportar",
-        validate: "Validar",
-        addNode: "+ Diálogo",
-        addOption: "+ Opção",
-        delete: "Excluir",
-        fitToScreen: "Ajustar",
-        loadSample: "Exemplo",
-        hintText: "Arraste o círculo da opção -> para o nó, missão ou vazio",
-        legendTransition: "Transição",
-        legendCondition: "Condição",
-        legendCommand: "Comando",
-        legendEnd: "Fim",
-        paletteTitle: "Missões",
-        propNodeTitle: "Diálogo do NPC",
-        labelNodeId: "ID do perfil:",
-        labelNodeText: "Texto do NPC:",
-        propOptionsTitle: "Opções do diálogo",
-        addNodeOption: "+ Adicionar opção",
-        propOptionTitle: "Opção do jogador",
-        labelOptionText: "Texto:",
-        labelTransition: "Transição para (ID):",
-        labelQuestLink: "Vínculo com missão (ID):",
-        labelIcon: "Ícone:",
-        labelColor: "Cor:",
-        propCondTitle: "Condições",
-        addCondition: "+ Condição",
-        propCmdTitle: "Comandos",
-        addCommand: "+ Comando",
-        emptyStateText: "Selecione um nó ou crie um novo",
-        tabField: "Campo",
-        tabCode: "Código",
-        applyCode: "Aplicar alterações",
-        copyCode: "Copiar",
-        downloadCode: "Baixar arquivo",
-        codeHint: "Alterações são aplicadas pelo botão 'Aplicar'",
-        previewTitle: "Pré-visualização",
-        questEditorTitle: "Editor de missões",
-        questListTitle: "Missões",
-        newQuest: "+ Nova",
-        condModalTitle: "Adicionar condição",
-        cmdModalTitle: "Adicionar comando",
-        targetModalTitle: "Adicionar objetivo",
-        rewardModalTitle: "Adicionar recompensa",
-        reqModalTitle: "Adicionar requisito",
-        questPreviewTitle: "Pré-visualização da missão",
-        save: "Salvar",
-        noQuestSelected: "Selecione uma missão para editar",
-        basic: "Geral",
-        targets: "Objetivos",
-        rewards: "Recompensas",
-        requirements: "Requisitos",
-        time: "Tempo",
-        cooldown: "Recarga (dias):",
-        timeLimit: "Limite (seg):",
-        autocomplete: "Auto-conclusão",
-        whatToDo: "O que fazer:",
-        reward: "Recompensa:",
-        takeQuest: "Aceitar missão",
-        noTargets: "Sem objetivos",
-        noRewards: "Sem recompensas",
-        noReqs: "Sem requisitos",
-        noDesc: "Sem descrição",
-        back: "Voltar",
-        previewQuestBtn: "Pré-visualização da missão",
-        rewardTypeItem: "Item",
-        rewardTypeCoins: "Moedas",
-        rewardTypeExp: "Experiência"
-    },
-    sv: {
-        appTitle: "Skaldens Smedja v2.1",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
-        searchPlaceholder: "Sök...",
-        importDialogue: "Importera dialog",
-        importQuest: "Importera uppdrag",
-        quests: "Uppdrag",
-        export: "Exportera",
-        validate: "Validera",
-        addNode: "+ Dialog",
-        addOption: "+ Alternativ",
-        delete: "Ta bort",
-        fitToScreen: "Anpassa",
-        loadSample: "Exempel",
-        hintText: "Dra handtaget på alternativet -> till nod, uppdrag eller tomrum",
-        legendTransition: "Övergång",
-        legendCondition: "Villkor",
-        legendCommand: "Kommando",
-        legendEnd: "Slut",
-        paletteTitle: "Uppdrag",
-        propNodeTitle: "NPC-dialog",
-        labelNodeId: "Profil-ID:",
-        labelNodeText: "NPC-text:",
-        propOptionsTitle: "Dialogalternativ",
-        addNodeOption: "+ Lägg till alternativ",
-        propOptionTitle: "Spelaralternativ",
-        labelOptionText: "Text:",
-        labelTransition: "Övergång till (ID):",
-        labelQuestLink: "Uppdragslänk (ID):",
-        labelIcon: "Ikon:",
-        labelColor: "Färg:",
-        propCondTitle: "Villkor",
-        addCondition: "+ Villkor",
-        propCmdTitle: "Kommandon",
-        addCommand: "+ Kommando",
-        emptyStateText: "Välj en nod eller skapa en ny",
-        tabField: "Fält",
-        tabCode: "Kod",
-        applyCode: "Tillämpa ändringar",
-        copyCode: "Kopiera",
-        downloadCode: "Ladda ner fil",
-        codeHint: "Ändringar tillämpas via 'Tillämpa'-knappen",
-        previewTitle: "Förhandsgranskning",
-        questEditorTitle: "Uppdragsredigerare",
-        questListTitle: "Uppdrag",
-        newQuest: "+ Nytt",
-        condModalTitle: "Lägg till villkor",
-        cmdModalTitle: "Lägg till kommando",
-        targetModalTitle: "Lägg till mål",
-        rewardModalTitle: "Lägg till belöning",
-        reqModalTitle: "Lägg till krav",
-        questPreviewTitle: "Uppdragsförhandsgranskning",
-        save: "Spara",
-        noQuestSelected: "Välj ett uppdrag att redigera",
-        basic: "Allmänt",
-        targets: "Mål",
-        rewards: "Belöningar",
-        requirements: "Krav",
-        time: "Tid",
-        cooldown: "Nedkylning (dagar):",
-        timeLimit: "Tidsgräns (sek):",
-        autocomplete: "Autoslutförande",
-        whatToDo: "Vad som ska göras:",
-        reward: "Belöning:",
-        takeQuest: "Acceptera uppdrag",
-        noTargets: "Inga mål",
-        noRewards: "Inga belöningar",
-        noReqs: "Inga krav",
-        noDesc: "Ingen beskrivning",
-        back: "Tillbaka",
-        previewQuestBtn: "Uppdragsförhandsgranskning",
-        rewardTypeItem: "Föremål",
-        rewardTypeCoins: "Mynt",
-        rewardTypeExp: "Erfarenhet"
-    },
-    ja: {
-        appTitle: "スカルドの鍛冶屋 2.1",
-        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
-        searchPlaceholder: "検索...",
-        importDialogue: "ダイアログをインポート",
-        importQuest: "クエストをインポート",
-        quests: "クエスト",
-        export: "エクスポート",
-        validate: "検証",
-        addNode: "+ ダイアログ",
-        addOption: "+ オプション",
-        delete: "削除",
-        fitToScreen: "画面に合わせる",
-        loadSample: "サンプル",
-        hintText: "オプションのハンドルをノード、クエスト、または空へドラッグ",
-        legendTransition: "遷移",
-        legendCondition: "条件",
-        legendCommand: "コマンド",
-        legendEnd: "終了",
-        paletteTitle: "クエスト",
-        propNodeTitle: "NPCダイアログ",
-        labelNodeId: "プロフィールID:",
-        labelNodeText: "NPCテキスト:",
-        propOptionsTitle: "ダイアログオプション",
-        addNodeOption: "+ オプションを追加",
-        propOptionTitle: "プレイヤーオプション",
-        labelOptionText: "テキスト:",
-        labelTransition: "遷移先 (ID):",
-        labelQuestLink: "クエストリンク (ID):",
-        labelIcon: "アイコン:",
-        labelColor: "色:",
-        propCondTitle: "条件",
-        addCondition: "+ 条件",
-        propCmdTitle: "コマンド",
-        addCommand: "+ コマンド",
-        emptyStateText: "ノードを選択するか新規作成",
-        tabField: "フィールド",
-        tabCode: "コード",
-        applyCode: "変更を適用",
-        copyCode: "コピー",
-        downloadCode: "ファイルをダウンロード",
-        codeHint: "変更は「適用」ボタンで適用されます",
-        previewTitle: "プレビュー",
-        questEditorTitle: "クエストエディタ",
-        questListTitle: "クエスト",
-        newQuest: "+ 新規",
-        condModalTitle: "条件を追加",
-        cmdModalTitle: "コマンドを追加",
-        targetModalTitle: "目標を追加",
-        rewardModalTitle: "報酬を追加",
-        reqModalTitle: "要件を追加",
-        questPreviewTitle: "クエストプレビュー",
-        save: "保存",
-        noQuestSelected: "編集するクエストを選択",
-        basic: "基本",
-        targets: "目標",
-        rewards: "報酬",
-        requirements: "要件",
-        time: "時間",
-        cooldown: "クールダウン (日):",
-        timeLimit: "制限 (秒):",
-        autocomplete: "自動完了",
-        whatToDo: "やること:",
-        reward: "報酬:",
-        takeQuest: "クエストを受ける",
-        noTargets: "目標なし",
-        noRewards: "報酬なし",
-        noReqs: "要件なし",
-        noDesc: "説明なし",
-        back: "戻る",
-        previewQuestBtn: "クエストプレビュー",
-        rewardTypeItem: "アイテム",
-        rewardTypeCoins: "コイン",
-        rewardTypeExp: "経験値"
+        previewQuestBtn: "Preview Quest"
     }
 };
 
@@ -1675,7 +1144,7 @@ class DialogueEditor {
         icon.setAttribute('x', x + 14);
         icon.setAttribute('y', y + 5);
         icon.setAttribute('font-size', '14');
-        icon.textContent = '';
+        icon.textContent = '📜';
         g.appendChild(icon);
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', x + 52);
@@ -1921,60 +1390,62 @@ class DialogueEditor {
             return;
         }
         const t = translations[this.lang];
-        const targetsHtml = quest.targets.map((t_item, i) => {
-            const itemData = this.itemSelectorData.find(item => item.id === t_item.prefab);
-            const itemName = itemData ? (itemData.nameRu || itemData.name) : t_item.prefab;
-            const iconUrl = itemData ?
-                `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` :
-                'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-            return `
-                <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
-                    <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="${t_item.prefab}">
-                    <div style="flex: 1;">
-                        <div style="font-size: 13px; color: var(--text-primary);">Collect ${itemName} x${t_item.amount}</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">${t_item.prefab}</div>
-                    </div>
-                    <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
+        const targetsHtml = quest.targets.map((t_item, i) => `
+            <div class="quest-target-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
+                <div class="item-selector" style="flex: 1;" data-index="${i}" data-value="${this.escapeHtml(t_item.prefab)}"></div>
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <input type="number" class="form-control" style="width: 60px;" value="${t_item.amount}" data-target-amount="${i}">
                 </div>
-            `;
-        }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
-        const rewardsHtml = quest.rewards.map((reward, i) => {
-            let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-            let displayName = reward.prefab;
-            if (reward.type === 'Item') {
-                const itemData = this.itemSelectorData.find(item => item.id === reward.prefab);
-                if (itemData) {
-                    iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}`;
-                    displayName = itemData.nameRu || itemData.name;
+                <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}" style="flex-shrink: 0;">×</button>
+            </div>
+        `).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
+        
+        const rewardsHtml = quest.rewards.map((r, i) => {
+            let prefabHtml = '';
+            if (r.type === 'Item') {
+                prefabHtml = `<div class="item-selector" style="width: 100%;" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab || '')}"></div>`;
+            } else {
+                const displayName = r.type === 'Coins' ? 'Coins' : 'Exp';
+                let iconHtml = '';
+                if (r.type === 'Coins') {
+                    const coinsData = this.itemSelectorData.find(item => item.id === 'Coins');
+                    const iconUrl = coinsData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+                    iconHtml = `<img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="Coins">`;
+                } else {
+                    iconHtml = `<div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>`;
                 }
-            } else if (reward.type === 'Coins') {
-                const coinsData = this.itemSelectorData.find(item => item.id === 'Coins');
-                if (coinsData) iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}`;
-                displayName = 'Coins';
-            } else if (reward.type === 'Exp') {
-                iconUrl = '';
-                displayName = 'Exp';
+                prefabHtml = `
+                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; width: 100%;">
+                        ${iconHtml}
+                        <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">${displayName}</div>
+                    </div>
+                `;
             }
-            const iconHtml = iconUrl ?
-                `<img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="${reward.prefab}">` :
-                `<div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>`;
             return `
-                <div class="quest-editor-item" style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; margin-bottom: 8px;">
-                    ${iconHtml}
-                    <div style="flex: 1;">
-                        <div style="font-size: 13px; color: var(--text-primary);">Item: ${displayName} x${reward.amount}</div>
-                        <div style="font-size: 11px; color: var(--text-secondary); font-family: monospace;">Item: ${reward.prefab}</div>
+                <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                        <select class="form-control" style="width: 100%;" data-reward-type="${i}">
+                            <option value="Item" ${r.type === 'Item' ? 'selected' : ''}>Item</option>
+                            <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
+                            <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
+                        </select>
+                        ${prefabHtml}
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                        <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
                     </div>
                     <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
                 </div>
             `;
         }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
+        
         const reqsHtml = quest.requirements.map((r, i) => `
             <div class="quest-requirement-item">
                 <span>${r.type}(${r.params.join(', ')})</span>
                 <button data-action="delete-quest-req" data-index="${i}">×</button>
             </div>
-        `).join('');
+        `).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noReqs}</p>`;
+        
         this.els.questEditor.innerHTML = `
             <div class="quest-form">
                 <div class="quest-form-section">
@@ -2002,7 +1473,7 @@ class DialogueEditor {
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.requirements}</h4>
-                    <div class="quest-requirements">${reqsHtml || `<p>${t.noReqs}</p>`}</div>
+                    <div class="quest-requirements">${reqsHtml}</div>
                     <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ ${t.requirements}</button>
                 </div>
                 <div class="quest-form-section">
@@ -2014,6 +1485,26 @@ class DialogueEditor {
             </div>
         `;
         this.bindQuestFormEvents(quest);
+        setTimeout(() => {
+            this.els.questEditor.querySelectorAll('.item-selector[data-index]').forEach(container => {
+                const index = parseInt(container.dataset.index);
+                const selector = new ItemSelector(container, container.dataset.value);
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.targets[index]) {
+                        quest.targets[index].prefab = e.target.value.trim();
+                    }
+                });
+            });
+            this.els.questEditor.querySelectorAll('.item-selector[data-reward-index]').forEach(container => {
+                const index = parseInt(container.dataset.rewardIndex);
+                const selector = new ItemSelector(container, container.dataset.value);
+                selector.input.addEventListener('change', (e) => {
+                    if (quest.rewards[index]) {
+                        quest.rewards[index].prefab = e.target.value.trim();
+                    }
+                });
+            });
+        }, 0);
     }
     bindQuestFormEvents(quest) {
         const qe = this.els.questEditor;
@@ -2037,6 +1528,30 @@ class DialogueEditor {
         bind('.quest-auto-input', 'autocomplete');
         bind('.quest-cd-input', 'cooldown');
         bind('.quest-tl-input', 'timeLimit');
+        
+        qe.querySelectorAll('[data-target-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.targetAmount);
+                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
+            });
+        });
+        qe.querySelectorAll('[data-reward-type]').forEach(select => {
+            select.addEventListener('change', (e) => {
+                const index = parseInt(e.target.dataset.rewardType);
+                if (quest.rewards[index]) {
+                    quest.rewards[index].type = e.target.value;
+                    if (e.target.value === 'Coins') quest.rewards[index].prefab = 'Coins';
+                    else if (e.target.value === 'Exp') quest.rewards[index].prefab = 'Exp';
+                    this.renderQuestEditor();
+                }
+            });
+        });
+        qe.querySelectorAll('[data-reward-amount]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const index = parseInt(e.target.dataset.rewardAmount);
+                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
+            });
+        });
     }
     saveQuestTarget() {
         const quest = this.quests.get(this.selectedQuest);
@@ -2060,7 +1575,7 @@ class DialogueEditor {
             prefab = 'Exp';
         }
         if (!prefab) { alert('Enter prefab'); return; }
-        quest.rewards.push({ type: 'Item', prefab, amount: this.els.rewardAmount.value || '1' });
+        quest.rewards.push({ type: rewardType, prefab, amount: this.els.rewardAmount.value || '1' });
         document.getElementById('questRewardModal').classList.remove('open');
         this.renderQuestEditor();
     }
@@ -2139,8 +1654,8 @@ class DialogueEditor {
             <div class="quest-preview-item-row">
                 ${iconHtml}
                 <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">Item: ${this.escapeHtml(displayName)}</span>
-                    <span class="quest-preview-item-id">Item: ${this.escapeHtml(r.prefab)}</span>
+                    <span class="quest-preview-item-name">${r.type}: ${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-id">${r.type}: ${this.escapeHtml(r.prefab)}</span>
                 </div>
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${r.amount}</span>
             </div>`;
