@@ -1675,7 +1675,7 @@ class DialogueEditor {
         icon.setAttribute('x', x + 14);
         icon.setAttribute('y', y + 5);
         icon.setAttribute('font-size', '14');
-        icon.textContent = '📜';
+        icon.textContent = '';
         g.appendChild(icon);
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', x + 52);
@@ -1969,6 +1969,12 @@ class DialogueEditor {
                 </div>
             `;
         }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
+        const reqsHtml = quest.requirements.map((r, i) => `
+            <div class="quest-requirement-item">
+                <span>${r.type}(${r.params.join(', ')})</span>
+                <button data-action="delete-quest-req" data-index="${i}">×</button>
+            </div>
+        `).join('');
         this.els.questEditor.innerHTML = `
             <div class="quest-form">
                 <div class="quest-form-section">
@@ -1996,12 +2002,7 @@ class DialogueEditor {
                 </div>
                 <div class="quest-form-section">
                     <h4>${t.requirements}</h4>
-                    <div class="quest-requirements">${quest.requirements.map((r, i) => `
-                        <div class="quest-requirement-item">
-                            <span>${r.type}(${r.params.join(', ')})</span>
-                            <button data-action="delete-quest-req" data-index="${i}">×</button>
-                        </div>
-                    `).join('') || `<p>${t.noReqs}</p>`}</div>
+                    <div class="quest-requirements">${reqsHtml || `<p>${t.noReqs}</p>`}</div>
                     <button class="btn-small" data-action="show-quest-req-modal" style="margin-top: 8px;">+ ${t.requirements}</button>
                 </div>
                 <div class="quest-form-section">
