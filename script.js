@@ -153,6 +153,7 @@ const translations = {
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
         renameFile: "Переименовать",
+        newFile: "+ Новый файл",
         codeHint: "Изменения применяются по кнопке 'Применить'",
         previewTitle: "Предпросмотр",
         questEditorTitle: "Редактор квестов",
@@ -229,6 +230,7 @@ const translations = {
         copyCode: "Copy",
         downloadCode: "Download File",
         renameFile: "Rename",
+        newFile: "+ New File",
         codeHint: "Changes applied via 'Apply Changes' button",
         previewTitle: "Preview",
         questEditorTitle: "Quest Editor",
@@ -262,538 +264,6 @@ const translations = {
         rewardTypeItem: "Item",
         rewardTypeCoins: "Coins",
         rewardTypeExp: "Experience"
-    },
-    de: {
-        appTitle: "Schmiede des Skalden v2.1",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
-        searchPlaceholder: "Suche...",
-        importDialogue: "Dialog importieren",
-        importQuest: "Quest importieren",
-        quests: "Quests",
-        export: "Exportieren",
-        validate: "Überprüfen",
-        addNode: "+ Dialog",
-        addOption: "+ Option",
-        delete: "Löschen",
-        fitToScreen: "Einpassen",
-        loadSample: "Beispiel",
-        hintText: "Ziehe den Griff an der Option -> zu Knoten, Quest oder Leere",
-        legendTransition: "Übergang",
-        legendCondition: "Bedingung",
-        legendCommand: "Befehl",
-        legendEnd: "Ende",
-        paletteTitle: "Quests",
-        propNodeTitle: "NPC-Dialog",
-        labelNodeId: "Profil-ID:",
-        labelNodeText: "NPC-Text:",
-        propOptionsTitle: "Dialogoptionen",
-        addNodeOption: "+ Option hinzufügen",
-        propOptionTitle: "Spieleroption",
-        labelOptionText: "Text:",
-        labelTransition: "Übergang zu (ID):",
-        labelQuestLink: "Questverknüpfung (ID):",
-        labelIcon: "Symbol:",
-        labelColor: "Farbe:",
-        propCondTitle: "Bedingungen",
-        addCondition: "+ Bedingung",
-        propCmdTitle: "Befehle",
-        addCommand: "+ Befehl",
-        emptyStateText: "Wähle einen Knoten oder erstelle einen neuen",
-        tabField: "Feld",
-        tabCode: "Code",
-        applyCode: "Änderungen übernehmen",
-        copyCode: "Kopieren",
-        downloadCode: "Datei herunterladen",
-        renameFile: "Umbenennen",
-        codeHint: "Änderungen werden per 'Übernehmen'-Button angewendet",
-        previewTitle: "Vorschau",
-        questEditorTitle: "Quest-Editor",
-        questListTitle: "Quests",
-        newQuest: "+ Neu",
-        condModalTitle: "Bedingung hinzufügen",
-        cmdModalTitle: "Befehl hinzufügen",
-        targetModalTitle: "Ziel hinzufügen",
-        rewardModalTitle: "Belohnung hinzufügen",
-        reqModalTitle: "Anforderung hinzufügen",
-        questPreviewTitle: "Quest-Vorschau",
-        save: "Speichern",
-        noQuestSelected: "Wähle eine Quest zum Bearbeiten",
-        basic: "Allgemein",
-        targets: "Ziele",
-        rewards: "Belohnungen",
-        requirements: "Anforderungen",
-        time: "Zeit",
-        cooldown: "Abklingzeit (Tage):",
-        timeLimit: "Zeitlimit (Sek):",
-        autocomplete: "Auto-Abschluss",
-        whatToDo: "Was zu tun ist:",
-        reward: "Belohnung:",
-        takeQuest: "Quest annehmen",
-        noTargets: "Keine Ziele",
-        noRewards: "Keine Belohnungen",
-        noReqs: "Keine Anforderungen",
-        noDesc: "Keine Beschreibung",
-        back: "Zurück",
-        previewQuestBtn: "Quest-Vorschau",
-        rewardTypeItem: "Gegenstand",
-        rewardTypeCoins: "Münzen",
-        rewardTypeExp: "Erfahrung"
-    },
-    es: {
-        appTitle: "Forja del Escaldo v2.1",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
-        searchPlaceholder: "Buscar...",
-        importDialogue: "Importar diálogo",
-        importQuest: "Importar misión",
-        quests: "Misiones",
-        export: "Exportar",
-        validate: "Validar",
-        addNode: "+ Diálogo",
-        addOption: "+ Opción",
-        delete: "Eliminar",
-        fitToScreen: "Ajustar",
-        loadSample: "Ejemplo",
-        hintText: "Arrastra el círculo de la opción -> al nodo, misión o vacío",
-        legendTransition: "Transición",
-        legendCondition: "Condición",
-        legendCommand: "Comando",
-        legendEnd: "Fin",
-        paletteTitle: "Misiones",
-        propNodeTitle: "Diálogo del NPC",
-        labelNodeId: "ID de perfil:",
-        labelNodeText: "Texto del NPC:",
-        propOptionsTitle: "Opciones del diálogo",
-        addNodeOption: "+ Añadir opción",
-        propOptionTitle: "Opción del jugador",
-        labelOptionText: "Texto:",
-        labelTransition: "Transición a (ID):",
-        labelQuestLink: "Vínculo con misión (ID):",
-        labelIcon: "Icono:",
-        labelColor: "Color:",
-        propCondTitle: "Condiciones",
-        addCondition: "+ Condición",
-        propCmdTitle: "Comandos",
-        addCommand: "+ Comando",
-        emptyStateText: "Selecciona un nodo o crea uno nuevo",
-        tabField: "Campo",
-        tabCode: "Código",
-        applyCode: "Aplicar cambios",
-        copyCode: "Copiar",
-        downloadCode: "Descargar archivo",
-        renameFile: "Renombrar",
-        codeHint: "Los cambios se aplican con el botón 'Aplicar'",
-        previewTitle: "Vista previa",
-        questEditorTitle: "Editor de misiones",
-        questListTitle: "Misiones",
-        newQuest: "+ Nueva",
-        condModalTitle: "Añadir condición",
-        cmdModalTitle: "Añadir comando",
-        targetModalTitle: "Añadir objetivo",
-        rewardModalTitle: "Añadir recompensa",
-        reqModalTitle: "Añadir requisito",
-        questPreviewTitle: "Vista previa de misión",
-        save: "Guardar",
-        noQuestSelected: "Selecciona una misión para editar",
-        basic: "General",
-        targets: "Objetivos",
-        rewards: "Recompensas",
-        requirements: "Requisitos",
-        time: "Tiempo",
-        cooldown: "Enfriamiento (días):",
-        timeLimit: "Límite (seg):",
-        autocomplete: "Autocompletar",
-        whatToDo: "Qué hay que hacer:",
-        reward: "Recompensa:",
-        takeQuest: "Aceptar misión",
-        noTargets: "Sin objetivos",
-        noRewards: "Sin recompensas",
-        noReqs: "Sin requisitos",
-        noDesc: "Sin descripción",
-        back: "Atrás",
-        previewQuestBtn: "Vista previa de misión",
-        rewardTypeItem: "Objeto",
-        rewardTypeCoins: "Monedas",
-        rewardTypeExp: "Experiencia"
-    },
-    fr: {
-        appTitle: "Forge du Skalde v2.1",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
-        searchPlaceholder: "Rechercher...",
-        importDialogue: "Importer dialogue",
-        importQuest: "Importer quête",
-        quests: "Quêtes",
-        export: "Exporter",
-        validate: "Valider",
-        addNode: "+ Dialogue",
-        addOption: "+ Option",
-        delete: "Supprimer",
-        fitToScreen: "Ajuster",
-        loadSample: "Exemple",
-        hintText: "Fais glisser le cercle de l'option -> vers le nœud, la quête ou le vide",
-        legendTransition: "Transition",
-        legendCondition: "Condition",
-        legendCommand: "Commande",
-        legendEnd: "Fin",
-        paletteTitle: "Quêtes",
-        propNodeTitle: "Dialogue PNJ",
-        labelNodeId: "ID du profil :",
-        labelNodeText: "Texte du PNJ :",
-        propOptionsTitle: "Options du dialogue",
-        addNodeOption: "+ Ajouter option",
-        propOptionTitle: "Option du joueur",
-        labelOptionText: "Texte :",
-        labelTransition: "Transition vers (ID) :",
-        labelQuestLink: "Lien avec quête (ID) :",
-        labelIcon: "Icône :",
-        labelColor: "Couleur :",
-        propCondTitle: "Conditions",
-        addCondition: "+ Condition",
-        propCmdTitle: "Commandes",
-        addCommand: "+ Commande",
-        emptyStateText: "Sélectionnez un nœud ou créez-en un nouveau",
-        tabField: "Champ",
-        tabCode: "Code",
-        applyCode: "Appliquer les modifications",
-        copyCode: "Copier",
-        downloadCode: "Télécharger le fichier",
-        renameFile: "Renommer",
-        codeHint: "Les modifications sont appliquées via le bouton 'Appliquer'",
-        previewTitle: "Aperçu",
-        questEditorTitle: "Éditeur de quêtes",
-        questListTitle: "Quêtes",
-        newQuest: "+ Nouveau",
-        condModalTitle: "Ajouter condition",
-        cmdModalTitle: "Ajouter commande",
-        targetModalTitle: "Ajouter objectif",
-        rewardModalTitle: "Ajouter récompense",
-        reqModalTitle: "Ajouter exigence",
-        questPreviewTitle: "Aperçu de quête",
-        save: "Enregistrer",
-        noQuestSelected: "Sélectionnez une quête à modifier",
-        basic: "Général",
-        targets: "Objectifs",
-        rewards: "Récompenses",
-        requirements: "Exigences",
-        time: "Temps",
-        cooldown: "Recharge (jours) :",
-        timeLimit: "Limite (sec) :",
-        autocomplete: "Auto-complétion",
-        whatToDo: "Ce qu'il faut faire :",
-        reward: "Récompense :",
-        takeQuest: "Accepter quête",
-        noTargets: "Pas d'objectifs",
-        noRewards: "Pas de récompenses",
-        noReqs: "Pas d'exigences",
-        noDesc: "Pas de description",
-        back: "Retour",
-        previewQuestBtn: "Aperçu de quête",
-        rewardTypeItem: "Objet",
-        rewardTypeCoins: "Pièces",
-        rewardTypeExp: "Expérience"
-    },
-    pl: {
-        appTitle: "Kuźnia Skalda v2.1",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
-        searchPlaceholder: "Szukaj...",
-        importDialogue: "Importuj dialog",
-        importQuest: "Importuj zadanie",
-        quests: "Zadania",
-        export: "Eksportuj",
-        validate: "Sprawdź",
-        addNode: "+ Dialog",
-        addOption: "+ Opcja",
-        delete: "Usuń",
-        fitToScreen: "Dopasuj",
-        loadSample: "Przykład",
-        hintText: "Przeciągnij kółko przy opcji -> do węzła, zadania lub pustki",
-        legendTransition: "Przejście",
-        legendCondition: "Warunek",
-        legendCommand: "Polecenie",
-        legendEnd: "Koniec",
-        paletteTitle: "Zadania",
-        propNodeTitle: "Dialog NPC",
-        labelNodeId: "ID profilu:",
-        labelNodeText: "Tekst NPC:",
-        propOptionsTitle: "Opcje dialogu",
-        addNodeOption: "+ Dodaj opcję",
-        propOptionTitle: "Opcja gracza",
-        labelOptionText: "Tekst:",
-        labelTransition: "Przejście do (ID):",
-        labelQuestLink: "Powiązanie z zadaniem (ID):",
-        labelIcon: "Ikona:",
-        labelColor: "Kolor:",
-        propCondTitle: "Warunki",
-        addCondition: "+ Warunek",
-        propCmdTitle: "Polecenia",
-        addCommand: "+ Polecenie",
-        emptyStateText: "Wybierz węzeł lub utwórz nowy",
-        tabField: "Pole",
-        tabCode: "Kod",
-        applyCode: "Zastosuj zmiany",
-        copyCode: "Kopiuj",
-        downloadCode: "Pobierz plik",
-        renameFile: "Zmień nazwę",
-        codeHint: "Zmiany są stosowane przyciskiem 'Zastosuj'",
-        previewTitle: "Podgląd",
-        questEditorTitle: "Edytor zadań",
-        questListTitle: "Zadania",
-        newQuest: "+ Nowe",
-        condModalTitle: "Dodaj warunek",
-        cmdModalTitle: "Dodaj polecenie",
-        targetModalTitle: "Dodaj cel",
-        rewardModalTitle: "Dodaj nagrodę",
-        reqModalTitle: "Dodaj wymóg",
-        questPreviewTitle: "Podgląd zadania",
-        save: "Zapisz",
-        noQuestSelected: "Wybierz zadanie do edycji",
-        basic: "Ogólne",
-        targets: "Cele",
-        rewards: "Nagrody",
-        requirements: "Wymagania",
-        time: "Czas",
-        cooldown: "Odnowienie (dni):",
-        timeLimit: "Limit (sek):",
-        autocomplete: "Auto-ukończenie",
-        whatToDo: "Co trzeba zrobić:",
-        reward: "Nagroda:",
-        takeQuest: "Przyjmij zadanie",
-        noTargets: "Brak celów",
-        noRewards: "Brak nagród",
-        noReqs: "Brak wymagań",
-        noDesc: "Brak opisu",
-        back: "Wstecz",
-        previewQuestBtn: "Podgląd zadania",
-        rewardTypeItem: "Przedmiot",
-        rewardTypeCoins: "Monety",
-        rewardTypeExp: "Doświadczenie"
-    },
-    pt: {
-        appTitle: "Forja do Escaldo v2.1",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
-        searchPlaceholder: "Pesquisar...",
-        importDialogue: "Importar diálogo",
-        importQuest: "Importar missão",
-        quests: "Missões",
-        export: "Exportar",
-        validate: "Validar",
-        addNode: "+ Diálogo",
-        addOption: "+ Opção",
-        delete: "Excluir",
-        fitToScreen: "Ajustar",
-        loadSample: "Exemplo",
-        hintText: "Arraste o círculo da opção -> para o nó, missão ou vazio",
-        legendTransition: "Transição",
-        legendCondition: "Condição",
-        legendCommand: "Comando",
-        legendEnd: "Fim",
-        paletteTitle: "Missões",
-        propNodeTitle: "Diálogo do NPC",
-        labelNodeId: "ID do perfil:",
-        labelNodeText: "Texto do NPC:",
-        propOptionsTitle: "Opções do diálogo",
-        addNodeOption: "+ Adicionar opção",
-        propOptionTitle: "Opção do jogador",
-        labelOptionText: "Texto:",
-        labelTransition: "Transição para (ID):",
-        labelQuestLink: "Vínculo com missão (ID):",
-        labelIcon: "Ícone:",
-        labelColor: "Cor:",
-        propCondTitle: "Condições",
-        addCondition: "+ Condição",
-        propCmdTitle: "Comandos",
-        addCommand: "+ Comando",
-        emptyStateText: "Selecione um nó ou crie um novo",
-        tabField: "Campo",
-        tabCode: "Código",
-        applyCode: "Aplicar alterações",
-        copyCode: "Copiar",
-        downloadCode: "Baixar arquivo",
-        renameFile: "Renomear",
-        codeHint: "Alterações são aplicadas pelo botão 'Aplicar'",
-        previewTitle: "Pré-visualização",
-        questEditorTitle: "Editor de missões",
-        questListTitle: "Missões",
-        newQuest: "+ Nova",
-        condModalTitle: "Adicionar condição",
-        cmdModalTitle: "Adicionar comando",
-        targetModalTitle: "Adicionar objetivo",
-        rewardModalTitle: "Adicionar recompensa",
-        reqModalTitle: "Adicionar requisito",
-        questPreviewTitle: "Pré-visualização da missão",
-        save: "Salvar",
-        noQuestSelected: "Selecione uma missão para editar",
-        basic: "Geral",
-        targets: "Objetivos",
-        rewards: "Recompensas",
-        requirements: "Requisitos",
-        time: "Tempo",
-        cooldown: "Recarga (dias):",
-        timeLimit: "Limite (seg):",
-        autocomplete: "Auto-conclusão",
-        whatToDo: "O que fazer:",
-        reward: "Recompensa:",
-        takeQuest: "Aceitar missão",
-        noTargets: "Sem objetivos",
-        noRewards: "Sem recompensas",
-        noReqs: "Sem requisitos",
-        noDesc: "Sem descrição",
-        back: "Voltar",
-        previewQuestBtn: "Pré-visualização da missão",
-        rewardTypeItem: "Item",
-        rewardTypeCoins: "Moedas",
-        rewardTypeExp: "Experiência"
-    },
-    sv: {
-        appTitle: "Skaldens Smedja v2.1",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
-        searchPlaceholder: "Sök...",
-        importDialogue: "Importera dialog",
-        importQuest: "Importera uppdrag",
-        quests: "Uppdrag",
-        export: "Exportera",
-        validate: "Validera",
-        addNode: "+ Dialog",
-        addOption: "+ Alternativ",
-        delete: "Ta bort",
-        fitToScreen: "Anpassa",
-        loadSample: "Exempel",
-        hintText: "Dra handtaget på alternativet -> till nod, uppdrag eller tomrum",
-        legendTransition: "Övergång",
-        legendCondition: "Villkor",
-        legendCommand: "Kommando",
-        legendEnd: "Slut",
-        paletteTitle: "Uppdrag",
-        propNodeTitle: "NPC-dialog",
-        labelNodeId: "Profil-ID:",
-        labelNodeText: "NPC-text:",
-        propOptionsTitle: "Dialogalternativ",
-        addNodeOption: "+ Lägg till alternativ",
-        propOptionTitle: "Spelaralternativ",
-        labelOptionText: "Text:",
-        labelTransition: "Övergång till (ID):",
-        labelQuestLink: "Uppdragslänk (ID):",
-        labelIcon: "Ikon:",
-        labelColor: "Färg:",
-        propCondTitle: "Villkor",
-        addCondition: "+ Villkor",
-        propCmdTitle: "Kommandon",
-        addCommand: "+ Kommando",
-        emptyStateText: "Välj en nod eller skapa en ny",
-        tabField: "Fält",
-        tabCode: "Kod",
-        applyCode: "Tillämpa ändringar",
-        copyCode: "Kopiera",
-        downloadCode: "Ladda ner fil",
-        renameFile: "Byt namn",
-        codeHint: "Ändringar tillämpas via 'Tillämpa'-knappen",
-        previewTitle: "Förhandsgranskning",
-        questEditorTitle: "Uppdragsredigerare",
-        questListTitle: "Uppdrag",
-        newQuest: "+ Nytt",
-        condModalTitle: "Lägg till villkor",
-        cmdModalTitle: "Lägg till kommando",
-        targetModalTitle: "Lägg till mål",
-        rewardModalTitle: "Lägg till belöning",
-        reqModalTitle: "Lägg till krav",
-        questPreviewTitle: "Uppdragsförhandsgranskning",
-        save: "Spara",
-        noQuestSelected: "Välj ett uppdrag att redigera",
-        basic: "Allmänt",
-        targets: "Mål",
-        rewards: "Belöningar",
-        requirements: "Krav",
-        time: "Tid",
-        cooldown: "Nedkyldning (dagar):",
-        timeLimit: "Tidsgräns (sek):",
-        autocomplete: "Autoslutförande",
-        whatToDo: "Vad som ska göras:",
-        reward: "Belöning:",
-        takeQuest: "Acceptera uppdrag",
-        noTargets: "Inga mål",
-        noRewards: "Inga belöningar",
-        noReqs: "Inga krav",
-        noDesc: "Ingen beskrivning",
-        back: "Tillbaka",
-        previewQuestBtn: "Uppdragsförhandsgranskning",
-        rewardTypeItem: "Föremål",
-        rewardTypeCoins: "Mynt",
-        rewardTypeExp: "Erfarenhet"
-    },
-    ja: {
-        appTitle: "スカルドの鍛冶屋 2.1",
-        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
-        searchPlaceholder: "検索...",
-        importDialogue: "ダイアログをインポート",
-        importQuest: "クエストをインポート",
-        quests: "クエスト",
-        export: "エクスポート",
-        validate: "検証",
-        addNode: "+ ダイアログ",
-        addOption: "+ オプション",
-        delete: "削除",
-        fitToScreen: "画面に合わせる",
-        loadSample: "サンプル",
-        hintText: "オプションのハンドルをノード、クエスト、または空へドラッグ",
-        legendTransition: "遷移",
-        legendCondition: "条件",
-        legendCommand: "コマンド",
-        legendEnd: "終了",
-        paletteTitle: "クエスト",
-        propNodeTitle: "NPCダイアログ",
-        labelNodeId: "プロフィールID:",
-        labelNodeText: "NPCテキスト:",
-        propOptionsTitle: "ダイアログオプション",
-        addNodeOption: "+ オプションを追加",
-        propOptionTitle: "プレイヤーオプション",
-        labelOptionText: "テキスト:",
-        labelTransition: "遷移先 (ID):",
-        labelQuestLink: "クエストリンク (ID):",
-        labelIcon: "アイコン:",
-        labelColor: "色:",
-        propCondTitle: "条件",
-        addCondition: "+ 条件",
-        propCmdTitle: "コマンド",
-        addCommand: "+ コマンド",
-        emptyStateText: "ノードを選択するか新規作成",
-        tabField: "フィールド",
-        tabCode: "コード",
-        applyCode: "変更を適用",
-        copyCode: "コピー",
-        downloadCode: "ファイルをダウンロード",
-        renameFile: "名前を変更",
-        codeHint: "変更は「適用」ボタンで適用されます",
-        previewTitle: "プレビュー",
-        questEditorTitle: "クエストエディタ",
-        questListTitle: "クエスト",
-        newQuest: "+ 新規",
-        condModalTitle: "条件を追加",
-        cmdModalTitle: "コマンドを追加",
-        targetModalTitle: "目標を追加",
-        rewardModalTitle: "報酬を追加",
-        reqModalTitle: "要件を追加",
-        questPreviewTitle: "クエストプレビュー",
-        save: "保存",
-        noQuestSelected: "編集するクエストを選択",
-        basic: "基本",
-        targets: "目標",
-        rewards: "報酬",
-        requirements: "要件",
-        time: "時間",
-        cooldown: "クールダウン (日):",
-        timeLimit: "制限 (秒):",
-        autocomplete: "自動完了",
-        whatToDo: "やること:",
-        reward: "報酬:",
-        takeQuest: "クエストを受ける",
-        noTargets: "目標なし",
-        noRewards: "報酬なし",
-        noReqs: "要件なし",
-        noDesc: "説明なし",
-        back: "戻る",
-        previewQuestBtn: "クエストプレビュー",
-        rewardTypeItem: "アイテム",
-        rewardTypeCoins: "コイン",
-        rewardTypeExp: "経験値"
     }
 };
 
@@ -825,7 +295,7 @@ class DialogueEditor {
         this.cacheElements();
         this.initEventListeners();
         
-        // 3. Автоматическое создание файла при пустом запуске
+        // Автоматическое создание файла при пустом запуске
         if (Object.keys(this.cfgFiles).length === 0) {
             const newFileName = `skald_${Date.now()}.cfg`;
             this.cfgFiles[newFileName] = '';
@@ -854,7 +324,7 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelQuestLink', 'optionQuestLink', 'optionIconSelector', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'renameFileBtn', 'codeHint',
+            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'renameFileBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
             'questsModal', 'addQuestBtn', 'questsList', 'questEditor', 'questEditorTitle', 'questListTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
@@ -923,6 +393,7 @@ class DialogueEditor {
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
         this.els.renameFileBtn.addEventListener('click', () => this.renameCurrentFile());
+        this.els.newFileBtn.addEventListener('click', () => this.createNewFile());
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.lang = btn.dataset.lang;
@@ -988,6 +459,7 @@ class DialogueEditor {
         this.els.copyCodeBtn.textContent = t.copyCode;
         this.els.downloadCodeBtn.textContent = t.downloadCode;
         this.els.renameFileBtn.textContent = t.renameFile;
+        this.els.newFileBtn.textContent = t.newFile;
         this.els.codeHint.textContent = t.codeHint;
         this.els.previewTitle.textContent = t.previewTitle;
         this.els.questEditorTitle.textContent = t.questEditorTitle;
@@ -1014,6 +486,8 @@ class DialogueEditor {
         document.getElementById(tabId).classList.add('active');
         document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
         if (tabId === 'tabCode') {
+            // При переходе на вкладку "Код" обновляем содержимое текущего файла
+            this.syncCodeView();
             this.renderCodeTabs();
             if (this.currentCfgFile) this.showCodeFile(this.currentCfgFile);
         }
@@ -1076,6 +550,23 @@ class DialogueEditor {
             this.showCodeFile(this.currentCfgFile);
         }
     }
+    createNewFile() {
+        const fileName = prompt('Введите имя нового файла (с расширением .cfg):', `skald_${Date.now()}.cfg`);
+        if (fileName) {
+            if (!fileName.endsWith('.cfg')) {
+                alert('Имя файла должно заканчиваться на .cfg');
+                return;
+            }
+            if (this.cfgFiles[fileName]) {
+                alert('Файл с таким именем уже существует');
+                return;
+            }
+            this.cfgFiles[fileName] = '';
+            this.currentCfgFile = fileName;
+            this.renderCodeTabs();
+            this.showCodeFile(this.currentCfgFile);
+        }
+    }
     handleGlobalClick(e) {
         if (e.target.matches('.close') || e.target.closest('.close')) {
             const modal = e.target.closest('.modal');
@@ -1105,6 +596,7 @@ class DialogueEditor {
             case 'delete-command': this.removeCommand(parseInt(data.index)); break;
             case 'select-quest': this.selectQuest(data.id); break;
             case 'show-quest-target-modal': this.openModal('questTargetModal'); break;
+            case 'show-quest-reward-modal': this.openModal('questRewardModal'); break;
             case 'show-quest-req-modal': this.openModal('questRequirementModal'); this.updateRequirementParams(); break;
             case 'delete-quest-target': this.deleteQuestTarget(parseInt(data.index)); break;
             case 'delete-quest-reward': this.deleteQuestReward(parseInt(data.index)); break;
@@ -1112,9 +604,7 @@ class DialogueEditor {
             case 'show-quest-preview': this.showQuestPreview(); break;
             case 'preview-select-quest': this.previewSelectQuest(data.id); break;
             case 'open-quest-link': this.openQuestLink(data.questId); break;
-            // 2. Добавление награды напрямую без модального окна
             case 'add-quest-reward-inline':
-            case 'show-quest-reward-modal':
                 const q = this.quests.get(this.selectedQuest);
                 if (q) {
                     q.rewards.push({ type: 'Item', prefab: '', amount: '1' });
@@ -1137,6 +627,40 @@ class DialogueEditor {
                 if (this.targetSelector) this.targetSelector.container.innerHTML = '';
                 this.targetSelector = new ItemSelector(this.els.targetPrefabSelector, '');
             }
+            if (id === 'questRewardModal') {
+                if (this.rewardSelector) this.rewardSelector.container.innerHTML = '';
+                this.rewardSelector = new ItemSelector(this.els.rewardPrefabSelector, '');
+                this.updateRewardModalUI();
+            }
+        }
+    }
+    updateRewardModalUI() {
+        const rewardType = this.els.rewardType.value;
+        const selectorContainer = this.els.rewardPrefabSelector;
+        const displayContainer = this.els.rewardPrefabDisplay;
+        if (rewardType === 'Item') {
+            selectorContainer.style.display = 'block';
+            displayContainer.style.display = 'none';
+        } else if (rewardType === 'Coins') {
+            selectorContainer.style.display = 'none';
+            displayContainer.style.display = 'block';
+            const coinsData = this.itemSelectorData.find(i => i.id === 'Coins');
+            const iconUrl = coinsData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+            displayContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
+                    <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="Coins">
+                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Coins</div>
+                </div>
+            `;
+        } else if (rewardType === 'Exp') {
+            selectorContainer.style.display = 'none';
+            displayContainer.style.display = 'block';
+            displayContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
+                    <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>
+                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Exp</div>
+                </div>
+            `;
         }
     }
     closeAllModals() {
@@ -1904,6 +1428,7 @@ class DialogueEditor {
         this.renderQuestsList();
         this.renderQuestPalette();
         this.selectQuest(id);
+        this.syncCodeView();
     }
     selectQuest(id) {
         this.selectedQuest = id;
@@ -1939,7 +1464,6 @@ class DialogueEditor {
             </div>
         `).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
         
-        // 1. Исправлено отображение наград: локализованное имя + префикс "Item: "
         const rewardsHtml = quest.rewards.map((r, i) => {
             let prefabHtml = '';
             let displayName = r.prefab;
@@ -2042,6 +1566,7 @@ class DialogueEditor {
                 selector.input.addEventListener('change', (e) => {
                     if (quest.targets[index]) {
                         quest.targets[index].prefab = e.target.value.trim();
+                        this.syncCodeView();
                     }
                 });
             });
@@ -2051,6 +1576,7 @@ class DialogueEditor {
                 selector.input.addEventListener('change', (e) => {
                     if (quest.rewards[index]) {
                         quest.rewards[index].prefab = e.target.value.trim();
+                        this.syncCodeView();
                     }
                 });
             });
@@ -2068,6 +1594,7 @@ class DialogueEditor {
                         this.renderQuestsList();
                         this.renderQuestPalette();
                     }
+                    this.syncCodeView();
                 });
             }
         };
@@ -2082,7 +1609,10 @@ class DialogueEditor {
         qe.querySelectorAll('[data-target-amount]').forEach(input => {
             input.addEventListener('input', (e) => {
                 const index = parseInt(e.target.dataset.targetAmount);
-                if (quest.targets[index]) quest.targets[index].amount = e.target.value;
+                if (quest.targets[index]) {
+                    quest.targets[index].amount = e.target.value;
+                    this.syncCodeView();
+                }
             });
         });
         qe.querySelectorAll('[data-reward-type]').forEach(select => {
@@ -2094,13 +1624,17 @@ class DialogueEditor {
                     else if (e.target.value === 'Exp') quest.rewards[index].prefab = 'Exp';
                     else quest.rewards[index].prefab = '';
                     this.renderQuestEditor();
+                    this.syncCodeView();
                 }
             });
         });
         qe.querySelectorAll('[data-reward-amount]').forEach(input => {
             input.addEventListener('input', (e) => {
                 const index = parseInt(e.target.dataset.rewardAmount);
-                if (quest.rewards[index]) quest.rewards[index].amount = e.target.value;
+                if (quest.rewards[index]) {
+                    quest.rewards[index].amount = e.target.value;
+                    this.syncCodeView();
+                }
             });
         });
     }
@@ -2112,6 +1646,7 @@ class DialogueEditor {
         quest.targets.push({ prefab, amount: this.els.targetAmount.value || '1', level: this.els.targetLevel.value || '' });
         document.getElementById('questTargetModal').classList.remove('open');
         this.renderQuestEditor();
+        this.syncCodeView();
     }
     saveQuestReward() {
         const quest = this.quests.get(this.selectedQuest);
@@ -2129,6 +1664,7 @@ class DialogueEditor {
         quest.rewards.push({ type: rewardType, prefab, amount: this.els.rewardAmount.value || '1' });
         document.getElementById('questRewardModal').classList.remove('open');
         this.renderQuestEditor();
+        this.syncCodeView();
     }
     saveQuestRequirement() {
         const quest = this.quests.get(this.selectedQuest);
@@ -2139,18 +1675,31 @@ class DialogueEditor {
         quest.requirements.push({ type, params });
         this.closeAllModals();
         this.renderQuestEditor();
+        this.syncCodeView();
     }
     deleteQuestTarget(index) {
         const quest = this.quests.get(this.selectedQuest);
-        if (quest) { quest.targets.splice(index, 1); this.renderQuestEditor(); }
+        if (quest) {
+            quest.targets.splice(index, 1);
+            this.renderQuestEditor();
+            this.syncCodeView();
+        }
     }
     deleteQuestReward(index) {
         const quest = this.quests.get(this.selectedQuest);
-        if (quest) { quest.rewards.splice(index, 1); this.renderQuestEditor(); }
+        if (quest) {
+            quest.rewards.splice(index, 1);
+            this.renderQuestEditor();
+            this.syncCodeView();
+        }
     }
     deleteQuestRequirement(index) {
         const quest = this.quests.get(this.selectedQuest);
-        if (quest) { quest.requirements.splice(index, 1); this.renderQuestEditor(); }
+        if (quest) {
+            quest.requirements.splice(index, 1);
+            this.renderQuestEditor();
+            this.syncCodeView();
+        }
     }
     showQuestPreview() {
         if (!this.selectedQuest) { alert('Select a quest'); return; }
@@ -2182,7 +1731,6 @@ class DialogueEditor {
             </div>`;
         }).join('');
         
-        // 1. Исправлено отображение наград в предпросмотре
         const rewardsHtml = quest.rewards.map(r => {
             let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
             let displayName = r.prefab;
@@ -2258,6 +1806,7 @@ class DialogueEditor {
     }
     generateCfgFromData() {
         let cfg = '';
+        // Генерация диалогов
         this.nodes.forEach(node => {
             cfg += `[${node.id}]\n${node.text}\n`;
             node.options.forEach(opt => {
@@ -2274,6 +1823,22 @@ class DialogueEditor {
                 cfg += `${line}\n`;
             });
             cfg += '\n';
+        });
+        // Генерация квестов
+        this.quests.forEach(quest => {
+            const questId = quest.autocomplete ? `${quest.id}=autocomplete` : quest.id;
+            cfg += `[${questId}]\n`;
+            cfg += `${quest.type}\n`;
+            cfg += `${quest.name}\n`;
+            cfg += `${quest.description}\n`;
+            cfg += quest.targets.length > 0 ? quest.targets.map(t => `${t.prefab},${t.amount},${t.level}`).join(' | ') : 'None';
+            cfg += '\n';
+            cfg += quest.rewards.length > 0 ? quest.rewards.map(r => `${r.type}:${r.prefab},${r.amount}`).join(' | ') : 'None';
+            cfg += '\n';
+            cfg += quest.cooldown || quest.timeLimit ? `${quest.cooldown},${quest.timeLimit}` : 'None';
+            cfg += '\n';
+            cfg += quest.requirements.length > 0 ? quest.requirements.map(r => `${r.type}:${r.params.join(',')}`).join(' | ') : 'None';
+            cfg += '\n\n';
         });
         return cfg;
     }
