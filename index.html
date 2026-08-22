@@ -53,7 +53,6 @@
                 </div>
 
                 <div class="canvas-container" id="canvasContainer">
-                    <!-- SVG слой для стрелок и облачков -->
                     <svg id="connectionLayer" xmlns="http://www.w3.org/2000/svg">
                         <defs>
                             <marker id="arrowhead-orange" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
@@ -74,10 +73,8 @@
                         </defs>
                     </svg>
                     
-                    <!-- Контейнер для узлов диалогов -->
                     <div id="nodeContainer" class="node-container"></div>
                     
-                    <!-- Плавающая панель квестов -->
                     <div id="questPalette" class="quest-palette">
                         <div class="quest-palette-header">
                             <span id="paletteTitle">Квесты</span>
@@ -158,18 +155,17 @@
         <div id="tabCode" class="tab-content">
             <div class="code-viewer">
                 <div class="code-tabs" id="fileTabs">
-                    <!-- Вкладки файлов генерируются JS -->
+                    <!-- Вкладки файлов генерируются JS + кнопка "+" -->
+                    <button id="newFileBtn" class="code-tab-new" title="Новый файл">+</button>
                 </div>
                 <div class="code-content">
                     <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
                 </div>
                 <div class="code-actions">
-                    <button id="newFileBtn" class="secondary">+ Новый файл</button>
-                    <button id="renameFileBtn" class="secondary">Переименовать</button>
                     <button id="applyCodeBtn" class="secondary">Применить изменения</button>
                     <button id="copyCodeBtn" class="secondary">Копировать</button>
                     <button id="downloadCodeBtn" class="secondary">Скачать файл</button>
-                    <span class="code-hint" id="codeHint">Изменения применяются по кнопке "Применить"</span>
+                    <span class="code-hint" id="codeHint">Двойной клик по вкладке — переименовать</span>
                 </div>
             </div>
         </div>
@@ -184,10 +180,10 @@
         <div class="lang-switcher">
             <button class="lang-btn" data-lang="ru" title="Русский">🇷🇺</button>
             <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
-            <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
+            <button class="lang-btn" data-lang="de" title="Deutsch">🇩</button>
             <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
             <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
-            <button class="lang-btn" data-lang="pl" title="Polski">🇵🇱</button>
+            <button class="lang-btn" data-lang="pl" title="Polski">🇱</button>
             <button class="lang-btn" data-lang="pt" title="Português">🇵🇹</button>
             <button class="lang-btn" data-lang="sv" title="Svenska">🇸🇪</button>
             <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵</button>
