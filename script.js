@@ -152,6 +152,7 @@ const translations = {
         applyCode: "Применить изменения",
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
+        newFile: "+ Новый файл",
         codeHint: "Клик по вкладке — переименовать",
         previewTitle: "Предпросмотр",
         questEditorTitle: "Редактор квестов",
@@ -232,6 +233,7 @@ const translations = {
         applyCode: "Apply Changes",
         copyCode: "Copy",
         downloadCode: "Download File",
+        newFile: "+ New File",
         codeHint: "Click tab to rename",
         previewTitle: "Preview",
         questEditorTitle: "Quest Editor",
@@ -312,6 +314,7 @@ const translations = {
         applyCode: "Änderungen übernehmen",
         copyCode: "Kopieren",
         downloadCode: "Datei herunterladen",
+        newFile: "+ Neue Datei",
         codeHint: "Klick auf Tab zum Umbenennen",
         previewTitle: "Vorschau",
         questEditorTitle: "Quest-Editor",
@@ -392,6 +395,7 @@ const translations = {
         applyCode: "Aplicar cambios",
         copyCode: "Copiar",
         downloadCode: "Descargar archivo",
+        newFile: "+ Nuevo archivo",
         codeHint: "Clic en pestaña para renombrar",
         previewTitle: "Vista previa",
         questEditorTitle: "Editor de misiones",
@@ -472,6 +476,7 @@ const translations = {
         applyCode: "Appliquer les modifications",
         copyCode: "Copier",
         downloadCode: "Télécharger le fichier",
+        newFile: "+ Nouveau fichier",
         codeHint: "Clic sur l'onglet pour renommer",
         previewTitle: "Aperçu",
         questEditorTitle: "Éditeur de quêtes",
@@ -552,6 +557,7 @@ const translations = {
         applyCode: "Zastosuj zmiany",
         copyCode: "Kopiuj",
         downloadCode: "Pobierz plik",
+        newFile: "+ Nowy plik",
         codeHint: "Kliknij zakładkę, aby zmienić nazwę",
         previewTitle: "Podgląd",
         questEditorTitle: "Edytor zadań",
@@ -632,6 +638,7 @@ const translations = {
         applyCode: "Aplicar alterações",
         copyCode: "Copiar",
         downloadCode: "Baixar arquivo",
+        newFile: "+ Novo arquivo",
         codeHint: "Clique na aba para renomear",
         previewTitle: "Pré-visualização",
         questEditorTitle: "Editor de missões",
@@ -712,6 +719,7 @@ const translations = {
         applyCode: "Tillämpa ändringar",
         copyCode: "Kopiera",
         downloadCode: "Ladda ner fil",
+        newFile: "+ Ny fil",
         codeHint: "Klicka på fliken för att byta namn",
         previewTitle: "Förhandsgranskning",
         questEditorTitle: "Uppdragsredigerare",
@@ -792,6 +800,7 @@ const translations = {
         applyCode: "変更を適用",
         copyCode: "コピー",
         downloadCode: "ファイルをダウンロード",
+        newFile: "+ 新しいファイル",
         codeHint: "タブをクリックして名前を変更",
         previewTitle: "プレビュー",
         questEditorTitle: "クエストエディタ",
@@ -890,7 +899,7 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelQuestLink', 'optionQuestLink', 'optionIconSelector', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'codeHint',
+            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
             'questsModal', 'addQuestBtn', 'questsList', 'questEditor', 'questEditorTitle', 'questListTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
@@ -960,8 +969,8 @@ class DialogueEditor {
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
+        this.els.newFileBtn.addEventListener('click', () => this.createNewFile());
         
-        // Обработчики для модального окна закрытия вкладки
         this.els.closeTabSaveBtn.addEventListener('click', () => this.closeTabWithSave());
         this.els.closeTabDiscardBtn.addEventListener('click', () => this.closeTabWithoutSave());
         this.els.closeTabCancelBtn.addEventListener('click', () => this.cancelCloseTab());
@@ -1030,6 +1039,7 @@ class DialogueEditor {
         this.els.applyCodeBtn.textContent = t.applyCode;
         this.els.copyCodeBtn.textContent = t.copyCode;
         this.els.downloadCodeBtn.textContent = t.downloadCode;
+        this.els.newFileBtn.textContent = t.newFile;
         this.els.codeHint.textContent = t.codeHint;
         this.els.previewTitle.textContent = t.previewTitle;
         this.els.questEditorTitle.textContent = t.questEditorTitle;
@@ -1068,6 +1078,7 @@ class DialogueEditor {
     }
     renderCodeTabs() {
         const container = this.els.fileTabs;
+        const newFileBtn = this.els.newFileBtn;
         container.innerHTML = '';
         
         Object.keys(this.cfgFiles).forEach(filename => {
@@ -1099,6 +1110,8 @@ class DialogueEditor {
             tabWrapper.appendChild(closeBtn);
             container.appendChild(tabWrapper);
         });
+        
+        container.appendChild(newFileBtn);
     }
     startRenameTab(button, currentName) {
         const wrapper = button.parentElement;
@@ -1183,6 +1196,24 @@ class DialogueEditor {
     cancelCloseTab() {
         this.pendingCloseTab = null;
         this.els.closeTabConfirmModal.classList.remove('open');
+    }
+    createNewFile() {
+        const t = translations[this.lang];
+        const fileName = prompt(t.renameHint || 'Введите имя файла (.cfg):', `skald_${Date.now()}.cfg`);
+        if (fileName) {
+            if (!fileName.endsWith('.cfg')) {
+                alert('Имя файла должно заканчиваться на .cfg');
+                return;
+            }
+            if (this.cfgFiles[fileName]) {
+                alert('Файл с таким именем уже существует');
+                return;
+            }
+            this.cfgFiles[fileName] = '';
+            this.currentCfgFile = fileName;
+            this.renderCodeTabs();
+            this.showCodeFile(this.currentCfgFile);
+        }
     }
     showCodeFile(filename) {
         this.els.codeEditor.value = this.cfgFiles[filename] || '';
@@ -1902,7 +1933,7 @@ class DialogueEditor {
                 onClickAttr = `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"`;
             } else if (option.questLink) {
                 const quest = this.quests.get(option.questLink);
-                transitionText = `📜 ${quest ? this.escapeHtml(quest.name) : option.questLink}`;
+                transitionText = ` ${quest ? this.escapeHtml(quest.name) : option.questLink}`;
                 onClickAttr = '';
             }
             const iconHtml = option.icon ? this.getIconHtml(option.icon, 18) : '';
