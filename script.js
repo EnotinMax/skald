@@ -152,9 +152,7 @@ const translations = {
         applyCode: "Применить изменения",
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
-        renameFile: "Переименовать",
-        newFile: "+ Новый файл",
-        codeHint: "Изменения применяются по кнопке 'Применить'",
+        codeHint: "Двойной клик по вкладке — переименовать",
         previewTitle: "Предпросмотр",
         questEditorTitle: "Редактор квестов",
         questListTitle: "Квесты",
@@ -186,7 +184,8 @@ const translations = {
         previewQuestBtn: "Предпросмотр квеста",
         rewardTypeItem: "Предмет",
         rewardTypeCoins: "Монеты",
-        rewardTypeExp: "Опыт"
+        rewardTypeExp: "Опыт",
+        renameHint: "Введите имя файла (.cfg):"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
@@ -229,9 +228,7 @@ const translations = {
         applyCode: "Apply Changes",
         copyCode: "Copy",
         downloadCode: "Download File",
-        renameFile: "Rename",
-        newFile: "+ New File",
-        codeHint: "Changes applied via 'Apply Changes' button",
+        codeHint: "Double-click tab to rename",
         previewTitle: "Preview",
         questEditorTitle: "Quest Editor",
         questListTitle: "Quests",
@@ -263,7 +260,8 @@ const translations = {
         previewQuestBtn: "Preview Quest",
         rewardTypeItem: "Item",
         rewardTypeCoins: "Coins",
-        rewardTypeExp: "Experience"
+        rewardTypeExp: "Experience",
+        renameHint: "Enter filename (.cfg):"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.1",
@@ -306,9 +304,7 @@ const translations = {
         applyCode: "Änderungen übernehmen",
         copyCode: "Kopieren",
         downloadCode: "Datei herunterladen",
-        renameFile: "Umbenennen",
-        newFile: "+ Neue Datei",
-        codeHint: "Änderungen werden per 'Übernehmen'-Button angewendet",
+        codeHint: "Doppelklick auf Tab zum Umbenennen",
         previewTitle: "Vorschau",
         questEditorTitle: "Quest-Editor",
         questListTitle: "Quests",
@@ -340,7 +336,8 @@ const translations = {
         previewQuestBtn: "Quest-Vorschau",
         rewardTypeItem: "Gegenstand",
         rewardTypeCoins: "Münzen",
-        rewardTypeExp: "Erfahrung"
+        rewardTypeExp: "Erfahrung",
+        renameHint: "Dateiname eingeben (.cfg):"
     },
     es: {
         appTitle: "Forja del Escaldo v2.1",
@@ -383,9 +380,7 @@ const translations = {
         applyCode: "Aplicar cambios",
         copyCode: "Copiar",
         downloadCode: "Descargar archivo",
-        renameFile: "Renombrar",
-        newFile: "+ Nuevo archivo",
-        codeHint: "Los cambios se aplican con el botón 'Aplicar'",
+        codeHint: "Doble clic en pestaña para renombrar",
         previewTitle: "Vista previa",
         questEditorTitle: "Editor de misiones",
         questListTitle: "Misiones",
@@ -417,7 +412,8 @@ const translations = {
         previewQuestBtn: "Vista previa de misión",
         rewardTypeItem: "Objeto",
         rewardTypeCoins: "Monedas",
-        rewardTypeExp: "Experiencia"
+        rewardTypeExp: "Experiencia",
+        renameHint: "Introduce nombre de archivo (.cfg):"
     },
     fr: {
         appTitle: "Forge du Skalde v2.1",
@@ -460,9 +456,7 @@ const translations = {
         applyCode: "Appliquer les modifications",
         copyCode: "Copier",
         downloadCode: "Télécharger le fichier",
-        renameFile: "Renommer",
-        newFile: "+ Nouveau fichier",
-        codeHint: "Les modifications sont appliquées via le bouton 'Appliquer'",
+        codeHint: "Double-clic sur l'onglet pour renommer",
         previewTitle: "Aperçu",
         questEditorTitle: "Éditeur de quêtes",
         questListTitle: "Quêtes",
@@ -494,7 +488,8 @@ const translations = {
         previewQuestBtn: "Aperçu de quête",
         rewardTypeItem: "Objet",
         rewardTypeCoins: "Pièces",
-        rewardTypeExp: "Expérience"
+        rewardTypeExp: "Expérience",
+        renameHint: "Entrez le nom du fichier (.cfg) :"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.1",
@@ -537,9 +532,7 @@ const translations = {
         applyCode: "Zastosuj zmiany",
         copyCode: "Kopiuj",
         downloadCode: "Pobierz plik",
-        renameFile: "Zmień nazwę",
-        newFile: "+ Nowy plik",
-        codeHint: "Zmiany są stosowane przyciskiem 'Zastosuj'",
+        codeHint: "Podwójne kliknięcie zakładki — zmień nazwę",
         previewTitle: "Podgląd",
         questEditorTitle: "Edytor zadań",
         questListTitle: "Zadania",
@@ -571,7 +564,8 @@ const translations = {
         previewQuestBtn: "Podgląd zadania",
         rewardTypeItem: "Przedmiot",
         rewardTypeCoins: "Monety",
-        rewardTypeExp: "Doświadczenie"
+        rewardTypeExp: "Doświadczenie",
+        renameHint: "Wprowadź nazwę pliku (.cfg):"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.1",
@@ -614,9 +608,7 @@ const translations = {
         applyCode: "Aplicar alterações",
         copyCode: "Copiar",
         downloadCode: "Baixar arquivo",
-        renameFile: "Renomear",
-        newFile: "+ Novo arquivo",
-        codeHint: "Alterações são aplicadas pelo botão 'Aplicar'",
+        codeHint: "Duplo clique na aba para renomear",
         previewTitle: "Pré-visualização",
         questEditorTitle: "Editor de missões",
         questListTitle: "Missões",
@@ -648,7 +640,8 @@ const translations = {
         previewQuestBtn: "Pré-visualização da missão",
         rewardTypeItem: "Item",
         rewardTypeCoins: "Moedas",
-        rewardTypeExp: "Experiência"
+        rewardTypeExp: "Experiência",
+        renameHint: "Digite o nome do arquivo (.cfg):"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.1",
@@ -691,9 +684,7 @@ const translations = {
         applyCode: "Tillämpa ändringar",
         copyCode: "Kopiera",
         downloadCode: "Ladda ner fil",
-        renameFile: "Byt namn",
-        newFile: "+ Ny fil",
-        codeHint: "Ändringar tillämpas via 'Tillämpa'-knappen",
+        codeHint: "Dubbelklicka på fliken för att byta namn",
         previewTitle: "Förhandsgranskning",
         questEditorTitle: "Uppdragsredigerare",
         questListTitle: "Uppdrag",
@@ -725,7 +716,8 @@ const translations = {
         previewQuestBtn: "Uppdragsförhandsgranskning",
         rewardTypeItem: "Föremål",
         rewardTypeCoins: "Mynt",
-        rewardTypeExp: "Erfarenhet"
+        rewardTypeExp: "Erfarenhet",
+        renameHint: "Ange filnamn (.cfg):"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 2.1",
@@ -768,9 +760,7 @@ const translations = {
         applyCode: "変更を適用",
         copyCode: "コピー",
         downloadCode: "ファイルをダウンロード",
-        renameFile: "名前を変更",
-        newFile: "+ 新しいファイル",
-        codeHint: "変更は「適用」ボタンで適用されます",
+        codeHint: "タブをダブルクリックして名前を変更",
         previewTitle: "プレビュー",
         questEditorTitle: "クエストエディタ",
         questListTitle: "クエスト",
@@ -802,7 +792,8 @@ const translations = {
         previewQuestBtn: "クエストプレビュー",
         rewardTypeItem: "アイテム",
         rewardTypeCoins: "コイン",
-        rewardTypeExp: "経験値"
+        rewardTypeExp: "経験値",
+        renameHint: "ファイル名を入力 (.cfg):"
     }
 };
 
@@ -863,7 +854,7 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelQuestLink', 'optionQuestLink', 'optionIconSelector', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'renameFileBtn', 'newFileBtn', 'codeHint',
+            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
             'questsModal', 'addQuestBtn', 'questsList', 'questEditor', 'questEditorTitle', 'questListTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
@@ -931,7 +922,6 @@ class DialogueEditor {
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
-        this.els.renameFileBtn.addEventListener('click', () => this.renameCurrentFile());
         this.els.newFileBtn.addEventListener('click', () => this.createNewFile());
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -997,8 +987,6 @@ class DialogueEditor {
         this.els.applyCodeBtn.textContent = t.applyCode;
         this.els.copyCodeBtn.textContent = t.copyCode;
         this.els.downloadCodeBtn.textContent = t.downloadCode;
-        if (this.els.renameFileBtn) this.els.renameFileBtn.textContent = t.renameFile;
-        if (this.els.newFileBtn) this.els.newFileBtn.textContent = t.newFile;
         this.els.codeHint.textContent = t.codeHint;
         this.els.previewTitle.textContent = t.previewTitle;
         this.els.questEditorTitle.textContent = t.questEditorTitle;
@@ -1025,7 +1013,6 @@ class DialogueEditor {
         document.getElementById(tabId).classList.add('active');
         document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
         if (tabId === 'tabCode') {
-            // При переходе на вкладку "Код" обновляем содержимое текущего файла
             this.syncCodeView();
             this.renderCodeTabs();
             if (this.currentCfgFile) this.showCodeFile(this.currentCfgFile);
@@ -1033,18 +1020,79 @@ class DialogueEditor {
     }
     renderCodeTabs() {
         const container = this.els.fileTabs;
+        // Сохраняем кнопку "+" и очищаем остальное
+        const newFileBtn = this.els.newFileBtn;
         container.innerHTML = '';
+        
         Object.keys(this.cfgFiles).forEach(filename => {
             const btn = document.createElement('button');
             btn.className = `code-tab ${filename === this.currentCfgFile ? 'active' : ''}`;
             btn.textContent = filename;
             btn.dataset.file = filename;
+            btn.title = 'Двойной клик — переименовать';
             btn.addEventListener('click', () => {
+                // Если уже идёт редактирование — не переключаем
+                if (container.querySelector('.code-tab-input')) return;
                 this.currentCfgFile = filename;
                 this.renderCodeTabs();
                 this.showCodeFile(filename);
             });
+            // Двойной клик — переименование
+            btn.addEventListener('dblclick', (e) => {
+                e.stopPropagation();
+                this.startRenameTab(btn, filename);
+            });
             container.appendChild(btn);
+        });
+        
+        // Возвращаем кнопку "+" в конец
+        container.appendChild(newFileBtn);
+    }
+    startRenameTab(button, currentName) {
+        const container = this.els.fileTabs;
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'code-tab-input';
+        input.value = currentName;
+        
+        // Заменяем кнопку на input
+        button.replaceWith(input);
+        input.focus();
+        input.select();
+        
+        const finishRename = () => {
+            const newName = input.value.trim();
+            if (newName && newName !== currentName) {
+                if (!newName.endsWith('.cfg')) {
+                    alert('Имя файла должно заканчиваться на .cfg');
+                    this.renderCodeTabs();
+                    return;
+                }
+                if (this.cfgFiles[newName]) {
+                    alert('Файл с таким именем уже существует');
+                    this.renderCodeTabs();
+                    return;
+                }
+                // Переименовываем
+                this.cfgFiles[newName] = this.cfgFiles[currentName];
+                delete this.cfgFiles[currentName];
+                if (this.currentCfgFile === currentName) {
+                    this.currentCfgFile = newName;
+                }
+            }
+            this.renderCodeTabs();
+            this.showCodeFile(this.currentCfgFile);
+        };
+        
+        input.addEventListener('blur', finishRename);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                input.blur();
+            } else if (e.key === 'Escape') {
+                input.value = currentName;
+                input.blur();
+            }
         });
     }
     showCodeFile(filename) {
@@ -1074,23 +1122,9 @@ class DialogueEditor {
             this.downloadFile(this.currentCfgFile, this.els.codeEditor.value);
         }
     }
-    renameCurrentFile() {
-        if (!this.currentCfgFile) return;
-        const newName = prompt('Введите новое имя файла (с расширением .cfg):', this.currentCfgFile);
-        if (newName && newName !== this.currentCfgFile) {
-            if (!newName.endsWith('.cfg')) {
-                alert('Имя файла должно заканчиваться на .cfg');
-                return;
-            }
-            this.cfgFiles[newName] = this.cfgFiles[this.currentCfgFile];
-            delete this.cfgFiles[this.currentCfgFile];
-            this.currentCfgFile = newName;
-            this.renderCodeTabs();
-            this.showCodeFile(this.currentCfgFile);
-        }
-    }
     createNewFile() {
-        const fileName = prompt('Введите имя нового файла (с расширением .cfg):', `skald_${Date.now()}.cfg`);
+        const t = translations[this.lang];
+        const fileName = prompt(t.renameHint || 'Введите имя файла (.cfg):', `skald_${Date.now()}.cfg`);
         if (fileName) {
             if (!fileName.endsWith('.cfg')) {
                 alert('Имя файла должно заканчиваться на .cfg');
@@ -2345,7 +2379,6 @@ class DialogueEditor {
     }
     generateCfgFromData() {
         let cfg = '';
-        // Генерация диалогов
         this.nodes.forEach(node => {
             cfg += `[${node.id}]\n${node.text}\n`;
             node.options.forEach(opt => {
@@ -2363,7 +2396,6 @@ class DialogueEditor {
             });
             cfg += '\n';
         });
-        // Генерация квестов
         this.quests.forEach(quest => {
             const questId = quest.autocomplete ? `${quest.id}=autocomplete` : quest.id;
             cfg += `[${questId}]\n`;
