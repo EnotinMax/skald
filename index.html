@@ -386,7 +386,23 @@
             </div>
         </div>
     </div>
-
+    <div id="closeTabConfirmModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="closeTabConfirmTitle">Подтверждение закрытия</h2>
+                <span class="close" data-action="close-modal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p id="closeTabConfirmText" style="margin-bottom: 20px;">Сохранить изменения перед закрытием?</p>
+                <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button id="closeTabSaveBtn" class="secondary">Да, скачать и закрыть</button>
+                    <button id="closeTabDiscardBtn" class="danger">Да, закрыть без сохранения</button>
+                    <button id="closeTabCancelBtn" class="secondary">Отмена</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
