@@ -152,7 +152,7 @@ const translations = {
         applyCode: "Применить изменения",
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
-        codeHint: "Двойной клик по вкладке — переименовать",
+        codeHint: "Клик по вкладке — переименовать",
         previewTitle: "Предпросмотр",
         questEditorTitle: "Редактор квестов",
         questListTitle: "Квесты",
@@ -185,7 +185,11 @@ const translations = {
         rewardTypeItem: "Предмет",
         rewardTypeCoins: "Монеты",
         rewardTypeExp: "Опыт",
-        renameHint: "Введите имя файла (.cfg):"
+        closeTabConfirmTitle: "Подтверждение закрытия",
+        closeTabConfirmText: "Сохранить изменения перед закрытием?",
+        closeTabSave: "Да, закрыть с сохранением",
+        closeTabDiscard: "Да, закрыть без сохранения",
+        closeTabCancel: "Отмена"
     },
     en: {
         appTitle: "Skald's Forge v2.1",
@@ -228,7 +232,7 @@ const translations = {
         applyCode: "Apply Changes",
         copyCode: "Copy",
         downloadCode: "Download File",
-        codeHint: "Double-click tab to rename",
+        codeHint: "Click tab to rename",
         previewTitle: "Preview",
         questEditorTitle: "Quest Editor",
         questListTitle: "Quests",
@@ -261,7 +265,11 @@ const translations = {
         rewardTypeItem: "Item",
         rewardTypeCoins: "Coins",
         rewardTypeExp: "Experience",
-        renameHint: "Enter filename (.cfg):"
+        closeTabConfirmTitle: "Close Confirmation",
+        closeTabConfirmText: "Save changes before closing?",
+        closeTabSave: "Yes, close with saving",
+        closeTabDiscard: "Yes, close without saving",
+        closeTabCancel: "Cancel"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.1",
@@ -304,7 +312,7 @@ const translations = {
         applyCode: "Änderungen übernehmen",
         copyCode: "Kopieren",
         downloadCode: "Datei herunterladen",
-        codeHint: "Doppelklick auf Tab zum Umbenennen",
+        codeHint: "Klick auf Tab zum Umbenennen",
         previewTitle: "Vorschau",
         questEditorTitle: "Quest-Editor",
         questListTitle: "Quests",
@@ -337,7 +345,11 @@ const translations = {
         rewardTypeItem: "Gegenstand",
         rewardTypeCoins: "Münzen",
         rewardTypeExp: "Erfahrung",
-        renameHint: "Dateiname eingeben (.cfg):"
+        closeTabConfirmTitle: "Schließen bestätigen",
+        closeTabConfirmText: "Änderungen vor dem Schließen speichern?",
+        closeTabSave: "Ja, mit Speichern schließen",
+        closeTabDiscard: "Ja, ohne Speichern schließen",
+        closeTabCancel: "Abbrechen"
     },
     es: {
         appTitle: "Forja del Escaldo v2.1",
@@ -380,7 +392,7 @@ const translations = {
         applyCode: "Aplicar cambios",
         copyCode: "Copiar",
         downloadCode: "Descargar archivo",
-        codeHint: "Doble clic en pestaña para renombrar",
+        codeHint: "Clic en pestaña para renombrar",
         previewTitle: "Vista previa",
         questEditorTitle: "Editor de misiones",
         questListTitle: "Misiones",
@@ -413,7 +425,11 @@ const translations = {
         rewardTypeItem: "Objeto",
         rewardTypeCoins: "Monedas",
         rewardTypeExp: "Experiencia",
-        renameHint: "Introduce nombre de archivo (.cfg):"
+        closeTabConfirmTitle: "Confirmar cierre",
+        closeTabConfirmText: "¿Guardar cambios antes de cerrar?",
+        closeTabSave: "Sí, cerrar guardando",
+        closeTabDiscard: "Sí, cerrar sin guardar",
+        closeTabCancel: "Cancelar"
     },
     fr: {
         appTitle: "Forge du Skalde v2.1",
@@ -456,7 +472,7 @@ const translations = {
         applyCode: "Appliquer les modifications",
         copyCode: "Copier",
         downloadCode: "Télécharger le fichier",
-        codeHint: "Double-clic sur l'onglet pour renommer",
+        codeHint: "Clic sur l'onglet pour renommer",
         previewTitle: "Aperçu",
         questEditorTitle: "Éditeur de quêtes",
         questListTitle: "Quêtes",
@@ -489,7 +505,11 @@ const translations = {
         rewardTypeItem: "Objet",
         rewardTypeCoins: "Pièces",
         rewardTypeExp: "Expérience",
-        renameHint: "Entrez le nom du fichier (.cfg) :"
+        closeTabConfirmTitle: "Confirmer la fermeture",
+        closeTabConfirmText: "Enregistrer les modifications avant de fermer ?",
+        closeTabSave: "Oui, fermer en sauvegardant",
+        closeTabDiscard: "Oui, fermer sans sauvegarder",
+        closeTabCancel: "Annuler"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.1",
@@ -532,7 +552,7 @@ const translations = {
         applyCode: "Zastosuj zmiany",
         copyCode: "Kopiuj",
         downloadCode: "Pobierz plik",
-        codeHint: "Podwójne kliknięcie zakładki — zmień nazwę",
+        codeHint: "Kliknij zakładkę, aby zmienić nazwę",
         previewTitle: "Podgląd",
         questEditorTitle: "Edytor zadań",
         questListTitle: "Zadania",
@@ -565,7 +585,11 @@ const translations = {
         rewardTypeItem: "Przedmiot",
         rewardTypeCoins: "Monety",
         rewardTypeExp: "Doświadczenie",
-        renameHint: "Wprowadź nazwę pliku (.cfg):"
+        closeTabConfirmTitle: "Potwierdź zamknięcie",
+        closeTabConfirmText: "Zapisać zmiany przed zamknięciem?",
+        closeTabSave: "Tak, zamknij z zapisem",
+        closeTabDiscard: "Tak, zamknij bez zapisu",
+        closeTabCancel: "Anuluj"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.1",
@@ -608,7 +632,7 @@ const translations = {
         applyCode: "Aplicar alterações",
         copyCode: "Copiar",
         downloadCode: "Baixar arquivo",
-        codeHint: "Duplo clique na aba para renomear",
+        codeHint: "Clique na aba para renomear",
         previewTitle: "Pré-visualização",
         questEditorTitle: "Editor de missões",
         questListTitle: "Missões",
@@ -641,7 +665,11 @@ const translations = {
         rewardTypeItem: "Item",
         rewardTypeCoins: "Moedas",
         rewardTypeExp: "Experiência",
-        renameHint: "Digite o nome do arquivo (.cfg):"
+        closeTabConfirmTitle: "Confirmar fechamento",
+        closeTabConfirmText: "Salvar alterações antes de fechar?",
+        closeTabSave: "Sim, fechar salvando",
+        closeTabDiscard: "Sim, fechar sem salvar",
+        closeTabCancel: "Cancelar"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.1",
@@ -684,7 +712,7 @@ const translations = {
         applyCode: "Tillämpa ändringar",
         copyCode: "Kopiera",
         downloadCode: "Ladda ner fil",
-        codeHint: "Dubbelklicka på fliken för att byta namn",
+        codeHint: "Klicka på fliken för att byta namn",
         previewTitle: "Förhandsgranskning",
         questEditorTitle: "Uppdragsredigerare",
         questListTitle: "Uppdrag",
@@ -717,7 +745,11 @@ const translations = {
         rewardTypeItem: "Föremål",
         rewardTypeCoins: "Mynt",
         rewardTypeExp: "Erfarenhet",
-        renameHint: "Ange filnamn (.cfg):"
+        closeTabConfirmTitle: "Bekräfta stängning",
+        closeTabConfirmText: "Spara ändringar innan stängning?",
+        closeTabSave: "Ja, stäng med sparande",
+        closeTabDiscard: "Ja, stäng utan att spara",
+        closeTabCancel: "Avbryt"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 2.1",
@@ -760,7 +792,7 @@ const translations = {
         applyCode: "変更を適用",
         copyCode: "コピー",
         downloadCode: "ファイルをダウンロード",
-        codeHint: "タブをダブルクリックして名前を変更",
+        codeHint: "タブをクリックして名前を変更",
         previewTitle: "プレビュー",
         questEditorTitle: "クエストエディタ",
         questListTitle: "クエスト",
@@ -793,7 +825,11 @@ const translations = {
         rewardTypeItem: "アイテム",
         rewardTypeCoins: "コイン",
         rewardTypeExp: "経験値",
-        renameHint: "ファイル名を入力 (.cfg):"
+        closeTabConfirmTitle: "閉じる確認",
+        closeTabConfirmText: "閉じる前に変更を保存しますか？",
+        closeTabSave: "はい、保存して閉じる",
+        closeTabDiscard: "はい、保存せずに閉じる",
+        closeTabCancel: "キャンセル"
     }
 };
 
@@ -815,6 +851,7 @@ class DialogueEditor {
         this.drawingTempPath = null;
         this.cfgFiles = {};
         this.currentCfgFile = null;
+        this.pendingCloseTab = null;
         this.lang = localStorage.getItem('skald_lang') || 'ru';
         this.itemSelectorData = [];
         this.loadItemDataForPreview();
@@ -825,7 +862,6 @@ class DialogueEditor {
         this.cacheElements();
         this.initEventListeners();
         
-        // Автоматическое создание файла при пустом запуске
         if (Object.keys(this.cfgFiles).length === 0) {
             const newFileName = `skald_${Date.now()}.cfg`;
             this.cfgFiles[newFileName] = '';
@@ -854,17 +890,19 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelQuestLink', 'optionQuestLink', 'optionIconSelector', 'labelColor', 'optionColor',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
+            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
             'questsModal', 'addQuestBtn', 'questsList', 'questEditor', 'questEditorTitle', 'questListTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
             'commandModal', 'commandType', 'commandParams', 'saveCommandBtn', 'cmdModalTitle',
-            'questTargetModal', 'targetPrefabSelector', 'targetAmount', 'targetLevel', 'saveQuestTargetBtn', 'targetModalTitle',
-            'questRewardModal', 'rewardType', 'rewardPrefabSelector', 'rewardPrefabDisplay', 'rewardAmount', 'saveQuestRewardBtn', 'rewardModalTitle',
+            'questTargetModal', 'targetPrefab', 'targetAmount', 'targetLevel', 'saveQuestTargetBtn', 'targetModalTitle',
+            'questRewardModal', 'rewardType', 'rewardPrefab', 'rewardAmount', 'saveQuestRewardBtn', 'rewardModalTitle',
             'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn', 'reqModalTitle',
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
             'dialogueFileInput', 'questFileInput',
-            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd'
+            'legendTransition', 'legendCondition', 'legendCommand', 'legendEnd',
+            'closeTabConfirmModal', 'closeTabConfirmTitle', 'closeTabConfirmText',
+            'closeTabSaveBtn', 'closeTabDiscardBtn', 'closeTabCancelBtn'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
@@ -922,7 +960,12 @@ class DialogueEditor {
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
-        this.els.newFileBtn.addEventListener('click', () => this.createNewFile());
+        
+        // Обработчики для модального окна закрытия вкладки
+        this.els.closeTabSaveBtn.addEventListener('click', () => this.closeTabWithSave());
+        this.els.closeTabDiscardBtn.addEventListener('click', () => this.closeTabWithoutSave());
+        this.els.closeTabCancelBtn.addEventListener('click', () => this.cancelCloseTab());
+        
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.lang = btn.dataset.lang;
@@ -998,6 +1041,11 @@ class DialogueEditor {
         this.els.rewardModalTitle.textContent = t.rewardModalTitle;
         this.els.reqModalTitle.textContent = t.reqModalTitle;
         this.els.questPreviewTitle.textContent = t.questPreviewTitle;
+        this.els.closeTabConfirmTitle.textContent = t.closeTabConfirmTitle;
+        this.els.closeTabConfirmText.textContent = t.closeTabConfirmText;
+        this.els.closeTabSaveBtn.textContent = t.closeTabSave;
+        this.els.closeTabDiscardBtn.textContent = t.closeTabDiscard;
+        this.els.closeTabCancelBtn.textContent = t.closeTabCancel;
         if (this.els.legendTransition) this.els.legendTransition.textContent = t.legendTransition;
         if (this.els.legendCondition) this.els.legendCondition.textContent = t.legendCondition;
         if (this.els.legendCommand) this.els.legendCommand.textContent = t.legendCommand;
@@ -1020,43 +1068,46 @@ class DialogueEditor {
     }
     renderCodeTabs() {
         const container = this.els.fileTabs;
-        // Сохраняем кнопку "+" и очищаем остальное
-        const newFileBtn = this.els.newFileBtn;
         container.innerHTML = '';
         
         Object.keys(this.cfgFiles).forEach(filename => {
+            const tabWrapper = document.createElement('div');
+            tabWrapper.className = `code-tab-wrapper ${filename === this.currentCfgFile ? 'active' : ''}`;
+            tabWrapper.style.display = 'inline-flex';
+            tabWrapper.style.alignItems = 'center';
+            
             const btn = document.createElement('button');
-            btn.className = `code-tab ${filename === this.currentCfgFile ? 'active' : ''}`;
+            btn.className = 'code-tab';
             btn.textContent = filename;
             btn.dataset.file = filename;
-            btn.title = 'Двойной клик — переименовать';
-            btn.addEventListener('click', () => {
-                // Если уже идёт редактирование — не переключаем
-                if (container.querySelector('.code-tab-input')) return;
-                this.currentCfgFile = filename;
-                this.renderCodeTabs();
-                this.showCodeFile(filename);
-            });
-            // Двойной клик — переименование
-            btn.addEventListener('dblclick', (e) => {
+            btn.title = 'Клик — переименовать';
+            btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.startRenameTab(btn, filename);
             });
-            container.appendChild(btn);
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'code-tab-close';
+            closeBtn.innerHTML = '×';
+            closeBtn.title = 'Закрыть вкладку';
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.confirmCloseTab(filename);
+            });
+            
+            tabWrapper.appendChild(btn);
+            tabWrapper.appendChild(closeBtn);
+            container.appendChild(tabWrapper);
         });
-        
-        // Возвращаем кнопку "+" в конец
-        container.appendChild(newFileBtn);
     }
     startRenameTab(button, currentName) {
-        const container = this.els.fileTabs;
+        const wrapper = button.parentElement;
         const input = document.createElement('input');
         input.type = 'text';
         input.className = 'code-tab-input';
         input.value = currentName;
         
-        // Заменяем кнопку на input
-        button.replaceWith(input);
+        wrapper.replaceChild(input, button);
         input.focus();
         input.select();
         
@@ -1073,7 +1124,6 @@ class DialogueEditor {
                     this.renderCodeTabs();
                     return;
                 }
-                // Переименовываем
                 this.cfgFiles[newName] = this.cfgFiles[currentName];
                 delete this.cfgFiles[currentName];
                 if (this.currentCfgFile === currentName) {
@@ -1094,6 +1144,45 @@ class DialogueEditor {
                 input.blur();
             }
         });
+    }
+    confirmCloseTab(filename) {
+        this.pendingCloseTab = filename;
+        this.els.closeTabConfirmModal.classList.add('open');
+    }
+    closeTabWithSave() {
+        if (this.pendingCloseTab) {
+            this.cfgFiles[this.pendingCloseTab] = this.els.codeEditor.value;
+            delete this.cfgFiles[this.pendingCloseTab];
+            if (this.currentCfgFile === this.pendingCloseTab) {
+                const remainingFiles = Object.keys(this.cfgFiles);
+                this.currentCfgFile = remainingFiles.length > 0 ? remainingFiles[0] : null;
+                if (this.currentCfgFile) {
+                    this.showCodeFile(this.currentCfgFile);
+                }
+            }
+            this.pendingCloseTab = null;
+            this.els.closeTabConfirmModal.classList.remove('open');
+            this.renderCodeTabs();
+        }
+    }
+    closeTabWithoutSave() {
+        if (this.pendingCloseTab) {
+            delete this.cfgFiles[this.pendingCloseTab];
+            if (this.currentCfgFile === this.pendingCloseTab) {
+                const remainingFiles = Object.keys(this.cfgFiles);
+                this.currentCfgFile = remainingFiles.length > 0 ? remainingFiles[0] : null;
+                if (this.currentCfgFile) {
+                    this.showCodeFile(this.currentCfgFile);
+                }
+            }
+            this.pendingCloseTab = null;
+            this.els.closeTabConfirmModal.classList.remove('open');
+            this.renderCodeTabs();
+        }
+    }
+    cancelCloseTab() {
+        this.pendingCloseTab = null;
+        this.els.closeTabConfirmModal.classList.remove('open');
     }
     showCodeFile(filename) {
         this.els.codeEditor.value = this.cfgFiles[filename] || '';
@@ -1120,24 +1209,6 @@ class DialogueEditor {
     downloadCurrentCode() {
         if (this.currentCfgFile) {
             this.downloadFile(this.currentCfgFile, this.els.codeEditor.value);
-        }
-    }
-    createNewFile() {
-        const t = translations[this.lang];
-        const fileName = prompt(t.renameHint || 'Введите имя файла (.cfg):', `skald_${Date.now()}.cfg`);
-        if (fileName) {
-            if (!fileName.endsWith('.cfg')) {
-                alert('Имя файла должно заканчиваться на .cfg');
-                return;
-            }
-            if (this.cfgFiles[fileName]) {
-                alert('Файл с таким именем уже существует');
-                return;
-            }
-            this.cfgFiles[fileName] = '';
-            this.currentCfgFile = fileName;
-            this.renderCodeTabs();
-            this.showCodeFile(this.currentCfgFile);
         }
     }
     handleGlobalClick(e) {
@@ -1198,42 +1269,12 @@ class DialogueEditor {
             if (id === 'commandModal') this.updateCommandParams();
             if (id === 'questTargetModal') {
                 if (this.targetSelector) this.targetSelector.container.innerHTML = '';
-                this.targetSelector = new ItemSelector(this.els.targetPrefabSelector, '');
+                this.targetSelector = new ItemSelector(this.els.targetPrefab, '');
             }
             if (id === 'questRewardModal') {
                 if (this.rewardSelector) this.rewardSelector.container.innerHTML = '';
-                this.rewardSelector = new ItemSelector(this.els.rewardPrefabSelector, '');
-                this.updateRewardModalUI();
+                this.rewardSelector = new ItemSelector(this.els.rewardPrefab, '');
             }
-        }
-    }
-    updateRewardModalUI() {
-        const rewardType = this.els.rewardType.value;
-        const selectorContainer = this.els.rewardPrefabSelector;
-        const displayContainer = this.els.rewardPrefabDisplay;
-        if (rewardType === 'Item') {
-            selectorContainer.style.display = 'block';
-            displayContainer.style.display = 'none';
-        } else if (rewardType === 'Coins') {
-            selectorContainer.style.display = 'none';
-            displayContainer.style.display = 'block';
-            const coinsData = this.itemSelectorData.find(i => i.id === 'Coins');
-            const iconUrl = coinsData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-            displayContainer.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
-                    <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="Coins">
-                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Coins</div>
-                </div>
-            `;
-        } else if (rewardType === 'Exp') {
-            selectorContainer.style.display = 'none';
-            displayContainer.style.display = 'block';
-            displayContainer.innerHTML = `
-                <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px;">
-                    <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>
-                    <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">Exp</div>
-                </div>
-            `;
         }
     }
     closeAllModals() {
@@ -2037,54 +2078,22 @@ class DialogueEditor {
             </div>
         `).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noTargets}</p>`;
         
-        const rewardsHtml = quest.rewards.map((r, i) => {
-            let prefabHtml = '';
-            let displayName = r.prefab;
-            let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-
-            if (r.type === 'Coins' || r.prefab === 'Coins') {
-                displayName = t.rewardTypeCoins || 'Coins';
-                const coinsData = this.itemSelectorData.find(item => item.id === 'Coins');
-                if (coinsData) iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}`;
-                prefabHtml = `
-                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; width: 100%;">
-                        <img src="${iconUrl}" style="width: 32px; height: 32px; object-fit: contain;" alt="Coins">
-                        <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">${displayName}</div>
-                    </div>
-                `;
-            } else if (r.type === 'Exp' || r.prefab === 'Exp') {
-                displayName = t.rewardTypeExp || 'Experience';
-                prefabHtml = `
-                    <div style="display: flex; align-items: center; gap: 10px; padding: 8px; background: var(--bg-primary); border-radius: 4px; width: 100%;">
-                        <div style="width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; background: var(--bg-tertiary); border-radius: 4px; font-size: 18px;">✨</div>
-                        <div style="font-size: 13px; color: var(--text-primary); font-family: monospace;">${displayName}</div>
-                    </div>
-                `;
-            } else {
-                prefabHtml = `<div class="item-selector" style="width: 100%;" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab || '')}"></div>`;
-            }
-
-            const isSelectedItem = r.type === 'Item' && r.prefab !== 'Coins' && r.prefab !== 'Exp';
-            const isSelectedCoins = r.type === 'Coins' || r.prefab === 'Coins';
-            const isSelectedExp = r.type === 'Exp' || r.prefab === 'Exp';
-
-            return `
-                <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
-                    <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
-                        <select class="form-control" style="width: 100%;" data-reward-type="${i}">
-                            <option value="Item" ${isSelectedItem ? 'selected' : ''}>Item</option>
-                            <option value="Coins" ${isSelectedCoins ? 'selected' : ''}>Coins</option>
-                            <option value="Exp" ${isSelectedExp ? 'selected' : ''}>Exp</option>
-                        </select>
-                        ${prefabHtml}
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
-                        <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
-                    </div>
-                    <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
+        const rewardsHtml = quest.rewards.map((r, i) => `
+            <div class="quest-reward-item" style="display: flex; gap: 8px; align-items: center; flex: 1;">
+                <div style="flex: 1; display: flex; flex-direction: column; gap: 4px;">
+                    <select class="form-control" style="width: 100%;" data-reward-type="${i}">
+                        <option value="Item" ${r.type === 'Item' ? 'selected' : ''}>Item</option>
+                        <option value="Coins" ${r.type === 'Coins' ? 'selected' : ''}>Coins</option>
+                        <option value="Exp" ${r.type === 'Exp' ? 'selected' : ''}>Exp</option>
+                    </select>
+                    <div class="item-selector" style="width: 100%;" data-reward-index="${i}" data-value="${this.escapeHtml(r.prefab)}"></div>
                 </div>
-            `;
-        }).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
+                <div style="display: flex; align-items: center; gap: 4px; flex-shrink: 0;">
+                    <input type="number" class="form-control" style="width: 60px;" value="${r.amount}" data-reward-amount="${i}">
+                </div>
+                <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}" style="flex-shrink: 0;">×</button>
+            </div>
+        `).join('') || `<p style="color: var(--text-secondary); font-style: italic;">${t.noRewards}</p>`;
         
         const reqsHtml = quest.requirements.map((r, i) => `
             <div class="quest-requirement-item">
@@ -2305,34 +2314,15 @@ class DialogueEditor {
         }).join('');
         
         const rewardsHtml = quest.rewards.map(r => {
-            let iconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-            let displayName = r.prefab;
-            
-            if (r.type === 'Coins' || r.prefab === 'Coins') {
-                displayName = t.rewardTypeCoins || 'Coins';
-                const coinsData = this.itemSelectorData.find(i => i.id === 'Coins');
-                if (coinsData) iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${coinsData.icon}`;
-            } else if (r.type === 'Exp' || r.prefab === 'Exp') {
-                displayName = t.rewardTypeExp || 'Experience';
-                iconUrl = '';
-            } else {
-                const itemData = this.itemSelectorData.find(i => i.id === r.prefab);
-                if (itemData) {
-                    iconUrl = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}`;
-                    displayName = this.lang === 'ru' ? (itemData.nameRu || itemData.name) : itemData.name;
-                }
-            }
-            
-            const iconHtml = iconUrl ?
-                `<img src="${iconUrl}" class="item-preview-icon" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">` :
-                `<div class="item-preview-icon" style="display: flex; align-items: center; justify-content: center; font-size: 32px;">✨</div>`;
-                
+            const itemData = this.itemSelectorData.find(i => i.id === r.prefab) || null;
+            const displayName = itemData ? (itemData.nameRu || itemData.name) : r.prefab;
+            const iconUrl = itemData ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${itemData.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
             return `
             <div class="quest-preview-item-row">
-                ${iconHtml}
+                <img src="${iconUrl}" class="item-preview-icon" alt="${r.prefab}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">
                 <div class="quest-preview-item-info">
-                    <span class="quest-preview-item-name">Item: ${this.escapeHtml(displayName)}</span>
-                    <span class="quest-preview-item-id">Item: ${this.escapeHtml(r.prefab)}</span>
+                    <span class="quest-preview-item-name">${this.escapeHtml(displayName)}</span>
+                    <span class="quest-preview-item-id">${r.type}: ${this.escapeHtml(r.prefab)}</span>
                 </div>
                 <span style="font-weight: bold; color: #f1c40f; margin-left: 10px;">x${r.amount}</span>
             </div>`;
