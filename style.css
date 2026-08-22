@@ -749,3 +749,91 @@ input[type="color"].form-control { padding: 3px; height: 36px; cursor: pointer; 
 .code-tab-input:focus {
     box-shadow: inset 0 0 0 2px var(--accent);
 }
+
+/* === ВКЛАДКИ ФАЙЛОВ === */
+.code-tab-wrapper {
+    display: inline-flex;
+    align-items: center;
+    border-right: 1px solid var(--border);
+    background: var(--bg-secondary);
+}
+
+.code-tab-wrapper.active {
+    background: var(--bg-primary);
+}
+
+.code-tab {
+    padding: 8px 18px; /* Увеличено с 12px */
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-family: 'Consolas', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+    max-width: 225px; /* Увеличено с 150px (1.5x) */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.code-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+.code-tab-wrapper.active .code-tab {
+    color: var(--accent);
+}
+
+/* Крестик закрытия вкладки */
+.code-tab-close {
+    padding: 4px 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.code-tab-close:hover {
+    color: var(--danger);
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.code-tab-new {
+    padding: 8px 14px;
+    background: transparent;
+    border: none;
+    border-left: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.code-tab-new:hover {
+    background: var(--bg-tertiary);
+    color: var(--accent);
+}
+
+
+.code-tab-input {
+    padding: 8px 12px;
+    background: var(--bg-primary);
+    border: none;
+    color: var(--accent);
+    font-size: 13px;
+    font-family: 'Consolas', monospace;
+    outline: none;
+    min-width: 180px; /* Увеличено */
+    max-width: 300px; /* Увеличено */
+}
+
+.code-tab-input:focus {
+    box-shadow: inset 0 0 0 2px var(--accent);
+}
