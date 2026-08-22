@@ -7,7 +7,6 @@
   **Динамическая система редактора конфигов диалогов и квестов для KGMarketPlace**
 
   [![Website](https://img.shields.io/badge/Website-here?style=for-the-badge&logo=github-pages)](https://enotinmax.github.io/skald/)
-  [![GitHub](https://img.shields.io/badge/GitHub-EnotinMax/skald-black?style=for-the-badge&logo=github)](https://github.com/EnotinMax/skald/)
   [![Valheim](https://img.shields.io/badge/Game-Valheim-orange?style=for-the-badge)](https://www.valheimgame.com/)
 
 </div>
