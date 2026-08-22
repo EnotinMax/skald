@@ -1164,7 +1164,11 @@ class DialogueEditor {
     }
     closeTabWithSave() {
         if (this.pendingCloseTab) {
-            this.cfgFiles[this.pendingCloseTab] = this.els.codeEditor.value;
+            // Сначала скачиваем файл
+            const content = this.els.codeEditor.value;
+            this.downloadFile(this.pendingCloseTab, content);
+            
+            // Затем удаляем вкладку
             delete this.cfgFiles[this.pendingCloseTab];
             if (this.currentCfgFile === this.pendingCloseTab) {
                 const remainingFiles = Object.keys(this.cfgFiles);
