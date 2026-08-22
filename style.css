@@ -681,3 +681,71 @@ input[type="color"].form-control { padding: 3px; height: 36px; cursor: pointer; 
 .code-tab[title] {
     position: relative;
 }
+
+/* === ОБЁРТКА ВКЛАДКИ С КРЕСТИКОМ === */
+.code-tab-wrapper {
+    display: inline-flex;
+    align-items: center;
+    border-right: 1px solid var(--border);
+    background: var(--bg-secondary);
+}
+
+.code-tab-wrapper.active {
+    background: var(--bg-primary);
+}
+
+.code-tab {
+    padding: 8px 12px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 13px;
+    font-family: 'Consolas', monospace;
+    cursor: pointer;
+    transition: all 0.2s;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.code-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+.code-tab-wrapper.active .code-tab {
+    color: var(--accent);
+}
+
+.code-tab-close {
+    padding: 4px 8px;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1;
+}
+
+.code-tab-close:hover {
+    color: var(--danger);
+    background: rgba(231, 76, 60, 0.1);
+}
+
+.code-tab-input {
+    padding: 8px 12px;
+    background: var(--bg-primary);
+    border: none;
+    color: var(--accent);
+    font-size: 13px;
+    font-family: 'Consolas', monospace;
+    outline: none;
+    min-width: 120px;
+    max-width: 200px;
+}
+
+.code-tab-input:focus {
+    box-shadow: inset 0 0 0 2px var(--accent);
+}
