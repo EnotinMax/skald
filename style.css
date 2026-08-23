@@ -79,6 +79,9 @@ main { flex: 1; overflow: hidden; display: flex; }
 /* === CODE VIEWER === */
 .code-viewer { flex: 1; display: flex; flex-direction: column; background: var(--bg-primary); }
 .code-tabs { display: flex; background: var(--bg-secondary); border-bottom: 1px solid var(--border); align-items: center; }
+.code-tab { padding: 8px 16px; background: transparent; border: none; border-right: 1px solid var(--border); color: var(--text-secondary); font-size: 13px; font-family: 'Consolas', monospace; cursor: pointer; transition: all 0.2s; }
+.code-tab:hover { background: var(--bg-tertiary); color: var(--text-primary); }
+.code-tab.active { background: var(--accent-blue); color: white; }
 .code-tab-new { padding: 8px 14px; background: transparent; border: none; border-left: 1px solid var(--border); color: var(--text-secondary); font-size: 16px; font-weight: bold; cursor: pointer; transition: all 0.2s; }
 .code-tab-new:hover { background: var(--bg-tertiary); color: var(--accent); }
 .code-content { flex: 1; overflow: hidden; }
@@ -104,13 +107,40 @@ main { flex: 1; overflow: hidden; display: flex; }
 .dot.dashed { border: 1px dashed currentColor; background: transparent; }
 
 /* === CANVAS === */
-.canvas-container { flex: 1; position: relative; background: linear-gradient(rgba(26, 29, 35, 0.92), rgba(26, 29, 35, 0.92)), url('background.png') center center / cover no-repeat, repeating-linear-gradient(0deg, transparent, transparent 19px, #2a2f38 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #2a2f38 20px); overflow: hidden; cursor: grab; }
+.canvas-container { 
+    flex: 1; 
+    position: relative; 
+    background: linear-gradient(rgba(26, 29, 35, 0.92), rgba(26, 29, 35, 0.92)), url('background.png') center center / cover no-repeat, repeating-linear-gradient(0deg, transparent, transparent 19px, #2a2f38 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #2a2f38 20px); 
+    overflow: hidden; 
+    cursor: grab; 
+}
 .canvas-container:active { cursor: grabbing; }
 .canvas-container.drawing-mode { cursor: crosshair; }
 
-#connectionLayer { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; }
-.node-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-.quest-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+#connectionLayer { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 10000px; 
+    height: 10000px; 
+    pointer-events: none; 
+    z-index: 5; 
+}
+.node-container { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 10000px; 
+    height: 10000px; 
+}
+.quest-container { 
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    width: 10000px; 
+    height: 10000px; 
+    pointer-events: none; 
+}
 
 /* === DIALOGUE NODES === */
 .dialogue-node { position: absolute; min-width: 220px; max-width: 320px; background: var(--bg-secondary); border: 2px solid var(--accent-blue); border-radius: 8px; cursor: move; box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: visible; }
@@ -146,7 +176,18 @@ main { flex: 1; overflow: hidden; display: flex; }
 .option-draw-handle.is-end { background: #95a5a6; }
 
 /* === QUEST BLOCKS ON CANVAS === */
-.quest-block { position: absolute; min-width: 220px; max-width: 320px; background: var(--bg-secondary); border: 2px solid var(--accent-green); border-radius: 8px; cursor: move; box-shadow: 0 4px 15px rgba(0,0,0,0.4); overflow: visible; pointer-events: auto; }
+.quest-block { 
+    position: absolute; 
+    min-width: 220px; 
+    max-width: 320px; 
+    background: var(--bg-secondary); 
+    border: 2px solid var(--accent-green); 
+    border-radius: 8px; 
+    cursor: move; 
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+    overflow: visible; 
+    pointer-events: auto; 
+}
 .quest-block:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.5); }
 .quest-block.selected { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.25), 0 6px 20px rgba(0,0,0,0.5); }
 .quest-block .node-header { color: var(--accent-green); }
