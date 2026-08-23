@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Кузница Скальда v2.2 — Редактор диалогов KGMarketplace</title>
+    <title>Кузница Скальда — Редактор диалогов KGMarketplace</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="logo.png" type="image/png">
 </head>
@@ -44,7 +44,9 @@
                     <div class="legend">
                         <div class="legend-item"><span class="dot blue"></span><span class="legend-text" id="legendTransition">Переход</span></div>
                         <div class="legend-item"><span class="dot orange"></span><span class="legend-text" id="legendQuestLink">Связь с квестом</span></div>
-                        <div class="legend-item"><span class="dot green"></span><span class="legend-text" id="legendOtherQuest">Зависимость квеста</span></div>
+                        <div class="legend-item"><span class="dot green dashed"></span><span class="legend-text" id="legendOtherQuest">Зависимость квеста</span></div>
+                        <div class="legend-item"><span class="dot red"></span><span class="legend-text" id="legendCondition">Условие</span></div>
+                        <div class="legend-item"><span class="dot gray"></span><span class="legend-text" id="legendCommand">Команда</span></div>
                         <div class="legend-item"><span class="dot gray dashed"></span><span class="legend-text" id="legendEnd">Конец</span></div>
                     </div>
                 </div>
@@ -61,6 +63,9 @@
                             <marker id="arrowhead-green" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
                                 <polygon points="0 0, 12 4, 0 8" fill="#27ae60"/>
                             </marker>
+                            <marker id="arrowhead-red" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
+                                <polygon points="0 0, 12 4, 0 8" fill="#e74c3c"/>
+                            </marker>
                             <marker id="arrowhead-gray" markerWidth="12" markerHeight="8" refX="11" refY="4" orient="auto" markerUnits="userSpaceOnUse">
                                 <polygon points="0 0, 12 4, 0 8" fill="#95a5a6"/>
                             </marker>
@@ -71,6 +76,7 @@
                     </svg>
                     
                     <div id="nodeContainer" class="node-container"></div>
+                    <div id="questContainer" class="quest-container"></div>
                     
                     <div id="questPalette" class="quest-palette">
                         <div class="quest-palette-header">
@@ -107,6 +113,12 @@
                         <input type="text" id="optionText" class="form-control">
                     </div>
                     <div class="form-group">
+                        <label id="labelTransition">Переход к (ID):</label>
+                        <select id="optionTransition" class="form-control">
+                            <option value="">— Нет —</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label id="labelIcon">Иконка:</label>
                         <div id="optionIconSelector" class="item-selector"></div>
                     </div>
@@ -129,10 +141,7 @@
                         <input type="text" id="questId" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label><input type="checkbox" id="questAutocomplete"> <span id="labelAutocomplete">Автозавершение</span></label>
-                    </div>
-                    <div class="form-group">
-                        <label id="labelQuestType">Тип:</label>
+                        <label>Тип:</label>
                         <select id="questType" class="form-control">
                             <option value="Kill">Kill</option>
                             <option value="Collect">Collect</option>
@@ -144,38 +153,28 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label id="labelQuestName">Название:</label>
+                        <label>Название:</label>
                         <input type="text" id="questName" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label id="labelQuestDesc">Описание:</label>
-                        <textarea id="questDescription" class="form-control" rows="4"></textarea>
+                        <label>Описание:</label>
+                        <textarea id="questDescription" class="form-control" rows="3"></textarea>
                     </div>
-                    <div class="quest-targets-section">
-                        <h4 id="labelTargets">Цели</h4>
-                        <div id="questTargetsList"></div>
-                        <button id="addQuestTargetBtn" class="btn-small">+ Цель</button>
+                    <div class="form-group">
+                        <label><input type="checkbox" id="questAutocomplete"> <span id="labelAutocomplete">Автозавершение</span></label>
                     </div>
-                    <div class="quest-rewards-section">
-                        <h4 id="labelRewards">Награды</h4>
-                        <div id="questRewardsList"></div>
-                        <button id="addQuestRewardBtn" class="btn-small">+ Награда</button>
+                    <div class="form-group">
+                        <label id="labelCooldown">Кулдаун (дни):</label>
+                        <input type="number" id="questCooldown" class="form-control">
                     </div>
-                    <div class="quest-requirements-section">
-                        <h4 id="labelRequirements">Требования</h4>
-                        <div id="questRequirementsList"></div>
-                        <button id="addQuestRequirementBtn" class="btn-small">+ Требование</button>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label id="labelCooldown">Кулдаун (дни):</label>
-                            <input type="number" id="questCooldown" class="form-control">
-                        </div>
+                    <div class="form-group">
+                        <label id="labelTimeLimit">Лимит (сек):</label>
+                        <input type="number" id="questTimeLimit" class="form-control">
                     </div>
                 </div>
 
                 <div class="properties-section empty-state" id="emptyState">
-                    <p id="emptyStateText">Выберите узел или создайте новый</p>
+                    <p id="emptyStateText">Выберите блок или создайте новый</p>
                 </div>
             </aside>
         </div>
@@ -183,7 +182,9 @@
         <!-- Вкладка: Код -->
         <div id="tabCode" class="tab-content">
             <div class="code-viewer">
-                <div class="code-tabs" id="fileTabs"></div>
+                <div class="code-tabs" id="fileTabs">
+                    <button id="newFileBtn" class="code-tab-new" title="Новый файл">+</button>
+                </div>
                 <div class="code-content">
                     <textarea id="codeEditor" class="code-editor" spellcheck="false"></textarea>
                 </div>
@@ -206,9 +207,9 @@
             <button class="lang-btn" data-lang="en" title="English">🇬🇧</button>
             <button class="lang-btn" data-lang="de" title="Deutsch">🇩🇪</button>
             <button class="lang-btn" data-lang="es" title="Español">🇪🇸</button>
-            <button class="lang-btn" data-lang="fr" title="Français">🇫🇷</button>
+            <button class="lang-btn" data-lang="fr" title="Français">🇷</button>
             <button class="lang-btn" data-lang="pl" title="Polski">🇵🇱</button>
-            <button class="lang-btn" data-lang="pt" title="Português">🇵🇹</button>
+            <button class="lang-btn" data-lang="pt" title="Português">🇵</button>
             <button class="lang-btn" data-lang="sv" title="Svenska">🇸🇪</button>
             <button class="lang-btn" data-lang="ja" title="日本語">🇯🇵</button>
         </div>
@@ -216,34 +217,26 @@
 
     <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;">
 
-    <!-- Модалки -->
-    <div id="previewModal" class="modal">
-        <div class="modal-content preview-modal">
-            <div class="modal-header">
-                <h2 id="previewTitle">Предпросмотр</h2>
-                <span class="close" data-action="close-modal">&times;</span>
-            </div>
-            <div id="previewContent" class="preview-content"></div>
-        </div>
-    </div>
-
+    <!-- Модальное окно статистики импорта -->
     <div id="importStatsModal" class="modal">
-        <div class="modal-content stats-modal">
+        <div class="modal-content">
             <div class="modal-header">
-                <h2 id="importStatsTitle">Результат импорта</h2>
+                <h2 id="importStatsTitle">Результаты импорта</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="stats-content">
-                    <div class="stat-row"><span id="statDialoguesLabel">Найдено диалогов:</span><span id="statDialoguesCount" class="stat-value">0</span></div>
-                    <div class="stat-row"><span id="statQuestsLabel">Найдено квестов:</span><span id="statQuestsCount" class="stat-value">0</span></div>
-                    <div class="stat-row"><span id="statUnknownLabel">Не удалось распознать:</span><span id="statUnknownCount" class="stat-value">0</span></div>
+                <div class="import-stats">
+                    <div class="stat-row"><span class="stat-label" id="statDialoguesLabel">Найдено диалогов:</span><span class="stat-value" id="statDialogues">0</span></div>
+                    <div class="stat-row"><span class="stat-label" id="statQuestsLabel">Найдено квестов:</span><span class="stat-value" id="statQuests">0</span></div>
+                    <div class="stat-row"><span class="stat-label" id="statUnknownLabel">Не удалось распознать:</span><span class="stat-value" id="statUnknown">0</span></div>
                 </div>
-                <button id="importStatsOkBtn" class="btn-primary">OK</button>
+                <div id="unknownBlocksList" class="unknown-blocks-list"></div>
+                <button id="importStatsCloseBtn" class="btn-primary">OK</button>
             </div>
         </div>
     </div>
 
+    <!-- Модальные окна условий и команд -->
     <div id="conditionModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -257,12 +250,16 @@
                         <option value="HasItem">HasItem</option>
                         <option value="NotHasItem">NotHasItem</option>
                         <option value="SkillMore">SkillMore</option>
+                        <option value="SkillLess">SkillLess</option>
                         <option value="QuestFinished">QuestFinished</option>
                         <option value="NotFinished">NotFinished</option>
                         <option value="HasQuest">HasQuest</option>
                         <option value="NotHasQuest">NotHasQuest</option>
                         <option value="GlobalKey">GlobalKey</option>
                         <option value="NotGlobalKey">NotGlobalKey</option>
+                        <option value="OtherQuest">OtherQuest</option>
+                        <option value="IsVIP">IsVIP</option>
+                        <option value="Time">Time</option>
                     </select>
                 </div>
                 <div id="conditionParams"></div>
@@ -302,96 +299,23 @@
         </div>
     </div>
 
-    <div id="questTargetModal" class="modal">
-        <div class="modal-content">
+    <div id="questPreviewModal" class="modal">
+        <div class="modal-content quest-preview-modal">
             <div class="modal-header">
-                <h2 id="targetModalTitle">Добавить цель</h2>
+                <h2 id="questPreviewTitle">Предпросмотр квеста</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Префаб:</label>
-                    <div id="targetPrefabSelector" class="item-selector"></div>
-                </div>
-                <div class="form-group">
-                    <label>Количество:</label>
-                    <input type="number" id="targetAmount" class="form-control" value="1">
-                </div>
-                <div class="form-group">
-                    <label>Уровень:</label>
-                    <input type="number" id="targetLevel" class="form-control">
-                </div>
-                <button id="saveQuestTargetBtn">Сохранить</button>
-            </div>
+            <div id="questPreviewContent"></div>
         </div>
     </div>
 
-    <div id="questRewardModal" class="modal">
-        <div class="modal-content">
+    <div id="previewModal" class="modal">
+        <div class="modal-content preview-modal">
             <div class="modal-header">
-                <h2 id="rewardModalTitle">Добавить награду</h2>
+                <h2 id="previewTitle">Предпросмотр</h2>
                 <span class="close" data-action="close-modal">&times;</span>
             </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Тип:</label>
-                    <select id="rewardType" class="form-control">
-                        <option value="Item">Item</option>
-                        <option value="Skill">Skill</option>
-                        <option value="Pet">Pet</option>
-                        <option value="Skill_EXP">Skill_EXP</option>
-                        <option value="EpicMMO_EXP">EpicMMO_EXP</option>
-                        <option value="Battlepass_EXP">Battlepass_EXP</option>
-                        <option value="MH_EXP">MH_EXP</option>
-                        <option value="Cozyheim_EXP">Cozyheim_EXP</option>
-                        <option value="SetCustomValue">SetCustomValue</option>
-                        <option value="AddCustomValue">AddCustomValue</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>Префаб/Название:</label>
-                    <input type="text" id="rewardPrefab" class="form-control">
-                </div>
-                <div class="form-group">
-                    <label>Количество:</label>
-                    <input type="number" id="rewardAmount" class="form-control" value="1">
-                </div>
-                <div class="form-group">
-                    <label>Уровень:</label>
-                    <input type="number" id="rewardLevel" class="form-control">
-                </div>
-                <button id="saveQuestRewardBtn">Сохранить</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="questRequirementModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="reqModalTitle">Добавить требование</h2>
-                <span class="close" data-action="close-modal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <div class="form-group">
-                    <label>Тип:</label>
-                    <select id="requirementType" class="form-control">
-                        <option value="Skill">Skill</option>
-                        <option value="OtherQuest">OtherQuest</option>
-                        <option value="GlobalKey">GlobalKey</option>
-                        <option value="EpicMMO_Level">EpicMMO_Level</option>
-                        <option value="HasItem">HasItem</option>
-                        <option value="NotFinished">NotFinished</option>
-                        <option value="IsVIP">IsVIP</option>
-                        <option value="MH_Level">MH_Level</option>
-                        <option value="Time">Time</option>
-                        <option value="HasAchievement">HasAchievement</option>
-                        <option value="CustomValueMore">CustomValueMore</option>
-                        <option value="CustomValueLess">CustomValueLess</option>
-                    </select>
-                </div>
-                <div id="requirementParams"></div>
-                <button id="saveQuestRequirementBtn">Сохранить</button>
-            </div>
+            <div id="previewContent" class="preview-content"></div>
         </div>
     </div>
 
