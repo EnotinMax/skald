@@ -333,16 +333,25 @@
             <div id="previewContent" class="preview-content"></div>
         </div>
     </div>
+    
 <div id="questDependencyModal" class="modal">
     <div class="modal-content">
         <div class="modal-header">
-            <h2 id="questDependencyTitle">Тип зависимости квеста</h2>
+            <h2 id="questDependencyTitle">Тип зависимости</h2>
             <span class="close" data-action="close-modal">&times;</span>
         </div>
-        <div class="modal-body" style="display: flex; flex-direction: column; gap: 10px;">
-            <button id="questDependencyOtherQuestBtn" class="btn-primary" style="background: #27ae60;">OtherQuest (квест должен быть выполнен ранее)</button>
-            <button id="questDependencyNotFinishedBtn" class="btn-primary" style="background: #e74c3c;">NotFinished (квест НЕ должен быть выполнен)</button>
-            <button id="questDependencyCancelBtn" class="secondary">Отмена</button>
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Выберите тип зависимости:</label>
+                <select id="questDependencyTypeSelect" class="form-control">
+                    <option value="OtherQuest">OtherQuest (квест выполнен ранее)</option>
+                    <option value="NotFinished">NotFinished (квест не выполнен)</option>
+                </select>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+                <button id="questDependencyCancelBtn" class="secondary">Отмена</button>
+                <button id="questDependencyConfirmBtn" class="btn-primary">Сохранить</button>
+            </div>
         </div>
     </div>
 </div>
