@@ -1,6 +1,4 @@
 // КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.3
-// Этап 2: Квесты на холсте
-
 class ItemSelector {
     constructor(container, initialValue = '') {
         this.container = typeof container === 'string' ? document.getElementById(container) : container;
@@ -8,6 +6,7 @@ class ItemSelector {
         this.selectedId = initialValue;
         this.baseIconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
         this.unknownIcon = 'unknown.png';
+        this.onChangeCallback = null;
         this.initDOM();
         this.loadData();
         this.bindEvents();
@@ -87,6 +86,7 @@ class ItemSelector {
             this.input.value = item.id;
             this.iconImg.src = `${this.baseIconUrl}${item.icon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
+            if (this.onChangeCallback) this.onChangeCallback(item.id);
         }
         this.dropdown.classList.remove('active');
     }
@@ -100,6 +100,7 @@ class ItemSelector {
             this.input.value = trimmedValue;
             this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
+            if (this.onChangeCallback) this.onChangeCallback(trimmedValue);
         } else {
             this.selectedId = '';
             this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
@@ -110,16 +111,15 @@ class ItemSelector {
         const item = this.items.find(i => i.id === id);
         this.iconImg.src = item ? `${this.baseIconUrl}${item.icon}` : `${this.baseIconUrl}${this.unknownIcon}`;
     }
-    getItemName(id) {
-        const item = this.items.find(i => i.id === id);
-        return item ? (item.nameRu || item.name) : id;
+    setOnChange(callback) {
+        this.onChangeCallback = callback;
     }
 }
 
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.3",
-        appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
+        appSubtitle: "Редактор диалогов и квестов · by OdinSons",
         searchPlaceholder: "Поиск...",
         importFile: "Импортировать",
         export: "Экспорт",
@@ -153,12 +153,20 @@ const translations = {
         propQuestTitle: "Квест",
         labelQuestId: "ID:",
         labelQuestType: "Тип:",
-        labelQuestItem: "Предмет:",
         labelQuestName: "Название:",
         labelQuestDesc: "Описание:",
         labelAutocomplete: "Автозавершение",
         labelCooldown: "Кулдаун (дни):",
         labelTimeLimit: "Лимит (сек):",
+        labelQuestTargets: "Цели:",
+        labelQuestRewards: "Награды:",
+        labelQuestRequirements: "Требования:",
+        addQuestTarget: "+ Цель",
+        addQuestReward: "+ Награда",
+        addQuestRequirement: "+ Требование",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Выберите блок или создайте новый",
         tabField: "Поле",
         tabCode: "Код",
@@ -187,15 +195,35 @@ const translations = {
         questTypeMove: "Переместить",
         targets: "Цели",
         rewards: "Награды",
-        addTarget: "+ Добавить цель",
-        addReward: "+ Добавить награду",
+        requirements: "Требования",
+        noTargets: "Нет целей",
+        noRewards: "Нет наград",
+        noReqs: "Нет требований",
+        noDesc: "Нет описания",
+        takeQuest: "Взять квест",
+        whatToDo: "Что нужно сделать:",
+        reward: "Вознаграждение:",
+        previewQuestBtn: "Предпросмотр квеста",
+        questListTitle: "Квесты",
+        newQuest: "+ Новый",
+        basic: "Основное",
+        time: "Время",
+        amount: "Количество:",
+        level: "Уровень:",
+        targetPrefab: "Предмет/Существо:",
+        rewardType: "Тип награды:",
+        rewardPrefab: "Предмет:",
+        requirementType: "Тип требования:",
         rewardTypeItem: "Предмет",
+        rewardTypeCoins: "Монеты",
         rewardTypeExp: "Опыт",
-        rewardTypeEpicMMO: "EpicMMO Опыт"
+        rewardTypeEpicMMO: "EpicMMO Опыт",
+        questPreviewSidebar: "Квесты",
+        questPreviewTitle: "Предпросмотр квеста"
     },
     en: {
         appTitle: "Skald's Forge v2.3",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons",
         searchPlaceholder: "Search...",
         importFile: "Import",
         export: "Export",
@@ -229,12 +257,20 @@ const translations = {
         propQuestTitle: "Quest",
         labelQuestId: "ID:",
         labelQuestType: "Type:",
-        labelQuestItem: "Item:",
         labelQuestName: "Name:",
         labelQuestDesc: "Description:",
         labelAutocomplete: "Autocomplete",
         labelCooldown: "Cooldown (days):",
         labelTimeLimit: "Time Limit (sec):",
+        labelQuestTargets: "Targets:",
+        labelQuestRewards: "Rewards:",
+        labelQuestRequirements: "Requirements:",
+        addQuestTarget: "+ Target",
+        addQuestReward: "+ Reward",
+        addQuestRequirement: "+ Requirement",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Select a block or create new",
         tabField: "Canvas",
         tabCode: "Code",
@@ -263,15 +299,35 @@ const translations = {
         questTypeMove: "Move",
         targets: "Targets",
         rewards: "Rewards",
-        addTarget: "+ Add Target",
-        addReward: "+ Add Reward",
+        requirements: "Requirements",
+        noTargets: "No targets",
+        noRewards: "No rewards",
+        noReqs: "No requirements",
+        noDesc: "No description",
+        takeQuest: "Take Quest",
+        whatToDo: "What to do:",
+        reward: "Reward:",
+        previewQuestBtn: "Preview Quest",
+        questListTitle: "Quests",
+        newQuest: "+ New",
+        basic: "Basic",
+        time: "Time",
+        amount: "Amount:",
+        level: "Level:",
+        targetPrefab: "Item/Creature:",
+        rewardType: "Reward Type:",
+        rewardPrefab: "Item:",
+        requirementType: "Requirement Type:",
         rewardTypeItem: "Item",
+        rewardTypeCoins: "Coins",
         rewardTypeExp: "Experience",
-        rewardTypeEpicMMO: "EpicMMO Experience"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Quests",
+        questPreviewTitle: "Quest Preview"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.3",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
+        appSubtitle: "Dialog- & Quest-Editor · by OdinSons",
         searchPlaceholder: "Suche...",
         importFile: "Importieren",
         export: "Exportieren",
@@ -305,12 +361,20 @@ const translations = {
         propQuestTitle: "Quest",
         labelQuestId: "ID:",
         labelQuestType: "Typ:",
-        labelQuestItem: "Gegenstand:",
         labelQuestName: "Name:",
         labelQuestDesc: "Beschreibung:",
         labelAutocomplete: "Auto-Abschluss",
         labelCooldown: "Abklingzeit (Tage):",
         labelTimeLimit: "Zeitlimit (Sek):",
+        labelQuestTargets: "Ziele:",
+        labelQuestRewards: "Belohnungen:",
+        labelQuestRequirements: "Anforderungen:",
+        addQuestTarget: "+ Ziel",
+        addQuestReward: "+ Belohnung",
+        addQuestRequirement: "+ Anforderung",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Wähle einen Block oder erstelle einen neuen",
         tabField: "Feld",
         tabCode: "Code",
@@ -339,15 +403,35 @@ const translations = {
         questTypeMove: "Bewegen",
         targets: "Ziele",
         rewards: "Belohnungen",
-        addTarget: "+ Ziel hinzufügen",
-        addReward: "+ Belohnung hinzufügen",
+        requirements: "Anforderungen",
+        noTargets: "Keine Ziele",
+        noRewards: "Keine Belohnungen",
+        noReqs: "Keine Anforderungen",
+        noDesc: "Keine Beschreibung",
+        takeQuest: "Quest annehmen",
+        whatToDo: "Was zu tun ist:",
+        reward: "Belohnung:",
+        previewQuestBtn: "Quest-Vorschau",
+        questListTitle: "Quests",
+        newQuest: "+ Neu",
+        basic: "Allgemein",
+        time: "Zeit",
+        amount: "Menge:",
+        level: "Stufe:",
+        targetPrefab: "Gegenstand/Kreatur:",
+        rewardType: "Belohnungstyp:",
+        rewardPrefab: "Gegenstand:",
+        requirementType: "Anforderungstyp:",
         rewardTypeItem: "Gegenstand",
+        rewardTypeCoins: "Münzen",
         rewardTypeExp: "Erfahrung",
-        rewardTypeEpicMMO: "EpicMMO Erfahrung"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Quests",
+        questPreviewTitle: "Quest-Vorschau"
     },
     es: {
         appTitle: "Forja del Escaldo v2.3",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
+        appSubtitle: "Editor de diálogos y misiones · by OdinSons",
         searchPlaceholder: "Buscar...",
         importFile: "Importar",
         export: "Exportar",
@@ -381,12 +465,20 @@ const translations = {
         propQuestTitle: "Misión",
         labelQuestId: "ID:",
         labelQuestType: "Tipo:",
-        labelQuestItem: "Objeto:",
         labelQuestName: "Nombre:",
         labelQuestDesc: "Descripción:",
         labelAutocomplete: "Autocompletar",
         labelCooldown: "Enfriamiento (días):",
         labelTimeLimit: "Límite (seg):",
+        labelQuestTargets: "Objetivos:",
+        labelQuestRewards: "Recompensas:",
+        labelQuestRequirements: "Requisitos:",
+        addQuestTarget: "+ Objetivo",
+        addQuestReward: "+ Recompensa",
+        addQuestRequirement: "+ Requisito",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Selecciona un bloque o crea uno nuevo",
         tabField: "Campo",
         tabCode: "Código",
@@ -415,15 +507,35 @@ const translations = {
         questTypeMove: "Mover",
         targets: "Objetivos",
         rewards: "Recompensas",
-        addTarget: "+ Añadir objetivo",
-        addReward: "+ Añadir recompensa",
+        requirements: "Requisitos",
+        noTargets: "Sin objetivos",
+        noRewards: "Sin recompensas",
+        noReqs: "Sin requisitos",
+        noDesc: "Sin descripción",
+        takeQuest: "Aceptar misión",
+        whatToDo: "Qué hay que hacer:",
+        reward: "Recompensa:",
+        previewQuestBtn: "Vista previa de misión",
+        questListTitle: "Misiones",
+        newQuest: "+ Nueva",
+        basic: "General",
+        time: "Tiempo",
+        amount: "Cantidad:",
+        level: "Nivel:",
+        targetPrefab: "Objeto/Criatura:",
+        rewardType: "Tipo de recompensa:",
+        rewardPrefab: "Objeto:",
+        requirementType: "Tipo de requisito:",
         rewardTypeItem: "Objeto",
+        rewardTypeCoins: "Monedas",
         rewardTypeExp: "Experiencia",
-        rewardTypeEpicMMO: "Experiencia EpicMMO"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Misiones",
+        questPreviewTitle: "Vista previa de misión"
     },
     fr: {
         appTitle: "Forge du Skalde v2.3",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
+        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons",
         searchPlaceholder: "Rechercher...",
         importFile: "Importer",
         export: "Exporter",
@@ -457,12 +569,20 @@ const translations = {
         propQuestTitle: "Quête",
         labelQuestId: "ID :",
         labelQuestType: "Type :",
-        labelQuestItem: "Objet :",
         labelQuestName: "Nom :",
         labelQuestDesc: "Description :",
         labelAutocomplete: "Auto-complétion",
         labelCooldown: "Recharge (jours) :",
         labelTimeLimit: "Limite (sec) :",
+        labelQuestTargets: "Objectifs :",
+        labelQuestRewards: "Récompenses :",
+        labelQuestRequirements: "Exigences :",
+        addQuestTarget: "+ Objectif",
+        addQuestReward: "+ Récompense",
+        addQuestRequirement: "+ Exigence",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Sélectionnez un bloc ou créez-en un nouveau",
         tabField: "Champ",
         tabCode: "Code",
@@ -491,15 +611,35 @@ const translations = {
         questTypeMove: "Déplacer",
         targets: "Objectifs",
         rewards: "Récompenses",
-        addTarget: "+ Ajouter objectif",
-        addReward: "+ Ajouter récompense",
+        requirements: "Exigences",
+        noTargets: "Pas d'objectifs",
+        noRewards: "Pas de récompenses",
+        noReqs: "Pas d'exigences",
+        noDesc: "Pas de description",
+        takeQuest: "Accepter quête",
+        whatToDo: "Ce qu'il faut faire :",
+        reward: "Récompense :",
+        previewQuestBtn: "Aperçu de quête",
+        questListTitle: "Quêtes",
+        newQuest: "+ Nouveau",
+        basic: "Général",
+        time: "Temps",
+        amount: "Quantité :",
+        level: "Niveau :",
+        targetPrefab: "Objet/Créature :",
+        rewardType: "Type de récompense :",
+        rewardPrefab: "Objet :",
+        requirementType: "Type d'exigence :",
         rewardTypeItem: "Objet",
+        rewardTypeCoins: "Pièces",
         rewardTypeExp: "Expérience",
-        rewardTypeEpicMMO: "Expérience EpicMMO"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Quêtes",
+        questPreviewTitle: "Aperçu de quête"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.3",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
+        appSubtitle: "Edytor dialogów i zadań · by OdinSons",
         searchPlaceholder: "Szukaj...",
         importFile: "Importuj",
         export: "Eksportuj",
@@ -533,12 +673,20 @@ const translations = {
         propQuestTitle: "Zadanie",
         labelQuestId: "ID:",
         labelQuestType: "Typ:",
-        labelQuestItem: "Przedmiot:",
         labelQuestName: "Nazwa:",
         labelQuestDesc: "Opis:",
         labelAutocomplete: "Auto-ukończenie",
         labelCooldown: "Odnowienie (dni):",
         labelTimeLimit: "Limit (sek):",
+        labelQuestTargets: "Cele:",
+        labelQuestRewards: "Nagrody:",
+        labelQuestRequirements: "Wymagania:",
+        addQuestTarget: "+ Cel",
+        addQuestReward: "+ Nagroda",
+        addQuestRequirement: "+ Wymóg",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Wybierz blok lub utwórz nowy",
         tabField: "Pole",
         tabCode: "Kod",
@@ -567,15 +715,35 @@ const translations = {
         questTypeMove: "Przenieść",
         targets: "Cele",
         rewards: "Nagrody",
-        addTarget: "+ Dodaj cel",
-        addReward: "+ Dodaj nagrodę",
+        requirements: "Wymagania",
+        noTargets: "Brak celów",
+        noRewards: "Brak nagród",
+        noReqs: "Brak wymagań",
+        noDesc: "Brak opisu",
+        takeQuest: "Przyjmij zadanie",
+        whatToDo: "Co trzeba zrobić:",
+        reward: "Nagroda:",
+        previewQuestBtn: "Podgląd zadania",
+        questListTitle: "Zadania",
+        newQuest: "+ Nowe",
+        basic: "Ogólne",
+        time: "Czas",
+        amount: "Ilość:",
+        level: "Poziom:",
+        targetPrefab: "Przedmiot/Stworzenie:",
+        rewardType: "Typ nagrody:",
+        rewardPrefab: "Przedmiot:",
+        requirementType: "Typ wymagania:",
         rewardTypeItem: "Przedmiot",
+        rewardTypeCoins: "Monety",
         rewardTypeExp: "Doświadczenie",
-        rewardTypeEpicMMO: "Doświadczenie EpicMMO"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Zadania",
+        questPreviewTitle: "Podgląd zadania"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.3",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
+        appSubtitle: "Editor de diálogos e missões · by OdinSons",
         searchPlaceholder: "Pesquisar...",
         importFile: "Importar",
         export: "Exportar",
@@ -609,12 +777,20 @@ const translations = {
         propQuestTitle: "Missão",
         labelQuestId: "ID:",
         labelQuestType: "Tipo:",
-        labelQuestItem: "Item:",
         labelQuestName: "Nome:",
         labelQuestDesc: "Descrição:",
         labelAutocomplete: "Auto-conclusão",
         labelCooldown: "Recarga (dias):",
         labelTimeLimit: "Limite (seg):",
+        labelQuestTargets: "Objetivos:",
+        labelQuestRewards: "Recompensas:",
+        labelQuestRequirements: "Requisitos:",
+        addQuestTarget: "+ Objetivo",
+        addQuestReward: "+ Recompensa",
+        addQuestRequirement: "+ Requisito",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Selecione um bloco ou crie um novo",
         tabField: "Campo",
         tabCode: "Código",
@@ -643,15 +819,35 @@ const translations = {
         questTypeMove: "Mover",
         targets: "Objetivos",
         rewards: "Recompensas",
-        addTarget: "+ Adicionar objetivo",
-        addReward: "+ Adicionar recompensa",
+        requirements: "Requisitos",
+        noTargets: "Sem objetivos",
+        noRewards: "Sem recompensas",
+        noReqs: "Sem requisitos",
+        noDesc: "Sem descrição",
+        takeQuest: "Aceitar missão",
+        whatToDo: "O que fazer:",
+        reward: "Recompensa:",
+        previewQuestBtn: "Pré-visualização da missão",
+        questListTitle: "Missões",
+        newQuest: "+ Nova",
+        basic: "Geral",
+        time: "Tempo",
+        amount: "Quantidade:",
+        level: "Nível:",
+        targetPrefab: "Item/Criatura:",
+        rewardType: "Tipo de recompensa:",
+        rewardPrefab: "Item:",
+        requirementType: "Tipo de requisito:",
         rewardTypeItem: "Item",
+        rewardTypeCoins: "Moedas",
         rewardTypeExp: "Experiência",
-        rewardTypeEpicMMO: "Experiência EpicMMO"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Missões",
+        questPreviewTitle: "Pré-visualização da missão"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.3",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
+        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons",
         searchPlaceholder: "Sök...",
         importFile: "Importera",
         export: "Exportera",
@@ -685,12 +881,20 @@ const translations = {
         propQuestTitle: "Uppdrag",
         labelQuestId: "ID:",
         labelQuestType: "Typ:",
-        labelQuestItem: "Föremål:",
         labelQuestName: "Namn:",
         labelQuestDesc: "Beskrivning:",
         labelAutocomplete: "Autoslutförande",
         labelCooldown: "Nedkyldning (dagar):",
         labelTimeLimit: "Tidsgräns (sek):",
+        labelQuestTargets: "Mål:",
+        labelQuestRewards: "Belöningar:",
+        labelQuestRequirements: "Krav:",
+        addQuestTarget: "+ Mål",
+        addQuestReward: "+ Belöning",
+        addQuestRequirement: "+ Krav",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "Välj en block eller skapa en ny",
         tabField: "Fält",
         tabCode: "Kod",
@@ -719,15 +923,35 @@ const translations = {
         questTypeMove: "Flytta",
         targets: "Mål",
         rewards: "Belöningar",
-        addTarget: "+ Lägg till mål",
-        addReward: "+ Lägg till belöning",
+        requirements: "Krav",
+        noTargets: "Inga mål",
+        noRewards: "Inga belöningar",
+        noReqs: "Inga krav",
+        noDesc: "Ingen beskrivning",
+        takeQuest: "Acceptera uppdrag",
+        whatToDo: "Vad som ska göras:",
+        reward: "Belöning:",
+        previewQuestBtn: "Uppdragsförhandsgranskning",
+        questListTitle: "Uppdrag",
+        newQuest: "+ Nytt",
+        basic: "Allmänt",
+        time: "Tid",
+        amount: "Mängd:",
+        level: "Nivå:",
+        targetPrefab: "Föremål/Varelse:",
+        rewardType: "Belöningstyp:",
+        rewardPrefab: "Föremål:",
+        requirementType: "Kravtyp:",
         rewardTypeItem: "Föremål",
+        rewardTypeCoins: "Mynt",
         rewardTypeExp: "Erfarenhet",
-        rewardTypeEpicMMO: "EpicMMO Erfarenhet"
+        rewardTypeEpicMMO: "EpicMMO Exp",
+        questPreviewSidebar: "Uppdrag",
+        questPreviewTitle: "Uppdragsförhandsgranskning"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 v2.3",
-        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
+        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons",
         searchPlaceholder: "検索...",
         importFile: "インポート",
         export: "エクスポート",
@@ -761,12 +985,20 @@ const translations = {
         propQuestTitle: "クエスト",
         labelQuestId: "ID:",
         labelQuestType: "タイプ:",
-        labelQuestItem: "アイテム:",
         labelQuestName: "名前:",
         labelQuestDesc: "説明:",
         labelAutocomplete: "自動完了",
         labelCooldown: "クールダウン (日):",
         labelTimeLimit: "制限 (秒):",
+        labelQuestTargets: "目標:",
+        labelQuestRewards: "報酬:",
+        labelQuestRequirements: "要件:",
+        addQuestTarget: "+ 目標",
+        addQuestReward: "+ 報酬",
+        addQuestRequirement: "+ 要件",
+        removeTarget: "×",
+        removeReward: "×",
+        removeRequirement: "×",
         emptyStateText: "ブロックを選択するか新規作成",
         tabField: "フィールド",
         tabCode: "コード",
@@ -795,11 +1027,31 @@ const translations = {
         questTypeMove: "移動する",
         targets: "目標",
         rewards: "報酬",
-        addTarget: "+ 目標を追加",
-        addReward: "+ 報酬を追加",
+        requirements: "要件",
+        noTargets: "目標なし",
+        noRewards: "報酬なし",
+        noReqs: "要件なし",
+        noDesc: "説明なし",
+        takeQuest: "クエストを受ける",
+        whatToDo: "やること:",
+        reward: "報酬:",
+        previewQuestBtn: "クエストプレビュー",
+        questListTitle: "クエスト",
+        newQuest: "+ 新規",
+        basic: "基本",
+        time: "時間",
+        amount: "数量:",
+        level: "レベル:",
+        targetPrefab: "アイテム/クリーチャー:",
+        rewardType: "報酬タイプ:",
+        rewardPrefab: "アイテム:",
+        requirementType: "要件タイプ:",
         rewardTypeItem: "アイテム",
+        rewardTypeCoins: "コイン",
         rewardTypeExp: "経験値",
-        rewardTypeEpicMMO: "EpicMMO 経験値"
+        rewardTypeEpicMMO: "EpicMMO 経験値",
+        questPreviewSidebar: "クエスト",
+        questPreviewTitle: "クエストプレビュー"
     }
 };
 
@@ -835,7 +1087,8 @@ class DialogueEditor {
         this.loadItemDataForPreview();
         
         this.optionIconSelector = null;
-        this.questItemSelector = null;
+        this.questTargetSelectors = [];
+        this.questRewardSelectors = [];
         this.els = {};
         
         this.cacheElements();
@@ -863,9 +1116,12 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelIcon', 'optionIconSelector',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'propQuestTitle', 'labelQuestId', 'questId', 'labelQuestType', 'questType', 'labelQuestItem', 'questItemSelector', 'questItemGroup',
+            'propQuestTitle', 'labelQuestId', 'questId', 'labelQuestType', 'questType',
             'labelQuestName', 'questName', 'labelQuestDesc', 'questDescription', 'questAutocomplete',
             'labelAutocomplete', 'labelCooldown', 'questCooldown', 'labelTimeLimit', 'questTimeLimit',
+            'labelQuestTargets', 'questTargetsList', 'addQuestTargetBtn',
+            'labelQuestRewards', 'questRewardsList', 'addQuestRewardBtn',
+            'labelQuestRequirements', 'questRequirementsList', 'addQuestRequirementBtn',
             'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
@@ -918,6 +1174,10 @@ class DialogueEditor {
         this.els.questAutocomplete.addEventListener('change', (e) => this.updateQuestProperty('autocomplete', e.target.checked));
         this.els.questCooldown.addEventListener('input', (e) => this.updateQuestProperty('cooldown', e.target.value));
         this.els.questTimeLimit.addEventListener('input', (e) => this.updateQuestProperty('timeLimit', e.target.value));
+        
+        this.els.addQuestTargetBtn.addEventListener('click', () => this.addQuestTarget());
+        this.els.addQuestRewardBtn.addEventListener('click', () => this.addQuestReward());
+        this.els.addQuestRequirementBtn.addEventListener('click', () => this.addQuestRequirement());
         
         this.els.toggleQuestPalette.addEventListener('click', () => {
             this.els.questPalette.classList.toggle('collapsed');
@@ -1008,12 +1268,17 @@ class DialogueEditor {
         this.els.propQuestTitle.textContent = t.propQuestTitle;
         this.els.labelQuestId.textContent = t.labelQuestId;
         this.els.labelQuestType.textContent = t.labelQuestType;
-        this.els.labelQuestItem.textContent = t.labelQuestItem;
         this.els.labelQuestName.textContent = t.labelQuestName;
         this.els.labelQuestDesc.textContent = t.labelQuestDesc;
         this.els.labelAutocomplete.textContent = t.labelAutocomplete;
         this.els.labelCooldown.textContent = t.labelCooldown;
         this.els.labelTimeLimit.textContent = t.labelTimeLimit;
+        this.els.labelQuestTargets.textContent = t.labelQuestTargets;
+        this.els.labelQuestRewards.textContent = t.labelQuestRewards;
+        this.els.labelQuestRequirements.textContent = t.labelQuestRequirements;
+        this.els.addQuestTargetBtn.textContent = t.addQuestTarget;
+        this.els.addQuestRewardBtn.textContent = t.addQuestReward;
+        this.els.addQuestRequirementBtn.textContent = t.addQuestRequirement;
         this.els.emptyStateText.textContent = t.emptyStateText;
         this.els.tabFieldBtn.textContent = t.tabField;
         this.els.tabCodeBtn.textContent = t.tabCode;
@@ -1159,16 +1424,12 @@ class DialogueEditor {
             case 'delete-option': this.deleteOptionFromNode(data.optionId); break;
             case 'delete-condition': this.removeCondition(parseInt(data.index)); break;
             case 'delete-command': this.removeCommand(parseInt(data.index)); break;
+            case 'delete-quest-target': this.removeQuestTarget(parseInt(data.index)); break;
+            case 'delete-quest-reward': this.removeQuestReward(parseInt(data.index)); break;
+            case 'delete-quest-requirement': this.removeQuestRequirement(parseInt(data.index)); break;
             case 'show-quest-preview': this.showQuestPreview(); break;
             case 'preview-select-quest': this.previewSelectQuest(data.id); break;
             case 'open-quest-link': this.openQuestLink(data.questId); break;
-            case 'add-quest-target': this.addQuestTarget(); break;
-            case 'add-quest-reward': this.addQuestReward(); break;
-            case 'delete-quest-target': this.deleteQuestTarget(parseInt(data.index)); break;
-            case 'delete-quest-reward': this.deleteQuestReward(parseInt(data.index)); break;
-            case 'update-quest-target': this.updateQuestTarget(parseInt(data.index), data.value); break;
-            case 'update-quest-reward-type': this.updateQuestRewardType(parseInt(data.index), data.value); break;
-            case 'update-quest-reward-amount': this.updateQuestRewardAmount(parseInt(data.index), data.value); break;
         }
     }
     
@@ -1306,132 +1567,119 @@ class DialogueEditor {
     
     renderQuestPropertiesPanel(quest) {
         const t = translations[this.lang];
-        const panel = this.els.questProperties;
         
-        const targetsHtml = quest.targets.map((target, i) => {
-            const itemName = this.getItemSelectorName(target.prefab);
-            const iconUrl = this.getItemSelectorIcon(target.prefab);
-            return `
-                <div class="quest-property-item" style="display: flex; align-items: center; gap: 8px; margin: 4px 0; padding: 6px; background: var(--bg-primary); border-radius: 4px;">
-                    <img src="${iconUrl}" style="width: 24px; height: 24px; object-fit: contain;" alt="${target.prefab}">
-                    <span style="flex: 1; font-size: 12px;">${itemName} x${target.amount}</span>
-                    <button class="option-list-btn danger" data-action="delete-quest-target" data-index="${i}">×</button>
-                </div>
+        // Очищаем старые селекторы
+        this.questTargetSelectors.forEach(s => { if (s.container) s.container.innerHTML = ''; });
+        this.questRewardSelectors.forEach(s => { if (s.container) s.container.innerHTML = ''; });
+        this.questTargetSelectors = [];
+        this.questRewardSelectors = [];
+        
+        // Рендер целей
+        const targetsContainer = this.els.questTargetsList;
+        targetsContainer.innerHTML = '';
+        
+        quest.targets.forEach((target, i) => {
+            const row = document.createElement('div');
+            row.className = 'quest-property-row';
+            row.innerHTML = `
+                <div class="item-selector" style="flex: 1;"></div>
+                <input type="number" class="form-control quest-target-amount" value="${target.amount || '1'}" style="width: 70px;" data-index="${i}">
+                <button class="btn-small danger" data-action="delete-quest-target" data-index="${i}">×</button>
             `;
-        }).join('');
+            targetsContainer.appendChild(row);
+            
+            const selectorContainer = row.querySelector('.item-selector');
+            const selector = new ItemSelector(selectorContainer, target.prefab || '');
+            selector.setOnChange((newId) => {
+                quest.targets[i].prefab = newId;
+                this.renderQuestBlocks();
+                this.syncCodeView();
+            });
+            this.questTargetSelectors.push(selector);
+            
+            row.querySelector('.quest-target-amount').addEventListener('input', (e) => {
+                quest.targets[i].amount = e.target.value;
+                this.renderQuestBlocks();
+                this.syncCodeView();
+            });
+        });
         
-        const rewardsHtml = quest.rewards.map((reward, i) => {
-            const itemName = this.getItemSelectorName(reward.prefab);
-            const iconUrl = this.getItemSelectorIcon(reward.prefab);
-            const typeLabel = t[`rewardType${reward.type}`] || reward.type;
-            return `
-                <div class="quest-property-item" style="display: flex; align-items: center; gap: 8px; margin: 4px 0; padding: 6px; background: var(--bg-primary); border-radius: 4px;">
-                    <img src="${iconUrl}" style="width: 24px; height: 24px; object-fit: contain;" alt="${reward.prefab}">
-                    <span style="flex: 1; font-size: 12px;">${typeLabel}: ${itemName} x${reward.amount}</span>
-                    <button class="option-list-btn danger" data-action="delete-quest-reward" data-index="${i}">×</button>
-                </div>
-            `;
-        }).join('');
+        // Рендер наград
+        const rewardsContainer = this.els.questRewardsList;
+        rewardsContainer.innerHTML = '';
         
-        panel.innerHTML = `
-            <h3 id="propQuestTitle">${t.propQuestTitle}</h3>
-            <div class="form-group">
-                <label>${t.labelQuestId}</label>
-                <input type="text" id="questId" class="form-control" value="${this.escapeHtml(quest.id)}">
-            </div>
-            <div class="form-group">
-                <label>${t.labelQuestType}</label>
-                <select id="questType" class="form-control">
-                    <option value="Kill" ${quest.questType === 'Kill' ? 'selected' : ''}>${t.questTypeKill}</option>
-                    <option value="Collect" ${quest.questType === 'Collect' ? 'selected' : ''}>${t.questTypeCollect}</option>
-                    <option value="Harvest" ${quest.questType === 'Harvest' ? 'selected' : ''}>${t.questTypeHarvest}</option>
-                    <option value="Craft" ${quest.questType === 'Craft' ? 'selected' : ''}>${t.questTypeCraft}</option>
-                    <option value="Talk" ${quest.questType === 'Talk' ? 'selected' : ''}>${t.questTypeTalk}</option>
-                    <option value="Build" ${quest.questType === 'Build' ? 'selected' : ''}>${t.questTypeBuild}</option>
-                    <option value="Move" ${quest.questType === 'Move' ? 'selected' : ''}>${t.questTypeMove}</option>
+        quest.rewards.forEach((reward, i) => {
+            const row = document.createElement('div');
+            row.className = 'quest-property-row';
+            
+            const isItemReward = reward.type === 'Item';
+            
+            row.innerHTML = `
+                <select class="form-control quest-reward-type" style="width: 120px;" data-index="${i}">
+                    <option value="Item" ${reward.type === 'Item' ? 'selected' : ''}>${t.rewardTypeItem}</option>
+                    <option value="Coins" ${reward.type === 'Coins' ? 'selected' : ''}>${t.rewardTypeCoins}</option>
+                    <option value="Exp" ${reward.type === 'Exp' ? 'selected' : ''}>${t.rewardTypeExp}</option>
+                    <option value="EpicMMO_EXP" ${reward.type === 'EpicMMO_EXP' ? 'selected' : ''}>${t.rewardTypeEpicMMO}</option>
                 </select>
-            </div>
-            <div class="form-group">
-                <label>${t.labelQuestName}</label>
-                <input type="text" id="questName" class="form-control" value="${this.escapeHtml(quest.name)}">
-            </div>
-            <div class="form-group">
-                <label>${t.labelQuestDesc}</label>
-                <textarea id="questDescription" class="form-control" rows="3">${this.escapeHtml(quest.description)}</textarea>
-            </div>
-            <div class="form-group">
-                <label><input type="checkbox" id="questAutocomplete" ${quest.autocomplete ? 'checked' : ''}> ${t.labelAutocomplete}</label>
-            </div>
-            <div class="form-group">
-                <label>${t.labelCooldown}</label>
-                <input type="number" id="questCooldown" class="form-control" value="${quest.cooldown}">
-            </div>
-            <div class="form-group">
-                <label>${t.labelTimeLimit}</label>
-                <input type="number" id="questTimeLimit" class="form-control" value="${quest.timeLimit}">
-            </div>
-            <div class="quest-form-section">
-                <h4>${t.targets}</h4>
-                <div class="quest-targets">${targetsHtml}</div>
-                <button class="btn-small" data-action="add-quest-target" style="margin-top: 8px;">${t.addTarget}</button>
-            </div>
-            <div class="quest-form-section">
-                <h4>${t.rewards}</h4>
-                <div class="quest-rewards">${rewardsHtml}</div>
-                <button class="btn-small" data-action="add-quest-reward" style="margin-top: 8px;">${t.addReward}</button>
-            </div>
-        `;
-        
-        this.bindQuestPropertyEvents(quest);
-    }
-    
-    bindQuestPropertyEvents(quest) {
-        const panel = this.els.questProperties;
-        
-        panel.querySelector('#questId').addEventListener('change', (e) => {
-            quest.id = e.target.value.trim();
-            this.quests.set(quest.id, quest);
-            this.renderQuestBlocks();
-            this.syncCodeView();
+                <div class="item-selector" style="flex: 1; ${!isItemReward ? 'display: none;' : ''}"></div>
+                <input type="number" class="form-control quest-reward-amount" value="${reward.amount || '1'}" style="width: 70px;" data-index="${i}">
+                <button class="btn-small danger" data-action="delete-quest-reward" data-index="${i}">×</button>
+            `;
+            rewardsContainer.appendChild(row);
+            
+            const typeSelect = row.querySelector('.quest-reward-type');
+            const selectorContainer = row.querySelector('.item-selector');
+            const amountInput = row.querySelector('.quest-reward-amount');
+            
+            typeSelect.addEventListener('change', (e) => {
+                quest.rewards[i].type = e.target.value;
+                if (e.target.value === 'Item') {
+                    selectorContainer.style.display = 'block';
+                } else {
+                    selectorContainer.style.display = 'none';
+                    if (e.target.value === 'Coins') quest.rewards[i].prefab = 'Coins';
+                    else if (e.target.value === 'Exp') quest.rewards[i].prefab = 'Exp';
+                    else if (e.target.value === 'EpicMMO_EXP') quest.rewards[i].prefab = 'EpicMMO_EXP';
+                }
+                this.renderQuestBlocks();
+                this.syncCodeView();
+            });
+            
+            if (isItemReward) {
+                const selector = new ItemSelector(selectorContainer, reward.prefab || '');
+                selector.setOnChange((newId) => {
+                    quest.rewards[i].prefab = newId;
+                    this.renderQuestBlocks();
+                    this.syncCodeView();
+                });
+                this.questRewardSelectors.push(selector);
+            }
+            
+            amountInput.addEventListener('input', (e) => {
+                quest.rewards[i].amount = e.target.value;
+                this.renderQuestBlocks();
+                this.syncCodeView();
+            });
         });
         
-        panel.querySelector('#questType').addEventListener('change', (e) => {
-            quest.questType = e.target.value;
-            this.renderQuestBlocks();
-            this.syncCodeView();
-        });
+        // Рендер требований
+        const reqsContainer = this.els.questRequirementsList;
+        reqsContainer.innerHTML = '';
         
-        panel.querySelector('#questName').addEventListener('input', (e) => {
-            quest.name = e.target.value;
-            this.renderQuestBlocks();
-            this.syncCodeView();
-        });
-        
-        panel.querySelector('#questDescription').addEventListener('input', (e) => {
-            quest.description = e.target.value;
-            this.syncCodeView();
-        });
-        
-        panel.querySelector('#questAutocomplete').addEventListener('change', (e) => {
-            quest.autocomplete = e.target.checked;
-            this.syncCodeView();
-        });
-        
-        panel.querySelector('#questCooldown').addEventListener('input', (e) => {
-            quest.cooldown = e.target.value;
-            this.syncCodeView();
-        });
-        
-        panel.querySelector('#questTimeLimit').addEventListener('input', (e) => {
-            quest.timeLimit = e.target.value;
-            this.syncCodeView();
+        quest.requirements.forEach((req, i) => {
+            const row = document.createElement('div');
+            row.className = 'quest-property-row';
+            row.innerHTML = `
+                <span class="quest-req-text" style="flex: 1; font-family: monospace; font-size: 12px; color: var(--text-secondary);">${req.type}: ${req.params.join(', ')}</span>
+                <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
+            `;
+            reqsContainer.appendChild(row);
         });
     }
     
     addQuestTarget() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        
         quest.targets.push({ prefab: '', amount: '1', level: '' });
         this.renderQuestPropertiesPanel(quest);
         this.renderQuestBlocks();
@@ -1441,73 +1689,44 @@ class DialogueEditor {
     addQuestReward() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        
         quest.rewards.push({ type: 'Item', prefab: '', amount: '1' });
         this.renderQuestPropertiesPanel(quest);
         this.renderQuestBlocks();
         this.syncCodeView();
     }
     
-    deleteQuestTarget(index) {
+    addQuestRequirement() {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        
+        quest.requirements.push({ type: 'OtherQuest', params: [''] });
+        this.renderQuestPropertiesPanel(quest);
+        this.syncCodeView();
+    }
+    
+    removeQuestTarget(index) {
+        const quest = this.quests.get(this.selectedQuest);
+        if (!quest) return;
         quest.targets.splice(index, 1);
         this.renderQuestPropertiesPanel(quest);
         this.renderQuestBlocks();
         this.syncCodeView();
     }
     
-    deleteQuestReward(index) {
+    removeQuestReward(index) {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        
         quest.rewards.splice(index, 1);
         this.renderQuestPropertiesPanel(quest);
         this.renderQuestBlocks();
         this.syncCodeView();
     }
     
-    updateQuestTarget(index, value) {
+    removeQuestRequirement(index) {
         const quest = this.quests.get(this.selectedQuest);
         if (!quest) return;
-        
-        quest.targets[index].prefab = value;
+        quest.requirements.splice(index, 1);
         this.renderQuestPropertiesPanel(quest);
-        this.renderQuestBlocks();
         this.syncCodeView();
-    }
-    
-    updateQuestRewardType(index, value) {
-        const quest = this.quests.get(this.selectedQuest);
-        if (!quest) return;
-        
-        quest.rewards[index].type = value;
-        this.renderQuestPropertiesPanel(quest);
-        this.renderQuestBlocks();
-        this.syncCodeView();
-    }
-    
-    updateQuestRewardAmount(index, value) {
-        const quest = this.quests.get(this.selectedQuest);
-        if (!quest) return;
-        
-        quest.rewards[index].amount = value;
-        this.renderQuestPropertiesPanel(quest);
-        this.renderQuestBlocks();
-        this.syncCodeView();
-    }
-    
-    getItemSelectorName(id) {
-        if (!id) return '';
-        const item = this.itemSelectorData.find(i => i.id === id);
-        return item ? (item.nameRu || item.name) : id;
-    }
-    
-    getItemSelectorIcon(id) {
-        if (!id) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-        const item = this.itemSelectorData.find(i => i.id === id);
-        return item ? `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}` : 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
     }
     
     selectOption(optionId) {
@@ -1619,6 +1838,11 @@ class DialogueEditor {
         if (!quest) return;
         
         quest[property] = value;
+        
+        if (property === 'questType') {
+            this.renderQuestPropertiesPanel(quest);
+        }
+        
         this.renderQuestBlocks();
         this.syncCodeView();
     }
@@ -1744,6 +1968,12 @@ class DialogueEditor {
         return div;
     }
     
+    getItemName(prefab) {
+        const item = this.itemSelectorData.find(i => i.id === prefab);
+        if (item) return item.nameRu || item.name;
+        return prefab;
+    }
+    
     createQuestBlockElement(quest) {
         const div = document.createElement('div');
         div.className = `quest-block ${quest.id === this.selectedQuest ? 'selected' : ''}`;
@@ -1756,15 +1986,23 @@ class DialogueEditor {
         const t = translations[this.lang];
         const typeTranslation = t[`questType${quest.questType}`] || quest.questType;
         
-        const targetsText = quest.targets.map(target => {
-            const name = this.getItemSelectorName(target.prefab);
-            return `${name} x${target.amount}`;
+        const targetsText = quest.targets.map(ti => {
+            const name = this.getItemName(ti.prefab);
+            return `${name} х${ti.amount}`;
         }).join(', ');
         
-        const rewardsText = quest.rewards.map(reward => {
-            const name = this.getItemSelectorName(reward.prefab);
-            const typeLabel = t[`rewardType${reward.type}`] || reward.type;
-            return `${name} x${reward.amount}`;
+        const rewardsText = quest.rewards.map(r => {
+            if (r.type === 'Item') {
+                const name = this.getItemName(r.prefab);
+                return `${name} х${r.amount}`;
+            } else if (r.type === 'Coins') {
+                return `${t.rewardTypeCoins} х${r.amount}`;
+            } else if (r.type === 'Exp') {
+                return `${t.rewardTypeExp} х${r.amount}`;
+            } else if (r.type === 'EpicMMO_EXP') {
+                return `${t.rewardTypeEpicMMO} х${r.amount}`;
+            }
+            return `${r.type}: ${r.prefab} х${r.amount}`;
         }).join(', ');
         
         div.innerHTML = `
