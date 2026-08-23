@@ -1,5 +1,4 @@
-// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.2
-// Этап 1: Умный парсер + единая структура данных
+// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.3
 
 class ItemSelector {
     constructor(container, initialValue = '') {
@@ -114,7 +113,7 @@ class ItemSelector {
 
 const translations = {
     ru: {
-        appTitle: "Кузница Скальда v2.2",
+        appTitle: "Кузница Скальда v2.3",
         appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
         searchPlaceholder: "Поиск...",
         importFile: "Импортировать",
@@ -147,6 +146,11 @@ const translations = {
         propCmdTitle: "Команды",
         addCommand: "+ Команда",
         propQuestTitle: "Квест",
+        labelQuestId: "ID:",
+        labelQuestType: "Тип:",
+        labelQuestItem: "Предмет:",
+        labelQuestName: "Название:",
+        labelQuestDesc: "Описание:",
         labelAutocomplete: "Автозавершение",
         labelCooldown: "Кулдаун (дни):",
         labelTimeLimit: "Лимит (сек):",
@@ -168,10 +172,17 @@ const translations = {
         statQuestsLabel: "Найдено квестов:",
         statUnknownLabel: "Не удалось распознать:",
         importStatsClose: "OK",
-        back: "Назад"
+        back: "Назад",
+        questTypeKill: "Убить",
+        questTypeCollect: "Собрать",
+        questTypeHarvest: "Собрать урожай",
+        questTypeCraft: "Изготовить",
+        questTypeTalk: "Разговор",
+        questTypeBuild: "Построить",
+        questTypeMove: "Переместить"
     },
     en: {
-        appTitle: "Skald's Forge v2.2",
+        appTitle: "Skald's Forge v2.3",
         appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
         searchPlaceholder: "Search...",
         importFile: "Import",
@@ -204,6 +215,11 @@ const translations = {
         propCmdTitle: "Commands",
         addCommand: "+ Command",
         propQuestTitle: "Quest",
+        labelQuestId: "ID:",
+        labelQuestType: "Type:",
+        labelQuestItem: "Item:",
+        labelQuestName: "Name:",
+        labelQuestDesc: "Description:",
         labelAutocomplete: "Autocomplete",
         labelCooldown: "Cooldown (days):",
         labelTimeLimit: "Time Limit (sec):",
@@ -225,10 +241,17 @@ const translations = {
         statQuestsLabel: "Quests found:",
         statUnknownLabel: "Unrecognized:",
         importStatsClose: "OK",
-        back: "Back"
+        back: "Back",
+        questTypeKill: "Kill",
+        questTypeCollect: "Collect",
+        questTypeHarvest: "Harvest",
+        questTypeCraft: "Craft",
+        questTypeTalk: "Talk",
+        questTypeBuild: "Build",
+        questTypeMove: "Move"
     },
     de: {
-        appTitle: "Schmiede des Skalden v2.2",
+        appTitle: "Schmiede des Skalden v2.3",
         appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
         searchPlaceholder: "Suche...",
         importFile: "Importieren",
@@ -261,6 +284,11 @@ const translations = {
         propCmdTitle: "Befehle",
         addCommand: "+ Befehl",
         propQuestTitle: "Quest",
+        labelQuestId: "ID:",
+        labelQuestType: "Typ:",
+        labelQuestItem: "Gegenstand:",
+        labelQuestName: "Name:",
+        labelQuestDesc: "Beschreibung:",
         labelAutocomplete: "Auto-Abschluss",
         labelCooldown: "Abklingzeit (Tage):",
         labelTimeLimit: "Zeitlimit (Sek):",
@@ -282,10 +310,17 @@ const translations = {
         statQuestsLabel: "Quests gefunden:",
         statUnknownLabel: "Nicht erkannt:",
         importStatsClose: "OK",
-        back: "Zurück"
+        back: "Zurück",
+        questTypeKill: "Töten",
+        questTypeCollect: "Sammeln",
+        questTypeHarvest: "Ernten",
+        questTypeCraft: "Herstellen",
+        questTypeTalk: "Sprechen",
+        questTypeBuild: "Bauen",
+        questTypeMove: "Bewegen"
     },
     es: {
-        appTitle: "Forja del Escaldo v2.2",
+        appTitle: "Forja del Escaldo v2.3",
         appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
         searchPlaceholder: "Buscar...",
         importFile: "Importar",
@@ -318,6 +353,11 @@ const translations = {
         propCmdTitle: "Comandos",
         addCommand: "+ Comando",
         propQuestTitle: "Misión",
+        labelQuestId: "ID:",
+        labelQuestType: "Tipo:",
+        labelQuestItem: "Objeto:",
+        labelQuestName: "Nombre:",
+        labelQuestDesc: "Descripción:",
         labelAutocomplete: "Autocompletar",
         labelCooldown: "Enfriamiento (días):",
         labelTimeLimit: "Límite (seg):",
@@ -339,10 +379,17 @@ const translations = {
         statQuestsLabel: "Misiones encontradas:",
         statUnknownLabel: "No reconocidos:",
         importStatsClose: "OK",
-        back: "Atrás"
+        back: "Atrás",
+        questTypeKill: "Matar",
+        questTypeCollect: "Recoger",
+        questTypeHarvest: "Cosechar",
+        questTypeCraft: "Fabricar",
+        questTypeTalk: "Hablar",
+        questTypeBuild: "Construir",
+        questTypeMove: "Mover"
     },
     fr: {
-        appTitle: "Forge du Skalde v2.2",
+        appTitle: "Forge du Skalde v2.3",
         appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
         searchPlaceholder: "Rechercher...",
         importFile: "Importer",
@@ -375,6 +422,11 @@ const translations = {
         propCmdTitle: "Commandes",
         addCommand: "+ Commande",
         propQuestTitle: "Quête",
+        labelQuestId: "ID :",
+        labelQuestType: "Type :",
+        labelQuestItem: "Objet :",
+        labelQuestName: "Nom :",
+        labelQuestDesc: "Description :",
         labelAutocomplete: "Auto-complétion",
         labelCooldown: "Recharge (jours) :",
         labelTimeLimit: "Limite (sec) :",
@@ -396,10 +448,17 @@ const translations = {
         statQuestsLabel: "Quêtes trouvées :",
         statUnknownLabel: "Non reconnus :",
         importStatsClose: "OK",
-        back: "Retour"
+        back: "Retour",
+        questTypeKill: "Tuer",
+        questTypeCollect: "Collecter",
+        questTypeHarvest: "Récolter",
+        questTypeCraft: "Fabriquer",
+        questTypeTalk: "Parler",
+        questTypeBuild: "Construire",
+        questTypeMove: "Déplacer"
     },
     pl: {
-        appTitle: "Kuźnia Skalda v2.2",
+        appTitle: "Kuźnia Skalda v2.3",
         appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
         searchPlaceholder: "Szukaj...",
         importFile: "Importuj",
@@ -432,6 +491,11 @@ const translations = {
         propCmdTitle: "Polecenia",
         addCommand: "+ Polecenie",
         propQuestTitle: "Zadanie",
+        labelQuestId: "ID:",
+        labelQuestType: "Typ:",
+        labelQuestItem: "Przedmiot:",
+        labelQuestName: "Nazwa:",
+        labelQuestDesc: "Opis:",
         labelAutocomplete: "Auto-ukończenie",
         labelCooldown: "Odnowienie (dni):",
         labelTimeLimit: "Limit (sek):",
@@ -453,10 +517,17 @@ const translations = {
         statQuestsLabel: "Znalezione zadania:",
         statUnknownLabel: "Nierozpoznane:",
         importStatsClose: "OK",
-        back: "Wstecz"
+        back: "Wstecz",
+        questTypeKill: "Zabić",
+        questTypeCollect: "Zebrać",
+        questTypeHarvest: "Zebrać plony",
+        questTypeCraft: "Wytworzyć",
+        questTypeTalk: "Porozmawiać",
+        questTypeBuild: "Zbudować",
+        questTypeMove: "Przenieść"
     },
     pt: {
-        appTitle: "Forja do Escaldo v2.2",
+        appTitle: "Forja do Escaldo v2.3",
         appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
         searchPlaceholder: "Pesquisar...",
         importFile: "Importar",
@@ -489,6 +560,11 @@ const translations = {
         propCmdTitle: "Comandos",
         addCommand: "+ Comando",
         propQuestTitle: "Missão",
+        labelQuestId: "ID:",
+        labelQuestType: "Tipo:",
+        labelQuestItem: "Item:",
+        labelQuestName: "Nome:",
+        labelQuestDesc: "Descrição:",
         labelAutocomplete: "Auto-conclusão",
         labelCooldown: "Recarga (dias):",
         labelTimeLimit: "Limite (seg):",
@@ -510,10 +586,17 @@ const translations = {
         statQuestsLabel: "Missões encontradas:",
         statUnknownLabel: "Não reconhecidos:",
         importStatsClose: "OK",
-        back: "Voltar"
+        back: "Voltar",
+        questTypeKill: "Matar",
+        questTypeCollect: "Coletar",
+        questTypeHarvest: "Colher",
+        questTypeCraft: "Fabricar",
+        questTypeTalk: "Conversar",
+        questTypeBuild: "Construir",
+        questTypeMove: "Mover"
     },
     sv: {
-        appTitle: "Skaldens Smedja v2.2",
+        appTitle: "Skaldens Smedja v2.3",
         appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
         searchPlaceholder: "Sök...",
         importFile: "Importera",
@@ -546,6 +629,11 @@ const translations = {
         propCmdTitle: "Kommandon",
         addCommand: "+ Kommando",
         propQuestTitle: "Uppdrag",
+        labelQuestId: "ID:",
+        labelQuestType: "Typ:",
+        labelQuestItem: "Föremål:",
+        labelQuestName: "Namn:",
+        labelQuestDesc: "Beskrivning:",
         labelAutocomplete: "Autoslutförande",
         labelCooldown: "Nedkyldning (dagar):",
         labelTimeLimit: "Tidsgräns (sek):",
@@ -567,10 +655,17 @@ const translations = {
         statQuestsLabel: "Uppdrag hittade:",
         statUnknownLabel: "Okända:",
         importStatsClose: "OK",
-        back: "Tillbaka"
+        back: "Tillbaka",
+        questTypeKill: "Döda",
+        questTypeCollect: "Samla",
+        questTypeHarvest: "Skörda",
+        questTypeCraft: "Tillverka",
+        questTypeTalk: "Prata",
+        questTypeBuild: "Bygga",
+        questTypeMove: "Flytta"
     },
     ja: {
-        appTitle: "スカルドの鍛冶屋 v2.2",
+        appTitle: "スカルドの鍛冶屋 v2.3",
         appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
         searchPlaceholder: "検索...",
         importFile: "インポート",
@@ -603,6 +698,11 @@ const translations = {
         propCmdTitle: "コマンド",
         addCommand: "+ コマンド",
         propQuestTitle: "クエスト",
+        labelQuestId: "ID:",
+        labelQuestType: "タイプ:",
+        labelQuestItem: "アイテム:",
+        labelQuestName: "名前:",
+        labelQuestDesc: "説明:",
         labelAutocomplete: "自動完了",
         labelCooldown: "クールダウン (日):",
         labelTimeLimit: "制限 (秒):",
@@ -624,19 +724,25 @@ const translations = {
         statQuestsLabel: "見つかったクエスト:",
         statUnknownLabel: "認識されなかった:",
         importStatsClose: "OK",
-        back: "戻る"
+        back: "戻る",
+        questTypeKill: "倒す",
+        questTypeCollect: "集める",
+        questTypeHarvest: "収穫する",
+        questTypeCraft: "作成する",
+        questTypeTalk: "話す",
+        questTypeBuild: "建てる",
+        questTypeMove: "移動する"
     }
 };
 
 class DialogueEditor {
     constructor() {
-        // Единая структура данных
-        this.blocks = []; // массив блоков в порядке файла
-        this.nodes = new Map(); // диалоги для быстрого доступа
-        this.quests = new Map(); // квесты для быстрого доступа
-        this.fileContents = {}; // сырой контент файлов с комментариями
+        this.blocks = [];
+        this.nodes = new Map();
+        this.quests = new Map();
+        this.fileContents = {};
         
-        this.selectedBlock = null; // выбранный блок (диалог или квест)
+        this.selectedBlock = null;
         this.selectedNode = null;
         this.selectedOption = null;
         this.selectedQuest = null;
@@ -661,6 +767,7 @@ class DialogueEditor {
         this.loadItemDataForPreview();
         
         this.optionIconSelector = null;
+        this.questItemSelector = null;
         this.els = {};
         
         this.cacheElements();
@@ -688,7 +795,8 @@ class DialogueEditor {
             'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
             'labelIcon', 'optionIconSelector',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'propQuestTitle', 'questId', 'questType', 'questName', 'questDescription', 'questAutocomplete',
+            'propQuestTitle', 'labelQuestId', 'questId', 'labelQuestType', 'questType', 'labelQuestItem', 'questItemSelector', 'questItemGroup',
+            'labelQuestName', 'questName', 'labelQuestDesc', 'questDescription', 'questAutocomplete',
             'labelAutocomplete', 'labelCooldown', 'questCooldown', 'labelTimeLimit', 'questTimeLimit',
             'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
@@ -735,9 +843,8 @@ class DialogueEditor {
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
         this.els.saveCommandBtn.addEventListener('click', () => this.saveCommand());
         
-        // Quest properties
         this.els.questId.addEventListener('change', (e) => this.updateQuestProperty('id', e.target.value));
-        this.els.questType.addEventListener('change', (e) => this.updateQuestProperty('type', e.target.value));
+        this.els.questType.addEventListener('change', (e) => this.updateQuestProperty('questType', e.target.value));
         this.els.questName.addEventListener('input', (e) => this.updateQuestProperty('name', e.target.value));
         this.els.questDescription.addEventListener('input', (e) => this.updateQuestProperty('description', e.target.value));
         this.els.questAutocomplete.addEventListener('change', (e) => this.updateQuestProperty('autocomplete', e.target.checked));
@@ -831,6 +938,11 @@ class DialogueEditor {
         this.els.propCmdTitle.textContent = t.propCmdTitle;
         this.els.addCommandBtn.textContent = t.addCommand;
         this.els.propQuestTitle.textContent = t.propQuestTitle;
+        this.els.labelQuestId.textContent = t.labelQuestId;
+        this.els.labelQuestType.textContent = t.labelQuestType;
+        this.els.labelQuestItem.textContent = t.labelQuestItem;
+        this.els.labelQuestName.textContent = t.labelQuestName;
+        this.els.labelQuestDesc.textContent = t.labelQuestDesc;
         this.els.labelAutocomplete.textContent = t.labelAutocomplete;
         this.els.labelCooldown.textContent = t.labelCooldown;
         this.els.labelTimeLimit.textContent = t.labelTimeLimit;
@@ -899,7 +1011,6 @@ class DialogueEditor {
     }
     
     showCodeFile(filename) {
-        // Показываем сырой контент, если есть, иначе генерируем
         if (this.fileContents[filename]) {
             this.els.codeEditor.value = this.fileContents[filename];
         } else if (this.currentCfgFile) {
@@ -915,7 +1026,6 @@ class DialogueEditor {
         this.fileContents[this.currentCfgFile] = content;
         this.cfgFiles[this.currentCfgFile] = content;
         
-        // Умный парсинг
         const result = this.smartParse(content);
         this.showImportStats(result);
         this.render();
@@ -1003,8 +1113,6 @@ class DialogueEditor {
     closeAllModals() {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
-    
-    // === БЛОКИ (единая структура) ===
     
     addNode(id = null, x = null, y = null) {
         const nodeId = id || `Node_${Date.now()}`;
@@ -1115,6 +1223,39 @@ class DialogueEditor {
                 this.els.questAutocomplete.checked = quest.autocomplete || false;
                 this.els.questCooldown.value = quest.cooldown || '';
                 this.els.questTimeLimit.value = quest.timeLimit || '';
+                
+                this.updateQuestItemSelector(quest);
+            }
+        }
+    }
+    
+    updateQuestItemSelector(quest) {
+        const itemTypes = ['Collect', 'Harvest', 'Craft'];
+        const showItemSelector = itemTypes.includes(quest.questType);
+        
+        this.els.questItemGroup.style.display = showItemSelector ? 'block' : 'none';
+        
+        if (showItemSelector) {
+            if (this.questItemSelector) {
+                this.questItemSelector.container.innerHTML = '';
+            }
+            
+            const targetPrefab = quest.targets && quest.targets.length > 0 ? quest.targets[0].prefab : '';
+            this.questItemSelector = new ItemSelector(this.els.questItemSelector, targetPrefab);
+            
+            this.questItemSelector.input.addEventListener('change', (e) => {
+                if (!quest.targets) quest.targets = [];
+                if (quest.targets.length === 0) {
+                    quest.targets.push({ prefab: '', amount: '1', level: '' });
+                }
+                quest.targets[0].prefab = e.target.value.trim();
+                this.renderQuestBlocks();
+                this.syncCodeView();
+            });
+        } else {
+            if (this.questItemSelector) {
+                this.questItemSelector.container.innerHTML = '';
+                this.questItemSelector = null;
             }
         }
     }
@@ -1228,6 +1369,11 @@ class DialogueEditor {
         if (!quest) return;
         
         quest[property] = value;
+        
+        if (property === 'questType') {
+            this.updateQuestItemSelector(quest);
+        }
+        
         this.renderQuestBlocks();
         this.syncCodeView();
     }
@@ -1362,18 +1508,25 @@ class DialogueEditor {
         div.style.left = `${quest.x}px`;
         div.style.top = `${quest.y}px`;
         
+        const t = translations[this.lang];
+        const typeTranslation = t[`questType${quest.questType}`] || quest.questType;
+        
         const summary = [];
         if (quest.targets && quest.targets.length > 0) {
-            summary.push(`Цели: ${quest.targets.map(t => `${t.prefab} x${t.amount}`).join(', ')}`);
+            summary.push(`${t.targets}: ${quest.targets.map(ti => {
+                const itemData = this.itemSelectorData.find(i => i.id === ti.prefab);
+                const name = itemData ? (itemData.nameRu || itemData.name) : ti.prefab;
+                return `${name} x${ti.amount}`;
+            }).join(', ')}`);
         }
         if (quest.rewards && quest.rewards.length > 0) {
-            summary.push(`Награды: ${quest.rewards.map(r => `${r.type}: ${r.prefab} x${r.amount}`).join(', ')}`);
+            summary.push(`${t.rewards}: ${quest.rewards.map(r => `${r.type}: ${r.prefab} x${r.amount}`).join(', ')}`);
         }
         
         div.innerHTML = `
             <div class="node-header">
-                <span class="node-header-text">📜 ${this.escapeHtml(quest.id)}</span>
-                <span class="quest-type-badge">${quest.questType || 'Kill'}</span>
+                <span class="node-header-text">${this.escapeHtml(quest.id)}</span>
+                <span class="quest-type-badge">${typeTranslation}</span>
             </div>
             <div class="quest-summary">
                 <div class="quest-summary-item"><strong>${this.escapeHtml(quest.name || '')}</strong></div>
@@ -1546,7 +1699,6 @@ class DialogueEditor {
             if (target.type === 'node') {
                 option.transition = target.id;
             } else if (target.type === 'quest') {
-                // Диалог → Квест: добавляем команду OpenUI
                 const openUiCommand = { type: 'OpenUI', params: ['Quests', target.id] };
                 option.commands = option.commands.filter(c => !(c.type === 'OpenUI' && c.params[1] === target.id));
                 option.commands.push(openUiCommand);
@@ -1556,7 +1708,6 @@ class DialogueEditor {
                 option.commands = option.commands.filter(c => c.type !== 'OpenUI');
             }
         } else if (this.drawingFromOption.type === 'quest') {
-            // Квест → Квест: добавляем OtherQuest в целевой квест
             if (target.type === 'quest' && target.id !== this.drawingFromOption.questId) {
                 const targetQuest = this.quests.get(target.id);
                 if (targetQuest) {
@@ -1614,9 +1765,8 @@ class DialogueEditor {
     
     renderConnections() {
         const svg = this.els.connectionLayer;
-        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
+        svg.querySelectorAll('path, .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
         
-        // Рендерим связи для диалогов
         this.nodes.forEach(node => {
             const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
             if (!nodeEl) return;
@@ -1666,7 +1816,6 @@ class DialogueEditor {
                     svg.appendChild(dot);
                     
                 } else {
-                    // Проверяем, есть ли команда OpenUI, Quests, ID
                     const openUiCommand = opt.commands.find(c => c.type === 'OpenUI' && c.params[0] === 'Quests');
                     if (openUiCommand && this.quests.has(openUiCommand.params[1])) {
                         const questId = openUiCommand.params[1];
@@ -1698,7 +1847,6 @@ class DialogueEditor {
                         dot.setAttribute('stroke-width', '1');
                         svg.appendChild(dot);
                     } else {
-                        // Конец
                         const endX = sx + 120;
                         const endY = sy;
                         const pathD = this.getCurvePath(sx, sy, endX, endY);
@@ -1729,7 +1877,6 @@ class DialogueEditor {
             });
         });
         
-        // Рендерим связи между квестами (OtherQuest)
         this.quests.forEach(quest => {
             const otherQuestReq = quest.requirements.find(r => r.type === 'OtherQuest');
             if (otherQuestReq && this.quests.has(otherQuestReq.params[0])) {
@@ -2065,15 +2212,12 @@ class DialogueEditor {
     
     showQuestPreview() {
         if (!this.selectedQuest) { alert('Select a quest'); return; }
-        // TODO: реализовать предпросмотр квеста
     }
     
     previewSelectQuest(id) {
         this.selectedQuest = id;
         this.renderQuestPalette();
     }
-    
-    // === УМНЫЙ ПАРСЕР ===
     
     handleFileImport(e) {
         const file = e.target.files[0];
@@ -2100,7 +2244,6 @@ class DialogueEditor {
     smartParse(content) {
         const stats = { dialogues: 0, quests: 0, unknown: 0, unknownBlocks: [] };
         
-        // Разбиваем на блоки по [ID]
         const blocks = content.split(/\n(?=\[)/);
         
         blocks.forEach(block => {
@@ -2116,16 +2259,13 @@ class DialogueEditor {
             
             if (!cleanId) return;
             
-            // Определяем тип блока
             const secondLine = lines.length > 1 ? lines[1] : '';
             const questTypes = ['Kill', 'Collect', 'Harvest', 'Craft', 'Talk', 'Build', 'Move'];
             
             if (questTypes.includes(secondLine)) {
-                // Это квест
                 stats.quests++;
                 this.parseQuestBlock(cleanId, lines, autocomplete);
             } else if (secondLine && !secondLine.startsWith('Text:')) {
-                // Это диалог
                 stats.dialogues++;
                 this.parseDialogueBlock(cleanId, lines);
             } else {
@@ -2150,12 +2290,10 @@ class DialogueEditor {
             collapsed: false
         };
         
-        // Вторая строка - текст NPC
         if (lines.length > 1 && !lines[1].startsWith('Text:')) {
             node.text = lines[1];
         }
         
-        // Остальные строки - опции
         for (let i = 2; i < lines.length; i++) {
             if (lines[i].startsWith('Text:')) {
                 this.parseOptionLine(node, lines[i]);
@@ -2185,7 +2323,6 @@ class DialogueEditor {
             y: 100 + Math.floor(this.quests.size / 5) * 300
         };
         
-        // Парсим многострочное описание
         let descStart = 3;
         let descEnd = descStart;
         while (descEnd < lines.length && !this.isQuestDataLine(lines[descEnd])) {
@@ -2193,7 +2330,6 @@ class DialogueEditor {
         }
         quest.description = lines.slice(descStart, descEnd).join('\n');
         
-        // Парсим остальные данные
         let i = descEnd;
         while (i < lines.length) {
             const line = lines[i];
@@ -2232,12 +2368,10 @@ class DialogueEditor {
     }
     
     isQuestTargetLine(line) {
-        // Цели: Prefab, Amount, Level
         return /[^,]+,\s*\d+/.test(line) && !line.includes(':');
     }
     
     isQuestRewardLine(line) {
-        // Награды: Type:Prefab, Amount
         return /^(Item|Skill|Pet|Skill_EXP|EpicMMO_EXP|Battlepass_EXP|MH_EXP|Cozyheim_EXP|SetCustomValue|AddCustomValue):/.test(line);
     }
     
@@ -2295,7 +2429,6 @@ class DialogueEditor {
     generateCfgFromData() {
         let cfg = '';
         
-        // Сначала диалоги
         this.blocks.filter(b => b.type === 'dialogue').forEach(node => {
             cfg += `[${node.id}]\n${node.text}\n`;
             node.options.forEach(opt => {
@@ -2309,7 +2442,6 @@ class DialogueEditor {
             cfg += '\n';
         });
         
-        // Потом квесты
         this.blocks.filter(b => b.type === 'quest').forEach(quest => {
             const questId = quest.autocomplete ? `${quest.id}=autocomplete` : quest.id;
             cfg += `[${questId}]\n`;
@@ -2439,7 +2571,6 @@ class DialogueEditor {
         if (this.currentCfgFile) {
             const generated = this.generateCfgFromData();
             this.cfgFiles[this.currentCfgFile] = generated;
-            // Обновляем отображение только если мы на вкладке "Код"
             if (document.getElementById('tabCode').classList.contains('active')) {
                 this.els.codeEditor.value = generated;
             }
