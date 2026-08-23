@@ -1,4 +1,5 @@
 // КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.2
+// Этап 1: Умный парсер + единая структура данных
 
 class ItemSelector {
     constructor(container, initialValue = '') {
@@ -116,7 +117,7 @@ const translations = {
         appTitle: "Кузница Скальда v2.2",
         appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
         searchPlaceholder: "Поиск...",
-        importBtn: "Импортировать",
+        importFile: "Импортировать",
         export: "Экспорт",
         validate: "Проверить",
         addNode: "+ Диалог",
@@ -128,6 +129,8 @@ const translations = {
         legendTransition: "Переход",
         legendQuestLink: "Связь с квестом",
         legendOtherQuest: "Зависимость квеста",
+        legendCondition: "Условие",
+        legendCommand: "Команда",
         legendEnd: "Конец",
         paletteTitle: "Квесты",
         propNodeTitle: "Диалог NPC",
@@ -137,6 +140,7 @@ const translations = {
         addNodeOption: "+ Добавить опцию",
         propOptionTitle: "Опция игрока",
         labelOptionText: "Текст:",
+        labelTransition: "Переход к (ID):",
         labelIcon: "Иконка:",
         propCondTitle: "Условия",
         addCondition: "+ Условие",
@@ -144,40 +148,33 @@ const translations = {
         addCommand: "+ Команда",
         propQuestTitle: "Квест",
         labelAutocomplete: "Автозавершение",
-        labelQuestType: "Тип:",
-        labelQuestName: "Название:",
-        labelQuestDesc: "Описание:",
-        labelTargets: "Цели",
-        labelRewards: "Награды",
-        labelRequirements: "Требования",
         labelCooldown: "Кулдаун (дни):",
-        emptyStateText: "Выберите узел или создайте новый",
+        labelTimeLimit: "Лимит (сек):",
+        emptyStateText: "Выберите блок или создайте новый",
         tabField: "Поле",
         tabCode: "Код",
         applyCode: "Применить изменения",
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
+        newFile: "+ Новый файл",
         codeHint: "Изменения применяются по кнопке 'Применить'",
         previewTitle: "Предпросмотр",
+        questPreviewTitle: "Предпросмотр квеста",
         condModalTitle: "Добавить условие",
         cmdModalTitle: "Добавить команду",
-        targetModalTitle: "Добавить цель",
-        rewardModalTitle: "Добавить награду",
-        reqModalTitle: "Добавить требование",
         save: "Сохранить",
-        noQuestSelected: "Выберите квест для редактирования",
-        importStatsTitle: "Результат импорта",
+        importStatsTitle: "Результаты импорта",
         statDialoguesLabel: "Найдено диалогов:",
         statQuestsLabel: "Найдено квестов:",
         statUnknownLabel: "Не удалось распознать:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Назад"
     },
     en: {
         appTitle: "Skald's Forge v2.2",
         appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
         searchPlaceholder: "Search...",
-        importBtn: "Import",
+        importFile: "Import",
         export: "Export",
         validate: "Validate",
         addNode: "+ Dialogue",
@@ -187,8 +184,10 @@ const translations = {
         loadSample: "Sample",
         hintText: "Drag handle on option → to node, quest or void",
         legendTransition: "Transition",
-        legendQuestLink: "Quest link",
-        legendOtherQuest: "Quest dependency",
+        legendQuestLink: "Quest Link",
+        legendOtherQuest: "Quest Dependency",
+        legendCondition: "Condition",
+        legendCommand: "Command",
         legendEnd: "End",
         paletteTitle: "Quests",
         propNodeTitle: "NPC Dialogue",
@@ -198,6 +197,7 @@ const translations = {
         addNodeOption: "+ Add Option",
         propOptionTitle: "Player Option",
         labelOptionText: "Text:",
+        labelTransition: "Transition to (ID):",
         labelIcon: "Icon:",
         propCondTitle: "Conditions",
         addCondition: "+ Condition",
@@ -205,40 +205,33 @@ const translations = {
         addCommand: "+ Command",
         propQuestTitle: "Quest",
         labelAutocomplete: "Autocomplete",
-        labelQuestType: "Type:",
-        labelQuestName: "Name:",
-        labelQuestDesc: "Description:",
-        labelTargets: "Targets",
-        labelRewards: "Rewards",
-        labelRequirements: "Requirements",
         labelCooldown: "Cooldown (days):",
-        emptyStateText: "Select a node or create new",
+        labelTimeLimit: "Time Limit (sec):",
+        emptyStateText: "Select a block or create new",
         tabField: "Canvas",
         tabCode: "Code",
         applyCode: "Apply Changes",
         copyCode: "Copy",
         downloadCode: "Download File",
+        newFile: "+ New File",
         codeHint: "Changes applied via 'Apply Changes' button",
         previewTitle: "Preview",
+        questPreviewTitle: "Quest Preview",
         condModalTitle: "Add Condition",
         cmdModalTitle: "Add Command",
-        targetModalTitle: "Add Target",
-        rewardModalTitle: "Add Reward",
-        reqModalTitle: "Add Requirement",
         save: "Save",
-        noQuestSelected: "Select a quest to edit",
-        importStatsTitle: "Import Result",
+        importStatsTitle: "Import Results",
         statDialoguesLabel: "Dialogues found:",
         statQuestsLabel: "Quests found:",
         statUnknownLabel: "Unrecognized:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Back"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.2",
         appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
         searchPlaceholder: "Suche...",
-        importBtn: "Importieren",
+        importFile: "Importieren",
         export: "Exportieren",
         validate: "Überprüfen",
         addNode: "+ Dialog",
@@ -250,6 +243,8 @@ const translations = {
         legendTransition: "Übergang",
         legendQuestLink: "Quest-Verknüpfung",
         legendOtherQuest: "Quest-Abhängigkeit",
+        legendCondition: "Bedingung",
+        legendCommand: "Befehl",
         legendEnd: "Ende",
         paletteTitle: "Quests",
         propNodeTitle: "NPC-Dialog",
@@ -259,6 +254,7 @@ const translations = {
         addNodeOption: "+ Option hinzufügen",
         propOptionTitle: "Spieleroption",
         labelOptionText: "Text:",
+        labelTransition: "Übergang zu (ID):",
         labelIcon: "Symbol:",
         propCondTitle: "Bedingungen",
         addCondition: "+ Bedingung",
@@ -266,40 +262,33 @@ const translations = {
         addCommand: "+ Befehl",
         propQuestTitle: "Quest",
         labelAutocomplete: "Auto-Abschluss",
-        labelQuestType: "Typ:",
-        labelQuestName: "Name:",
-        labelQuestDesc: "Beschreibung:",
-        labelTargets: "Ziele",
-        labelRewards: "Belohnungen",
-        labelRequirements: "Anforderungen",
         labelCooldown: "Abklingzeit (Tage):",
-        emptyStateText: "Wähle einen Knoten oder erstelle einen neuen",
+        labelTimeLimit: "Zeitlimit (Sek):",
+        emptyStateText: "Wähle einen Block oder erstelle einen neuen",
         tabField: "Feld",
         tabCode: "Code",
         applyCode: "Änderungen übernehmen",
         copyCode: "Kopieren",
         downloadCode: "Datei herunterladen",
+        newFile: "+ Neue Datei",
         codeHint: "Änderungen werden per 'Übernehmen'-Button angewendet",
         previewTitle: "Vorschau",
+        questPreviewTitle: "Quest-Vorschau",
         condModalTitle: "Bedingung hinzufügen",
         cmdModalTitle: "Befehl hinzufügen",
-        targetModalTitle: "Ziel hinzufügen",
-        rewardModalTitle: "Belohnung hinzufügen",
-        reqModalTitle: "Anforderung hinzufügen",
         save: "Speichern",
-        noQuestSelected: "Wähle eine Quest zum Bearbeiten",
-        importStatsTitle: "Importergebnis",
+        importStatsTitle: "Importergebnisse",
         statDialoguesLabel: "Dialoge gefunden:",
         statQuestsLabel: "Quests gefunden:",
         statUnknownLabel: "Nicht erkannt:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Zurück"
     },
     es: {
         appTitle: "Forja del Escaldo v2.2",
         appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
         searchPlaceholder: "Buscar...",
-        importBtn: "Importar",
+        importFile: "Importar",
         export: "Exportar",
         validate: "Validar",
         addNode: "+ Diálogo",
@@ -309,8 +298,10 @@ const translations = {
         loadSample: "Ejemplo",
         hintText: "Arrastra el círculo de la opción → al nodo, misión o vacío",
         legendTransition: "Transición",
-        legendQuestLink: "Enlace a misión",
+        legendQuestLink: "Vínculo con misión",
         legendOtherQuest: "Dependencia de misión",
+        legendCondition: "Condición",
+        legendCommand: "Comando",
         legendEnd: "Fin",
         paletteTitle: "Misiones",
         propNodeTitle: "Diálogo del NPC",
@@ -320,6 +311,7 @@ const translations = {
         addNodeOption: "+ Añadir opción",
         propOptionTitle: "Opción del jugador",
         labelOptionText: "Texto:",
+        labelTransition: "Transición a (ID):",
         labelIcon: "Icono:",
         propCondTitle: "Condiciones",
         addCondition: "+ Condición",
@@ -327,40 +319,33 @@ const translations = {
         addCommand: "+ Comando",
         propQuestTitle: "Misión",
         labelAutocomplete: "Autocompletar",
-        labelQuestType: "Tipo:",
-        labelQuestName: "Nombre:",
-        labelQuestDesc: "Descripción:",
-        labelTargets: "Objetivos",
-        labelRewards: "Recompensas",
-        labelRequirements: "Requisitos",
         labelCooldown: "Enfriamiento (días):",
-        emptyStateText: "Selecciona un nodo o crea uno nuevo",
+        labelTimeLimit: "Límite (seg):",
+        emptyStateText: "Selecciona un bloque o crea uno nuevo",
         tabField: "Campo",
         tabCode: "Código",
         applyCode: "Aplicar cambios",
         copyCode: "Copiar",
         downloadCode: "Descargar archivo",
+        newFile: "+ Nuevo archivo",
         codeHint: "Los cambios se aplican con el botón 'Aplicar'",
         previewTitle: "Vista previa",
+        questPreviewTitle: "Vista previa de misión",
         condModalTitle: "Añadir condición",
         cmdModalTitle: "Añadir comando",
-        targetModalTitle: "Añadir objetivo",
-        rewardModalTitle: "Añadir recompensa",
-        reqModalTitle: "Añadir requisito",
         save: "Guardar",
-        noQuestSelected: "Selecciona una misión para editar",
-        importStatsTitle: "Resultado de importación",
+        importStatsTitle: "Resultados de importación",
         statDialoguesLabel: "Diálogos encontrados:",
         statQuestsLabel: "Misiones encontradas:",
         statUnknownLabel: "No reconocidos:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Atrás"
     },
     fr: {
         appTitle: "Forge du Skalde v2.2",
         appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
         searchPlaceholder: "Rechercher...",
-        importBtn: "Importer",
+        importFile: "Importer",
         export: "Exporter",
         validate: "Valider",
         addNode: "+ Dialogue",
@@ -372,6 +357,8 @@ const translations = {
         legendTransition: "Transition",
         legendQuestLink: "Lien avec quête",
         legendOtherQuest: "Dépendance de quête",
+        legendCondition: "Condition",
+        legendCommand: "Commande",
         legendEnd: "Fin",
         paletteTitle: "Quêtes",
         propNodeTitle: "Dialogue PNJ",
@@ -381,6 +368,7 @@ const translations = {
         addNodeOption: "+ Ajouter option",
         propOptionTitle: "Option du joueur",
         labelOptionText: "Texte :",
+        labelTransition: "Transition vers (ID) :",
         labelIcon: "Icône :",
         propCondTitle: "Conditions",
         addCondition: "+ Condition",
@@ -388,40 +376,33 @@ const translations = {
         addCommand: "+ Commande",
         propQuestTitle: "Quête",
         labelAutocomplete: "Auto-complétion",
-        labelQuestType: "Type :",
-        labelQuestName: "Nom :",
-        labelQuestDesc: "Description :",
-        labelTargets: "Objectifs",
-        labelRewards: "Récompenses",
-        labelRequirements: "Exigences",
         labelCooldown: "Recharge (jours) :",
-        emptyStateText: "Sélectionnez un nœud ou créez-en un nouveau",
+        labelTimeLimit: "Limite (sec) :",
+        emptyStateText: "Sélectionnez un bloc ou créez-en un nouveau",
         tabField: "Champ",
         tabCode: "Code",
         applyCode: "Appliquer les modifications",
         copyCode: "Copier",
         downloadCode: "Télécharger le fichier",
+        newFile: "+ Nouveau fichier",
         codeHint: "Les modifications sont appliquées via le bouton 'Appliquer'",
         previewTitle: "Aperçu",
+        questPreviewTitle: "Aperçu de quête",
         condModalTitle: "Ajouter condition",
         cmdModalTitle: "Ajouter commande",
-        targetModalTitle: "Ajouter objectif",
-        rewardModalTitle: "Ajouter récompense",
-        reqModalTitle: "Ajouter exigence",
         save: "Enregistrer",
-        noQuestSelected: "Sélectionnez une quête à modifier",
-        importStatsTitle: "Résultat de l'import",
+        importStatsTitle: "Résultats d'importation",
         statDialoguesLabel: "Dialogues trouvés :",
         statQuestsLabel: "Quêtes trouvées :",
         statUnknownLabel: "Non reconnus :",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Retour"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.2",
         appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
         searchPlaceholder: "Szukaj...",
-        importBtn: "Importuj",
+        importFile: "Importuj",
         export: "Eksportuj",
         validate: "Sprawdź",
         addNode: "+ Dialog",
@@ -433,6 +414,8 @@ const translations = {
         legendTransition: "Przejście",
         legendQuestLink: "Powiązanie z zadaniem",
         legendOtherQuest: "Zależność zadania",
+        legendCondition: "Warunek",
+        legendCommand: "Polecenie",
         legendEnd: "Koniec",
         paletteTitle: "Zadania",
         propNodeTitle: "Dialog NPC",
@@ -442,6 +425,7 @@ const translations = {
         addNodeOption: "+ Dodaj opcję",
         propOptionTitle: "Opcja gracza",
         labelOptionText: "Tekst:",
+        labelTransition: "Przejście do (ID):",
         labelIcon: "Ikona:",
         propCondTitle: "Warunki",
         addCondition: "+ Warunek",
@@ -449,40 +433,33 @@ const translations = {
         addCommand: "+ Polecenie",
         propQuestTitle: "Zadanie",
         labelAutocomplete: "Auto-ukończenie",
-        labelQuestType: "Typ:",
-        labelQuestName: "Nazwa:",
-        labelQuestDesc: "Opis:",
-        labelTargets: "Cele",
-        labelRewards: "Nagrody",
-        labelRequirements: "Wymagania",
         labelCooldown: "Odnowienie (dni):",
-        emptyStateText: "Wybierz węzeł lub utwórz nowy",
+        labelTimeLimit: "Limit (sek):",
+        emptyStateText: "Wybierz blok lub utwórz nowy",
         tabField: "Pole",
         tabCode: "Kod",
         applyCode: "Zastosuj zmiany",
         copyCode: "Kopiuj",
         downloadCode: "Pobierz plik",
+        newFile: "+ Nowy plik",
         codeHint: "Zmiany są stosowane przyciskiem 'Zastosuj'",
         previewTitle: "Podgląd",
+        questPreviewTitle: "Podgląd zadania",
         condModalTitle: "Dodaj warunek",
         cmdModalTitle: "Dodaj polecenie",
-        targetModalTitle: "Dodaj cel",
-        rewardModalTitle: "Dodaj nagrodę",
-        reqModalTitle: "Dodaj wymóg",
         save: "Zapisz",
-        noQuestSelected: "Wybierz zadanie do edycji",
-        importStatsTitle: "Wynik importu",
+        importStatsTitle: "Wyniki importu",
         statDialoguesLabel: "Znalezione dialogi:",
         statQuestsLabel: "Znalezione zadania:",
         statUnknownLabel: "Nierozpoznane:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Wstecz"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.2",
         appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
         searchPlaceholder: "Pesquisar...",
-        importBtn: "Importar",
+        importFile: "Importar",
         export: "Exportar",
         validate: "Validar",
         addNode: "+ Diálogo",
@@ -494,6 +471,8 @@ const translations = {
         legendTransition: "Transição",
         legendQuestLink: "Vínculo com missão",
         legendOtherQuest: "Dependência de missão",
+        legendCondition: "Condição",
+        legendCommand: "Comando",
         legendEnd: "Fim",
         paletteTitle: "Missões",
         propNodeTitle: "Diálogo do NPC",
@@ -503,6 +482,7 @@ const translations = {
         addNodeOption: "+ Adicionar opção",
         propOptionTitle: "Opção do jogador",
         labelOptionText: "Texto:",
+        labelTransition: "Transição para (ID):",
         labelIcon: "Ícone:",
         propCondTitle: "Condições",
         addCondition: "+ Condição",
@@ -510,40 +490,33 @@ const translations = {
         addCommand: "+ Comando",
         propQuestTitle: "Missão",
         labelAutocomplete: "Auto-conclusão",
-        labelQuestType: "Tipo:",
-        labelQuestName: "Nome:",
-        labelQuestDesc: "Descrição:",
-        labelTargets: "Objetivos",
-        labelRewards: "Recompensas",
-        labelRequirements: "Requisitos",
         labelCooldown: "Recarga (dias):",
-        emptyStateText: "Selecione um nó ou crie um novo",
+        labelTimeLimit: "Limite (seg):",
+        emptyStateText: "Selecione um bloco ou crie um novo",
         tabField: "Campo",
         tabCode: "Código",
         applyCode: "Aplicar alterações",
         copyCode: "Copiar",
         downloadCode: "Baixar arquivo",
+        newFile: "+ Novo arquivo",
         codeHint: "Alterações são aplicadas pelo botão 'Aplicar'",
         previewTitle: "Pré-visualização",
+        questPreviewTitle: "Pré-visualização da missão",
         condModalTitle: "Adicionar condição",
         cmdModalTitle: "Adicionar comando",
-        targetModalTitle: "Adicionar objetivo",
-        rewardModalTitle: "Adicionar recompensa",
-        reqModalTitle: "Adicionar requisito",
         save: "Salvar",
-        noQuestSelected: "Selecione uma missão para editar",
-        importStatsTitle: "Resultado da importação",
+        importStatsTitle: "Resultados da importação",
         statDialoguesLabel: "Diálogos encontrados:",
         statQuestsLabel: "Missões encontradas:",
         statUnknownLabel: "Não reconhecidos:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Voltar"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.2",
         appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
         searchPlaceholder: "Sök...",
-        importBtn: "Importera",
+        importFile: "Importera",
         export: "Exportera",
         validate: "Validera",
         addNode: "+ Dialog",
@@ -555,6 +528,8 @@ const translations = {
         legendTransition: "Övergång",
         legendQuestLink: "Uppdragslänk",
         legendOtherQuest: "Uppdragsberoende",
+        legendCondition: "Villkor",
+        legendCommand: "Kommando",
         legendEnd: "Slut",
         paletteTitle: "Uppdrag",
         propNodeTitle: "NPC-dialog",
@@ -564,6 +539,7 @@ const translations = {
         addNodeOption: "+ Lägg till alternativ",
         propOptionTitle: "Spelaralternativ",
         labelOptionText: "Text:",
+        labelTransition: "Övergång till (ID):",
         labelIcon: "Ikon:",
         propCondTitle: "Villkor",
         addCondition: "+ Villkor",
@@ -571,40 +547,33 @@ const translations = {
         addCommand: "+ Kommando",
         propQuestTitle: "Uppdrag",
         labelAutocomplete: "Autoslutförande",
-        labelQuestType: "Typ:",
-        labelQuestName: "Namn:",
-        labelQuestDesc: "Beskrivning:",
-        labelTargets: "Mål",
-        labelRewards: "Belöningar",
-        labelRequirements: "Krav",
-        labelCooldown: "Nedkylning (dagar):",
-        emptyStateText: "Välj en nod eller skapa en ny",
+        labelCooldown: "Nedkyldning (dagar):",
+        labelTimeLimit: "Tidsgräns (sek):",
+        emptyStateText: "Välj en block eller skapa en ny",
         tabField: "Fält",
         tabCode: "Kod",
         applyCode: "Tillämpa ändringar",
         copyCode: "Kopiera",
         downloadCode: "Ladda ner fil",
+        newFile: "+ Ny fil",
         codeHint: "Ändringar tillämpas via 'Tillämpa'-knappen",
         previewTitle: "Förhandsgranskning",
+        questPreviewTitle: "Uppdragsförhandsgranskning",
         condModalTitle: "Lägg till villkor",
         cmdModalTitle: "Lägg till kommando",
-        targetModalTitle: "Lägg till mål",
-        rewardModalTitle: "Lägg till belöning",
-        reqModalTitle: "Lägg till krav",
         save: "Spara",
-        noQuestSelected: "Välj ett uppdrag att redigera",
         importStatsTitle: "Importresultat",
-        statDialoguesLabel: "Hittade dialoger:",
-        statQuestsLabel: "Hittade uppdrag:",
+        statDialoguesLabel: "Dialoger hittade:",
+        statQuestsLabel: "Uppdrag hittade:",
         statUnknownLabel: "Okända:",
-        importOk: "OK",
+        importStatsClose: "OK",
         back: "Tillbaka"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 v2.2",
         appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
         searchPlaceholder: "検索...",
-        importBtn: "インポート",
+        importFile: "インポート",
         export: "エクスポート",
         validate: "検証",
         addNode: "+ ダイアログ",
@@ -616,6 +585,8 @@ const translations = {
         legendTransition: "遷移",
         legendQuestLink: "クエストリンク",
         legendOtherQuest: "クエスト依存",
+        legendCondition: "条件",
+        legendCommand: "コマンド",
         legendEnd: "終了",
         paletteTitle: "クエスト",
         propNodeTitle: "NPCダイアログ",
@@ -625,6 +596,7 @@ const translations = {
         addNodeOption: "+ オプションを追加",
         propOptionTitle: "プレイヤーオプション",
         labelOptionText: "テキスト:",
+        labelTransition: "遷移先 (ID):",
         labelIcon: "アイコン:",
         propCondTitle: "条件",
         addCondition: "+ 条件",
@@ -632,42 +604,42 @@ const translations = {
         addCommand: "+ コマンド",
         propQuestTitle: "クエスト",
         labelAutocomplete: "自動完了",
-        labelQuestType: "タイプ:",
-        labelQuestName: "名前:",
-        labelQuestDesc: "説明:",
-        labelTargets: "目標",
-        labelRewards: "報酬",
-        labelRequirements: "要件",
         labelCooldown: "クールダウン (日):",
-        emptyStateText: "ノードを選択するか新規作成",
+        labelTimeLimit: "制限 (秒):",
+        emptyStateText: "ブロックを選択するか新規作成",
         tabField: "フィールド",
         tabCode: "コード",
         applyCode: "変更を適用",
         copyCode: "コピー",
         downloadCode: "ファイルをダウンロード",
+        newFile: "+ 新しいファイル",
         codeHint: "変更は「適用」ボタンで適用されます",
         previewTitle: "プレビュー",
+        questPreviewTitle: "クエストプレビュー",
         condModalTitle: "条件を追加",
         cmdModalTitle: "コマンドを追加",
-        targetModalTitle: "目標を追加",
-        rewardModalTitle: "報酬を追加",
-        reqModalTitle: "要件を追加",
         save: "保存",
-        noQuestSelected: "編集するクエストを選択",
         importStatsTitle: "インポート結果",
         statDialoguesLabel: "見つかったダイアログ:",
         statQuestsLabel: "見つかったクエスト:",
-        statUnknownLabel: "認識できなかった:",
-        importOk: "OK",
+        statUnknownLabel: "認識されなかった:",
+        importStatsClose: "OK",
         back: "戻る"
     }
 };
 
 class DialogueEditor {
     constructor() {
-        this.blocks = []; // единый массив блоков {type, id, data, comments}
-        this.selectedBlock = null;
+        // Единая структура данных
+        this.blocks = []; // массив блоков в порядке файла
+        this.nodes = new Map(); // диалоги для быстрого доступа
+        this.quests = new Map(); // квесты для быстрого доступа
+        this.fileContents = {}; // сырой контент файлов с комментариями
+        
+        this.selectedBlock = null; // выбранный блок (диалог или квест)
+        this.selectedNode = null;
         this.selectedOption = null;
+        this.selectedQuest = null;
         
         this.currentZoom = 1;
         this.canvasOffset = { x: 0, y: 0 };
@@ -681,17 +653,16 @@ class DialogueEditor {
         this.drawingFromOption = null;
         this.drawingTempPath = null;
         
-        this.cfgFiles = {}; // filename -> {raw, generated}
+        this.cfgFiles = {};
         this.currentCfgFile = null;
-        
         this.lang = localStorage.getItem('skald_lang') || 'ru';
+        
         this.itemSelectorData = [];
         this.loadItemDataForPreview();
         
         this.optionIconSelector = null;
-        this.targetPrefabSelector = null;
-        
         this.els = {};
+        
         this.cacheElements();
         this.initEventListeners();
         this.applyLanguage();
@@ -707,85 +678,71 @@ class DialogueEditor {
     
     cacheElements() {
         const ids = [
-            'appTitle', 'appSubtitle', 'searchInput', 'importBtn',
-            'exportBtn', 'validateBtn', 'previewBtn', 'addNodeBtn', 'addQuestBtn',
-            'deleteBtn', 'zoomInBtn', 'zoomOutBtn', 'fitToScreenBtn', 'loadSampleBtn',
+            'appTitle', 'appSubtitle', 'searchInput', 'importBtn', 'exportBtn', 'validateBtn', 'previewBtn',
+            'addNodeBtn', 'addQuestBtn', 'deleteBtn', 'zoomInBtn', 'zoomOutBtn', 'fitToScreenBtn', 'loadSampleBtn',
             'hintText', 'paletteTitle', 'questPalette', 'questPaletteList', 'toggleQuestPalette',
-            'connectionLayer', 'nodeContainer', 'canvasContainer',
+            'connectionLayer', 'nodeContainer', 'questContainer', 'canvasContainer',
             'nodeProperties', 'optionProperties', 'questProperties', 'emptyState', 'emptyStateText',
             'propNodeTitle', 'labelNodeId', 'nodeId', 'labelNodeText', 'nodeText',
             'propOptionsTitle', 'nodeOptionsList', 'addNodeOptionBtn',
-            'propOptionTitle', 'labelOptionText', 'optionText', 'optionIconSelector',
+            'propOptionTitle', 'labelOptionText', 'optionText', 'labelTransition', 'optionTransition',
+            'labelIcon', 'optionIconSelector',
             'propCondTitle', 'conditionsList', 'addConditionBtn', 'propCmdTitle', 'commandsList', 'addCommandBtn',
-            'propQuestTitle', 'questAutocomplete', 'labelAutocomplete', 'labelQuestType', 'questType',
-            'labelQuestName', 'questName', 'labelQuestDesc', 'questDescription',
-            'labelTargets', 'questTargetsList', 'addQuestTargetBtn',
-            'labelRewards', 'questRewardsList', 'addQuestRewardBtn',
-            'labelRequirements', 'questRequirementsList', 'addQuestRequirementBtn',
-            'labelCooldown', 'questCooldown',
-            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'codeHint',
+            'propQuestTitle', 'questId', 'questType', 'questName', 'questDescription', 'questAutocomplete',
+            'labelAutocomplete', 'labelCooldown', 'questCooldown', 'labelTimeLimit', 'questTimeLimit',
+            'tabFieldBtn', 'tabCodeBtn', 'fileTabs', 'codeEditor', 'applyCodeBtn', 'copyCodeBtn', 'downloadCodeBtn', 'newFileBtn', 'codeHint',
             'previewModal', 'previewContent', 'previewTitle',
-            'importStatsModal', 'importStatsTitle', 'statDialoguesLabel', 'statDialoguesCount',
-            'statQuestsLabel', 'statQuestsCount', 'statUnknownLabel', 'statUnknownCount', 'importStatsOkBtn',
+            'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
             'commandModal', 'commandType', 'commandParams', 'saveCommandBtn', 'cmdModalTitle',
-            'questTargetModal', 'targetPrefabSelector', 'targetAmount', 'targetLevel', 'saveQuestTargetBtn', 'targetModalTitle',
-            'questRewardModal', 'rewardType', 'rewardPrefab', 'rewardAmount', 'rewardLevel', 'saveQuestRewardBtn', 'rewardModalTitle',
-            'questRequirementModal', 'requirementType', 'requirementParams', 'saveQuestRequirementBtn', 'reqModalTitle',
-            'dialogueFileInput', 'fileInput',
-            'legendTransition', 'legendQuestLink', 'legendOtherQuest', 'legendEnd'
+            'fileInput',
+            'importStatsModal', 'importStatsTitle', 'statDialoguesLabel', 'statQuestsLabel', 'statUnknownLabel',
+            'statDialogues', 'statQuests', 'statUnknown', 'unknownBlocksList', 'importStatsCloseBtn',
+            'legendTransition', 'legendQuestLink', 'legendOtherQuest', 'legendCondition', 'legendCommand', 'legendEnd'
         ];
         ids.forEach(id => { this.els[id] = document.getElementById(id); });
     }
     
     initEventListeners() {
-        this.els.addNodeBtn.addEventListener('click', () => this.addDialogueBlock());
-        this.els.addQuestBtn.addEventListener('click', () => this.addQuestBlock());
+        this.els.addNodeBtn.addEventListener('click', () => this.addNode());
+        this.els.addQuestBtn.addEventListener('click', () => this.addQuest());
         this.els.deleteBtn.addEventListener('click', () => this.deleteSelected());
         this.els.zoomInBtn.addEventListener('click', () => this.zoom(0.1));
         this.els.zoomOutBtn.addEventListener('click', () => this.zoom(-0.1));
         this.els.fitToScreenBtn.addEventListener('click', () => this.fitToScreen());
         this.els.loadSampleBtn.addEventListener('click', () => this.loadSampleData());
         
-        this.els.searchInput.addEventListener('input', (e) => this.searchBlocks(e.target.value));
+        this.els.searchInput.addEventListener('input', (e) => this.searchDialogue(e.target.value));
         this.els.importBtn.addEventListener('click', () => this.els.fileInput.click());
         this.els.exportBtn.addEventListener('click', () => this.exportCurrentCfg());
-        this.els.validateBtn.addEventListener('click', () => this.validateAll());
+        this.els.validateBtn.addEventListener('click', () => this.validateDialogue());
         this.els.previewBtn.addEventListener('click', () => this.showPreview());
         
         this.els.fileInput.addEventListener('change', (e) => this.handleFileImport(e));
         
-        // Node properties
-        this.els.nodeId.addEventListener('change', (e) => this.updateBlockProperty('id', e.target.value));
-        this.els.nodeText.addEventListener('input', (e) => this.updateBlockProperty('text', e.target.value));
-        this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToSelected());
+        this.els.nodeId.addEventListener('change', (e) => this.updateNodeProperty('id', e.target.value));
+        this.els.nodeText.addEventListener('input', (e) => this.updateNodeProperty('text', e.target.value));
+        this.els.addNodeOptionBtn.addEventListener('click', () => this.addOptionToNode(this.selectedNode));
         
-        // Option properties
         this.els.optionText.addEventListener('input', (e) => this.updateOptionProperty('text', e.target.value));
+        this.els.optionTransition.addEventListener('change', (e) => this.updateOptionProperty('transition', e.target.value));
+        
         this.els.addConditionBtn.addEventListener('click', () => this.openModal('conditionModal'));
         this.els.addCommandBtn.addEventListener('click', () => this.openModal('commandModal'));
         
-        // Quest properties
-        this.els.questId.addEventListener('change', (e) => this.updateQuestProperty('id', e.target.value));
-        this.els.questAutocomplete.addEventListener('change', (e) => this.updateQuestProperty('autocomplete', e.target.checked));
-        this.els.questType.addEventListener('change', (e) => this.updateQuestProperty('questType', e.target.value));
-        this.els.questName.addEventListener('input', (e) => this.updateQuestProperty('name', e.target.value));
-        this.els.questDescription.addEventListener('input', (e) => this.updateQuestProperty('description', e.target.value));
-        this.els.questCooldown.addEventListener('input', (e) => this.updateQuestProperty('cooldown', e.target.value));
-        this.els.addQuestTargetBtn.addEventListener('click', () => this.openModal('questTargetModal'));
-        this.els.addQuestRewardBtn.addEventListener('click', () => this.openModal('questRewardModal'));
-        this.els.addQuestRequirementBtn.addEventListener('click', () => this.openModal('questRequirementModal'));
-        
-        // Modals
         this.els.conditionType.addEventListener('change', () => this.updateConditionParams());
         this.els.saveConditionBtn.addEventListener('click', () => this.saveCondition());
         this.els.commandType.addEventListener('change', () => this.updateCommandParams());
         this.els.saveCommandBtn.addEventListener('click', () => this.saveCommand());
-        this.els.saveQuestTargetBtn.addEventListener('click', () => this.saveQuestTarget());
-        this.els.saveQuestRewardBtn.addEventListener('click', () => this.saveQuestReward());
-        this.els.requirementType.addEventListener('change', () => this.updateRequirementParams());
-        this.els.saveQuestRequirementBtn.addEventListener('click', () => this.saveQuestRequirement());
-        this.els.importStatsOkBtn.addEventListener('click', () => this.closeAllModals());
+        
+        // Quest properties
+        this.els.questId.addEventListener('change', (e) => this.updateQuestProperty('id', e.target.value));
+        this.els.questType.addEventListener('change', (e) => this.updateQuestProperty('type', e.target.value));
+        this.els.questName.addEventListener('input', (e) => this.updateQuestProperty('name', e.target.value));
+        this.els.questDescription.addEventListener('input', (e) => this.updateQuestProperty('description', e.target.value));
+        this.els.questAutocomplete.addEventListener('change', (e) => this.updateQuestProperty('autocomplete', e.target.checked));
+        this.els.questCooldown.addEventListener('input', (e) => this.updateQuestProperty('cooldown', e.target.value));
+        this.els.questTimeLimit.addEventListener('input', (e) => this.updateQuestProperty('timeLimit', e.target.value));
         
         this.els.toggleQuestPalette.addEventListener('click', () => {
             this.els.questPalette.classList.toggle('collapsed');
@@ -810,6 +767,11 @@ class DialogueEditor {
         this.els.applyCodeBtn.addEventListener('click', () => this.applyCodeFromEditor());
         this.els.copyCodeBtn.addEventListener('click', () => this.copyCurrentCode());
         this.els.downloadCodeBtn.addEventListener('click', () => this.downloadCurrentCode());
+        this.els.newFileBtn.addEventListener('click', () => this.createNewFile());
+        
+        this.els.importStatsCloseBtn.addEventListener('click', () => {
+            this.els.importStatsModal.classList.remove('open');
+        });
         
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.addEventListener('click', () => {
@@ -832,17 +794,20 @@ class DialogueEditor {
                 if (this.isDrawingCurve) this.cancelDrawing();
                 else this.closeAllModals();
             }
-            if (e.key === 'Delete' && this.selectedBlock && !isTyping) this.deleteSelected();
+            if (e.key === 'Delete' && this.selectedBlock && !isTyping) {
+                this.deleteSelected();
+            }
         });
     }
     
     applyLanguage() {
         const t = translations[this.lang];
         if (!t) return;
+        
         this.els.appTitle.textContent = t.appTitle;
         this.els.appSubtitle.textContent = t.appSubtitle;
         this.els.searchInput.placeholder = t.searchPlaceholder;
-        this.els.importBtn.textContent = t.importBtn;
+        this.els.importBtn.textContent = t.importFile;
         this.els.exportBtn.textContent = t.export;
         this.els.validateBtn.textContent = t.validate;
         this.els.addNodeBtn.textContent = t.addNode;
@@ -859,6 +824,7 @@ class DialogueEditor {
         this.els.addNodeOptionBtn.textContent = t.addNodeOption;
         this.els.propOptionTitle.textContent = t.propOptionTitle;
         this.els.labelOptionText.textContent = t.labelOptionText;
+        this.els.labelTransition.textContent = t.labelTransition;
         this.els.labelIcon.textContent = t.labelIcon;
         this.els.propCondTitle.textContent = t.propCondTitle;
         this.els.addConditionBtn.textContent = t.addCondition;
@@ -866,35 +832,33 @@ class DialogueEditor {
         this.els.addCommandBtn.textContent = t.addCommand;
         this.els.propQuestTitle.textContent = t.propQuestTitle;
         this.els.labelAutocomplete.textContent = t.labelAutocomplete;
-        this.els.labelQuestType.textContent = t.labelQuestType;
-        this.els.labelQuestName.textContent = t.labelQuestName;
-        this.els.labelQuestDesc.textContent = t.labelQuestDesc;
-        this.els.labelTargets.textContent = t.labelTargets;
-        this.els.labelRewards.textContent = t.labelRewards;
-        this.els.labelRequirements.textContent = t.labelRequirements;
         this.els.labelCooldown.textContent = t.labelCooldown;
+        this.els.labelTimeLimit.textContent = t.labelTimeLimit;
         this.els.emptyStateText.textContent = t.emptyStateText;
         this.els.tabFieldBtn.textContent = t.tabField;
         this.els.tabCodeBtn.textContent = t.tabCode;
         this.els.applyCodeBtn.textContent = t.applyCode;
         this.els.copyCodeBtn.textContent = t.copyCode;
         this.els.downloadCodeBtn.textContent = t.downloadCode;
+        this.els.newFileBtn.textContent = t.newFile;
         this.els.codeHint.textContent = t.codeHint;
         this.els.previewTitle.textContent = t.previewTitle;
+        this.els.questPreviewTitle.textContent = t.questPreviewTitle;
+        this.els.condModalTitle.textContent = t.condModalTitle;
+        this.els.cmdModalTitle.textContent = t.cmdModalTitle;
         this.els.importStatsTitle.textContent = t.importStatsTitle;
         this.els.statDialoguesLabel.textContent = t.statDialoguesLabel;
         this.els.statQuestsLabel.textContent = t.statQuestsLabel;
         this.els.statUnknownLabel.textContent = t.statUnknownLabel;
-        this.els.importStatsOkBtn.textContent = t.importOk;
-        this.els.condModalTitle.textContent = t.condModalTitle;
-        this.els.cmdModalTitle.textContent = t.cmdModalTitle;
-        this.els.targetModalTitle.textContent = t.targetModalTitle;
-        this.els.rewardModalTitle.textContent = t.rewardModalTitle;
-        this.els.reqModalTitle.textContent = t.reqModalTitle;
+        this.els.importStatsCloseBtn.textContent = t.importStatsClose;
+        
         if (this.els.legendTransition) this.els.legendTransition.textContent = t.legendTransition;
         if (this.els.legendQuestLink) this.els.legendQuestLink.textContent = t.legendQuestLink;
         if (this.els.legendOtherQuest) this.els.legendOtherQuest.textContent = t.legendOtherQuest;
+        if (this.els.legendCondition) this.els.legendCondition.textContent = t.legendCondition;
+        if (this.els.legendCommand) this.els.legendCommand.textContent = t.legendCommand;
         if (this.els.legendEnd) this.els.legendEnd.textContent = t.legendEnd;
+        
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === this.lang);
         });
@@ -906,6 +870,7 @@ class DialogueEditor {
         document.querySelectorAll('.bottom-tab').forEach(t => t.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
         document.querySelector(`.bottom-tab[data-tab="${tabId}"]`).classList.add('active');
+        
         if (tabId === 'tabCode') {
             this.renderCodeTabs();
             if (this.currentCfgFile) this.showCodeFile(this.currentCfgFile);
@@ -914,7 +879,9 @@ class DialogueEditor {
     
     renderCodeTabs() {
         const container = this.els.fileTabs;
+        const newFileBtn = this.els.newFileBtn;
         container.innerHTML = '';
+        
         Object.keys(this.cfgFiles).forEach(filename => {
             const btn = document.createElement('button');
             btn.className = `code-tab ${filename === this.currentCfgFile ? 'active' : ''}`;
@@ -927,21 +894,30 @@ class DialogueEditor {
             });
             container.appendChild(btn);
         });
+        
+        container.appendChild(newFileBtn);
     }
     
     showCodeFile(filename) {
-        const fileData = this.cfgFiles[filename];
-        if (!fileData) return;
-        // Показываем raw content если есть, иначе generated
-        this.els.codeEditor.value = fileData.raw || fileData.generated || '';
+        // Показываем сырой контент, если есть, иначе генерируем
+        if (this.fileContents[filename]) {
+            this.els.codeEditor.value = this.fileContents[filename];
+        } else if (this.currentCfgFile) {
+            this.els.codeEditor.value = this.generateCfgFromData();
+        } else {
+            this.els.codeEditor.value = '';
+        }
     }
     
     applyCodeFromEditor() {
         if (!this.currentCfgFile) return;
         const content = this.els.codeEditor.value;
-        this.cfgFiles[this.currentCfgFile].generated = content;
-        // Парсим и обновляем блоки
-        this.parseUnifiedCfg(content, true);
+        this.fileContents[this.currentCfgFile] = content;
+        this.cfgFiles[this.currentCfgFile] = content;
+        
+        // Умный парсинг
+        const result = this.smartParse(content);
+        this.showImportStats(result);
         this.render();
     }
     
@@ -955,9 +931,26 @@ class DialogueEditor {
     
     downloadCurrentCode() {
         if (this.currentCfgFile) {
-            const fileData = this.cfgFiles[this.currentCfgFile];
-            const content = fileData.raw || fileData.generated || '';
-            this.downloadFile(this.currentCfgFile, content);
+            this.downloadFile(this.currentCfgFile, this.els.codeEditor.value);
+        }
+    }
+    
+    createNewFile() {
+        const fileName = prompt('Введите имя файла (.cfg):', `skald_${Date.now()}.cfg`);
+        if (fileName) {
+            if (!fileName.endsWith('.cfg')) {
+                alert('Имя файла должно заканчиваться на .cfg');
+                return;
+            }
+            if (this.cfgFiles[fileName]) {
+                alert('Файл с таким именем уже существует');
+                return;
+            }
+            this.cfgFiles[fileName] = '';
+            this.fileContents[fileName] = '';
+            this.currentCfgFile = fileName;
+            this.renderCodeTabs();
+            this.showCodeFile(this.currentCfgFile);
         }
     }
     
@@ -970,31 +963,32 @@ class DialogueEditor {
             this.closeAllModals();
             return;
         }
+        
         const actionTarget = e.target.closest('[data-action]');
         if (!actionTarget) return;
+        
         const action = actionTarget.dataset.action;
         const data = actionTarget.dataset;
+        
         switch (action) {
             case 'close-modal': this.closeAllModals(); break;
-            case 'select-block': this.selectBlock(data.id, data.type); break;
+            case 'select-node': this.selectNode(data.id); break;
             case 'select-option': this.selectOption(data.optionId); break;
+            case 'select-quest-block': this.selectQuest(data.id); break;
             case 'navigate': this.previewNavigate(data.target); break;
             case 'preview-go-back': this.previewGoBack(); break;
-            case 'delete-option': this.deleteOptionFromBlock(data.optionId); break;
+            case 'toggle-collapse': this.toggleCollapse(data.id); break;
+            case 'delete-option': this.deleteOptionFromNode(data.optionId); break;
             case 'delete-condition': this.removeCondition(parseInt(data.index)); break;
             case 'delete-command': this.removeCommand(parseInt(data.index)); break;
-            case 'delete-quest-target': this.deleteQuestTarget(parseInt(data.index)); break;
-            case 'delete-quest-reward': this.deleteQuestReward(parseInt(data.index)); break;
-            case 'delete-quest-req': this.deleteQuestRequirement(parseInt(data.index)); break;
+            case 'show-quest-preview': this.showQuestPreview(); break;
+            case 'preview-select-quest': this.previewSelectQuest(data.id); break;
             case 'open-quest-link': this.openQuestLink(data.questId); break;
         }
     }
     
     openQuestLink(questId) {
-        const block = this.blocks.find(b => b.type === 'quest' && b.id === questId);
-        if (block) {
-            this.selectBlock(questId, 'quest');
-        }
+        this.selectQuest(questId);
     }
     
     openModal(id) {
@@ -1003,11 +997,6 @@ class DialogueEditor {
             modal.classList.add('open');
             if (id === 'conditionModal') this.updateConditionParams();
             if (id === 'commandModal') this.updateCommandParams();
-            if (id === 'questRequirementModal') this.updateRequirementParams();
-            if (id === 'questTargetModal') {
-                if (this.targetPrefabSelector) this.targetPrefabSelector.container.innerHTML = '';
-                this.targetPrefabSelector = new ItemSelector(this.els.targetPrefabSelector, '');
-            }
         }
     }
     
@@ -1015,99 +1004,127 @@ class DialogueEditor {
         document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open'));
     }
     
-    addDialogueBlock(id = null, x = null, y = null) {
-        const blockId = id || `dialogue_${Date.now()}`;
-        if (this.blocks.some(b => b.id === blockId)) return null;
-        const offset = this.blocks.filter(b => b.type === 'dialogue').length * 50;
+    // === БЛОКИ (единая структура) ===
+    
+    addNode(id = null, x = null, y = null) {
+        const nodeId = id || `Node_${Date.now()}`;
+        if (this.nodes.has(nodeId)) return null;
+        
+        const offset = this.nodes.size * 50;
         const block = {
             type: 'dialogue',
-            id: blockId,
+            id: nodeId,
+            text: 'New dialogue...',
+            options: [],
             x: x !== null ? x : 100 + offset,
             y: y !== null ? y : 100 + offset,
-            data: {
-                text: 'New dialogue...',
-                options: []
-            },
-            comments: []
+            collapsed: false
         };
+        
         this.blocks.push(block);
-        this.render();
-        this.selectBlock(blockId, 'dialogue');
+        this.nodes.set(nodeId, block);
+        this.renderNodes();
+        this.selectNode(nodeId);
         this.syncCodeView();
         return block;
     }
     
-    addQuestBlock(id = null, x = null, y = null) {
-        const blockId = id || `quest_${Date.now()}`;
-        if (this.blocks.some(b => b.id === blockId)) return null;
-        const offset = this.blocks.filter(b => b.type === 'quest').length * 50;
+    addQuest(id = null, x = null, y = null) {
+        const questId = id || `Quest_${Date.now()}`;
+        if (this.quests.has(questId)) return null;
+        
+        const offset = this.quests.size * 50;
         const block = {
             type: 'quest',
-            id: blockId,
+            id: questId,
+            questType: 'Kill',
+            name: 'New Quest',
+            description: 'Description...',
+            targets: [],
+            rewards: [],
+            cooldown: '',
+            timeLimit: '',
+            requirements: [],
+            autocomplete: false,
             x: x !== null ? x : 400 + offset,
-            y: y !== null ? y : 100 + offset,
-            data: {
-                questType: 'Kill',
-                name: 'New Quest',
-                description: 'Description...',
-                targets: [],
-                rewards: [],
-                requirements: [],
-                cooldown: '',
-                autocomplete: false
-            },
-            comments: []
+            y: y !== null ? y : 100 + offset
         };
+        
         this.blocks.push(block);
-        this.render();
-        this.selectBlock(blockId, 'quest');
+        this.quests.set(questId, block);
+        this.renderQuestBlocks();
+        this.selectQuest(questId);
         this.syncCodeView();
         return block;
     }
     
-    selectBlock(id, type) {
-        this.selectedBlock = { id, type };
+    selectNode(nodeId) {
+        this.selectedBlock = this.nodes.get(nodeId);
+        this.selectedNode = nodeId;
         this.selectedOption = null;
+        this.selectedQuest = null;
         
-        document.querySelectorAll('.dialogue-node, .quest-node').forEach(el => {
-            el.classList.toggle('selected', el.dataset.blockId === id);
+        document.querySelectorAll('.dialogue-node').forEach(el => {
+            el.classList.toggle('selected', el.dataset.nodeId === nodeId);
+        });
+        document.querySelectorAll('.quest-block').forEach(el => {
+            el.classList.remove('selected');
         });
         
-        if (id) {
-            const block = this.blocks.find(b => b.id === id);
-            if (!block) return;
+        if (nodeId) {
+            this.els.nodeProperties.style.display = 'block';
+            this.els.optionProperties.style.display = 'none';
+            this.els.questProperties.style.display = 'none';
+            this.els.emptyState.style.display = 'none';
             
-            if (block.type === 'dialogue') {
-                this.els.nodeProperties.style.display = 'block';
-                this.els.optionProperties.style.display = 'none';
-                this.els.questProperties.style.display = 'none';
-                this.els.emptyState.style.display = 'none';
-                this.els.nodeId.value = block.id;
-                this.els.nodeText.value = block.data.text;
+            const node = this.nodes.get(nodeId);
+            if (node) {
+                this.els.nodeId.value = node.id;
+                this.els.nodeText.value = node.text;
                 this.renderNodeOptionsList();
-            } else if (block.type === 'quest') {
-                this.els.nodeProperties.style.display = 'none';
-                this.els.optionProperties.style.display = 'none';
-                this.els.questProperties.style.display = 'block';
-                this.els.emptyState.style.display = 'none';
-                this.els.questId.value = block.id;
-                this.els.questAutocomplete.checked = block.data.autocomplete;
-                this.els.questType.value = block.data.questType;
-                this.els.questName.value = block.data.name;
-                this.els.questDescription.value = block.data.description;
-                this.els.questCooldown.value = block.data.cooldown;
-                this.renderQuestTargetsList();
-                this.renderQuestRewardsList();
-                this.renderQuestRequirementsList();
+                this.updateTransitionsList();
+            }
+        }
+    }
+    
+    selectQuest(questId) {
+        this.selectedBlock = this.quests.get(questId);
+        this.selectedQuest = questId;
+        this.selectedNode = null;
+        this.selectedOption = null;
+        
+        document.querySelectorAll('.dialogue-node').forEach(el => {
+            el.classList.remove('selected');
+        });
+        document.querySelectorAll('.quest-block').forEach(el => {
+            el.classList.toggle('selected', el.dataset.questId === questId);
+        });
+        
+        if (questId) {
+            this.els.nodeProperties.style.display = 'none';
+            this.els.optionProperties.style.display = 'none';
+            this.els.questProperties.style.display = 'block';
+            this.els.emptyState.style.display = 'none';
+            
+            const quest = this.quests.get(questId);
+            if (quest) {
+                this.els.questId.value = quest.id;
+                this.els.questType.value = quest.questType || 'Kill';
+                this.els.questName.value = quest.name || '';
+                this.els.questDescription.value = quest.description || '';
+                this.els.questAutocomplete.checked = quest.autocomplete || false;
+                this.els.questCooldown.value = quest.cooldown || '';
+                this.els.questTimeLimit.value = quest.timeLimit || '';
             }
         }
     }
     
     selectOption(optionId) {
         this.selectedOption = optionId;
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block || block.type !== 'dialogue') return;
-        const option = block.data.options.find(o => o.id === optionId);
+        const node = this.nodes.get(this.selectedNode);
+        if (!node) return;
+        
+        const option = node.options.find(o => o.id === optionId);
         if (!option) return;
         
         this.els.nodeProperties.style.display = 'none';
@@ -1115,226 +1132,257 @@ class DialogueEditor {
         this.els.questProperties.style.display = 'none';
         
         this.els.optionText.value = option.text || '';
+        this.els.optionTransition.value = option.transition || '';
+        
         this.renderConditionsList(option.conditions);
         this.renderCommandsList(option.commands);
         this.renderNodeOptionsList();
+        this.updateTransitionsList();
         
-        if (this.optionIconSelector) this.optionIconSelector.container.innerHTML = '';
+        if (this.optionIconSelector) {
+            this.optionIconSelector.container.innerHTML = '';
+        }
         this.optionIconSelector = new ItemSelector(this.els.optionIconSelector, option.icon || '');
         this.optionIconSelector.input.addEventListener('change', (e) => {
             option.icon = e.target.value.trim();
-            this.render();
+            this.renderNodes();
+            this.renderNodeOptionsList();
             this.syncCodeView();
         });
     }
     
-    addOptionToSelected() {
-        if (!this.selectedBlock || this.selectedBlock.type !== 'dialogue') { alert('Select a dialogue first!'); return; }
-        this.addOptionToBlock(this.selectedBlock.id);
-    }
-    
-    addOptionToBlock(blockId, text = 'New option') {
-        const block = this.blocks.find(b => b.id === blockId);
-        if (!block || block.type !== 'dialogue') return null;
+    addOptionToNode(nodeId, text = 'New option') {
+        const node = this.nodes.get(nodeId);
+        if (!node) return null;
+        
         const option = {
             id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
             text: text,
             transition: '',
-            questLink: '',
             icon: '',
             conditions: [],
             commands: []
         };
-        block.data.options.push(option);
-        this.render();
+        
+        node.options.push(option);
+        this.renderNodes();
+        this.renderNodeOptionsList();
         this.selectOption(option.id);
         this.syncCodeView();
         return option;
     }
     
-    deleteOptionFromBlock(optionId) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        block.data.options = block.data.options.filter(o => o.id !== optionId);
+    deleteOptionFromNode(optionId) {
+        const node = this.nodes.get(this.selectedNode);
+        if (!node) return;
+        node.options = node.options.filter(o => o.id !== optionId);
         if (this.selectedOption === optionId) {
             this.selectedOption = null;
             this.els.optionProperties.style.display = 'none';
             this.els.nodeProperties.style.display = 'block';
         }
-        this.render();
+        this.renderNodes();
+        this.renderNodeOptionsList();
         this.syncCodeView();
     }
     
-    updateBlockProperty(property, value) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
+    toggleCollapse(nodeId) {
+        const node = this.nodes.get(nodeId);
+        if (node) { node.collapsed = !node.collapsed; this.renderNodes(); }
+    }
+    
+    updateNodeProperty(property, value) {
+        const node = this.nodes.get(this.selectedNode);
+        if (!node) return;
+        
         if (property === 'id') {
-            if (value && value !== block.id && !this.blocks.some(b => b.id === value)) {
-                block.id = value;
-                this.selectedBlock.id = value;
-                this.render();
+            if (value && value !== node.id && !this.nodes.has(value)) {
+                this.nodes.delete(node.id);
+                node.id = value;
+                this.nodes.set(value, node);
+                this.selectedNode = value;
+                this.renderNodes();
+                this.updateTransitionsList();
             }
-        } else if (property === 'text') {
-            block.data.text = value;
-            this.render();
+        } else {
+            node[property] = value;
+            this.renderNodes();
         }
         this.syncCodeView();
     }
     
     updateOptionProperty(property, value) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const option = block.data.options.find(o => o.id === this.selectedOption);
+        const node = this.nodes.get(this.selectedNode);
+        if (!node || !this.selectedOption) return;
+        const option = node.options.find(o => o.id === this.selectedOption);
         if (!option) return;
-        if (property === 'transition' && value) {
-            option.questLink = '';
-        } else if (property === 'questLink' && value) {
-            option.transition = '';
-        }
+        
         option[property] = value;
-        this.render();
+        this.renderNodes();
+        this.renderNodeOptionsList();
         this.syncCodeView();
     }
     
     updateQuestProperty(property, value) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        if (property === 'id') {
-            if (value && value !== block.id && !this.blocks.some(b => b.id === value)) {
-                block.id = value;
-                this.selectedBlock.id = value;
-                this.els.questId.value = value;
-                this.render();
-            }
-        } else {
-            block.data[property] = value;
-            this.render();
-        }
+        const quest = this.quests.get(this.selectedQuest);
+        if (!quest) return;
+        
+        quest[property] = value;
+        this.renderQuestBlocks();
         this.syncCodeView();
     }
     
     deleteSelected() {
         if (this.selectedOption) {
-            this.deleteOptionFromBlock(this.selectedOption);
-        } else if (this.selectedBlock) {
-            // Удаляем связи
-            this.blocks.forEach(b => {
-                if (b.type === 'dialogue') {
-                    b.data.options.forEach(opt => {
-                        if (opt.transition === this.selectedBlock.id) opt.transition = '';
-                        if (opt.questLink === this.selectedBlock.id) opt.questLink = '';
-                    });
-                } else if (b.type === 'quest') {
-                    b.data.requirements = b.data.requirements.filter(r => !(r.type === 'OtherQuest' && r.param === this.selectedBlock.id));
-                }
+            this.deleteOptionFromNode(this.selectedOption);
+        } else if (this.selectedNode) {
+            this.nodes.forEach(otherNode => {
+                otherNode.options.forEach(opt => {
+                    if (opt.transition === this.selectedNode) opt.transition = '';
+                });
             });
-            this.blocks = this.blocks.filter(b => b.id !== this.selectedBlock.id);
-            this.selectedBlock = null;
+            this.nodes.delete(this.selectedNode);
+            this.blocks = this.blocks.filter(b => b.id !== this.selectedNode);
+            this.selectedNode = null;
             this.selectedOption = null;
+            this.selectedBlock = null;
             this.els.nodeProperties.style.display = 'none';
             this.els.optionProperties.style.display = 'none';
             this.els.questProperties.style.display = 'none';
             this.els.emptyState.style.display = 'flex';
-            this.render();
+            this.renderNodes();
+            this.syncCodeView();
+        } else if (this.selectedQuest) {
+            this.quests.delete(this.selectedQuest);
+            this.blocks = this.blocks.filter(b => b.id !== this.selectedQuest);
+            this.selectedQuest = null;
+            this.selectedBlock = null;
+            this.els.nodeProperties.style.display = 'none';
+            this.els.optionProperties.style.display = 'none';
+            this.els.questProperties.style.display = 'none';
+            this.els.emptyState.style.display = 'flex';
+            this.renderQuestBlocks();
             this.syncCodeView();
         }
     }
     
-    render() { this.renderBlocks(); this.renderQuestPalette(); }
+    updateTransitionsList() {
+        const select = this.els.optionTransition;
+        select.innerHTML = '<option value="">— Нет —</option>';
+        this.nodes.forEach((node, nodeId) => {
+            if (nodeId !== this.selectedNode) {
+                const opt = document.createElement('option');
+                opt.value = nodeId;
+                opt.textContent = nodeId;
+                select.appendChild(opt);
+            }
+        });
+    }
     
-    renderBlocks() {
+    render() { 
+        this.renderNodes(); 
+        this.renderQuestBlocks(); 
+        this.renderQuestPalette(); 
+    }
+    
+    renderNodes() {
         const container = this.els.nodeContainer;
         container.innerHTML = '';
-        this.blocks.forEach(block => {
-            const el = block.type === 'dialogue' ? this.createDialogueElement(block) : this.createQuestElement(block);
+        
+        this.blocks.filter(b => b.type === 'dialogue').forEach(node => {
+            const el = this.createNodeElement(node);
             container.appendChild(el);
         });
+        
         requestAnimationFrame(() => this.renderConnections());
     }
     
-    createDialogueElement(block) {
-        const div = document.createElement('div');
-        div.className = `dialogue-node ${this.selectedBlock && this.selectedBlock.id === block.id ? 'selected' : ''}`;
-        div.dataset.blockId = block.id;
-        div.dataset.action = 'select-block';
-        div.dataset.id = block.id;
-        div.dataset.type = 'dialogue';
-        div.style.left = `${block.x}px`;
-        div.style.top = `${block.y}px`;
+    renderQuestBlocks() {
+        const container = this.els.questContainer;
+        container.innerHTML = '';
         
-        const previewText = this.escapeHtml(block.data.text.length > 80 ? block.data.text.substring(0, 80) + '...' : block.data.text);
+        this.blocks.filter(b => b.type === 'quest').forEach(quest => {
+            const el = this.createQuestBlockElement(quest);
+            container.appendChild(el);
+        });
+        
+        requestAnimationFrame(() => this.renderConnections());
+    }
+    
+    createNodeElement(node) {
+        const div = document.createElement('div');
+        div.className = `dialogue-node ${node.id === this.selectedNode ? 'selected' : ''} ${node.collapsed ? 'collapsed' : ''}`;
+        div.dataset.nodeId = node.id;
+        div.dataset.action = 'select-node';
+        div.dataset.id = node.id;
+        div.style.left = `${node.x}px`;
+        div.style.top = `${node.y}px`;
+        
+        const previewText = this.escapeHtml(node.text.length > 80 ? node.text.substring(0, 80) + '...' : node.text);
         
         div.innerHTML = `
             <div class="node-header">
-                <span class="node-header-text">📝 ${this.escapeHtml(block.id)}</span>
+                <button class="collapse-btn" data-action="toggle-collapse" data-id="${node.id}">
+                    ${node.collapsed ? '▶' : '▼'}
+                </button>
+                <span class="node-header-text">${this.escapeHtml(node.id)}</span>
             </div>
             <div class="node-content">
                 <div class="node-text">${previewText}</div>
-                ${block.data.options.map((opt) => {
+                ${node.options.map((opt) => {
                     const handleClass = this.getOptionHandleClass(opt);
                     const iconHtml = opt.icon ? this.getIconHtml(opt.icon, 16) : '';
                     return `
-                    <div class="option ${this.selectedOption === opt.id ? 'selected' : ''} ${this.getOptionClass(opt)}" 
+                    <div class="option ${opt.id === this.selectedOption ? 'selected' : ''} ${this.getOptionClass(opt)}" 
                          data-action="select-option" 
                          data-option-id="${opt.id}">
                         ${iconHtml}
                         <span class="option-text">${this.escapeHtml(opt.text.length > 25 ? opt.text.substring(0, 25) + '...' : opt.text)}</span>
                         <div class="option-draw-handle ${handleClass}" 
                              data-draw-handle 
-                             data-block-id="${block.id}" 
+                             data-node-id="${node.id}" 
                              data-option-id="${opt.id}"></div>
                     </div>
                 `;
                 }).join('')}
             </div>
         `;
-        this.setupNodeDrag(div, block);
-        this.setupDrawHandles(div, block);
+        
+        this.setupNodeDrag(div, node);
+        this.setupDrawHandles(div, node);
         return div;
     }
     
-    createQuestElement(block) {
+    createQuestBlockElement(quest) {
         const div = document.createElement('div');
-        div.className = `quest-node ${this.selectedBlock && this.selectedBlock.id === block.id ? 'selected' : ''}`;
-        div.dataset.blockId = block.id;
-        div.dataset.action = 'select-block';
-        div.dataset.id = block.id;
-        div.dataset.type = 'quest';
-        div.style.left = `${block.x}px`;
-        div.style.top = `${block.y}px`;
+        div.className = `quest-block ${quest.id === this.selectedQuest ? 'selected' : ''}`;
+        div.dataset.questId = quest.id;
+        div.dataset.action = 'select-quest-block';
+        div.dataset.id = quest.id;
+        div.style.left = `${quest.x}px`;
+        div.style.top = `${quest.y}px`;
         
-        const targetsText = block.data.targets.map(t => `${t.prefab} x${t.amount}`).join(', ');
-        const rewardsText = block.data.rewards.map(r => `${r.type}: ${r.prefab} x${r.amount}`).join(', ');
+        const summary = [];
+        if (quest.targets && quest.targets.length > 0) {
+            summary.push(`Цели: ${quest.targets.map(t => `${t.prefab} x${t.amount}`).join(', ')}`);
+        }
+        if (quest.rewards && quest.rewards.length > 0) {
+            summary.push(`Награды: ${quest.rewards.map(r => `${r.type}: ${r.prefab} x${r.amount}`).join(', ')}`);
+        }
         
         div.innerHTML = `
             <div class="node-header">
-                <span class="node-header-text">📜 ${this.escapeHtml(block.id)}${block.data.autocomplete ? ' ★' : ''}</span>
+                <span class="node-header-text">📜 ${this.escapeHtml(quest.id)}</span>
+                <span class="quest-type-badge">${quest.questType || 'Kill'}</span>
             </div>
-            <div class="node-content">
-                <div class="quest-node-info">
-                    <div class="quest-type">${block.data.questType}</div>
-                    <div class="quest-name">${this.escapeHtml(block.data.name)}</div>
-                    ${targetsText ? `<div class="quest-targets">🎯 ${this.escapeHtml(targetsText)}</div>` : ''}
-                    ${rewardsText ? `<div class="quest-rewards">🎁 ${this.escapeHtml(rewardsText)}</div>` : ''}
-                </div>
+            <div class="quest-summary">
+                <div class="quest-summary-item"><strong>${this.escapeHtml(quest.name || '')}</strong></div>
+                ${summary.map(s => `<div class="quest-summary-item">${this.escapeHtml(s)}</div>`).join('')}
             </div>
         `;
-        this.setupNodeDrag(div, block);
+        
+        this.setupQuestBlockDrag(div, quest);
         return div;
-    }
-    
-    getOptionClass(opt) {
-        if (opt.conditions.length > 0) return 'has-conditions';
-        if (opt.commands.length > 0) return 'has-commands';
-        if (opt.transition || opt.questLink) return 'has-transition';
-        return '';
-    }
-    
-    getOptionHandleClass(opt) {
-        if (opt.conditions.length > 0) return 'has-conditions';
-        if (opt.commands.length > 0) return 'has-commands';
-        if (opt.transition || opt.questLink) return 'has-transition';
-        return '';
     }
     
     getIconHtml(iconId, size = 16) {
@@ -1343,52 +1391,108 @@ class DialogueEditor {
         return `<img src="${iconUrl}" class="option-icon" style="width: ${size}px; height: ${size}px;" alt="${iconId}" title="${iconId}" onerror="this.src='https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png'">`;
     }
     
-    setupNodeDrag(element, block) {
+    getOptionClass(opt) {
+        if (opt.conditions.length > 0) return 'has-conditions';
+        if (opt.commands.length > 0) return 'has-commands';
+        if (opt.transition) return 'has-transition';
+        return 'is-end';
+    }
+    
+    getOptionHandleClass(opt) {
+        if (opt.conditions.length > 0) return 'has-conditions';
+        if (opt.commands.length > 0) return 'has-commands';
+        if (opt.transition) return 'has-transition';
+        return 'is-end';
+    }
+    
+    setupNodeDrag(element, node) {
         let isDragging = false;
         let startX = 0, startY = 0;
-        let startBlockX = 0, startBlockY = 0;
+        let startNodeX = 0, startNodeY = 0;
+        
         const onMouseDown = (e) => {
             if (e.target.closest('[data-draw-handle]') || e.target.closest('button') || e.target.closest('.option') || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-            this.selectBlock(block.id, block.type);
+            
+            this.selectNode(node.id);
+            
             isDragging = true;
             startX = e.clientX;
             startY = e.clientY;
-            startBlockX = block.x;
-            startBlockY = block.y;
+            startNodeX = node.x;
+            startNodeY = node.y;
             e.stopPropagation();
             e.preventDefault();
         };
+        
         const onMouseMove = (e) => {
             if (!isDragging) return;
             const dx = (e.clientX - startX) / this.currentZoom;
             const dy = (e.clientY - startY) / this.currentZoom;
-            block.x = startBlockX + dx;
-            block.y = startBlockY + dy;
-            element.style.left = `${block.x}px`;
-            element.style.top = `${block.y}px`;
+            node.x = startNodeX + dx;
+            node.y = startNodeY + dy;
+            element.style.left = `${node.x}px`;
+            element.style.top = `${node.y}px`;
             this.renderConnections();
         };
+        
         const onMouseUp = () => { isDragging = false; };
+        
         element.addEventListener('mousedown', onMouseDown);
         window.addEventListener('mousemove', onMouseMove);
         window.addEventListener('mouseup', onMouseUp);
     }
     
-    setupDrawHandles(element, block) {
+    setupQuestBlockDrag(element, quest) {
+        let isDragging = false;
+        let startX = 0, startY = 0;
+        let startNodeX = 0, startNodeY = 0;
+        
+        const onMouseDown = (e) => {
+            this.selectQuest(quest.id);
+            
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startNodeX = quest.x;
+            startNodeY = quest.y;
+            e.stopPropagation();
+            e.preventDefault();
+        };
+        
+        const onMouseMove = (e) => {
+            if (!isDragging) return;
+            const dx = (e.clientX - startX) / this.currentZoom;
+            const dy = (e.clientY - startY) / this.currentZoom;
+            quest.x = startNodeX + dx;
+            quest.y = startNodeY + dy;
+            element.style.left = `${quest.x}px`;
+            element.style.top = `${quest.y}px`;
+            this.renderConnections();
+        };
+        
+        const onMouseUp = () => { isDragging = false; };
+        
+        element.addEventListener('mousedown', onMouseDown);
+        window.addEventListener('mousemove', onMouseMove);
+        window.addEventListener('mouseup', onMouseUp);
+    }
+    
+    setupDrawHandles(element, node) {
         const handles = element.querySelectorAll('[data-draw-handle]');
         handles.forEach(handle => {
             handle.addEventListener('mousedown', (e) => {
                 e.stopPropagation();
                 e.preventDefault();
-                this.startDrawing(e, block.id, handle.dataset.optionId);
+                this.startDrawing(e, node.id, handle.dataset.optionId);
             });
         });
     }
     
-    startDrawing(e, blockId, optionId) {
+    startDrawing(e, nodeId, optionId) {
         this.isDrawingCurve = true;
-        this.drawingFromOption = { blockId, optionId };
+        this.drawingFromOption = { nodeId, optionId, type: 'dialogue' };
         this.els.canvasContainer.classList.add('drawing-mode');
+        
         const svg = this.els.connectionLayer;
         this.drawingTempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
         this.drawingTempPath.setAttribute('fill', 'none');
@@ -1402,59 +1506,83 @@ class DialogueEditor {
     
     onDrawMouseMove(e) {
         if (!this.isDrawingCurve || !this.drawingTempPath) return;
+        
         const containerRect = this.els.canvasContainer.getBoundingClientRect();
         const mouseX = (e.clientX - containerRect.left - this.canvasOffset.x) / this.currentZoom;
         const mouseY = (e.clientY - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-        const optionEl = this.els.nodeContainer.querySelector(`[data-option-id="${this.drawingFromOption.optionId}"]`);
-        if (!optionEl) return;
-        const handle = optionEl.querySelector('[data-draw-handle]');
-        if (!handle) return;
-        const handleRect = handle.getBoundingClientRect();
-        const sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-        const sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+        
+        let sx, sy;
+        if (this.drawingFromOption.type === 'dialogue') {
+            const optionEl = this.els.nodeContainer.querySelector(`[data-option-id="${this.drawingFromOption.optionId}"]`);
+            if (!optionEl) return;
+            const handle = optionEl.querySelector('[data-draw-handle]');
+            if (!handle) return;
+            const handleRect = handle.getBoundingClientRect();
+            sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+            sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+        } else {
+            const questEl = this.els.questContainer.querySelector(`[data-quest-id="${this.drawingFromOption.questId}"]`);
+            if (!questEl) return;
+            const rect = questEl.getBoundingClientRect();
+            sx = (rect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+            sy = (rect.top + rect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+        }
+        
         const pathD = this.getCurvePath(sx, sy, mouseX, mouseY);
         this.drawingTempPath.setAttribute('d', pathD);
     }
     
     onDrawMouseUp(e) {
         if (!this.isDrawingCurve) return;
-        const target = this.findDrawTarget(e);
-        const block = this.blocks.find(b => b.id === this.drawingFromOption.blockId);
-        if (!block) { this.cancelDrawing(); return; }
-        const option = block.data.options.find(o => o.id === this.drawingFromOption.optionId);
-        if (!option) { this.cancelDrawing(); return; }
         
-        if (target.type === 'dialogue') {
-            option.transition = target.id;
-            option.questLink = '';
-        } else if (target.type === 'quest') {
-            option.questLink = target.id;
-            option.transition = '';
-        } else if (target.type === 'quest-dependency') {
-            // Квест -> Квест: добавляем OtherQuest в целевой квест
-            const targetBlock = this.blocks.find(b => b.id === target.id);
-            if (targetBlock && targetBlock.type === 'quest') {
-                if (!targetBlock.data.requirements.some(r => r.type === 'OtherQuest' && r.param === block.id)) {
-                    targetBlock.data.requirements.push({ type: 'OtherQuest', param: block.id });
+        const target = this.findDrawTarget(e);
+        
+        if (this.drawingFromOption.type === 'dialogue') {
+            const node = this.nodes.get(this.drawingFromOption.nodeId);
+            if (!node) { this.cancelDrawing(); return; }
+            const option = node.options.find(o => o.id === this.drawingFromOption.optionId);
+            if (!option) { this.cancelDrawing(); return; }
+            
+            if (target.type === 'node') {
+                option.transition = target.id;
+            } else if (target.type === 'quest') {
+                // Диалог → Квест: добавляем команду OpenUI
+                const openUiCommand = { type: 'OpenUI', params: ['Quests', target.id] };
+                option.commands = option.commands.filter(c => !(c.type === 'OpenUI' && c.params[1] === target.id));
+                option.commands.push(openUiCommand);
+                option.transition = '';
+            } else {
+                option.transition = '';
+                option.commands = option.commands.filter(c => c.type !== 'OpenUI');
+            }
+        } else if (this.drawingFromOption.type === 'quest') {
+            // Квест → Квест: добавляем OtherQuest в целевой квест
+            if (target.type === 'quest' && target.id !== this.drawingFromOption.questId) {
+                const targetQuest = this.quests.get(target.id);
+                if (targetQuest) {
+                    targetQuest.requirements = targetQuest.requirements.filter(r => r.type !== 'OtherQuest');
+                    targetQuest.requirements.push({ type: 'OtherQuest', params: [this.drawingFromOption.questId] });
+                    this.renderQuestBlocks();
                 }
             }
-        } else {
-            option.transition = '';
-            option.questLink = '';
         }
+        
         this.cancelDrawing();
         this.render();
         this.syncCodeView();
-        if (this.selectedOption === option.id) {
-            this.selectOption(option.id);
-        }
     }
     
     findDrawTarget(e) {
-        const nodeEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-block-id]');
-        if (nodeEl && nodeEl.dataset.blockId !== this.drawingFromOption.blockId) {
-            return { type: nodeEl.dataset.type, id: nodeEl.dataset.blockId };
+        const nodeEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('.dialogue-node');
+        if (nodeEl) {
+            return { type: 'node', id: nodeEl.dataset.nodeId };
         }
+        
+        const questEl = document.elementFromPoint(e.clientX, e.clientY)?.closest('.quest-block');
+        if (questEl) {
+            return { type: 'quest', id: questEl.dataset.questId };
+        }
+        
         return { type: 'end' };
     }
     
@@ -1469,10 +1597,11 @@ class DialogueEditor {
     }
     
     renderNodeOptionsList() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block || block.type !== 'dialogue') return;
-        this.els.nodeOptionsList.innerHTML = block.data.options.map((opt, i) => `
-            <div class="option-list-item ${this.selectedOption === opt.id ? 'selected' : ''}" 
+        const node = this.nodes.get(this.selectedNode);
+        if (!node) return;
+        
+        this.els.nodeOptionsList.innerHTML = node.options.map((opt, i) => `
+            <div class="option-list-item ${opt.id === this.selectedOption ? 'selected' : ''}" 
                  data-action="select-option" 
                  data-option-id="${opt.id}">
                 <span class="option-list-text">${i + 1}. ${this.escapeHtml(opt.text)}</span>
@@ -1483,72 +1612,93 @@ class DialogueEditor {
         `).join('');
     }
     
-    renderQuestTargetsList() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        this.els.questTargetsList.innerHTML = block.data.targets.map((t, i) => `
-            <div class="quest-target-item">
-                <span>${this.escapeHtml(t.prefab)} x${t.amount}${t.level ? `, lvl ${t.level}` : ''}</span>
-                <button data-action="delete-quest-target" data-index="${i}">×</button>
-            </div>
-        `).join('');
-    }
-    
-    renderQuestRewardsList() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        this.els.questRewardsList.innerHTML = block.data.rewards.map((r, i) => `
-            <div class="quest-reward-item">
-                <span>${r.type}: ${this.escapeHtml(r.prefab)} x${r.amount}${r.level ? `, lvl ${r.level}` : ''}</span>
-                <button data-action="delete-quest-reward" data-index="${i}">×</button>
-            </div>
-        `).join('');
-    }
-    
-    renderQuestRequirementsList() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        this.els.questRequirementsList.innerHTML = block.data.requirements.map((r, i) => `
-            <div class="quest-requirement-item">
-                <span>${r.type}: ${this.escapeHtml(r.param)}</span>
-                <button data-action="delete-quest-req" data-index="${i}">×</button>
-            </div>
-        `).join('');
-    }
-    
     renderConnections() {
         const svg = this.els.connectionLayer;
-        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .connection-dot').forEach(el => el.remove());
+        svg.querySelectorAll('path:not([stroke-dasharray="8 4"]), .end-cloud-group, .quest-cloud-group, .connection-dot').forEach(el => el.remove());
         
-        this.blocks.forEach(block => {
-            if (block.type === 'dialogue') {
-                const nodeEl = this.els.nodeContainer.querySelector(`[data-block-id="${block.id}"][data-type="dialogue"]`);
-                if (!nodeEl) return;
-                block.data.options.forEach((opt) => {
-                    const optionEl = nodeEl.querySelector(`[data-option-id="${opt.id}"]`);
-                    if (!optionEl) return;
-                    const handle = optionEl.querySelector('[data-draw-handle]');
-                    if (!handle) return;
-                    const handleRect = handle.getBoundingClientRect();
-                    const containerRect = this.els.canvasContainer.getBoundingClientRect();
-                    const sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-                    const sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+        // Рендерим связи для диалогов
+        this.nodes.forEach(node => {
+            const nodeEl = this.els.nodeContainer.querySelector(`[data-node-id="${node.id}"]`);
+            if (!nodeEl) return;
+            
+            node.options.forEach((opt) => {
+                const optionEl = nodeEl.querySelector(`[data-option-id="${opt.id}"]`);
+                if (!optionEl) return;
+                
+                const handle = optionEl.querySelector('[data-draw-handle]');
+                if (!handle) return;
+                
+                const handleRect = handle.getBoundingClientRect();
+                const containerRect = this.els.canvasContainer.getBoundingClientRect();
+                
+                const sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                const sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                
+                const colorInfo = this.getOptionColorInfo(opt);
+                
+                if (opt.transition && this.nodes.has(opt.transition)) {
+                    const targetEl = this.els.nodeContainer.querySelector(`[data-node-id="${opt.transition}"]`);
+                    if (!targetEl) return;
                     
-                    if (opt.transition) {
-                        const targetEl = this.els.nodeContainer.querySelector(`[data-block-id="${opt.transition}"]`);
-                        if (!targetEl) return;
-                        const tRect = targetEl.getBoundingClientRect();
+                    const tRect = targetEl.getBoundingClientRect();
+                    const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                    
+                    const pathD = this.getCurvePath(sx, sy, tx, ty);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', colorInfo.color);
+                    path.setAttribute('stroke-width', '2.5');
+                    path.setAttribute('marker-end', `url(#arrowhead-${colorInfo.marker})`);
+                    path.setAttribute('opacity', '0.85');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+                    
+                    const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                    dot.setAttribute('class', 'connection-dot');
+                    dot.setAttribute('cx', sx);
+                    dot.setAttribute('cy', sy);
+                    dot.setAttribute('r', '4');
+                    dot.setAttribute('fill', colorInfo.color);
+                    dot.setAttribute('stroke', '#fff');
+                    dot.setAttribute('stroke-width', '1');
+                    svg.appendChild(dot);
+                    
+                } else {
+                    // Проверяем, есть ли команда OpenUI, Quests, ID
+                    const openUiCommand = opt.commands.find(c => c.type === 'OpenUI' && c.params[0] === 'Quests');
+                    if (openUiCommand && this.quests.has(openUiCommand.params[1])) {
+                        const questId = openUiCommand.params[1];
+                        const questEl = this.els.questContainer.querySelector(`[data-quest-id="${questId}"]`);
+                        if (!questEl) return;
+                        
+                        const tRect = questEl.getBoundingClientRect();
                         const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
                         const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-                        this.drawConnection(svg, sx, sy, tx, ty, '#3498db', 'blue');
-                    } else if (opt.questLink) {
-                        const targetEl = this.els.nodeContainer.querySelector(`[data-block-id="${opt.questLink}"]`);
-                        if (!targetEl) return;
-                        const tRect = targetEl.getBoundingClientRect();
-                        const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-                        const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-                        this.drawConnection(svg, sx, sy, tx, ty, '#f39c12', 'orange');
+                        
+                        const pathD = this.getCurvePath(sx, sy, tx, ty);
+                        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                        path.setAttribute('d', pathD);
+                        path.setAttribute('fill', 'none');
+                        path.setAttribute('stroke', '#f39c12');
+                        path.setAttribute('stroke-width', '2.5');
+                        path.setAttribute('marker-end', 'url(#arrowhead-orange)');
+                        path.setAttribute('opacity', '0.85');
+                        path.setAttribute('stroke-linecap', 'round');
+                        svg.appendChild(path);
+                        
+                        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        dot.setAttribute('class', 'connection-dot');
+                        dot.setAttribute('cx', sx);
+                        dot.setAttribute('cy', sy);
+                        dot.setAttribute('r', '4');
+                        dot.setAttribute('fill', '#f39c12');
+                        dot.setAttribute('stroke', '#fff');
+                        dot.setAttribute('stroke-width', '1');
+                        svg.appendChild(dot);
                     } else {
+                        // Конец
                         const endX = sx + 120;
                         const endY = sy;
                         const pathD = this.getCurvePath(sx, sy, endX, endY);
@@ -1560,59 +1710,70 @@ class DialogueEditor {
                         path.setAttribute('stroke-dasharray', '6 4');
                         path.setAttribute('marker-end', 'url(#arrowhead-gray)');
                         path.setAttribute('opacity', '0.7');
+                        path.setAttribute('stroke-linecap', 'round');
                         svg.appendChild(path);
+                        
+                        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        dot.setAttribute('class', 'connection-dot');
+                        dot.setAttribute('cx', sx);
+                        dot.setAttribute('cy', sy);
+                        dot.setAttribute('r', '4');
+                        dot.setAttribute('fill', '#95a5a6');
+                        dot.setAttribute('stroke', '#fff');
+                        dot.setAttribute('stroke-width', '1');
+                        svg.appendChild(dot);
+                        
                         this.renderEndCloud(endX, endY, svg);
                     }
-                });
-            } else if (block.type === 'quest') {
-                // Рисуем зависимости OtherQuest
-                block.data.requirements.forEach(req => {
-                    if (req.type === 'OtherQuest') {
-                        const sourceBlock = this.blocks.find(b => b.id === req.param);
-                        if (!sourceBlock) return;
-                        const sourceEl = this.els.nodeContainer.querySelector(`[data-block-id="${sourceBlock.id}"]`);
-                        const targetEl = this.els.nodeContainer.querySelector(`[data-block-id="${block.id}"]`);
-                        if (!sourceEl || !targetEl) return;
-                        const sRect = sourceEl.getBoundingClientRect();
-                        const tRect = targetEl.getBoundingClientRect();
-                        const containerRect = this.els.canvasContainer.getBoundingClientRect();
-                        const sx = (sRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-                        const sy = (sRect.top + sRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-                        const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
-                        const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-                        this.drawConnection(svg, sx, sy, tx, ty, '#27ae60', 'green', true);
-                    }
-                });
+                }
+            });
+        });
+        
+        // Рендерим связи между квестами (OtherQuest)
+        this.quests.forEach(quest => {
+            const otherQuestReq = quest.requirements.find(r => r.type === 'OtherQuest');
+            if (otherQuestReq && this.quests.has(otherQuestReq.params[0])) {
+                const sourceQuestId = otherQuestReq.params[0];
+                const sourceQuestEl = this.els.questContainer.querySelector(`[data-quest-id="${sourceQuestId}"]`);
+                const targetQuestEl = this.els.questContainer.querySelector(`[data-quest-id="${quest.id}"]`);
+                
+                if (sourceQuestEl && targetQuestEl) {
+                    const sRect = sourceQuestEl.getBoundingClientRect();
+                    const tRect = targetQuestEl.getBoundingClientRect();
+                    const containerRect = this.els.canvasContainer.getBoundingClientRect();
+                    
+                    const sx = (sRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const sy = (sRect.top + sRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                    const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                    
+                    const pathD = this.getCurvePath(sx, sy, tx, ty);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#27ae60');
+                    path.setAttribute('stroke-width', '2.5');
+                    path.setAttribute('stroke-dasharray', '8 4');
+                    path.setAttribute('marker-end', 'url(#arrowhead-green)');
+                    path.setAttribute('opacity', '0.85');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+                }
             }
         });
     }
     
-    drawConnection(svg, sx, sy, tx, ty, color, markerId, dashed = false) {
-        const pathD = this.getCurvePath(sx, sy, tx, ty);
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', pathD);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', color);
-        path.setAttribute('stroke-width', '2.5');
-        if (dashed) path.setAttribute('stroke-dasharray', '6 4');
-        path.setAttribute('marker-end', `url(#arrowhead-${markerId})`);
-        path.setAttribute('opacity', '0.85');
-        path.setAttribute('stroke-linecap', 'round');
-        svg.appendChild(path);
-        const dot = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        dot.setAttribute('class', 'connection-dot');
-        dot.setAttribute('cx', sx);
-        dot.setAttribute('cy', sy);
-        dot.setAttribute('r', '4');
-        dot.setAttribute('fill', color);
-        dot.setAttribute('stroke', '#fff');
-        dot.setAttribute('stroke-width', '1');
-        svg.appendChild(dot);
+    getOptionColorInfo(opt) {
+        if (opt.conditions.length > 0) return { color: '#e74c3c', marker: 'red' };
+        if (opt.commands.length > 0) return { color: '#27ae60', marker: 'green' };
+        if (opt.transition) return { color: '#3498db', marker: 'blue' };
+        return { color: '#95a5a6', marker: 'gray' };
     }
     
     getCurvePath(sx, sy, tx, ty) {
         const dx = tx - sx;
         const dy = ty - sy;
+        
         if (dx > 30) {
             const cpOffset = Math.max(50, dx * 0.4);
             return `M ${sx} ${sy} C ${sx + cpOffset} ${sy}, ${tx - cpOffset} ${ty}, ${tx} ${ty}`;
@@ -1621,13 +1782,17 @@ class DialogueEditor {
             const goUp = sy > 200;
             const vertDir = goUp ? -1 : 1;
             const midY = sy + vertDir * loopOffset;
-            return `M ${sx} ${sy} C ${sx + loopOffset} ${sy}, ${sx + loopOffset} ${midY}, ${(sx + tx) / 2} ${midY} S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
+            
+            return `M ${sx} ${sy} ` +
+                `C ${sx + loopOffset} ${sy}, ${sx + loopOffset} ${midY}, ${(sx + tx) / 2} ${midY} ` +
+                `S ${tx - loopOffset} ${ty}, ${tx} ${ty}`;
         }
     }
     
     renderEndCloud(x, y, svg) {
         const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         g.setAttribute('class', 'end-cloud-group');
+        
         const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
         rect.setAttribute('x', x);
         rect.setAttribute('y', y - 16);
@@ -1639,6 +1804,7 @@ class DialogueEditor {
         rect.setAttribute('stroke', '#95a5a6');
         rect.setAttribute('stroke-width', '1.5');
         g.appendChild(rect);
+        
         const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         text.setAttribute('x', x + 40);
         text.setAttribute('y', y + 4);
@@ -1649,20 +1815,21 @@ class DialogueEditor {
         text.setAttribute('font-style', 'italic');
         text.textContent = translations[this.lang].legendEnd;
         g.appendChild(text);
+        
         svg.appendChild(g);
     }
     
     renderQuestPalette() {
-        this.els.questPaletteList.innerHTML = this.blocks.filter(b => b.type === 'quest').map(q => `
-            <div class="quest-palette-item" data-block-id="${q.id}">
-                <div class="quest-palette-item-name">${this.escapeHtml(q.data.name)}</div>
+        this.els.questPaletteList.innerHTML = Array.from(this.quests.values()).map(q => `
+            <div class="quest-palette-item" data-quest-id="${q.id}">
+                <div class="quest-palette-item-name">${this.escapeHtml(q.name)}</div>
                 <div class="quest-palette-item-id">${this.escapeHtml(q.id)}</div>
             </div>
         `).join('');
     }
     
     startCanvasDrag(e) {
-        if (e.target.closest('.dialogue-node') || e.target.closest('.quest-node') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
+        if (e.target.closest('.dialogue-node') || e.target.closest('.quest-block') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
         this.isCanvasDragging = true;
         this.canvasStartPos = { x: e.clientX - this.canvasOffset.x, y: e.clientY - this.canvasOffset.y };
     }
@@ -1683,6 +1850,8 @@ class DialogueEditor {
         this.els.connectionLayer.style.transformOrigin = origin;
         this.els.nodeContainer.style.transform = transform;
         this.els.nodeContainer.style.transformOrigin = origin;
+        this.els.questContainer.style.transform = transform;
+        this.els.questContainer.style.transformOrigin = origin;
     }
     
     zoom(delta) {
@@ -1697,38 +1866,45 @@ class DialogueEditor {
     }
     
     showPreview() {
-        if (!this.selectedBlock || this.selectedBlock.type !== 'dialogue') { alert('Select a dialogue first'); return; }
+        if (!this.selectedNode) { alert('Select a dialogue first'); return; }
         this.previewHistory = [];
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        this.currentPreviewNode = block;
-        this.els.previewContent.innerHTML = this.generatePreview(block, true);
+        this.currentPreviewNode = this.nodes.get(this.selectedNode);
+        this.els.previewContent.innerHTML = this.generatePreview(this.currentPreviewNode, true);
         this.openModal('previewModal');
     }
     
-    generatePreview(block, isRoot = false) {
-        const processedText = this.processTextForPreview(block.data.text);
+    generatePreview(node, isRoot = false) {
+        const processedText = this.processTextForPreview(node.text);
         let html = '';
+        
         if (!isRoot) {
             html += `<div class="preview-back"><button data-action="preview-go-back">← ${translations[this.lang].back}</button></div>`;
         }
+        
         html += `
-            <div class="preview-profile">[ ${this.escapeHtml(block.id)} ]</div>
+            <div class="preview-profile">[ ${this.escapeHtml(node.id)} ]</div>
             <div class="preview-npc-text">${processedText}</div>
             <div class="preview-options">
         `;
-        block.data.options.forEach((option, index) => {
+        
+        node.options.forEach((option, index) => {
             const processedOptionText = this.processTextForPreview(option.text);
             let transitionText = '';
             let onClickAttr = '';
+            
             if (option.transition) {
                 transitionText = `→ ${this.escapeHtml(option.transition)}`;
                 onClickAttr = `data-action="navigate" data-target="${this.escapeHtml(option.transition)}"`;
-            } else if (option.questLink) {
-                const quest = this.blocks.find(b => b.id === option.questLink);
-                transitionText = `📜 ${quest ? this.escapeHtml(quest.data.name) : option.questLink}`;
-                onClickAttr = '';
+            } else {
+                const openUiCommand = option.commands.find(c => c.type === 'OpenUI' && c.params[0] === 'Quests');
+                if (openUiCommand) {
+                    const quest = this.quests.get(openUiCommand.params[1]);
+                    transitionText = `📜 ${quest ? this.escapeHtml(quest.name) : openUiCommand.params[1]}`;
+                }
             }
+            
             const iconHtml = option.icon ? this.getIconHtml(option.icon, 18) : '';
+            
             html += `
                 <div class="preview-option" ${onClickAttr}>
                     ${iconHtml}
@@ -1738,16 +1914,17 @@ class DialogueEditor {
                 </div>
             `;
         });
+        
         html += '</div>';
         return html;
     }
     
     previewNavigate(nodeId) {
-        const targetBlock = this.blocks.find(b => b.id === nodeId);
-        if (!targetBlock) return;
+        const targetNode = this.nodes.get(nodeId);
+        if (!targetNode) return;
         this.previewHistory.push(this.currentPreviewNode);
-        this.currentPreviewNode = targetBlock;
-        this.els.previewContent.innerHTML = this.generatePreview(targetBlock, false);
+        this.currentPreviewNode = targetNode;
+        this.els.previewContent.innerHTML = this.generatePreview(targetNode, false);
     }
     
     previewGoBack() {
@@ -1775,10 +1952,6 @@ class DialogueEditor {
         this.renderParamInputs(this.els.commandParams, this.getCommandParams(this.els.commandType.value));
     }
     
-    updateRequirementParams() {
-        this.renderParamInputs(this.els.requirementParams, this.getRequirementParams(this.els.requirementType.value));
-    }
-    
     renderParamInputs(container, params) {
         container.innerHTML = params.map(name => `
             <div class="form-group">
@@ -1790,109 +1963,71 @@ class DialogueEditor {
     
     getConditionParams(type) {
         const map = {
-            'HasItem': ['ItemPrefab', 'Amount', 'ItemLevel'], 'NotHasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
-            'SkillMore': ['SkillName', 'MinLevel'], 'SkillLess': ['SkillName', 'MaxLevel'],
-            'QuestFinished': ['QuestName'], 'NotFinished': ['QuestName'],
-            'HasQuest': ['QuestName'], 'NotHasQuest': ['QuestName'],
-            'GlobalKey': ['KeyName'], 'NotGlobalKey': ['KeyName']
+            'HasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
+            'NotHasItem': ['ItemPrefab', 'Amount', 'ItemLevel'],
+            'SkillMore': ['SkillName', 'MinLevel'],
+            'SkillLess': ['SkillName', 'MaxLevel'],
+            'QuestFinished': ['QuestName'],
+            'NotFinished': ['QuestName'],
+            'HasQuest': ['QuestName'],
+            'NotHasQuest': ['QuestName'],
+            'GlobalKey': ['KeyName'],
+            'NotGlobalKey': ['KeyName'],
+            'OtherQuest': ['QuestID'],
+            'IsVIP': [],
+            'Time': ['Seconds']
         };
         return map[type] || [];
     }
     
     getCommandParams(type) {
         const map = {
-            'GiveItem': ['ItemPrefab', 'Amount', 'Level'], 'RemoveItem': ['ItemPrefab', 'Amount'],
-            'GiveQuest': ['QuestName'], 'FinishQuest': ['QuestID'],
-            'RemoveQuest': ['QuestName', 'TriggerEvent'], 'OpenUI': ['UIType', 'Profile'],
-            'PlaySound': ['SoundName'], 'Spawn': ['PrefabName', 'Amount', 'Level'],
-            'Teleport': ['X', 'Y', 'Z', 'TeleportWithOre'], 'Damage': ['Amount'],
-            'Heal': ['Amount'], 'GiveBuff': ['BuffName', 'Duration'], 'AddPin': ['PinName', 'X', 'Y', 'Z']
-        };
-        return map[type] || [];
-    }
-    
-    getRequirementParams(type) {
-        const map = {
-            'Skill': ['SkillName', 'MinLevel'],
-            'OtherQuest': ['QuestID'],
-            'GlobalKey': ['KeyName'],
-            'EpicMMO_Level': ['Level'],
-            'HasItem': ['ItemPrefab'],
-            'NotFinished': ['QuestID'],
-            'IsVIP': [],
-            'MH_Level': ['Level'],
-            'Time': ['Seconds'],
-            'HasAchievement': ['AchievementID'],
-            'CustomValueMore': ['ValueName', 'Value'],
-            'CustomValueLess': ['ValueName', 'Value']
+            'GiveItem': ['ItemPrefab', 'Amount', 'Level'],
+            'RemoveItem': ['ItemPrefab', 'Amount'],
+            'GiveQuest': ['QuestName'],
+            'FinishQuest': ['QuestID'],
+            'RemoveQuest': ['QuestName', 'TriggerEvent'],
+            'OpenUI': ['UIType', 'Profile'],
+            'PlaySound': ['SoundName'],
+            'Spawn': ['PrefabName', 'Amount', 'Level'],
+            'Teleport': ['X', 'Y', 'Z', 'TeleportWithOre'],
+            'Damage': ['Amount'],
+            'Heal': ['Amount'],
+            'GiveBuff': ['BuffName', 'Duration'],
+            'AddPin': ['PinName', 'X', 'Y', 'Z']
         };
         return map[type] || [];
     }
     
     saveCondition() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const option = block.data.options.find(o => o.id === this.selectedOption);
+        const node = this.nodes.get(this.selectedNode);
+        if (!node || !this.selectedOption) return;
+        const option = node.options.find(o => o.id === this.selectedOption);
         if (!option) return;
+        
         const type = this.els.conditionType.value;
         const params = Array.from(this.els.conditionParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
+        
         option.conditions.push({ type, params });
         this.renderConditionsList(option.conditions);
         this.closeAllModals();
-        this.render();
+        this.renderNodes();
         this.syncCodeView();
     }
     
     saveCommand() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const option = block.data.options.find(o => o.id === this.selectedOption);
+        const node = this.nodes.get(this.selectedNode);
+        if (!node || !this.selectedOption) return;
+        const option = node.options.find(o => o.id === this.selectedOption);
         if (!option) return;
+        
         const type = this.els.commandType.value;
         const params = Array.from(this.els.commandParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
+        
         option.commands.push({ type, params });
         this.renderCommandsList(option.commands);
         this.closeAllModals();
-        this.render();
-        this.syncCodeView();
-    }
-    
-    saveQuestTarget() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const prefab = this.targetPrefabSelector ? this.targetPrefabSelector.input.value.trim() : '';
-        if (!prefab) { alert('Enter prefab'); return; }
-        block.data.targets.push({ prefab, amount: this.els.targetAmount.value || '1', level: this.els.targetLevel.value || '' });
-        this.closeAllModals();
-        this.renderQuestTargetsList();
-        this.syncCodeView();
-    }
-    
-    saveQuestReward() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const prefab = this.els.rewardPrefab.value.trim();
-        if (!prefab) { alert('Enter prefab'); return; }
-        block.data.rewards.push({ 
-            type: this.els.rewardType.value, 
-            prefab, 
-            amount: this.els.rewardAmount.value || '1',
-            level: this.els.rewardLevel.value || ''
-        });
-        this.closeAllModals();
-        this.renderQuestRewardsList();
-        this.syncCodeView();
-    }
-    
-    saveQuestRequirement() {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const type = this.els.requirementType.value;
-        const params = Array.from(this.els.requirementParams.querySelectorAll('.param-input')).map(i => i.value).filter(v => v);
-        const param = params.join(', ');
-        block.data.requirements.push({ type, param });
-        this.closeAllModals();
-        this.renderQuestRequirementsList();
+        this.renderNodes();
         this.syncCodeView();
     }
     
@@ -1915,161 +2050,198 @@ class DialogueEditor {
     }
     
     removeCondition(index) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const option = block.data.options.find(o => o.id === this.selectedOption);
-        if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); this.syncCodeView(); }
+        const node = this.nodes.get(this.selectedNode);
+        if (!node || !this.selectedOption) return;
+        const option = node.options.find(o => o.id === this.selectedOption);
+        if (option) { option.conditions.splice(index, 1); this.renderConditionsList(option.conditions); this.renderNodes(); this.syncCodeView(); }
     }
     
     removeCommand(index) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (!block) return;
-        const option = block.data.options.find(o => o.id === this.selectedOption);
-        if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); this.syncCodeView(); }
+        const node = this.nodes.get(this.selectedNode);
+        if (!node || !this.selectedOption) return;
+        const option = node.options.find(o => o.id === this.selectedOption);
+        if (option) { option.commands.splice(index, 1); this.renderCommandsList(option.commands); this.renderNodes(); this.syncCodeView(); }
     }
     
-    deleteQuestTarget(index) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (block) { block.data.targets.splice(index, 1); this.renderQuestTargetsList(); this.syncCodeView(); }
+    showQuestPreview() {
+        if (!this.selectedQuest) { alert('Select a quest'); return; }
+        // TODO: реализовать предпросмотр квеста
     }
     
-    deleteQuestReward(index) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (block) { block.data.rewards.splice(index, 1); this.renderQuestRewardsList(); this.syncCodeView(); }
-    }
-    
-    deleteQuestRequirement(index) {
-        const block = this.blocks.find(b => b.id === this.selectedBlock.id);
-        if (block) { block.data.requirements.splice(index, 1); this.renderQuestRequirementsList(); this.syncCodeView(); }
+    previewSelectQuest(id) {
+        this.selectedQuest = id;
+        this.renderQuestPalette();
     }
     
     // === УМНЫЙ ПАРСЕР ===
+    
     handleFileImport(e) {
         const file = e.target.files[0];
         if (!file) return;
+        
         const reader = new FileReader();
         reader.onload = (ev) => {
             const content = ev.target.result;
-            const stats = this.parseUnifiedCfg(content, false);
-            this.cfgFiles[file.name] = { raw: content, generated: this.generateCfgFromData() };
+            this.cfgFiles[file.name] = content;
+            this.fileContents[file.name] = content;
             this.currentCfgFile = file.name;
+            
+            const result = this.smartParse(content);
+            this.showImportStats(result);
+            
             this.renderCodeTabs();
             this.showCodeFile(file.name);
             this.switchTab('tabField');
-            this.showImportStats(stats);
         };
         reader.readAsText(file);
         e.target.value = '';
     }
     
-    parseUnifiedCfg(content, keepExisting = false) {
-        if (!keepExisting) this.blocks = [];
-        
-        const stats = { dialogues: 0, quests: 0, unknown: 0 };
+    smartParse(content) {
+        const stats = { dialogues: 0, quests: 0, unknown: 0, unknownBlocks: [] };
         
         // Разбиваем на блоки по [ID]
-        const blockRegex = /\[([^\]=]+)(?:=autocomplete)?\]/g;
-        let match;
-        const blocks = [];
-        let lastIndex = 0;
-        
-        while ((match = blockRegex.exec(content)) !== null) {
-            const blockId = match[1].trim();
-            const isAutocomplete = match[0].includes('=autocomplete');
-            const blockStart = match.index;
-            const blockContent = content.substring(blockStart);
-            blocks.push({ id: blockId, content: blockContent, autocomplete: isAutocomplete });
-        }
+        const blocks = content.split(/\n(?=\[)/);
         
         blocks.forEach(block => {
-            const lines = block.content.split('\n');
-            const headerComments = [];
-            let dataStartIndex = 0;
+            const lines = block.split('\n').map(l => l.trim()).filter(l => l !== '');
+            if (lines.length === 0) return;
             
-            // Собираем комментарии до заголовка
-            for (let i = 0; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (line.startsWith('#')) {
-                    headerComments.push(line);
-                } else if (line === '') {
-                    // пропускаем
-                } else {
-                    dataStartIndex = i;
-                    break;
-                }
-            }
+            const firstLine = lines[0];
+            if (!firstLine.startsWith('[') || !firstLine.endsWith(']')) return;
+            
+            const blockId = firstLine.slice(1, -1).trim();
+            const autocomplete = blockId.includes('=autocomplete');
+            const cleanId = autocomplete ? blockId.split('=')[0] : blockId;
+            
+            if (!cleanId) return;
             
             // Определяем тип блока
-            const firstDataLine = lines[dataStartIndex]?.trim() || '';
+            const secondLine = lines.length > 1 ? lines[1] : '';
             const questTypes = ['Kill', 'Collect', 'Harvest', 'Craft', 'Talk', 'Build', 'Move'];
             
-            let blockType = 'unknown';
-            if (block.autocomplete || questTypes.includes(firstDataLine)) {
-                blockType = 'quest';
-            } else if (lines.some(l => l.trim().startsWith('Text:'))) {
-                blockType = 'dialogue';
-            }
-            
-            if (blockType === 'quest') {
-                const questData = this.parseQuestBlock(lines, dataStartIndex, block.autocomplete);
-                this.blocks.push({
-                    type: 'quest',
-                    id: block.id,
-                    data: questData,
-                    comments: headerComments,
-                    x: 400 + this.blocks.filter(b => b.type === 'quest').length * 50,
-                    y: 100
-                });
+            if (questTypes.includes(secondLine)) {
+                // Это квест
                 stats.quests++;
-            } else if (blockType === 'dialogue') {
-                const dialogueData = this.parseDialogueBlock(lines, dataStartIndex);
-                this.blocks.push({
-                    type: 'dialogue',
-                    id: block.id,
-                    data: dialogueData,
-                    comments: headerComments,
-                    x: 100 + this.blocks.filter(b => b.type === 'dialogue').length * 50,
-                    y: 100
-                });
+                this.parseQuestBlock(cleanId, lines, autocomplete);
+            } else if (secondLine && !secondLine.startsWith('Text:')) {
+                // Это диалог
                 stats.dialogues++;
+                this.parseDialogueBlock(cleanId, lines);
             } else {
                 stats.unknown++;
+                stats.unknownBlocks.push(cleanId);
             }
         });
         
-        this.render();
         return stats;
     }
     
-    parseDialogueBlock(lines, startIndex) {
-        const data = { text: '', options: [] };
-        let i = startIndex;
-        const textLines = [];
+    parseDialogueBlock(id, lines) {
+        if (this.nodes.has(id)) return;
         
-        // Читаем текст NPC до первой строки Text:
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line.startsWith('Text:')) break;
-            if (line !== '' && !line.startsWith('#')) {
-                textLines.push(line);
-            }
-            i++;
-        }
-        data.text = textLines.join('\n');
+        const node = {
+            type: 'dialogue',
+            id: id,
+            text: '',
+            options: [],
+            x: 100 + (this.nodes.size % 5) * 300,
+            y: 100 + Math.floor(this.nodes.size / 5) * 300,
+            collapsed: false
+        };
         
-        // Читаем опции
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line.startsWith('Text:')) {
-                this.parseOptionLine(data, line);
-            }
-            i++;
+        // Вторая строка - текст NPC
+        if (lines.length > 1 && !lines[1].startsWith('Text:')) {
+            node.text = lines[1];
         }
         
-        return data;
+        // Остальные строки - опции
+        for (let i = 2; i < lines.length; i++) {
+            if (lines[i].startsWith('Text:')) {
+                this.parseOptionLine(node, lines[i]);
+            }
+        }
+        
+        this.blocks.push(node);
+        this.nodes.set(id, node);
     }
     
-    parseOptionLine(data, line) {
+    parseQuestBlock(id, lines, autocomplete) {
+        if (this.quests.has(id)) return;
+        
+        const quest = {
+            type: 'quest',
+            id: id,
+            questType: lines.length > 1 ? lines[1] : 'Kill',
+            name: lines.length > 2 ? lines[2] : '',
+            description: '',
+            targets: [],
+            rewards: [],
+            cooldown: '',
+            timeLimit: '',
+            requirements: [],
+            autocomplete: autocomplete,
+            x: 400 + (this.quests.size % 5) * 300,
+            y: 100 + Math.floor(this.quests.size / 5) * 300
+        };
+        
+        // Парсим многострочное описание
+        let descStart = 3;
+        let descEnd = descStart;
+        while (descEnd < lines.length && !this.isQuestDataLine(lines[descEnd])) {
+            descEnd++;
+        }
+        quest.description = lines.slice(descStart, descEnd).join('\n');
+        
+        // Парсим остальные данные
+        let i = descEnd;
+        while (i < lines.length) {
+            const line = lines[i];
+            
+            if (this.isQuestTargetLine(line)) {
+                line.split('|').map(p => p.trim()).forEach(p => {
+                    const d = p.split(',');
+                    quest.targets.push({ prefab: d[0] || '', amount: d[1] || '1', level: d[2] || '' });
+                });
+            } else if (this.isQuestRewardLine(line)) {
+                line.split('|').map(p => p.trim()).forEach(p => {
+                    const d = p.split(':');
+                    if (d.length >= 2) {
+                        const ps = d[1].split(',');
+                        quest.rewards.push({ type: d[0], prefab: ps[0] || '', amount: ps[1] || '1' });
+                    }
+                });
+            } else if (/^\d+$/.test(line)) {
+                quest.cooldown = line;
+            } else if (line.startsWith('OtherQuest:')) {
+                quest.requirements.push({ type: 'OtherQuest', params: [line.substring(11).trim()] });
+            } else if (line !== 'None' && line.includes(':')) {
+                const d = line.split(':');
+                quest.requirements.push({ type: d[0], params: d[1] ? d[1].split(',').map(x => x.trim()) : [] });
+            }
+            
+            i++;
+        }
+        
+        this.blocks.push(quest);
+        this.quests.set(id, quest);
+    }
+    
+    isQuestDataLine(line) {
+        return this.isQuestTargetLine(line) || this.isQuestRewardLine(line) || /^\d+$/.test(line) || line === 'None' || line.startsWith('OtherQuest:') || (line.includes(':') && !line.startsWith('Text:'));
+    }
+    
+    isQuestTargetLine(line) {
+        // Цели: Prefab, Amount, Level
+        return /[^,]+,\s*\d+/.test(line) && !line.includes(':');
+    }
+    
+    isQuestRewardLine(line) {
+        // Награды: Type:Prefab, Amount
+        return /^(Item|Skill|Pet|Skill_EXP|EpicMMO_EXP|Battlepass_EXP|MH_EXP|Cozyheim_EXP|SetCustomValue|AddCustomValue):/.test(line);
+    }
+    
+    parseOptionLine(node, line) {
         const parts = line.split('|').map(p => p.trim());
         const textPart = parts.find(p => p.startsWith('Text:'));
         if (!textPart) return;
@@ -2078,7 +2250,6 @@ class DialogueEditor {
             id: `opt_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
             text: textPart.substring(5).trim(),
             transition: '',
-            questLink: '',
             icon: '',
             conditions: [],
             commands: []
@@ -2092,18 +2263,11 @@ class DialogueEditor {
             } else if (part.startsWith('Condition:')) {
                 this.parseCondition(option, part.substring(10).trim());
             } else if (part.startsWith('Command:')) {
-                const cmdStr = part.substring(8).trim();
-                // Проверяем, не является ли это OpenUI, Quests, ID
-                const openUIMatch = cmdStr.match(/^OpenUI,\s*Quests,\s*(.+)$/i);
-                if (openUIMatch) {
-                    option.questLink = openUIMatch[1].trim();
-                } else {
-                    this.parseCommand(option, cmdStr);
-                }
+                this.parseCommand(option, part.substring(8).trim());
             }
         });
         
-        data.options.push(option);
+        node.options.push(option);
     }
     
     parseCondition(option, str) {
@@ -2116,148 +2280,27 @@ class DialogueEditor {
         option.commands.push({ type: parts[0], params: parts.slice(1) });
     }
     
-    parseQuestBlock(lines, startIndex, autocomplete = false) {
-        const data = {
-            questType: '',
-            name: '',
-            description: '',
-            targets: [],
-            rewards: [],
-            requirements: [],
-            cooldown: '',
-            autocomplete: autocomplete
-        };
-        
-        let i = startIndex;
-        const questTypes = ['Kill', 'Collect', 'Harvest', 'Craft', 'Talk', 'Build', 'Move'];
-        
-        // 1. Тип квеста
-        while (i < lines.length && (lines[i].trim() === '' || lines[i].trim().startsWith('#'))) i++;
-        if (i < lines.length && questTypes.includes(lines[i].trim())) {
-            data.questType = lines[i].trim();
-            i++;
-        }
-        
-        // 2. Название
-        while (i < lines.length && (lines[i].trim() === '' || lines[i].trim().startsWith('#'))) i++;
-        if (i < lines.length) {
-            data.name = lines[i].trim();
-            i++;
-        }
-        
-        // 3. Описание (многострочное, до строки-цели)
-        const descLines = [];
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line === '' || line.startsWith('#')) {
-                descLines.push(line);
-                i++;
-                continue;
-            }
-            if (this.isTargetLine(line) || this.isRewardLine(line) || this.isCooldownLine(line)) {
-                break;
-            }
-            descLines.push(line);
-            i++;
-        }
-        data.description = descLines.join('\n').trim();
-        
-        // 4. Цели
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line === '' || line.startsWith('#')) { i++; continue; }
-            if (line === 'None') { i++; break; }
-            if (!this.isTargetLine(line) && !this.isRewardLine(line)) break;
-            if (this.isTargetLine(line)) {
-                const targets = line.split('|').map(t => t.trim());
-                targets.forEach(t => {
-                    const parts = t.split(',').map(p => p.trim());
-                    if (parts.length >= 2) {
-                        data.targets.push({ prefab: parts[0], amount: parts[1], level: parts[2] || '' });
-                    }
-                });
-            }
-            i++;
-        }
-        
-        // 5. Награды
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line === '' || line.startsWith('#')) { i++; continue; }
-            if (line === 'None') { i++; break; }
-            if (!this.isRewardLine(line)) break;
-            const rewards = line.split('|').map(r => r.trim());
-            rewards.forEach(r => {
-                const match = r.match(/^(\w+):\s*([^,]+),\s*(\d+)(?:,\s*(\d+))?$/);
-                if (match) {
-                    data.rewards.push({ type: match[1], prefab: match[2].trim(), amount: match[3], level: match[4] || '' });
-                }
-            });
-            i++;
-        }
-        
-        // 6. Cooldown
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line === '' || line.startsWith('#')) { i++; continue; }
-            if (this.isCooldownLine(line)) {
-                data.cooldown = line;
-                i++;
-                break;
-            }
-            break;
-        }
-        
-        // 7. Требования
-        while (i < lines.length) {
-            const line = lines[i].trim();
-            if (line === '' || line.startsWith('#')) { i++; continue; }
-            if (line === 'None') { i++; break; }
-            const reqs = line.split('|').map(r => r.trim());
-            reqs.forEach(r => {
-                const match = r.match(/^(\w+):\s*(.+)$/);
-                if (match) {
-                    data.requirements.push({ type: match[1], param: match[2].trim() });
-                }
-            });
-            i++;
-        }
-        
-        return data;
-    }
-    
-    isTargetLine(line) {
-        return /^[^,\n]+,\s*\d+(,\s*\d+)?$/.test(line);
-    }
-    
-    isRewardLine(line) {
-        return /^\w+:\s*[^,]+,\s*\d+/.test(line);
-    }
-    
-    isCooldownLine(line) {
-        return /^\d+$/.test(line);
-    }
-    
     showImportStats(stats) {
-        this.els.statDialoguesCount.textContent = stats.dialogues;
-        this.els.statQuestsCount.textContent = stats.quests;
-        this.els.statUnknownCount.textContent = stats.unknown;
-        this.openModal('importStatsModal');
+        this.els.statDialogues.textContent = stats.dialogues;
+        this.els.statQuests.textContent = stats.quests;
+        this.els.statUnknown.textContent = stats.unknown;
+        
+        this.els.unknownBlocksList.innerHTML = stats.unknownBlocks.map(id => 
+            `<div class="unknown-block-item">${this.escapeHtml(id)}</div>`
+        ).join('');
+        
+        this.els.importStatsModal.classList.add('open');
     }
     
     generateCfgFromData() {
         let cfg = '';
+        
         // Сначала диалоги
-        this.blocks.filter(b => b.type === 'dialogue').forEach(block => {
-            if (block.comments.length > 0) {
-                cfg += block.comments.join('\n') + '\n';
-            }
-            cfg += `[${block.id}]\n`;
-            cfg += `${block.data.text}\n`;
-            block.data.options.forEach(opt => {
+        this.blocks.filter(b => b.type === 'dialogue').forEach(node => {
+            cfg += `[${node.id}]\n${node.text}\n`;
+            node.options.forEach(opt => {
                 let line = `Text: ${opt.text}`;
                 if (opt.transition) line += ` | Transition: ${opt.transition}`;
-                if (opt.questLink) line += ` | Command: OpenUI, Quests, ${opt.questLink}`;
                 opt.commands.forEach(cmd => { line += ` | Command: ${cmd.type}${cmd.params.length ? ', ' + cmd.params.join(', ') : ''}`; });
                 opt.conditions.forEach(cond => { line += ` | Condition: ${cond.type}${cond.params.length ? ', ' + cond.params.join(', ') : ''}`; });
                 if (opt.icon) line += ` | Icon: ${opt.icon}`;
@@ -2265,106 +2308,109 @@ class DialogueEditor {
             });
             cfg += '\n';
         });
+        
         // Потом квесты
-        this.blocks.filter(b => b.type === 'quest').forEach(block => {
-            if (block.comments.length > 0) {
-                cfg += block.comments.join('\n') + '\n';
-            }
-            const questId = block.data.autocomplete ? `${block.id}=autocomplete` : block.id;
+        this.blocks.filter(b => b.type === 'quest').forEach(quest => {
+            const questId = quest.autocomplete ? `${quest.id}=autocomplete` : quest.id;
             cfg += `[${questId}]\n`;
-            cfg += `${block.data.questType}\n`;
-            cfg += `${block.data.name}\n`;
-            cfg += `${block.data.description}\n`;
-            cfg += block.data.targets.length > 0 ? block.data.targets.map(t => `${t.prefab}, ${t.amount}${t.level ? ', ' + t.level : ''}`).join(' | ') : 'None';
+            cfg += `${quest.questType}\n`;
+            cfg += `${quest.name}\n`;
+            cfg += `${quest.description}\n`;
+            cfg += quest.targets.length > 0 ? quest.targets.map(t => `${t.prefab},${t.amount},${t.level}`).join(' | ') : 'None';
             cfg += '\n';
-            cfg += block.data.rewards.length > 0 ? block.data.rewards.map(r => `${r.type}: ${r.prefab}, ${r.amount}${r.level ? ', ' + r.level : ''}`).join(' | ') : 'None';
+            cfg += quest.rewards.length > 0 ? quest.rewards.map(r => `${r.type}:${r.prefab},${r.amount}`).join(' | ') : 'None';
             cfg += '\n';
-            cfg += block.data.cooldown || 'None';
+            cfg += quest.cooldown || 'None';
             cfg += '\n';
-            cfg += block.data.requirements.length > 0 ? block.data.requirements.map(r => `${r.type}: ${r.param}`).join(' | ') : 'None';
+            if (quest.requirements.length > 0) {
+                cfg += quest.requirements.map(r => `${r.type}:${r.params.join(',')}`).join(' | ');
+            } else {
+                cfg += 'None';
+            }
             cfg += '\n\n';
         });
+        
         return cfg;
     }
     
     exportCurrentCfg() {
-        if (!this.currentCfgFile) { alert('No file selected'); return; }
+        if (!this.currentCfgFile) {
+            alert('No file selected');
+            return;
+        }
         const content = this.generateCfgFromData();
         this.downloadFile(this.currentCfgFile, content);
     }
     
-    validateAll() {
+    validateDialogue() {
         const errors = [];
-        this.blocks.forEach(block => {
-            if (block.type === 'dialogue') {
-                if (!block.data.text || !block.data.text.trim()) errors.push(`"${block.id}": no NPC text`);
-                block.data.options.forEach((opt, i) => {
-                    if (!opt.text || !opt.text.trim()) errors.push(`"${block.id}" #${i + 1}: no option text`);
-                    if (opt.transition && !this.blocks.some(b => b.id === opt.transition)) errors.push(`"${block.id}" #${i + 1}: invalid transition "${opt.transition}"`);
-                    if (opt.questLink && !this.blocks.some(b => b.id === opt.questLink)) errors.push(`"${block.id}" #${i + 1}: invalid quest link "${opt.questLink}"`);
-                });
-            } else if (block.type === 'quest') {
-                if (!block.data.questType) errors.push(`"${block.id}": no quest type`);
-                if (!block.data.name) errors.push(`"${block.id}": no quest name`);
-            }
+        this.nodes.forEach((node, id) => {
+            if (!node.text || !node.text.trim()) errors.push(`"${id}": no NPC text`);
+            node.options.forEach((opt, i) => {
+                if (!opt.text || !opt.text.trim()) errors.push(`"${id}" #${i + 1}: no option text`);
+                if (opt.transition && !this.nodes.has(opt.transition)) errors.push(`"${id}" #${i + 1}: invalid transition "${opt.transition}"`);
+            });
         });
         if (errors.length === 0) alert('No errors found!');
         else alert('Errors:\n\n' + errors.join('\n'));
     }
     
-    searchBlocks(query) {
+    searchDialogue(query) {
         if (!query.trim()) {
-            document.querySelectorAll('.dialogue-node, .quest-node').forEach(el => el.style.opacity = '1');
+            document.querySelectorAll('.dialogue-node, .quest-block').forEach(el => el.style.opacity = '1');
             return;
         }
         const q = query.toLowerCase();
         this.blocks.forEach(block => {
-            const el = document.querySelector(`[data-block-id="${block.id}"]`);
+            const el = document.querySelector(`[data-node-id="${block.id}"], [data-quest-id="${block.id}"]`);
             if (!el) return;
-            let match = block.id.toLowerCase().includes(q);
-            if (block.type === 'dialogue') {
-                match = match || block.data.text.toLowerCase().includes(q) || block.data.options.some(o => o.text.toLowerCase().includes(q));
-            } else if (block.type === 'quest') {
-                match = match || block.data.name.toLowerCase().includes(q) || block.data.description.toLowerCase().includes(q);
-            }
+            const match = block.id.toLowerCase().includes(q) || 
+                (block.text && block.text.toLowerCase().includes(q)) ||
+                (block.name && block.name.toLowerCase().includes(q));
             el.style.opacity = match ? '1' : '0.25';
         });
     }
     
     loadSampleData() {
         if (this.blocks.length > 0 && !confirm('Replace current data with sample?')) return;
+        
         this.blocks = [];
+        this.nodes.clear();
+        this.quests.clear();
         this.cfgFiles = {};
+        this.fileContents = {};
         this.currentCfgFile = 'sample.cfg';
         
-        const d1 = this.addDialogueBlock('лапшеслав', 100, 150);
-        d1.data.text = 'Приветствую, путник!\nХочешь перекусить?';
-        const o1 = this.addOptionToBlock('лапшеслав', 'А ты кто вообще, воин?'); o1.transition = 'лапшеслав_о_себе';
-        const o2 = this.addOptionToBlock('лапшеслав', '<color=#f1c40f>Может помочь?</color>'); o2.transition = 'лапшеслав_просьба'; o2.icon = 'Hammer';
-        const o3 = this.addOptionToBlock('лапшеслав', '(уйти)');
+        const n1 = this.addNode('лапшеслав', 100, 150);
+        n1.text = 'Приветствую, путник!\nХочешь перекусить?';
+        const o1 = this.addOptionToNode('лапшеслав', 'А ты кто вообще, воин?'); o1.transition = 'лапшеслав_о_себе';
+        const o2 = this.addOptionToNode('лапшеслав', '<color=#f1c40f>Может помочь?</color>'); o2.transition = 'лапшеслав_просьба'; o2.icon = 'Hammer';
+        const o3 = this.addOptionToNode('лапшеслав', '(уйти)');
         
-        const d2 = this.addDialogueBlock('лапшеслав_о_себе', 500, 100);
-        d2.data.text = 'Я Лапшеслав, повар.\nГотовлю рамен. Вон меню.';
-        const o4 = this.addOptionToBlock('лапшеслав_о_себе', 'Сомнительно, я не буду.'); o4.transition = 'лапшеслав';
+        const n2 = this.addNode('лапшеслав_о_себе', 500, 100);
+        n2.text = 'Я Лапшеслав, повар.\nГотовлю рамен. Вон меню.';
+        const o4 = this.addOptionToNode('лапшеслав_о_себе', 'Сомнительно, я не буду.'); o4.transition = 'лапшеслав';
         
-        const d3 = this.addDialogueBlock('лапшеслав_просьба', 500, 300);
-        d3.data.text = 'Да, помощь нужна.\nДля рамена со свининой не хватает одного ингредиента.\nПринеси, пожалуйста <color=#e74c3c>10 кусков свинины</color>.';
-        const o5 = this.addOptionToBlock('лапшеслав_просьба', 'Хорошо'); o5.questLink = 'лапшеслав_квест';
-        const o6 = this.addOptionToBlock('лапшеслав_просьба', 'В другой раз'); o6.transition = 'лапшеслав';
+        const n3 = this.addNode('лапшеслав_просьба', 500, 300);
+        n3.text = 'Да, помощь нужна.\nДля рамена со свининой не хватает одного ингредиента.\nПринеси, пожалуйста <color=#e74c3c>10 кусков свинины</color>.';
+        const o5 = this.addOptionToNode('лапшеслав_просьба', 'Хорошо'); 
+        o5.commands.push({ type: 'OpenUI', params: ['Quests', 'лапшеслав_квест'] });
+        const o6 = this.addOptionToNode('лапшеслав_просьба', 'В другой раз'); o6.transition = 'лапшеслав';
         
-        const q1 = this.addQuestBlock('лапшеслав_квест', 900, 300);
-        q1.data = {
-            questType: 'Collect',
-            name: 'Недостающий ингредиент',
-            description: 'Принести для варева 10 кусков сырой кабанины.',
-            targets: [{ prefab: 'RawMeat', amount: '10', level: '' }],
-            rewards: [{ type: 'Item', prefab: 'Coins', amount: '100', level: '' }],
-            requirements: [],
-            cooldown: '1',
-            autocomplete: false
-        };
+        const n4 = this.addNode('лапшеслав_квествзят', 900, 300);
+        n4.text = 'Отлично! Я пока поставлю воду для бульона.';
+        this.addOptionToNode('лапшеслав_квествзят', 'Вернусь через пару минут');
         
-        this.cfgFiles['sample.cfg'] = { raw: this.generateCfgFromData(), generated: this.generateCfgFromData() };
+        const q1 = this.addQuest('лапшеслав_квест', 900, 100);
+        q1.questType = 'Collect';
+        q1.name = 'Недостающий ингредиент';
+        q1.description = 'Принести для варева 10 кусков сырой кабанины.';
+        q1.targets = [{ prefab: 'RawMeat', amount: '10', level: '' }];
+        q1.rewards = [{ type: 'Item', prefab: 'Coins', amount: '100' }];
+        q1.cooldown = '1';
+        
+        this.cfgFiles['sample.cfg'] = this.generateCfgFromData();
+        this.fileContents['sample.cfg'] = this.generateCfgFromData();
         this.render();
         this.renderCodeTabs();
         this.showCodeFile('sample.cfg');
@@ -2390,11 +2436,12 @@ class DialogueEditor {
     }
     
     syncCodeView() {
-        if (this.currentCfgFile && this.cfgFiles[this.currentCfgFile]) {
-            this.cfgFiles[this.currentCfgFile].generated = this.generateCfgFromData();
-            // Если показываем raw, не обновляем editor
-            if (!this.cfgFiles[this.currentCfgFile].raw) {
-                this.showCodeFile(this.currentCfgFile);
+        if (this.currentCfgFile) {
+            const generated = this.generateCfgFromData();
+            this.cfgFiles[this.currentCfgFile] = generated;
+            // Обновляем отображение только если мы на вкладке "Код"
+            if (document.getElementById('tabCode').classList.contains('active')) {
+                this.els.codeEditor.value = generated;
             }
         }
     }
