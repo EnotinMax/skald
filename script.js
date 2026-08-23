@@ -119,7 +119,7 @@ class ItemSelector {
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.3",
-        appSubtitle: "Редактор диалогов и квестов · by OdinSons",
+        appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
         searchPlaceholder: "Поиск...",
         importFile: "Импортировать",
         export: "Экспорт",
@@ -219,11 +219,12 @@ const translations = {
         rewardTypeExp: "Опыт",
         rewardTypeEpicMMO: "EpicMMO Опыт",
         questPreviewSidebar: "Квесты",
-        questPreviewTitle: "Предпросмотр квеста"
+        questPreviewTitle: "Предпросмотр квеста",
+        requirementParams: "Параметры:"
     },
     en: {
         appTitle: "Skald's Forge v2.3",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
         searchPlaceholder: "Search...",
         importFile: "Import",
         export: "Export",
@@ -323,11 +324,12 @@ const translations = {
         rewardTypeExp: "Experience",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Quests",
-        questPreviewTitle: "Quest Preview"
+        questPreviewTitle: "Quest Preview",
+        requirementParams: "Parameters:"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.3",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons",
+        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
         searchPlaceholder: "Suche...",
         importFile: "Importieren",
         export: "Exportieren",
@@ -427,11 +429,12 @@ const translations = {
         rewardTypeExp: "Erfahrung",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Quests",
-        questPreviewTitle: "Quest-Vorschau"
+        questPreviewTitle: "Quest-Vorschau",
+        requirementParams: "Parameter:"
     },
     es: {
         appTitle: "Forja del Escaldo v2.3",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons",
+        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
         searchPlaceholder: "Buscar...",
         importFile: "Importar",
         export: "Exportar",
@@ -531,11 +534,12 @@ const translations = {
         rewardTypeExp: "Experiencia",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Misiones",
-        questPreviewTitle: "Vista previa de misión"
+        questPreviewTitle: "Vista previa de misión",
+        requirementParams: "Parámetros:"
     },
     fr: {
         appTitle: "Forge du Skalde v2.3",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons",
+        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
         searchPlaceholder: "Rechercher...",
         importFile: "Importer",
         export: "Exporter",
@@ -635,11 +639,12 @@ const translations = {
         rewardTypeExp: "Expérience",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Quêtes",
-        questPreviewTitle: "Aperçu de quête"
+        questPreviewTitle: "Aperçu de quête",
+        requirementParams: "Paramètres :"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.3",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons",
+        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
         searchPlaceholder: "Szukaj...",
         importFile: "Importuj",
         export: "Eksportuj",
@@ -739,11 +744,12 @@ const translations = {
         rewardTypeExp: "Doświadczenie",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Zadania",
-        questPreviewTitle: "Podgląd zadania"
+        questPreviewTitle: "Podgląd zadania",
+        requirementParams: "Parametry:"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.3",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons",
+        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
         searchPlaceholder: "Pesquisar...",
         importFile: "Importar",
         export: "Exportar",
@@ -843,11 +849,12 @@ const translations = {
         rewardTypeExp: "Experiência",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Missões",
-        questPreviewTitle: "Pré-visualização da missão"
+        questPreviewTitle: "Pré-visualização da missão",
+        requirementParams: "Parâmetros:"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.3",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons",
+        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
         searchPlaceholder: "Sök...",
         importFile: "Importera",
         export: "Exportera",
@@ -947,11 +954,12 @@ const translations = {
         rewardTypeExp: "Erfarenhet",
         rewardTypeEpicMMO: "EpicMMO Exp",
         questPreviewSidebar: "Uppdrag",
-        questPreviewTitle: "Uppdragsförhandsgranskning"
+        questPreviewTitle: "Uppdragsförhandsgranskning",
+        requirementParams: "Parametrar:"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 v2.3",
-        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons",
+        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
         searchPlaceholder: "検索...",
         importFile: "インポート",
         export: "エクスポート",
@@ -1051,7 +1059,8 @@ const translations = {
         rewardTypeExp: "経験値",
         rewardTypeEpicMMO: "EpicMMO 経験値",
         questPreviewSidebar: "クエスト",
-        questPreviewTitle: "クエストプレビュー"
+        questPreviewTitle: "クエストプレビュー",
+        requirementParams: "パラメータ:"
     }
 };
 
@@ -1615,13 +1624,13 @@ class DialogueEditor {
             const isItemReward = reward.type === 'Item';
             
             row.innerHTML = `
-                <select class="form-control quest-reward-type" style="width: 120px;" data-index="${i}">
+                <select class="form-control quest-reward-type" style="width: 100%;" data-index="${i}">
                     <option value="Item" ${reward.type === 'Item' ? 'selected' : ''}>${t.rewardTypeItem}</option>
                     <option value="Coins" ${reward.type === 'Coins' ? 'selected' : ''}>${t.rewardTypeCoins}</option>
                     <option value="Exp" ${reward.type === 'Exp' ? 'selected' : ''}>${t.rewardTypeExp}</option>
                     <option value="EpicMMO_EXP" ${reward.type === 'EpicMMO_EXP' ? 'selected' : ''}>${t.rewardTypeEpicMMO}</option>
                 </select>
-                <div class="item-selector" style="flex: 1; ${!isItemReward ? 'display: none;' : ''}"></div>
+                <div class="item-selector" style="width: 100%; ${!isItemReward ? 'display: none;' : ''}"></div>
                 <input type="number" class="form-control quest-reward-amount" value="${reward.amount || '1'}" style="width: 70px;" data-index="${i}">
                 <button class="btn-small danger" data-action="delete-quest-reward" data-index="${i}">×</button>
             `;
@@ -1669,11 +1678,33 @@ class DialogueEditor {
         quest.requirements.forEach((req, i) => {
             const row = document.createElement('div');
             row.className = 'quest-property-row';
-            row.innerHTML = `
-                <span class="quest-req-text" style="flex: 1; font-family: monospace; font-size: 12px; color: var(--text-secondary);">${req.type}: ${req.params.join(', ')}</span>
-                <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
-            `;
-            reqsContainer.appendChild(row);
+            
+            if (req.type === 'OtherQuest') {
+                row.innerHTML = `
+                    <div class="item-selector" style="flex: 1;"></div>
+                    <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
+                `;
+                reqsContainer.appendChild(row);
+                
+                const selectorContainer = row.querySelector('.item-selector');
+                const selector = new ItemSelector(selectorContainer, req.params[0] || '');
+                selector.setOnChange((newId) => {
+                    quest.requirements[i].params = [newId];
+                    this.syncCodeView();
+                });
+            } else {
+                row.innerHTML = `
+                    <span class="quest-req-type" style="font-weight: bold; min-width: 120px;">${req.type}:</span>
+                    <input type="text" class="form-control quest-req-params" value="${req.params.join(', ')}" style="flex: 1;" data-index="${i}">
+                    <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
+                `;
+                reqsContainer.appendChild(row);
+                
+                row.querySelector('.quest-req-params').addEventListener('input', (e) => {
+                    quest.requirements[i].params = e.target.value.split(',').map(p => p.trim());
+                    this.syncCodeView();
+                });
+            }
         });
     }
     
