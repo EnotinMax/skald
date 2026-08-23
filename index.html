@@ -333,7 +333,20 @@
             <div id="previewContent" class="preview-content"></div>
         </div>
     </div>
-
+<div id="questDependencyModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2 id="questDependencyTitle">Тип зависимости квеста</h2>
+            <span class="close" data-action="close-modal">&times;</span>
+        </div>
+        <div class="modal-body" style="display: flex; flex-direction: column; gap: 10px;">
+            <button id="questDependencyOtherQuestBtn" class="btn-primary" style="background: #27ae60;">OtherQuest (квест должен быть выполнен ранее)</button>
+            <button id="questDependencyNotFinishedBtn" class="btn-primary" style="background: #e74c3c;">NotFinished (квест НЕ должен быть выполнен)</button>
+            <button id="questDependencyCancelBtn" class="secondary">Отмена</button>
+        </div>
+    </div>
+</div>
+    
     <script src="script.js"></script>
 </body>
 </html>
