@@ -1,4 +1,4 @@
-// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.3
+// КУЗНИЦА СКАЛЬДА / SKALD'S FORGE v2.4
 class ItemSelector {
     constructor(container, initialValue = '') {
         this.container = typeof container === 'string' ? document.getElementById(container) : container;
@@ -118,7 +118,7 @@ class ItemSelector {
 
 const translations = {
     ru: {
-        appTitle: "Кузница Скальда v2.3",
+        appTitle: "Кузница Скальда v2.4",
         appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
         searchPlaceholder: "Поиск...",
         importFile: "Импортировать",
@@ -187,8 +187,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Назад",
         questTypeKill: "Убить",
-        questTypeCollect: "Собрать",
-        questTypeHarvest: "Собрать урожай",
+        questTypeCollect: "Накопить",
+        questTypeHarvest: "Собрать",
         questTypeCraft: "Изготовить",
         questTypeTalk: "Разговор",
         questTypeBuild: "Построить",
@@ -216,14 +216,14 @@ const translations = {
         requirementType: "Тип требования:",
         rewardTypeItem: "Предмет",
         rewardTypeCoins: "Монеты",
-        rewardTypeExp: "Опыт",
-        rewardTypeEpicMMO: "EpicMMO Опыт",
+        rewardTypeExp: "EpicMMO Опыт",
         questPreviewSidebar: "Квесты",
         questPreviewTitle: "Предпросмотр квеста",
-        requirementParams: "Параметры:"
+        requirementParams: "Параметры:",
+        closeFile: "×"
     },
     en: {
-        appTitle: "Skald's Forge v2.3",
+        appTitle: "Skald's Forge v2.4",
         appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
         searchPlaceholder: "Search...",
         importFile: "Import",
@@ -292,8 +292,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Back",
         questTypeKill: "Kill",
-        questTypeCollect: "Collect",
-        questTypeHarvest: "Harvest",
+        questTypeCollect: "Accumulate",
+        questTypeHarvest: "Gather",
         questTypeCraft: "Craft",
         questTypeTalk: "Talk",
         questTypeBuild: "Build",
@@ -321,14 +321,14 @@ const translations = {
         requirementType: "Requirement Type:",
         rewardTypeItem: "Item",
         rewardTypeCoins: "Coins",
-        rewardTypeExp: "Experience",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Quests",
         questPreviewTitle: "Quest Preview",
-        requirementParams: "Parameters:"
+        requirementParams: "Parameters:",
+        closeFile: "×"
     },
     de: {
-        appTitle: "Schmiede des Skalden v2.3",
+        appTitle: "Schmiede des Skalden v2.4",
         appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
         searchPlaceholder: "Suche...",
         importFile: "Importieren",
@@ -426,14 +426,14 @@ const translations = {
         requirementType: "Anforderungstyp:",
         rewardTypeItem: "Gegenstand",
         rewardTypeCoins: "Münzen",
-        rewardTypeExp: "Erfahrung",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Quests",
         questPreviewTitle: "Quest-Vorschau",
-        requirementParams: "Parameter:"
+        requirementParams: "Parameter:",
+        closeFile: "×"
     },
     es: {
-        appTitle: "Forja del Escaldo v2.3",
+        appTitle: "Forja del Escaldo v2.4",
         appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
         searchPlaceholder: "Buscar...",
         importFile: "Importar",
@@ -502,8 +502,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Atrás",
         questTypeKill: "Matar",
-        questTypeCollect: "Recoger",
-        questTypeHarvest: "Cosechar",
+        questTypeCollect: "Acumular",
+        questTypeHarvest: "Recolectar",
         questTypeCraft: "Fabricar",
         questTypeTalk: "Hablar",
         questTypeBuild: "Construir",
@@ -531,14 +531,14 @@ const translations = {
         requirementType: "Tipo de requisito:",
         rewardTypeItem: "Objeto",
         rewardTypeCoins: "Monedas",
-        rewardTypeExp: "Experiencia",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Misiones",
         questPreviewTitle: "Vista previa de misión",
-        requirementParams: "Parámetros:"
+        requirementParams: "Parámetros:",
+        closeFile: "×"
     },
     fr: {
-        appTitle: "Forge du Skalde v2.3",
+        appTitle: "Forge du Skalde v2.4",
         appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
         searchPlaceholder: "Rechercher...",
         importFile: "Importer",
@@ -607,7 +607,7 @@ const translations = {
         importStatsClose: "OK",
         back: "Retour",
         questTypeKill: "Tuer",
-        questTypeCollect: "Collecter",
+        questTypeCollect: "Accumuler",
         questTypeHarvest: "Récolter",
         questTypeCraft: "Fabriquer",
         questTypeTalk: "Parler",
@@ -636,14 +636,14 @@ const translations = {
         requirementType: "Type d'exigence :",
         rewardTypeItem: "Objet",
         rewardTypeCoins: "Pièces",
-        rewardTypeExp: "Expérience",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Quêtes",
         questPreviewTitle: "Aperçu de quête",
-        requirementParams: "Paramètres :"
+        requirementParams: "Paramètres :",
+        closeFile: "×"
     },
     pl: {
-        appTitle: "Kuźnia Skalda v2.3",
+        appTitle: "Kuźnia Skalda v2.4",
         appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
         searchPlaceholder: "Szukaj...",
         importFile: "Importuj",
@@ -712,8 +712,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Wstecz",
         questTypeKill: "Zabić",
-        questTypeCollect: "Zebrać",
-        questTypeHarvest: "Zebrać plony",
+        questTypeCollect: "Zgromadzić",
+        questTypeHarvest: "Zebrać",
         questTypeCraft: "Wytworzyć",
         questTypeTalk: "Porozmawiać",
         questTypeBuild: "Zbudować",
@@ -741,14 +741,14 @@ const translations = {
         requirementType: "Typ wymagania:",
         rewardTypeItem: "Przedmiot",
         rewardTypeCoins: "Monety",
-        rewardTypeExp: "Doświadczenie",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Zadania",
         questPreviewTitle: "Podgląd zadania",
-        requirementParams: "Parametry:"
+        requirementParams: "Parametry:",
+        closeFile: "×"
     },
     pt: {
-        appTitle: "Forja do Escaldo v2.3",
+        appTitle: "Forja do Escaldo v2.4",
         appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
         searchPlaceholder: "Pesquisar...",
         importFile: "Importar",
@@ -817,7 +817,7 @@ const translations = {
         importStatsClose: "OK",
         back: "Voltar",
         questTypeKill: "Matar",
-        questTypeCollect: "Coletar",
+        questTypeCollect: "Acumular",
         questTypeHarvest: "Colher",
         questTypeCraft: "Fabricar",
         questTypeTalk: "Conversar",
@@ -846,14 +846,14 @@ const translations = {
         requirementType: "Tipo de requisito:",
         rewardTypeItem: "Item",
         rewardTypeCoins: "Moedas",
-        rewardTypeExp: "Experiência",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Missões",
         questPreviewTitle: "Pré-visualização da missão",
-        requirementParams: "Parâmetros:"
+        requirementParams: "Parâmetros:",
+        closeFile: "×"
     },
     sv: {
-        appTitle: "Skaldens Smedja v2.3",
+        appTitle: "Skaldens Smedja v2.4",
         appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
         searchPlaceholder: "Sök...",
         importFile: "Importera",
@@ -922,7 +922,7 @@ const translations = {
         importStatsClose: "OK",
         back: "Tillbaka",
         questTypeKill: "Döda",
-        questTypeCollect: "Samla",
+        questTypeCollect: "Ackumulera",
         questTypeHarvest: "Skörda",
         questTypeCraft: "Tillverka",
         questTypeTalk: "Prata",
@@ -951,14 +951,14 @@ const translations = {
         requirementType: "Kravtyp:",
         rewardTypeItem: "Föremål",
         rewardTypeCoins: "Mynt",
-        rewardTypeExp: "Erfarenhet",
-        rewardTypeEpicMMO: "EpicMMO Exp",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "Uppdrag",
         questPreviewTitle: "Uppdragsförhandsgranskning",
-        requirementParams: "Parametrar:"
+        requirementParams: "Parametrar:",
+        closeFile: "×"
     },
     ja: {
-        appTitle: "スカルドの鍛冶屋 v2.3",
+        appTitle: "スカルドの鍛冶屋 v2.4",
         appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
         searchPlaceholder: "検索...",
         importFile: "インポート",
@@ -1027,12 +1027,12 @@ const translations = {
         importStatsClose: "OK",
         back: "戻る",
         questTypeKill: "倒す",
-        questTypeCollect: "集める",
-        questTypeHarvest: "収穫する",
-        questTypeCraft: "作成する",
+        questTypeCollect: "蓄積",
+        questTypeHarvest: "収穫",
+        questTypeCraft: "作成",
         questTypeTalk: "話す",
         questTypeBuild: "建てる",
-        questTypeMove: "移動する",
+        questTypeMove: "移動",
         targets: "目標",
         rewards: "報酬",
         requirements: "要件",
@@ -1056,13 +1056,20 @@ const translations = {
         requirementType: "要件タイプ:",
         rewardTypeItem: "アイテム",
         rewardTypeCoins: "コイン",
-        rewardTypeExp: "経験値",
-        rewardTypeEpicMMO: "EpicMMO 経験値",
+        rewardTypeExp: "EpicMMO Exp",
         questPreviewSidebar: "クエスト",
         questPreviewTitle: "クエストプレビュー",
-        requirementParams: "パラメータ:"
+        requirementParams: "パラメータ:",
+        closeFile: "×"
     }
 };
+
+// Типы требований квеста
+const questRequirementTypes = [
+    'Skill', 'OtherQuest', 'GlobalKey', 'EpicMMO_Level', 'HasItem',
+    'NotFinished', 'IsVIP', 'MH_Level', 'Time', 'HasAchievement',
+    'CustomValueMore', 'CustomValueLess'
+];
 
 class DialogueEditor {
     constructor() {
@@ -1086,6 +1093,7 @@ class DialogueEditor {
         
         this.isDrawingCurve = false;
         this.drawingFromOption = null;
+        this.drawingFromQuest = null;
         this.drawingTempPath = null;
         
         this.cfgFiles = {};
@@ -1337,6 +1345,9 @@ class DialogueEditor {
         container.innerHTML = '';
         
         Object.keys(this.cfgFiles).forEach(filename => {
+            const tabWrapper = document.createElement('div');
+            tabWrapper.className = 'code-tab-wrapper';
+            
             const btn = document.createElement('button');
             btn.className = `code-tab ${filename === this.currentCfgFile ? 'active' : ''}`;
             btn.textContent = filename;
@@ -1346,10 +1357,39 @@ class DialogueEditor {
                 this.renderCodeTabs();
                 this.showCodeFile(filename);
             });
-            container.appendChild(btn);
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'code-tab-close';
+            closeBtn.textContent = '×';
+            closeBtn.title = translations[this.lang].closeFile;
+            closeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.closeFileTab(filename);
+            });
+            
+            tabWrapper.appendChild(btn);
+            tabWrapper.appendChild(closeBtn);
+            container.appendChild(tabWrapper);
         });
         
         container.appendChild(newFileBtn);
+    }
+    
+    closeFileTab(filename) {
+        delete this.cfgFiles[filename];
+        delete this.fileContents[filename];
+        
+        if (this.currentCfgFile === filename) {
+            const remainingFiles = Object.keys(this.cfgFiles);
+            this.currentCfgFile = remainingFiles.length > 0 ? remainingFiles[0] : null;
+        }
+        
+        this.renderCodeTabs();
+        if (this.currentCfgFile) {
+            this.showCodeFile(this.currentCfgFile);
+        } else {
+            this.els.codeEditor.value = '';
+        }
     }
     
     showCodeFile(filename) {
@@ -1500,7 +1540,8 @@ class DialogueEditor {
             requirements: [],
             autocomplete: false,
             x: x !== null ? x : 400 + offset,
-            y: y !== null ? y : 100 + offset
+            y: y !== null ? y : 100 + offset,
+            collapsed: false
         };
         
         this.blocks.push(block);
@@ -1627,8 +1668,7 @@ class DialogueEditor {
                 <select class="form-control quest-reward-type" style="width: 100%;" data-index="${i}">
                     <option value="Item" ${reward.type === 'Item' ? 'selected' : ''}>${t.rewardTypeItem}</option>
                     <option value="Coins" ${reward.type === 'Coins' ? 'selected' : ''}>${t.rewardTypeCoins}</option>
-                    <option value="Exp" ${reward.type === 'Exp' ? 'selected' : ''}>${t.rewardTypeExp}</option>
-                    <option value="EpicMMO_EXP" ${reward.type === 'EpicMMO_EXP' ? 'selected' : ''}>${t.rewardTypeEpicMMO}</option>
+                    <option value="EpicMMO_EXP" ${reward.type === 'EpicMMO_EXP' ? 'selected' : ''}>${t.rewardTypeExp}</option>
                 </select>
                 <div class="item-selector" style="width: 100%; ${!isItemReward ? 'display: none;' : ''}"></div>
                 <input type="number" class="form-control quest-reward-amount" value="${reward.amount || '1'}" style="width: 70px;" data-index="${i}">
@@ -1647,7 +1687,6 @@ class DialogueEditor {
                 } else {
                     selectorContainer.style.display = 'none';
                     if (e.target.value === 'Coins') quest.rewards[i].prefab = 'Coins';
-                    else if (e.target.value === 'Exp') quest.rewards[i].prefab = 'Exp';
                     else if (e.target.value === 'EpicMMO_EXP') quest.rewards[i].prefab = 'EpicMMO_EXP';
                 }
                 this.renderQuestBlocks();
@@ -1679,33 +1718,97 @@ class DialogueEditor {
             const row = document.createElement('div');
             row.className = 'quest-property-row';
             
-            if (req.type === 'OtherQuest') {
-                row.innerHTML = `
-                    <div class="item-selector" style="flex: 1;"></div>
-                    <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
-                `;
-                reqsContainer.appendChild(row);
-                
-                const selectorContainer = row.querySelector('.item-selector');
-                const selector = new ItemSelector(selectorContainer, req.params[0] || '');
-                selector.setOnChange((newId) => {
-                    quest.requirements[i].params = [newId];
-                    this.syncCodeView();
-                });
-            } else {
-                row.innerHTML = `
-                    <span class="quest-req-type" style="font-weight: bold; min-width: 120px;">${req.type}:</span>
-                    <input type="text" class="form-control quest-req-params" value="${req.params.join(', ')}" style="flex: 1;" data-index="${i}">
-                    <button class="btn-small danger" data-action="delete-quest-requirement" data-index="${i}">×</button>
-                `;
-                reqsContainer.appendChild(row);
-                
-                row.querySelector('.quest-req-params').addEventListener('input', (e) => {
-                    quest.requirements[i].params = e.target.value.split(',').map(p => p.trim());
-                    this.syncCodeView();
-                });
-            }
+            const reqTypeSelect = document.createElement('select');
+            reqTypeSelect.className = 'form-control quest-req-type';
+            reqTypeSelect.style.width = '150px';
+            reqTypeSelect.dataset.index = i;
+            
+            questRequirementTypes.forEach(type => {
+                const option = document.createElement('option');
+                option.value = type;
+                option.textContent = type;
+                if (req.type === type) option.selected = true;
+                reqTypeSelect.appendChild(option);
+            });
+            
+            row.appendChild(reqTypeSelect);
+            
+            const paramsContainer = document.createElement('div');
+            paramsContainer.style.flex = '1';
+            row.appendChild(paramsContainer);
+            
+            const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'btn-small danger';
+            deleteBtn.textContent = '×';
+            deleteBtn.dataset.action = 'delete-quest-requirement';
+            deleteBtn.dataset.index = i;
+            row.appendChild(deleteBtn);
+            
+            reqsContainer.appendChild(row);
+            
+            this.renderRequirementParams(paramsContainer, req, i, quest);
+            
+            reqTypeSelect.addEventListener('change', (e) => {
+                quest.requirements[i].type = e.target.value;
+                quest.requirements[i].params = [];
+                this.renderRequirementParams(paramsContainer, quest.requirements[i], i, quest);
+                this.syncCodeView();
+            });
         });
+    }
+    
+    renderRequirementParams(container, req, index, quest) {
+        container.innerHTML = '';
+        
+        if (req.type === 'HasItem') {
+            const selectorDiv = document.createElement('div');
+            selectorDiv.className = 'item-selector';
+            selectorDiv.style.flex = '1';
+            container.appendChild(selectorDiv);
+            
+            const selector = new ItemSelector(selectorDiv, req.params[0] || '');
+            selector.setOnChange((newId) => {
+                quest.requirements[index].params = [newId];
+                this.syncCodeView();
+            });
+        } else if (req.type === 'OtherQuest') {
+            const questSelect = document.createElement('select');
+            questSelect.className = 'form-control';
+            questSelect.style.flex = '1';
+            
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = '— Выберите квест —';
+            questSelect.appendChild(defaultOption);
+            
+            this.quests.forEach((quest, questId) => {
+                const option = document.createElement('option');
+                option.value = questId;
+                option.textContent = quest.name || questId;
+                if (req.params[0] === questId) option.selected = true;
+                questSelect.appendChild(option);
+            });
+            
+            container.appendChild(questSelect);
+            
+            questSelect.addEventListener('change', (e) => {
+                quest.requirements[index].params = [e.target.value];
+                this.syncCodeView();
+            });
+        } else {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'form-control';
+            input.style.flex = '1';
+            input.value = req.params ? req.params.join(', ') : '';
+            input.placeholder = translations[this.lang].requirementParams;
+            container.appendChild(input);
+            
+            input.addEventListener('input', (e) => {
+                quest.requirements[index].params = e.target.value.split(',').map(p => p.trim());
+                this.syncCodeView();
+            });
+        }
     }
     
     addQuestTarget() {
@@ -1790,6 +1893,11 @@ class DialogueEditor {
             this.renderNodeOptionsList();
             this.syncCodeView();
         });
+    }
+    
+    addOptionToSelected() {
+        if (!this.selectedNode) { alert('Select a node first!'); return; }
+        this.addOptionToNode(this.selectedNode);
     }
     
     addOptionToNode(nodeId, text = 'New option') {
@@ -1999,15 +2107,9 @@ class DialogueEditor {
         return div;
     }
     
-    getItemName(prefab) {
-        const item = this.itemSelectorData.find(i => i.id === prefab);
-        if (item) return item.nameRu || item.name;
-        return prefab;
-    }
-    
     createQuestBlockElement(quest) {
         const div = document.createElement('div');
-        div.className = `quest-block ${quest.id === this.selectedQuest ? 'selected' : ''}`;
+        div.className = `quest-block ${quest.id === this.selectedQuest ? 'selected' : ''} ${quest.collapsed ? 'collapsed' : ''}`;
         div.dataset.questId = quest.id;
         div.dataset.action = 'select-quest-block';
         div.dataset.id = quest.id;
@@ -2028,28 +2130,66 @@ class DialogueEditor {
                 return `${name} х${r.amount}`;
             } else if (r.type === 'Coins') {
                 return `${t.rewardTypeCoins} х${r.amount}`;
-            } else if (r.type === 'Exp') {
-                return `${t.rewardTypeExp} х${r.amount}`;
             } else if (r.type === 'EpicMMO_EXP') {
-                return `${t.rewardTypeEpicMMO} х${r.amount}`;
+                return `${t.rewardTypeExp} х${r.amount}`;
             }
             return `${r.type}: ${r.prefab} х${r.amount}`;
         }).join(', ');
         
         div.innerHTML = `
             <div class="node-header">
+                <button class="collapse-btn" data-action="toggle-collapse" data-id="${quest.id}">
+                    ${quest.collapsed ? '▶' : '▼'}
+                </button>
                 <span class="node-header-text">${this.escapeHtml(quest.id)}</span>
                 <span class="quest-type-badge">${typeTranslation}</span>
             </div>
-            <div class="quest-summary">
-                <div class="quest-summary-item"><strong>${this.escapeHtml(quest.name || '')}</strong></div>
-                ${targetsText ? `<div class="quest-summary-item">${t.targets}: ${this.escapeHtml(targetsText)}</div>` : ''}
-                ${rewardsText ? `<div class="quest-summary-item">${t.rewards}: ${this.escapeHtml(rewardsText)}</div>` : ''}
+            <div class="node-content">
+                <div class="quest-summary">
+                    <div class="quest-summary-item"><strong>${this.escapeHtml(quest.name || '')}</strong></div>
+                    ${targetsText ? `<div class="quest-summary-item">${t.targets}: ${this.escapeHtml(targetsText)}</div>` : ''}
+                    ${rewardsText ? `<div class="quest-summary-item">${t.rewards}: ${this.escapeHtml(rewardsText)}</div>` : ''}
+                </div>
+                <div class="quest-draw-handle" data-draw-handle-quest data-quest-id="${quest.id}"></div>
             </div>
         `;
         
         this.setupQuestBlockDrag(div, quest);
+        this.setupQuestDrawHandles(div, quest);
         return div;
+    }
+    
+    setupQuestDrawHandles(element, quest) {
+        const handle = element.querySelector('[data-draw-handle-quest]');
+        if (handle) {
+            handle.addEventListener('mousedown', (e) => {
+                e.stopPropagation();
+                e.preventDefault();
+                this.startDrawingFromQuest(e, quest.id);
+            });
+        }
+    }
+    
+    startDrawingFromQuest(e, questId) {
+        this.isDrawingCurve = true;
+        this.drawingFromQuest = { questId };
+        this.els.canvasContainer.classList.add('drawing-mode');
+        
+        const svg = this.els.connectionLayer;
+        this.drawingTempPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        this.drawingTempPath.setAttribute('fill', 'none');
+        this.drawingTempPath.setAttribute('stroke', '#95a5a6');
+        this.drawingTempPath.setAttribute('stroke-width', '2.5');
+        this.drawingTempPath.setAttribute('stroke-dasharray', '8 4');
+        this.drawingTempPath.setAttribute('marker-end', 'url(#arrowhead-drawing)');
+        this.drawingTempPath.setAttribute('opacity', '0.8');
+        svg.appendChild(this.drawingTempPath);
+    }
+    
+    getItemName(prefab) {
+        const item = this.itemSelectorData.find(i => i.id === prefab);
+        if (item) return item.nameRu || item.name;
+        return prefab;
     }
     
     getIconHtml(iconId, size = 16) {
@@ -2115,6 +2255,8 @@ class DialogueEditor {
         let startNodeX = 0, startNodeY = 0;
         
         const onMouseDown = (e) => {
+            if (e.target.closest('[data-draw-handle-quest]')) return;
+            
             this.selectQuest(quest.id);
             
             isDragging = true;
@@ -2179,7 +2321,7 @@ class DialogueEditor {
         const mouseY = (e.clientY - containerRect.top - this.canvasOffset.y) / this.currentZoom;
         
         let sx, sy;
-        if (this.drawingFromOption.type === 'dialogue') {
+        if (this.drawingFromOption && this.drawingFromOption.type === 'dialogue') {
             const optionEl = this.els.nodeContainer.querySelector(`[data-option-id="${this.drawingFromOption.optionId}"]`);
             if (!optionEl) return;
             const handle = optionEl.querySelector('[data-draw-handle]');
@@ -2187,8 +2329,8 @@ class DialogueEditor {
             const handleRect = handle.getBoundingClientRect();
             sx = (handleRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
             sy = (handleRect.top + handleRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
-        } else {
-            const questEl = this.els.questContainer.querySelector(`[data-quest-id="${this.drawingFromOption.questId}"]`);
+        } else if (this.drawingFromQuest) {
+            const questEl = this.els.questContainer.querySelector(`[data-quest-id="${this.drawingFromQuest.questId}"]`);
             if (!questEl) return;
             const rect = questEl.getBoundingClientRect();
             sx = (rect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
@@ -2204,7 +2346,7 @@ class DialogueEditor {
         
         const target = this.findDrawTarget(e);
         
-        if (this.drawingFromOption.type === 'dialogue') {
+        if (this.drawingFromOption && this.drawingFromOption.type === 'dialogue') {
             const node = this.nodes.get(this.drawingFromOption.nodeId);
             if (!node) { this.cancelDrawing(); return; }
             const option = node.options.find(o => o.id === this.drawingFromOption.optionId);
@@ -2221,12 +2363,12 @@ class DialogueEditor {
                 option.transition = '';
                 option.commands = option.commands.filter(c => c.type !== 'OpenUI');
             }
-        } else if (this.drawingFromOption.type === 'quest') {
-            if (target.type === 'quest' && target.id !== this.drawingFromOption.questId) {
+        } else if (this.drawingFromQuest) {
+            if (target.type === 'quest' && target.id !== this.drawingFromQuest.questId) {
                 const targetQuest = this.quests.get(target.id);
                 if (targetQuest) {
                     targetQuest.requirements = targetQuest.requirements.filter(r => r.type !== 'OtherQuest');
-                    targetQuest.requirements.push({ type: 'OtherQuest', params: [this.drawingFromOption.questId] });
+                    targetQuest.requirements.push({ type: 'OtherQuest', params: [this.drawingFromQuest.questId] });
                     this.renderQuestBlocks();
                 }
             }
@@ -2254,6 +2396,7 @@ class DialogueEditor {
     cancelDrawing() {
         this.isDrawingCurve = false;
         this.drawingFromOption = null;
+        this.drawingFromQuest = null;
         this.els.canvasContainer.classList.remove('drawing-mode');
         if (this.drawingTempPath) {
             this.drawingTempPath.remove();
@@ -2490,7 +2633,7 @@ class DialogueEditor {
     }
     
     startCanvasDrag(e) {
-        if (e.target.closest('.dialogue-node') || e.target.closest('.quest-block') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]')) return;
+        if (e.target.closest('.dialogue-node') || e.target.closest('.quest-block') || e.target.closest('.quest-palette') || e.target.closest('[data-draw-handle]') || e.target.closest('[data-draw-handle-quest]')) return;
         this.isCanvasDragging = true;
         this.canvasStartPos = { x: e.clientX - this.canvasOffset.x, y: e.clientY - this.canvasOffset.y };
     }
@@ -2835,7 +2978,8 @@ class DialogueEditor {
             requirements: [],
             autocomplete: autocomplete,
             x: 400 + (this.quests.size % 5) * 300,
-            y: 100 + Math.floor(this.quests.size / 5) * 300
+            y: 100 + Math.floor(this.quests.size / 5) * 300,
+            collapsed: false
         };
         
         let descStart = 3;
