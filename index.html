@@ -135,47 +135,58 @@
                 </div>
 
                 <div id="questProperties" class="properties-section" style="display: none;">
-                    <h3 id="propQuestTitle">Квест</h3>
-                    <div class="form-group">
-                        <label>ID:</label>
-                        <input type="text" id="questId" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Тип:</label>
-                        <select id="questType" class="form-control">
-                            <option value="Kill">Kill</option>
-                            <option value="Collect">Collect</option>
-                            <option value="Harvest">Harvest</option>
-                            <option value="Craft">Craft</option>
-                            <option value="Talk">Talk</option>
-                            <option value="Build">Build</option>
-                            <option value="Move">Move</option>
-                        </select>
-                    </div>
-                    <div class="form-group" id="questItemGroup" style="display: none;">
-                        <label>Предмет:</label>
-                        <div id="questItemSelector" class="item-selector"></div>
-                    </div>
-                    <div class="form-group">
-                        <label>Название:</label>
-                        <input type="text" id="questName" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label>Описание:</label>
-                        <textarea id="questDescription" class="form-control" rows="3"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label><input type="checkbox" id="questAutocomplete"> <span id="labelAutocomplete">Автозавершение</span></label>
-                    </div>
-                    <div class="form-group">
-                        <label id="labelCooldown">Кулдаун (дни):</label>
-                        <input type="number" id="questCooldown" class="form-control">
-                    </div>
-                    <div class="form-group">
-                        <label id="labelTimeLimit">Лимит (сек):</label>
-                        <input type="number" id="questTimeLimit" class="form-control">
-                    </div>
-                </div>
+    <h3 id="propQuestTitle">Квест</h3>
+    <div class="form-group">
+        <label id="labelQuestId">ID:</label>
+        <input type="text" id="questId" class="form-control">
+    </div>
+    <div class="form-group">
+        <label id="labelQuestType">Тип:</label>
+        <select id="questType" class="form-control">
+            <option value="Kill">Kill</option>
+            <option value="Collect">Collect</option>
+            <option value="Harvest">Harvest</option>
+            <option value="Craft">Craft</option>
+            <option value="Talk">Talk</option>
+            <option value="Build">Build</option>
+            <option value="Move">Move</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label id="labelQuestName">Название:</label>
+        <input type="text" id="questName" class="form-control">
+    </div>
+    <div class="form-group">
+        <label id="labelQuestDesc">Описание:</label>
+        <textarea id="questDescription" class="form-control" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+        <label><input type="checkbox" id="questAutocomplete"> <span id="labelAutocomplete">Автозавершение</span></label>
+    </div>
+    <div class="form-group">
+        <label id="labelCooldown">Кулдаун (дни):</label>
+        <input type="number" id="questCooldown" class="form-control">
+    </div>
+    <div class="form-group">
+        <label id="labelTimeLimit">Лимит (сек):</label>
+        <input type="number" id="questTimeLimit" class="form-control">
+    </div>
+    <div class="quest-form-section">
+        <h4 id="labelQuestTargets">Цели:</h4>
+        <div id="questTargetsList" class="quest-property-list"></div>
+        <button id="addQuestTargetBtn" class="btn-small">+ Цель</button>
+    </div>
+    <div class="quest-form-section">
+        <h4 id="labelQuestRewards">Награды:</h4>
+        <div id="questRewardsList" class="quest-property-list"></div>
+        <button id="addQuestRewardBtn" class="btn-small">+ Награда</button>
+    </div>
+    <div class="quest-form-section">
+        <h4 id="labelQuestRequirements">Требования:</h4>
+        <div id="questRequirementsList" class="quest-property-list"></div>
+        <button id="addQuestRequirementBtn" class="btn-small">+ Требование</button>
+    </div>
+</div>
 
                 <div class="properties-section empty-state" id="emptyState">
                     <p id="emptyStateText">Выберите блок или создайте новый</p>
