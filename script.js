@@ -179,7 +179,9 @@ const translations = {
         questTypeCraft: "Изготовить",
         questTypeTalk: "Разговор",
         questTypeBuild: "Построить",
-        questTypeMove: "Переместить"
+        questTypeMove: "Переместить",
+        targets: "Цели",
+        rewards: "Награды"
     },
     en: {
         appTitle: "Skald's Forge v2.3",
@@ -248,7 +250,9 @@ const translations = {
         questTypeCraft: "Craft",
         questTypeTalk: "Talk",
         questTypeBuild: "Build",
-        questTypeMove: "Move"
+        questTypeMove: "Move",
+        targets: "Targets",
+        rewards: "Rewards"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.3",
@@ -317,7 +321,9 @@ const translations = {
         questTypeCraft: "Herstellen",
         questTypeTalk: "Sprechen",
         questTypeBuild: "Bauen",
-        questTypeMove: "Bewegen"
+        questTypeMove: "Bewegen",
+        targets: "Ziele",
+        rewards: "Belohnungen"
     },
     es: {
         appTitle: "Forja del Escaldo v2.3",
@@ -386,7 +392,9 @@ const translations = {
         questTypeCraft: "Fabricar",
         questTypeTalk: "Hablar",
         questTypeBuild: "Construir",
-        questTypeMove: "Mover"
+        questTypeMove: "Mover",
+        targets: "Objetivos",
+        rewards: "Recompensas"
     },
     fr: {
         appTitle: "Forge du Skalde v2.3",
@@ -455,7 +463,9 @@ const translations = {
         questTypeCraft: "Fabriquer",
         questTypeTalk: "Parler",
         questTypeBuild: "Construire",
-        questTypeMove: "Déplacer"
+        questTypeMove: "Déplacer",
+        targets: "Objectifs",
+        rewards: "Récompenses"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.3",
@@ -524,7 +534,9 @@ const translations = {
         questTypeCraft: "Wytworzyć",
         questTypeTalk: "Porozmawiać",
         questTypeBuild: "Zbudować",
-        questTypeMove: "Przenieść"
+        questTypeMove: "Przenieść",
+        targets: "Cele",
+        rewards: "Nagrody"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.3",
@@ -593,7 +605,9 @@ const translations = {
         questTypeCraft: "Fabricar",
         questTypeTalk: "Conversar",
         questTypeBuild: "Construir",
-        questTypeMove: "Mover"
+        questTypeMove: "Mover",
+        targets: "Objetivos",
+        rewards: "Recompensas"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.3",
@@ -662,7 +676,9 @@ const translations = {
         questTypeCraft: "Tillverka",
         questTypeTalk: "Prata",
         questTypeBuild: "Bygga",
-        questTypeMove: "Flytta"
+        questTypeMove: "Flytta",
+        targets: "Mål",
+        rewards: "Belöningar"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 v2.3",
@@ -731,7 +747,9 @@ const translations = {
         questTypeCraft: "作成する",
         questTypeTalk: "話す",
         questTypeBuild: "建てる",
-        questTypeMove: "移動する"
+        questTypeMove: "移動する",
+        targets: "目標",
+        rewards: "報酬"
     }
 };
 
@@ -2232,6 +2250,7 @@ class DialogueEditor {
             
             const result = this.smartParse(content);
             this.showImportStats(result);
+            this.render();
             
             this.renderCodeTabs();
             this.showCodeFile(file.name);
