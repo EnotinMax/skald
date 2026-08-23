@@ -6,7 +6,6 @@ class ItemSelector {
         this.selectedId = initialValue;
         this.baseIconUrl = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
         this.unknownIcon = 'unknown.png';
-        this.onChangeCallback = null;
         this.initDOM();
         this.loadData();
         this.bindEvents();
@@ -86,7 +85,6 @@ class ItemSelector {
             this.input.value = item.id;
             this.iconImg.src = `${this.baseIconUrl}${item.icon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
-            if (this.onChangeCallback) this.onChangeCallback(item.id);
         }
         this.dropdown.classList.remove('active');
     }
@@ -100,7 +98,6 @@ class ItemSelector {
             this.input.value = trimmedValue;
             this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
             this.input.dispatchEvent(new Event('change', { bubbles: true }));
-            if (this.onChangeCallback) this.onChangeCallback(trimmedValue);
         } else {
             this.selectedId = '';
             this.iconImg.src = `${this.baseIconUrl}${this.unknownIcon}`;
@@ -111,15 +108,12 @@ class ItemSelector {
         const item = this.items.find(i => i.id === id);
         this.iconImg.src = item ? `${this.baseIconUrl}${item.icon}` : `${this.baseIconUrl}${this.unknownIcon}`;
     }
-    setOnChange(callback) {
-        this.onChangeCallback = callback;
-    }
 }
 
 const translations = {
     ru: {
         appTitle: "Кузница Скальда v2.4",
-        appSubtitle: "Редактор диалогов и квестов · Команда OdinSons и EnotinTech",
+        appSubtitle: "Редактор диалогов и квестов · by OdinSons",
         searchPlaceholder: "Поиск...",
         importFile: "Импортировать",
         export: "Экспорт",
@@ -150,30 +144,12 @@ const translations = {
         addCondition: "+ Условие",
         propCmdTitle: "Команды",
         addCommand: "+ Команда",
-        propQuestTitle: "Квест",
-        labelQuestId: "ID:",
-        labelQuestType: "Тип:",
-        labelQuestName: "Название:",
-        labelQuestDesc: "Описание:",
-        labelAutocomplete: "Автозавершение",
-        labelCooldown: "Кулдаун (дни):",
-        labelTimeLimit: "Лимит (сек):",
-        labelQuestTargets: "Цели:",
-        labelQuestRewards: "Награды:",
-        labelQuestRequirements: "Требования:",
-        addQuestTarget: "+ Цель",
-        addQuestReward: "+ Награда",
-        addQuestRequirement: "+ Требование",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Выберите блок или создайте новый",
         tabField: "Поле",
         tabCode: "Код",
         applyCode: "Применить изменения",
         copyCode: "Копировать",
         downloadCode: "Скачать файл",
-        newFile: "+ Новый файл",
         codeHint: "Изменения применяются по кнопке 'Применить'",
         previewTitle: "Предпросмотр",
         questPreviewTitle: "Предпросмотр квеста",
@@ -187,8 +163,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Назад",
         questTypeKill: "Убить",
-        questTypeCollect: "Накопить",
-        questTypeHarvest: "Собрать",
+        questTypeCollect: "Собрать",
+        questTypeHarvest: "Собрать урожай",
         questTypeCraft: "Изготовить",
         questTypeTalk: "Разговор",
         questTypeBuild: "Построить",
@@ -220,11 +196,15 @@ const translations = {
         questPreviewSidebar: "Квесты",
         questPreviewTitle: "Предпросмотр квеста",
         requirementParams: "Параметры:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Тип зависимости квеста",
+        questDependencyOtherQuest: "OtherQuest (квест должен быть выполнен ранее)",
+        questDependencyNotFinished: "NotFinished (квест НЕ должен быть выполнен)",
+        questDependencyCancel: "Отмена"
     },
     en: {
         appTitle: "Skald's Forge v2.4",
-        appSubtitle: "Dialogue & Quest Editor · by OdinSons & Enotin",
+        appSubtitle: "Dialogue & Quest Editor · by OdinSons",
         searchPlaceholder: "Search...",
         importFile: "Import",
         export: "Export",
@@ -255,30 +235,12 @@ const translations = {
         addCondition: "+ Condition",
         propCmdTitle: "Commands",
         addCommand: "+ Command",
-        propQuestTitle: "Quest",
-        labelQuestId: "ID:",
-        labelQuestType: "Type:",
-        labelQuestName: "Name:",
-        labelQuestDesc: "Description:",
-        labelAutocomplete: "Autocomplete",
-        labelCooldown: "Cooldown (days):",
-        labelTimeLimit: "Time Limit (sec):",
-        labelQuestTargets: "Targets:",
-        labelQuestRewards: "Rewards:",
-        labelQuestRequirements: "Requirements:",
-        addQuestTarget: "+ Target",
-        addQuestReward: "+ Reward",
-        addQuestRequirement: "+ Requirement",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Select a block or create new",
         tabField: "Canvas",
         tabCode: "Code",
         applyCode: "Apply Changes",
         copyCode: "Copy",
         downloadCode: "Download File",
-        newFile: "+ New File",
         codeHint: "Changes applied via 'Apply Changes' button",
         previewTitle: "Preview",
         questPreviewTitle: "Quest Preview",
@@ -292,8 +254,8 @@ const translations = {
         importStatsClose: "OK",
         back: "Back",
         questTypeKill: "Kill",
-        questTypeCollect: "Accumulate",
-        questTypeHarvest: "Gather",
+        questTypeCollect: "Collect",
+        questTypeHarvest: "Harvest",
         questTypeCraft: "Craft",
         questTypeTalk: "Talk",
         questTypeBuild: "Build",
@@ -325,11 +287,15 @@ const translations = {
         questPreviewSidebar: "Quests",
         questPreviewTitle: "Quest Preview",
         requirementParams: "Parameters:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Quest Dependency Type",
+        questDependencyOtherQuest: "OtherQuest (quest must be completed before)",
+        questDependencyNotFinished: "NotFinished (quest must NOT be completed)",
+        questDependencyCancel: "Cancel"
     },
     de: {
         appTitle: "Schmiede des Skalden v2.4",
-        appSubtitle: "Dialog- & Quest-Editor · by OdinSons & Enotin",
+        appSubtitle: "Dialog- & Quest-Editor · by OdinSons",
         searchPlaceholder: "Suche...",
         importFile: "Importieren",
         export: "Exportieren",
@@ -360,30 +326,12 @@ const translations = {
         addCondition: "+ Bedingung",
         propCmdTitle: "Befehle",
         addCommand: "+ Befehl",
-        propQuestTitle: "Quest",
-        labelQuestId: "ID:",
-        labelQuestType: "Typ:",
-        labelQuestName: "Name:",
-        labelQuestDesc: "Beschreibung:",
-        labelAutocomplete: "Auto-Abschluss",
-        labelCooldown: "Abklingzeit (Tage):",
-        labelTimeLimit: "Zeitlimit (Sek):",
-        labelQuestTargets: "Ziele:",
-        labelQuestRewards: "Belohnungen:",
-        labelQuestRequirements: "Anforderungen:",
-        addQuestTarget: "+ Ziel",
-        addQuestReward: "+ Belohnung",
-        addQuestRequirement: "+ Anforderung",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Wähle einen Block oder erstelle einen neuen",
         tabField: "Feld",
         tabCode: "Code",
         applyCode: "Änderungen übernehmen",
         copyCode: "Kopieren",
         downloadCode: "Datei herunterladen",
-        newFile: "+ Neue Datei",
         codeHint: "Änderungen werden per 'Übernehmen'-Button angewendet",
         previewTitle: "Vorschau",
         questPreviewTitle: "Quest-Vorschau",
@@ -430,11 +378,15 @@ const translations = {
         questPreviewSidebar: "Quests",
         questPreviewTitle: "Quest-Vorschau",
         requirementParams: "Parameter:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Quest-Abhängigkeitstyp",
+        questDependencyOtherQuest: "OtherQuest (Quest muss vorher abgeschlossen sein)",
+        questDependencyNotFinished: "NotFinished (Quest darf NICHT abgeschlossen sein)",
+        questDependencyCancel: "Abbrechen"
     },
     es: {
         appTitle: "Forja del Escaldo v2.4",
-        appSubtitle: "Editor de diálogos y misiones · by OdinSons & Enotin",
+        appSubtitle: "Editor de diálogos y misiones · by OdinSons",
         searchPlaceholder: "Buscar...",
         importFile: "Importar",
         export: "Exportar",
@@ -465,30 +417,12 @@ const translations = {
         addCondition: "+ Condición",
         propCmdTitle: "Comandos",
         addCommand: "+ Comando",
-        propQuestTitle: "Misión",
-        labelQuestId: "ID:",
-        labelQuestType: "Tipo:",
-        labelQuestName: "Nombre:",
-        labelQuestDesc: "Descripción:",
-        labelAutocomplete: "Autocompletar",
-        labelCooldown: "Enfriamiento (días):",
-        labelTimeLimit: "Límite (seg):",
-        labelQuestTargets: "Objetivos:",
-        labelQuestRewards: "Recompensas:",
-        labelQuestRequirements: "Requisitos:",
-        addQuestTarget: "+ Objetivo",
-        addQuestReward: "+ Recompensa",
-        addQuestRequirement: "+ Requisito",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Selecciona un bloque o crea uno nuevo",
         tabField: "Campo",
         tabCode: "Código",
         applyCode: "Aplicar cambios",
         copyCode: "Copiar",
         downloadCode: "Descargar archivo",
-        newFile: "+ Nuevo archivo",
         codeHint: "Los cambios se aplican con el botón 'Aplicar'",
         previewTitle: "Vista previa",
         questPreviewTitle: "Vista previa de misión",
@@ -535,11 +469,15 @@ const translations = {
         questPreviewSidebar: "Misiones",
         questPreviewTitle: "Vista previa de misión",
         requirementParams: "Parámetros:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Tipo de dependencia de misión",
+        questDependencyOtherQuest: "OtherQuest (la misión debe completarse antes)",
+        questDependencyNotFinished: "NotFinished (la misión NO debe completarse)",
+        questDependencyCancel: "Cancelar"
     },
     fr: {
         appTitle: "Forge du Skalde v2.4",
-        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons & Enotin",
+        appSubtitle: "Éditeur de dialogues et quêtes · by OdinSons",
         searchPlaceholder: "Rechercher...",
         importFile: "Importer",
         export: "Exporter",
@@ -570,30 +508,12 @@ const translations = {
         addCondition: "+ Condition",
         propCmdTitle: "Commandes",
         addCommand: "+ Commande",
-        propQuestTitle: "Quête",
-        labelQuestId: "ID :",
-        labelQuestType: "Type :",
-        labelQuestName: "Nom :",
-        labelQuestDesc: "Description :",
-        labelAutocomplete: "Auto-complétion",
-        labelCooldown: "Recharge (jours) :",
-        labelTimeLimit: "Limite (sec) :",
-        labelQuestTargets: "Objectifs :",
-        labelQuestRewards: "Récompenses :",
-        labelQuestRequirements: "Exigences :",
-        addQuestTarget: "+ Objectif",
-        addQuestReward: "+ Récompense",
-        addQuestRequirement: "+ Exigence",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Sélectionnez un bloc ou créez-en un nouveau",
         tabField: "Champ",
         tabCode: "Code",
         applyCode: "Appliquer les modifications",
         copyCode: "Copier",
         downloadCode: "Télécharger le fichier",
-        newFile: "+ Nouveau fichier",
         codeHint: "Les modifications sont appliquées via le bouton 'Appliquer'",
         previewTitle: "Aperçu",
         questPreviewTitle: "Aperçu de quête",
@@ -640,11 +560,15 @@ const translations = {
         questPreviewSidebar: "Quêtes",
         questPreviewTitle: "Aperçu de quête",
         requirementParams: "Paramètres :",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Type de dépendance de quête",
+        questDependencyOtherQuest: "OtherQuest (la quête doit être terminée avant)",
+        questDependencyNotFinished: "NotFinished (la quête ne doit PAS être terminée)",
+        questDependencyCancel: "Annuler"
     },
     pl: {
         appTitle: "Kuźnia Skalda v2.4",
-        appSubtitle: "Edytor dialogów i zadań · by OdinSons & Enotin",
+        appSubtitle: "Edytor dialogów i zadań · by OdinSons",
         searchPlaceholder: "Szukaj...",
         importFile: "Importuj",
         export: "Eksportuj",
@@ -675,30 +599,12 @@ const translations = {
         addCondition: "+ Warunek",
         propCmdTitle: "Polecenia",
         addCommand: "+ Polecenie",
-        propQuestTitle: "Zadanie",
-        labelQuestId: "ID:",
-        labelQuestType: "Typ:",
-        labelQuestName: "Nazwa:",
-        labelQuestDesc: "Opis:",
-        labelAutocomplete: "Auto-ukończenie",
-        labelCooldown: "Odnowienie (dni):",
-        labelTimeLimit: "Limit (sek):",
-        labelQuestTargets: "Cele:",
-        labelQuestRewards: "Nagrody:",
-        labelQuestRequirements: "Wymagania:",
-        addQuestTarget: "+ Cel",
-        addQuestReward: "+ Nagroda",
-        addQuestRequirement: "+ Wymóg",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Wybierz blok lub utwórz nowy",
         tabField: "Pole",
         tabCode: "Kod",
         applyCode: "Zastosuj zmiany",
         copyCode: "Kopiuj",
         downloadCode: "Pobierz plik",
-        newFile: "+ Nowy plik",
         codeHint: "Zmiany są stosowane przyciskiem 'Zastosuj'",
         previewTitle: "Podgląd",
         questPreviewTitle: "Podgląd zadania",
@@ -745,11 +651,15 @@ const translations = {
         questPreviewSidebar: "Zadania",
         questPreviewTitle: "Podgląd zadania",
         requirementParams: "Parametry:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Typ zależności zadania",
+        questDependencyOtherQuest: "OtherQuest (zadanie musi być wcześniej ukończone)",
+        questDependencyNotFinished: "NotFinished (zadanie NIE może być ukończone)",
+        questDependencyCancel: "Anuluj"
     },
     pt: {
         appTitle: "Forja do Escaldo v2.4",
-        appSubtitle: "Editor de diálogos e missões · by OdinSons & Enotin",
+        appSubtitle: "Editor de diálogos e missões · by OdinSons",
         searchPlaceholder: "Pesquisar...",
         importFile: "Importar",
         export: "Exportar",
@@ -780,30 +690,12 @@ const translations = {
         addCondition: "+ Condição",
         propCmdTitle: "Comandos",
         addCommand: "+ Comando",
-        propQuestTitle: "Missão",
-        labelQuestId: "ID:",
-        labelQuestType: "Tipo:",
-        labelQuestName: "Nome:",
-        labelQuestDesc: "Descrição:",
-        labelAutocomplete: "Auto-conclusão",
-        labelCooldown: "Recarga (dias):",
-        labelTimeLimit: "Limite (seg):",
-        labelQuestTargets: "Objetivos:",
-        labelQuestRewards: "Recompensas:",
-        labelQuestRequirements: "Requisitos:",
-        addQuestTarget: "+ Objetivo",
-        addQuestReward: "+ Recompensa",
-        addQuestRequirement: "+ Requisito",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Selecione um bloco ou crie um novo",
         tabField: "Campo",
         tabCode: "Código",
         applyCode: "Aplicar alterações",
         copyCode: "Copiar",
         downloadCode: "Baixar arquivo",
-        newFile: "+ Novo arquivo",
         codeHint: "Alterações são aplicadas pelo botão 'Aplicar'",
         previewTitle: "Pré-visualização",
         questPreviewTitle: "Pré-visualização da missão",
@@ -850,11 +742,15 @@ const translations = {
         questPreviewSidebar: "Missões",
         questPreviewTitle: "Pré-visualização da missão",
         requirementParams: "Parâmetros:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Tipo de dependência de missão",
+        questDependencyOtherQuest: "OtherQuest (missão deve ser concluída antes)",
+        questDependencyNotFinished: "NotFinished (missão NÃO deve ser concluída)",
+        questDependencyCancel: "Cancelar"
     },
     sv: {
         appTitle: "Skaldens Smedja v2.4",
-        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons & Enotin",
+        appSubtitle: "Dialog- & uppdragredigerare · by OdinSons",
         searchPlaceholder: "Sök...",
         importFile: "Importera",
         export: "Exportera",
@@ -885,30 +781,12 @@ const translations = {
         addCondition: "+ Villkor",
         propCmdTitle: "Kommandon",
         addCommand: "+ Kommando",
-        propQuestTitle: "Uppdrag",
-        labelQuestId: "ID:",
-        labelQuestType: "Typ:",
-        labelQuestName: "Namn:",
-        labelQuestDesc: "Beskrivning:",
-        labelAutocomplete: "Autoslutförande",
-        labelCooldown: "Nedkyldning (dagar):",
-        labelTimeLimit: "Tidsgräns (sek):",
-        labelQuestTargets: "Mål:",
-        labelQuestRewards: "Belöningar:",
-        labelQuestRequirements: "Krav:",
-        addQuestTarget: "+ Mål",
-        addQuestReward: "+ Belöning",
-        addQuestRequirement: "+ Krav",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "Välj en block eller skapa en ny",
         tabField: "Fält",
         tabCode: "Kod",
         applyCode: "Tillämpa ändringar",
         copyCode: "Kopiera",
         downloadCode: "Ladda ner fil",
-        newFile: "+ Ny fil",
         codeHint: "Ändringar tillämpas via 'Tillämpa'-knappen",
         previewTitle: "Förhandsgranskning",
         questPreviewTitle: "Uppdragsförhandsgranskning",
@@ -955,11 +833,15 @@ const translations = {
         questPreviewSidebar: "Uppdrag",
         questPreviewTitle: "Uppdragsförhandsgranskning",
         requirementParams: "Parametrar:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "Typ av uppdragsberoende",
+        questDependencyOtherQuest: "OtherQuest (uppdrag måste vara slutfört tidigare)",
+        questDependencyNotFinished: "NotFinished (uppdrag får INTE vara slutfört)",
+        questDependencyCancel: "Avbryt"
     },
     ja: {
         appTitle: "スカルドの鍛冶屋 v2.4",
-        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons & Enotin",
+        appSubtitle: "ダイアログ＆クエストエディタ · by OdinSons",
         searchPlaceholder: "検索...",
         importFile: "インポート",
         export: "エクスポート",
@@ -990,30 +872,12 @@ const translations = {
         addCondition: "+ 条件",
         propCmdTitle: "コマンド",
         addCommand: "+ コマンド",
-        propQuestTitle: "クエスト",
-        labelQuestId: "ID:",
-        labelQuestType: "タイプ:",
-        labelQuestName: "名前:",
-        labelQuestDesc: "説明:",
-        labelAutocomplete: "自動完了",
-        labelCooldown: "クールダウン (日):",
-        labelTimeLimit: "制限 (秒):",
-        labelQuestTargets: "目標:",
-        labelQuestRewards: "報酬:",
-        labelQuestRequirements: "要件:",
-        addQuestTarget: "+ 目標",
-        addQuestReward: "+ 報酬",
-        addQuestRequirement: "+ 要件",
-        removeTarget: "×",
-        removeReward: "×",
-        removeRequirement: "×",
         emptyStateText: "ブロックを選択するか新規作成",
         tabField: "フィールド",
         tabCode: "コード",
         applyCode: "変更を適用",
         copyCode: "コピー",
         downloadCode: "ファイルをダウンロード",
-        newFile: "+ 新しいファイル",
         codeHint: "変更は「適用」ボタンで適用されます",
         previewTitle: "プレビュー",
         questPreviewTitle: "クエストプレビュー",
@@ -1060,16 +924,13 @@ const translations = {
         questPreviewSidebar: "クエスト",
         questPreviewTitle: "クエストプレビュー",
         requirementParams: "パラメータ:",
-        closeFile: "×"
+        closeFile: "×",
+        questDependencyTitle: "クエスト依存タイプ",
+        questDependencyOtherQuest: "OtherQuest (クエストは以前に完了している必要があります)",
+        questDependencyNotFinished: "NotFinished (クエストは完了してはいけません)",
+        questDependencyCancel: "キャンセル"
     }
 };
-
-// Типы требований квеста
-const questRequirementTypes = [
-    'Skill', 'OtherQuest', 'GlobalKey', 'EpicMMO_Level', 'HasItem',
-    'NotFinished', 'IsVIP', 'MH_Level', 'Time', 'HasAchievement',
-    'CustomValueMore', 'CustomValueLess'
-];
 
 class DialogueEditor {
     constructor() {
@@ -1094,6 +955,7 @@ class DialogueEditor {
         this.isDrawingCurve = false;
         this.drawingFromOption = null;
         this.drawingFromQuest = null;
+        this.pendingQuestDependency = null;
         this.drawingTempPath = null;
         
         this.cfgFiles = {};
@@ -1144,6 +1006,7 @@ class DialogueEditor {
             'questPreviewModal', 'questPreviewContent', 'questPreviewTitle',
             'conditionModal', 'conditionType', 'conditionParams', 'saveConditionBtn', 'condModalTitle',
             'commandModal', 'commandType', 'commandParams', 'saveCommandBtn', 'cmdModalTitle',
+            'questDependencyModal', 'questDependencyTitle', 'questDependencyOtherQuestBtn', 'questDependencyNotFinishedBtn', 'questDependencyCancelBtn',
             'fileInput',
             'importStatsModal', 'importStatsTitle', 'statDialoguesLabel', 'statQuestsLabel', 'statUnknownLabel',
             'statDialogues', 'statQuests', 'statUnknown', 'unknownBlocksList', 'importStatsCloseBtn',
@@ -1195,6 +1058,10 @@ class DialogueEditor {
         this.els.addQuestTargetBtn.addEventListener('click', () => this.addQuestTarget());
         this.els.addQuestRewardBtn.addEventListener('click', () => this.addQuestReward());
         this.els.addQuestRequirementBtn.addEventListener('click', () => this.addQuestRequirement());
+        
+        this.els.questDependencyOtherQuestBtn.addEventListener('click', () => this.applyQuestDependency('OtherQuest'));
+        this.els.questDependencyNotFinishedBtn.addEventListener('click', () => this.applyQuestDependency('NotFinished'));
+        this.els.questDependencyCancelBtn.addEventListener('click', () => this.cancelQuestDependency());
         
         this.els.toggleQuestPalette.addEventListener('click', () => {
             this.els.questPalette.classList.toggle('collapsed');
@@ -1282,20 +1149,6 @@ class DialogueEditor {
         this.els.addConditionBtn.textContent = t.addCondition;
         this.els.propCmdTitle.textContent = t.propCmdTitle;
         this.els.addCommandBtn.textContent = t.addCommand;
-        this.els.propQuestTitle.textContent = t.propQuestTitle;
-        this.els.labelQuestId.textContent = t.labelQuestId;
-        this.els.labelQuestType.textContent = t.labelQuestType;
-        this.els.labelQuestName.textContent = t.labelQuestName;
-        this.els.labelQuestDesc.textContent = t.labelQuestDesc;
-        this.els.labelAutocomplete.textContent = t.labelAutocomplete;
-        this.els.labelCooldown.textContent = t.labelCooldown;
-        this.els.labelTimeLimit.textContent = t.labelTimeLimit;
-        this.els.labelQuestTargets.textContent = t.labelQuestTargets;
-        this.els.labelQuestRewards.textContent = t.labelQuestRewards;
-        this.els.labelQuestRequirements.textContent = t.labelQuestRequirements;
-        this.els.addQuestTargetBtn.textContent = t.addQuestTarget;
-        this.els.addQuestRewardBtn.textContent = t.addQuestReward;
-        this.els.addQuestRequirementBtn.textContent = t.addQuestRequirement;
         this.els.emptyStateText.textContent = t.emptyStateText;
         this.els.tabFieldBtn.textContent = t.tabField;
         this.els.tabCodeBtn.textContent = t.tabCode;
@@ -1320,6 +1173,11 @@ class DialogueEditor {
         if (this.els.legendCondition) this.els.legendCondition.textContent = t.legendCondition;
         if (this.els.legendCommand) this.els.legendCommand.textContent = t.legendCommand;
         if (this.els.legendEnd) this.els.legendEnd.textContent = t.legendEnd;
+        
+        if (this.els.questDependencyTitle) this.els.questDependencyTitle.textContent = t.questDependencyTitle;
+        if (this.els.questDependencyOtherQuestBtn) this.els.questDependencyOtherQuestBtn.textContent = t.questDependencyOtherQuest;
+        if (this.els.questDependencyNotFinishedBtn) this.els.questDependencyNotFinishedBtn.textContent = t.questDependencyNotFinished;
+        if (this.els.questDependencyCancelBtn) this.els.questDependencyCancelBtn.textContent = t.questDependencyCancel;
         
         document.querySelectorAll('.lang-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.lang === this.lang);
@@ -1618,13 +1476,11 @@ class DialogueEditor {
     renderQuestPropertiesPanel(quest) {
         const t = translations[this.lang];
         
-        // Очищаем старые селекторы
         this.questTargetSelectors.forEach(s => { if (s.container) s.container.innerHTML = ''; });
         this.questRewardSelectors.forEach(s => { if (s.container) s.container.innerHTML = ''; });
         this.questTargetSelectors = [];
         this.questRewardSelectors = [];
         
-        // Рендер целей
         const targetsContainer = this.els.questTargetsList;
         targetsContainer.innerHTML = '';
         
@@ -1654,7 +1510,6 @@ class DialogueEditor {
             });
         });
         
-        // Рендер наград
         const rewardsContainer = this.els.questRewardsList;
         rewardsContainer.innerHTML = '';
         
@@ -1710,7 +1565,6 @@ class DialogueEditor {
             });
         });
         
-        // Рендер требований
         const reqsContainer = this.els.questRequirementsList;
         reqsContainer.innerHTML = '';
         
@@ -1723,7 +1577,8 @@ class DialogueEditor {
             reqTypeSelect.style.width = '150px';
             reqTypeSelect.dataset.index = i;
             
-            questRequirementTypes.forEach(type => {
+            const reqTypes = ['Skill', 'OtherQuest', 'GlobalKey', 'EpicMMO_Level', 'HasItem', 'NotFinished', 'IsVIP', 'MH_Level', 'Time', 'HasAchievement', 'CustomValueMore', 'CustomValueLess'];
+            reqTypes.forEach(type => {
                 const option = document.createElement('option');
                 option.value = type;
                 option.textContent = type;
@@ -1771,7 +1626,7 @@ class DialogueEditor {
                 quest.requirements[index].params = [newId];
                 this.syncCodeView();
             });
-        } else if (req.type === 'OtherQuest') {
+        } else if (req.type === 'OtherQuest' || req.type === 'NotFinished') {
             const questSelect = document.createElement('select');
             questSelect.className = 'form-control';
             questSelect.style.flex = '1';
@@ -1781,11 +1636,11 @@ class DialogueEditor {
             defaultOption.textContent = '— Выберите квест —';
             questSelect.appendChild(defaultOption);
             
-            this.quests.forEach((quest, questId) => {
+            this.quests.forEach((q, qId) => {
                 const option = document.createElement('option');
-                option.value = questId;
-                option.textContent = quest.name || questId;
-                if (req.params[0] === questId) option.selected = true;
+                option.value = qId;
+                option.textContent = q.name || qId;
+                if (req.params[0] === qId) option.selected = true;
                 questSelect.appendChild(option);
             });
             
@@ -1936,8 +1791,12 @@ class DialogueEditor {
     }
     
     toggleCollapse(nodeId) {
-        const node = this.nodes.get(nodeId);
-        if (node) { node.collapsed = !node.collapsed; this.renderNodes(); }
+        const block = this.nodes.get(nodeId) || this.quests.get(nodeId);
+        if (block) {
+            block.collapsed = !block.collapsed;
+            this.renderNodes();
+            this.renderQuestBlocks();
+        }
     }
     
     updateNodeProperty(property, value) {
@@ -2365,18 +2224,48 @@ class DialogueEditor {
             }
         } else if (this.drawingFromQuest) {
             if (target.type === 'quest' && target.id !== this.drawingFromQuest.questId) {
-                const targetQuest = this.quests.get(target.id);
-                if (targetQuest) {
-                    targetQuest.requirements = targetQuest.requirements.filter(r => r.type !== 'OtherQuest');
-                    targetQuest.requirements.push({ type: 'OtherQuest', params: [this.drawingFromQuest.questId] });
-                    this.renderQuestBlocks();
-                }
+                this.pendingQuestDependency = {
+                    sourceId: this.drawingFromQuest.questId,
+                    targetId: target.id
+                };
+                this.cancelDrawing();
+                this.showQuestDependencyModal();
+                return;
             }
         }
         
         this.cancelDrawing();
         this.render();
         this.syncCodeView();
+    }
+    
+    showQuestDependencyModal() {
+        if (this.pendingQuestDependency) {
+            this.els.questDependencyModal.classList.add('open');
+        }
+    }
+    
+    applyQuestDependency(type) {
+        if (!this.pendingQuestDependency) return;
+        
+        const { sourceId, targetId } = this.pendingQuestDependency;
+        const targetQuest = this.quests.get(targetId);
+        
+        if (targetQuest) {
+            targetQuest.requirements = targetQuest.requirements.filter(r => r.type !== 'OtherQuest' && r.type !== 'NotFinished');
+            targetQuest.requirements.push({ type, params: [sourceId] });
+            this.renderQuestBlocks();
+            this.syncCodeView();
+        }
+        
+        this.pendingQuestDependency = null;
+        this.els.questDependencyModal.classList.remove('open');
+        this.render();
+    }
+    
+    cancelQuestDependency() {
+        this.pendingQuestDependency = null;
+        this.els.questDependencyModal.classList.remove('open');
     }
     
     findDrawTarget(e) {
@@ -2559,6 +2448,36 @@ class DialogueEditor {
                     path.setAttribute('stroke-width', '2.5');
                     path.setAttribute('stroke-dasharray', '8 4');
                     path.setAttribute('marker-end', 'url(#arrowhead-green)');
+                    path.setAttribute('opacity', '0.85');
+                    path.setAttribute('stroke-linecap', 'round');
+                    svg.appendChild(path);
+                }
+            }
+            
+            const notFinishedReq = quest.requirements.find(r => r.type === 'NotFinished');
+            if (notFinishedReq && this.quests.has(notFinishedReq.params[0])) {
+                const sourceQuestId = notFinishedReq.params[0];
+                const sourceQuestEl = this.els.questContainer.querySelector(`[data-quest-id="${sourceQuestId}"]`);
+                const targetQuestEl = this.els.questContainer.querySelector(`[data-quest-id="${quest.id}"]`);
+                
+                if (sourceQuestEl && targetQuestEl) {
+                    const sRect = sourceQuestEl.getBoundingClientRect();
+                    const tRect = targetQuestEl.getBoundingClientRect();
+                    const containerRect = this.els.canvasContainer.getBoundingClientRect();
+                    
+                    const sx = (sRect.right - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const sy = (sRect.top + sRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                    const tx = (tRect.left - containerRect.left - this.canvasOffset.x) / this.currentZoom;
+                    const ty = (tRect.top + tRect.height / 2 - containerRect.top - this.canvasOffset.y) / this.currentZoom;
+                    
+                    const pathD = this.getCurvePath(sx, sy, tx, ty);
+                    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                    path.setAttribute('d', pathD);
+                    path.setAttribute('fill', 'none');
+                    path.setAttribute('stroke', '#e74c3c');
+                    path.setAttribute('stroke-width', '2.5');
+                    path.setAttribute('stroke-dasharray', '8 4');
+                    path.setAttribute('marker-end', 'url(#arrowhead-red)');
                     path.setAttribute('opacity', '0.85');
                     path.setAttribute('stroke-linecap', 'round');
                     svg.appendChild(path);
@@ -3010,6 +2929,8 @@ class DialogueEditor {
                 quest.cooldown = line;
             } else if (line.startsWith('OtherQuest:')) {
                 quest.requirements.push({ type: 'OtherQuest', params: [line.substring(11).trim()] });
+            } else if (line.startsWith('NotFinished:')) {
+                quest.requirements.push({ type: 'NotFinished', params: [line.substring(12).trim()] });
             } else if (line !== 'None' && line.includes(':')) {
                 const d = line.split(':');
                 quest.requirements.push({ type: d[0], params: d[1] ? d[1].split(',').map(x => x.trim()) : [] });
@@ -3023,7 +2944,7 @@ class DialogueEditor {
     }
     
     isQuestDataLine(line) {
-        return this.isQuestTargetLine(line) || this.isQuestRewardLine(line) || /^\d+$/.test(line) || line === 'None' || line.startsWith('OtherQuest:') || (line.includes(':') && !line.startsWith('Text:'));
+        return this.isQuestTargetLine(line) || this.isQuestRewardLine(line) || /^\d+$/.test(line) || line === 'None' || line.startsWith('OtherQuest:') || line.startsWith('NotFinished:') || (line.includes(':') && !line.startsWith('Text:'));
     }
     
     isQuestTargetLine(line) {
