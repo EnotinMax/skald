@@ -7,7 +7,7 @@
   **Динамическая система редактора конфигов диалогов и квестов для KGMarketPlace**
 
   ![Status](https://img.shields.io/badge/Progress_v2-35%25-green)
-  [![Get start!](https://img.shields.io/badge/Get-start!-25-blue)](https://enotinmax.github.io/skald/)
+  [![Get start!](https://img.shields.io/badge/Get-start-25-blue)](https://enotinmax.github.io/skald/)
 
 </div>
 
