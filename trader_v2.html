@@ -35,7 +35,7 @@
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s;
-            max-width: 200px;
+            max-width: 220px;
         }
         .tab:hover {
             background: var(--bg-tertiary);
@@ -49,6 +49,22 @@
             flex: 1;
             overflow: hidden;
             text-overflow: ellipsis;
+            cursor: text;
+        }
+        .tab-name:hover {
+            color: var(--accent);
+        }
+        .tab-name-input {
+            flex: 1;
+            background: var(--bg-primary);
+            border: 1px solid var(--accent);
+            color: var(--text-primary);
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            outline: none;
+            min-width: 120px;
+            max-width: 180px;
         }
         .tab-close {
             width: 16px;
@@ -64,6 +80,7 @@
             align-items: center;
             justify-content: center;
             padding: 0;
+            flex-shrink: 0;
         }
         .tab-close:hover {
             background: rgba(255,255,255,0.2);
@@ -283,11 +300,8 @@
 </header>
 
 <main class="trader-layout">
-    <!-- Левая панель: Код -->
     <div class="trader-code-panel">
-        <!-- Вкладки -->
         <div class="tabs-container" id="tabsContainer">
-            <!-- Вкладки будут добавлены динамически -->
             <button class="tab-add" onclick="addNewTab()" title="Новая вкладка">+</button>
         </div>
         
@@ -296,12 +310,11 @@
             <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
-            <button class="secondary" onclick="loadSample()">📋 Пример</button>
+            <button class="secondary" onclick="loadSample()"> Пример</button>
             <button class="secondary" onclick="clearCurrentConfig()">🗑️ Очистить</button>
         </div>
     </div>
 
-    <!-- Средняя панель: Preview -->
     <div class="trader-preview-panel">
         <div class="preview-header">
             <h2>Trader</h2>
@@ -311,7 +324,6 @@
         </div>
     </div>
 
-    <!-- Правая панель: Редактор -->
     <div class="trader-editor-panel">
         <div id="editorPanel" class="editor-content">
             <div class="empty-state-trader">Загрузите CFG или нажмите «Пример»</div>
@@ -329,16 +341,21 @@
     let isSyncing = false;
     let syncTimeout;
     
-    // === СИСТЕМА ВКЛАДОК ===
     let configs = [];
     let activeConfigId = null;
     let tabCounter = 0;
+    let pendingRenameConfigId = null;
 
-    function createConfig(name = 'Новый файл', code = '', profiles = []) {
+    function generateRandomId() {
+        return Math.random().toString(36).substring(2, 8);
+    }
+
+    function createConfig(name = null, code = '', profiles = []) {
         tabCounter++;
+        const finalName = name || `skald_trader_${generateRandomId()}.cfg`;
         return {
             id: `config_${tabCounter}`,
-            name: name,
+            name: finalName,
             code: code,
             profiles: profiles
         };
@@ -356,19 +373,30 @@
             const currentConfig = configs.find(c => c.id === activeConfigId);
             if (currentConfig) {
                 currentConfig.code = document.getElementById('cfgInput').value;
-                currentConfig.profiles = [...profiles];
+                currentConfig.profiles = JSON.parse(JSON.stringify(profiles));
             }
         }
         
-        // Переключиться на новую вкладку
         activeConfigId = configId;
         const config = configs.find(c => c.id === configId);
         
         if (config) {
             document.getElementById('cfgInput').value = config.code;
-            profiles = [...config.profiles];
+            profiles = JSON.parse(JSON.stringify(config.profiles));
             renderTabs();
             renderAll();
+            
+            // Если было запрошено переименование — начинаем его после рендера
+            if (pendingRenameConfigId === configId) {
+                pendingRenameConfigId = null;
+                setTimeout(() => {
+                    const tab = document.querySelector(`.tab[data-config-id="${configId}"]`);
+                    if (tab) {
+                        const nameSpan = tab.querySelector('.tab-name');
+                        if (nameSpan) startRenameTab(configId, nameSpan);
+                    }
+                }, 0);
+            }
         }
     }
 
@@ -393,21 +421,65 @@
         }
     }
 
+    function startRenameTab(configId, nameSpan) {
+        const config = configs.find(c => c.id === configId);
+        if (!config) return;
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'tab-name-input';
+        input.value = config.name;
+        
+        nameSpan.replaceWith(input);
+        input.focus();
+        input.select();
+        
+        let finished = false;
+        const finishRename = () => {
+            if (finished) return;
+            finished = true;
+            const newName = input.value.trim();
+            if (newName) {
+                config.name = newName;
+            }
+            renderTabs();
+        };
+        
+        input.addEventListener('blur', finishRename);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                input.blur();
+            } else if (e.key === 'Escape') {
+                input.value = config.name;
+                input.blur();
+            }
+        });
+    }
+
     function renderTabs() {
         const container = document.getElementById('tabsContainer');
         const addButton = container.querySelector('.tab-add');
-        
-        // Удалить все вкладки кроме кнопки "+"
         container.querySelectorAll('.tab').forEach(tab => tab.remove());
         
         configs.forEach(config => {
             const tab = document.createElement('button');
             tab.className = `tab ${config.id === activeConfigId ? 'active' : ''}`;
-            tab.onclick = () => switchToTab(config.id);
+            tab.dataset.configId = config.id;
             
             const nameSpan = document.createElement('span');
             nameSpan.className = 'tab-name';
             nameSpan.textContent = config.name;
+            nameSpan.title = 'Кликните для переименования';
+            nameSpan.onclick = (e) => {
+                e.stopPropagation();
+                if (config.id !== activeConfigId) {
+                    pendingRenameConfigId = config.id;
+                    switchToTab(config.id);
+                } else {
+                    startRenameTab(config.id, nameSpan);
+                }
+            };
             
             const closeBtn = document.createElement('button');
             closeBtn.className = 'tab-close';
@@ -417,6 +489,9 @@
             
             tab.appendChild(nameSpan);
             tab.appendChild(closeBtn);
+            
+            tab.onclick = () => switchToTab(config.id);
+            
             container.insertBefore(tab, addButton);
         });
     }
@@ -425,7 +500,6 @@
         return configs.find(c => c.id === activeConfigId);
     }
 
-    // === УМНЫЙ ПАРСЕР JSON ===
     function safeParseJSON(text) {
         try {
             return JSON.parse(text);
@@ -505,10 +579,11 @@
         const reader = new FileReader();
         reader.onload = (e) => {
             const content = e.target.result;
-            // Создать новую вкладку с именем файла
             const newConfig = createConfig(file.name, content);
             configs.push(newConfig);
             switchToTab(newConfig.id);
+            // Сразу интерпретируем содержимое
+            parseCFG(content);
         };
         reader.readAsText(file);
         event.target.value = '';
@@ -606,10 +681,9 @@ Coins, 0, BlackMetal, 5`;
             }
         }
         
-        // Сохранить в текущую вкладку
         const config = getCurrentConfig();
         if (config) {
-            config.profiles = [...profiles];
+            config.profiles = JSON.parse(JSON.stringify(profiles));
         }
         
         renderAll();
@@ -749,7 +823,7 @@ Coins, 0, BlackMetal, 5`;
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = '️ Удалить правило';
+                delBtn.textContent = '🗑️ Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -1066,11 +1140,10 @@ Coins, 0, BlackMetal, 5`;
         const cfg = generateCFG();
         document.getElementById('cfgInput').value = cfg;
         
-        // Сохранить в текущую вкладку
         const config = getCurrentConfig();
         if (config) {
             config.code = cfg;
-            config.profiles = [...profiles];
+            config.profiles = JSON.parse(JSON.stringify(profiles));
         }
         
         renderWithFocusRestore(() => {
@@ -1102,12 +1175,10 @@ Coins, 0, BlackMetal, 5`;
         URL.revokeObjectURL(url);
     }
 
-    // Инициализация
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
         
-        // Создать первую вкладку по умолчанию
-        const defaultConfig = createConfig('Новый файл');
+        const defaultConfig = createConfig();
         configs.push(defaultConfig);
         activeConfigId = defaultConfig.id;
         renderTabs();
