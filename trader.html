@@ -61,16 +61,6 @@
         .empty-state-trader { text-align: center; padding: 40px; color: var(--text-secondary); font-style: italic; }
         
         .loading-state { text-align: center; padding: 40px; color: var(--accent); font-size: 16px; }
-        .loading-state::after {
-            content: '';
-            animation: dots 1.5s steps(4, end) infinite;
-        }
-        @keyframes dots {
-            0%, 20% { content: ''; }
-            40% { content: '.'; }
-            60% { content: '..'; }
-            80%, 100% { content: '...'; }
-        }
         
         .preview-header {
             background: linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
@@ -230,7 +220,7 @@
             <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
-            <span class="code-hint" id="statusText">Загрузка данных...</span>
+            <span class="code-hint" id="statusText">Загрузка...</span>
         </div>
     </div>
 
@@ -239,16 +229,16 @@
             <h2>Trader</h2>
         </div>
         <div class="preview-content" id="gamePreview">
-            <div class="loading-state">Загрузка предметов</div>
+            <div class="loading-state">Загрузка предметов...</div>
         </div>
     </div>
 
     <div class="trader-editor-panel">
         <div class="code-tabs">
-            <button class="code-tab active">✏️ Редактор</button>
+            <button class="code-tab active">️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
-            <div class="loading-state">Загрузка предметов</div>
+            <div class="loading-state">Загрузка предметов...</div>
         </div>
     </div>
 </main>
@@ -264,38 +254,50 @@
     let syncTimeout;
     let dataLoaded = false;
 
-    // КРИТИЧЕСКИ ВАЖНО: Загружаем данные ПЕРЕД любым рендерингом
+    // Загрузка с таймаутом и только с raw.githubusercontent.com
     async function loadItemsData() {
-        const urls = [
-            'https://enotinmax.github.io/skald/icons/items.json',
-            'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json'
-        ];
+        const url = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json';
         
-        for (const url of urls) {
-            try {
-                console.log(`Пытаемся загрузить: ${url}`);
-                const response = await fetch(url + '?v=' + Date.now());
-                if (!response.ok) {
-                    console.warn(`HTTP ${response.status} для ${url}`);
-                    continue;
-                }
-                itemsData = await response.json();
-                console.log(`✅ Загружено ${itemsData.length} предметов из ${url}`);
-                dataLoaded = true;
-                document.getElementById('statusText').textContent = `✅ Загружено ${itemsData.length} предметов`;
-                
-                // Теперь можно рендерить
-                if (profiles.length > 0) {
-                    renderAll();
-                }
-                return;
-            } catch (err) {
-                console.warn(`Ошибка при загрузке ${url}:`, err);
+        try {
+            console.log('Загрузка items.json...');
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд таймаут
+            
+            const response = await fetch(url + '?v=' + Date.now(), {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
             }
+            
+            itemsData = await response.json();
+            console.log(`✅ Загружено ${itemsData.length} предметов`);
+            dataLoaded = true;
+            document.getElementById('statusText').textContent = `✅ ${itemsData.length} предметов`;
+            
+            // Рендерим после загрузки
+            renderAll();
+            
+        } catch (err) {
+            console.error('❌ Ошибка загрузки:', err);
+            document.getElementById('statusText').textContent = '❌ Ошибка загрузки';
+            
+            // Показываем сообщение об ошибке
+            document.getElementById('gamePreview').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #e74c3c;">
+                    <p>Не удалось загрузить базу предметов.</p>
+                    <p style="font-size: 12px; color: #95a5a6;">Проверьте подключение к интернету</p>
+                </div>
+            `;
+            document.getElementById('editorPanel').innerHTML = `
+                <div style="text-align: center; padding: 40px; color: #e74c3c;">
+                    <p>Не удалось загрузить базу предметов.</p>
+                    <button onclick="loadItemsData()" style="margin-top: 10px; padding: 8px 16px; background: var(--accent); border: none; border-radius: 4px; color: white; cursor: pointer;">Повторить</button>
+                </div>
+            `;
         }
-        
-        console.error('❌ Не удалось загрузить items.json ни с одного URL');
-        document.getElementById('statusText').textContent = '❌ Ошибка загрузки предметов';
     }
 
     function getItemById(itemId) {
@@ -304,10 +306,10 @@
     }
 
     function getItemIconUrl(itemId) {
-        if (!dataLoaded) return 'https://enotinmax.github.io/skald/icons/unknown.png';
+        if (!dataLoaded) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
         const item = getItemById(itemId);
-        if (!item) return 'https://enotinmax.github.io/skald/icons/unknown.png';
-        return `https://enotinmax.github.io/skald/icons/${item.icon}`;
+        if (!item) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
     }
 
     function getItemName(itemId) {
@@ -454,7 +456,7 @@
         panel.innerHTML = '';
 
         if (!dataLoaded) {
-            panel.innerHTML = '<div class="loading-state">Загрузка предметов</div>';
+            panel.innerHTML = '<div class="loading-state">Загрузка предметов...</div>';
             return;
         }
 
@@ -524,7 +526,7 @@
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = '🗑️ Удалить правило';
+                delBtn.textContent = '️ Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -577,10 +579,7 @@
         selectorWrapper.append(inputWrapper, dropdown);
         
         function updateDropdown(filter = '') {
-            if (!dataLoaded || itemsData.length === 0) {
-                console.warn('itemsData ещё не загружен');
-                return;
-            }
+            if (!dataLoaded || itemsData.length === 0) return;
             
             dropdown.innerHTML = '';
             const lowerFilter = filter.toLowerCase();
@@ -608,12 +607,12 @@
                 const div = document.createElement('div');
                 div.className = 'item-option';
                 div.dataset.id = item.id;
-                div.innerHTML = `<img src="https://enotinmax.github.io/skald/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                div.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
                 
                 div.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
-                    icon.src = `https://enotinmax.github.io/skald/icons/${item.icon}`;
+                    icon.src = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
@@ -710,7 +709,7 @@
         container.innerHTML = '';
         
         if (!dataLoaded) {
-            container.innerHTML = '<div class="loading-state">Загрузка предметов</div>';
+            container.innerHTML = '<div class="loading-state">Загрузка предметов...</div>';
             return;
         }
         
@@ -869,21 +868,15 @@
         URL.revokeObjectURL(url);
     }
 
-    // КРИТИЧЕСКИ ВАЖНО: Сначала загружаем данные, потом парсим пример
-    window.addEventListener('DOMContentLoaded', async () => {
-        await loadItemsData(); // Ждём загрузки
+    // Инициализация
+    window.addEventListener('DOMContentLoaded', () => {
+        loadItemsData();
         
         let codeTimeout;
         document.getElementById('cfgInput').addEventListener('input', (e) => {
             clearTimeout(codeTimeout);
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
-        
-        if (profiles.length === 0 && dataLoaded) {
-            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
-            document.getElementById('cfgInput').value = exampleCFG;
-            parseCFG(exampleCFG);
-        }
     });
 </script>
 </body>
