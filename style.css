@@ -636,3 +636,28 @@ textarea.form-control { resize: vertical; min-height: 80px; font-family: inherit
         margin-top: 4px;
         border: 1px solid var(--border);
         }
+
+.exchange-arrow {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
+    border: 3px solid #78281f;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.exchange-arrow:hover {
+    background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+    transform: scale(1.1) rotate(180deg);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.2);
+}
+.exchange-arrow::after {
+    content: '▶';
+    color: #e8d8a3;
+    font-size: 24px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    margin-left: 3px;
+}
