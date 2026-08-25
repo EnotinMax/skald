@@ -259,7 +259,7 @@
         <div class="code-actions">
             <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
-            <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
+            <button class="secondary" onclick="exportCFG()"> Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
         </div>
     </div>
@@ -275,7 +275,7 @@
     <!-- Правая панель: Редактор -->
     <div class="trader-editor-panel">
         <div class="code-tabs">
-            <button class="code-tab active">✏️ Редактор</button>
+            <button class="code-tab active">️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
             <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
@@ -293,11 +293,11 @@
     let isSyncing = false;
     let syncTimeout;
 
-    // Загрузка базы предметов с правильным URL (GitHub Pages)
+    // Загрузка базы предметов с правильным URL
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
-            const response = await fetch(`https://enotinmax.github.io/icons/items.json${cacheBuster}`);
+            const response = await fetch(`https://enotinmax.github.io/skald/icons/items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
             console.log(`Загружено ${itemsData.length} предметов`);
@@ -317,11 +317,11 @@
     }
 
     function getItemIconUrl(itemId) {
-        if (!itemsData.length) return 'https://enotinmax.github.io/icons/unknown.png';
+        if (!itemsData.length) return 'https://enotinmax.github.io/skald/icons/unknown.png';
         const item = getItemById(itemId);
-        if (!item) return 'https://enotinmax.github.io/icons/unknown.png';
-        // Иконки находятся на GitHub Pages в том же каталоге
-        return `https://enotinmax.github.io/icons/${item.icon}`;
+        if (!item) return 'https://enotinmax.github.io/skald/icons/unknown.png';
+        // Правильный путь к иконкам
+        return `https://enotinmax.github.io/skald/icons/${item.icon}`;
     }
 
     function getItemName(itemId) {
@@ -342,7 +342,7 @@
             parseCFG(content);
         };
         reader.readAsText(file);
-        event.target.value = ''; // Сброс input для возможности повторной загрузки того же файла
+        event.target.value = '';
     }
 
     // --- Парсинг CFG ---
@@ -534,7 +534,7 @@
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = '️ Удалить правило';
+                delBtn.textContent = '🗑️ Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -564,7 +564,6 @@
         const row = document.createElement('div');
         row.className = 'trade-item-row';
         
-        // Item Selector
         const selectorWrapper = document.createElement('div');
         selectorWrapper.className = 'item-selector';
         
@@ -613,11 +612,11 @@
                 const li = document.createElement('li');
                 li.className = 'item-option';
                 li.dataset.id = item.id;
-                li.innerHTML = `<img src="https://enotinmax.github.io/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                li.innerHTML = `<img src="https://enotinmax.github.io/skald/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
                 li.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
-                    icon.src = `https://enotinmax.github.io/icons/${item.icon}`;
+                    icon.src = `https://enotinmax.github.io/skald/icons/${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
@@ -629,16 +628,13 @@
         function updateData(newId) {
             profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
             profiles[pIndex].trades[tIndex].edited = true;
-            // НЕМЕДЛЕННАЯ синхронизация при изменении ID
             scheduleImmediateSync();
         }
 
-        // Автосинхронизация при вводе в поле ID
         let inputTimeout;
         input.addEventListener('input', (e) => {
             clearTimeout(inputTimeout);
             updateDropdown(e.target.value);
-            // Отложенная синхронизация для ввода текста
             inputTimeout = setTimeout(() => {
                 updateData(e.target.value);
             }, 300);
@@ -651,7 +647,6 @@
         input.addEventListener('blur', () => { 
             setTimeout(() => { 
                 dropdown.classList.remove('active');
-                // Финальная синхронизация при потере фокуса
                 updateData(input.value);
             }, 150); 
         });
@@ -737,7 +732,6 @@
         const container = document.createElement('div');
         container.className = 'trade-item-preview';
         
-        // Колонка 1: Текст стоимости
         const costTextCol = document.createElement('div');
         costTextCol.className = 'cost-text-col';
         trade.costs.forEach(cost => {
@@ -760,7 +754,6 @@
             costTextCol.appendChild(row);
         });
         
-        // Колонка 2: Иконки стоимости
         const costIconCol = document.createElement('div');
         costIconCol.className = 'cost-icon-col';
         trade.costs.forEach(cost => {
@@ -773,14 +766,12 @@
             costIconCol.appendChild(iconEl);
         });
         
-        // Колонка 3: Стрелка (по центру)
         const arrowCol = document.createElement('div');
         arrowCol.className = 'arrow-col';
         const arrow = document.createElement('div');
         arrow.className = 'exchange-arrow';
         arrowCol.appendChild(arrow);
         
-        // Колонка 4: Иконки награды
         const rewardIconCol = document.createElement('div');
         rewardIconCol.className = 'reward-icon-col';
         trade.rewards.forEach(reward => {
@@ -793,7 +784,6 @@
             rewardIconCol.appendChild(iconEl);
         });
         
-        // Колонка 5: Текст награды
         const rewardTextCol = document.createElement('div');
         rewardTextCol.className = 'reward-text-col';
         trade.rewards.forEach(reward => {
@@ -842,13 +832,12 @@
         }, 150);
     }
     
-    // Немедленная синхронизация (для быстрых изменений)
     function scheduleImmediateSync() {
         if (isSyncing) clearTimeout(syncTimeout);
         isSyncing = true;
         syncTimeout = setTimeout(() => {
             doSync();
-        }, 50); // Быстрее чем обычная синхронизация
+        }, 50);
     }
     
     function doSync() {
@@ -888,7 +877,6 @@
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
         
-        // Загрузка примера при старте
         if (profiles.length === 0) {
             const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
             document.getElementById('cfgInput').value = exampleCFG;
