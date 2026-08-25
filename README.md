@@ -8,7 +8,7 @@
 
   ![Status](https://img.shields.io/badge/Progress_v3-55%25-green)
   [![Get start!](https://img.shields.io/badge/Get-start-blue)](https://enotinmax.github.io/skald/)
-  ![OdinSons](https://img.shields.io/badge/Odinsons-orange)
+  ![OdinSons](https://img.shields.io/badge/Odinsons-orange?logo=odinsons)
 
 </div>
 
