@@ -6,9 +6,9 @@
   
   **Динамическая система редактора конфигов диалогов и квестов для KGMarketPlace**
 
-  ![Status](https://img.shields.io/badge/Progress_v3-55%25-green)
+  [![Status](https://img.shields.io/badge/Progress_v3-55%25-green)]
   [![Get start!](https://img.shields.io/badge/Get-start-blue)](https://enotinmax.github.io/skald/)
-  ![OdinSons](https://img.shields.io/badge/Odinsons-orange?logo=github)
+  [![OdinSons](https://img.shields.io/badge/Odinsons-orange?logo=github)](https://github.com/odin-sons)
 
 </div>
 
