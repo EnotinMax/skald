@@ -17,22 +17,62 @@
             margin-top: -2px;
         }
         
-        /* === ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ === */
-        .lang-switcher {
+        /* === ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (ФУТЕР СПРАВА) === */
+        .lang-switcher-container {
             position: fixed;
-            bottom: 80px;
+            bottom: 20px;
             right: 20px;
-            z-index: 100;
+            z-index: 1000;
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            flex-direction: column-reverse; /* Меню всплывает вверх */
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+        .lang-current-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             background: var(--bg-primary);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 26px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: all 0.2s;
+        }
+
+        .lang-current-btn:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .lang-dropdown {
+            background: var(--bg-secondary);
             border: 1px solid var(--border);
             border-radius: 8px;
             padding: 6px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 4px;
+            min-width: 150px;
         }
-        .lang-btn {
+
+        .lang-dropdown.active {
+            display: flex;
+            animation: fadeIn 0.15s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .lang-dropdown-btn {
             display: flex;
             align-items: center;
             gap: 8px;
@@ -41,24 +81,28 @@
             border: 1px solid transparent;
             border-radius: 4px;
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.15s;
             white-space: nowrap;
-            min-width: 110px;
         }
-        .lang-btn:hover {
+
+        .lang-dropdown-btn:hover {
             background: var(--bg-tertiary);
             color: var(--text-primary);
         }
-        .lang-btn.active {
+
+        .lang-dropdown-btn.active {
             background: var(--accent-blue);
             color: white;
-            border-color: var(--accent-blue);
         }
-        .lang-flag {
-            font-size: 16px;
-            line-height: 1;
+
+        /* Кнопка добавления профиля перенесена вверх, чтобы не перекрываться меню языков */
+        #btnAddProfileWrapper {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            z-index: 100;
         }
     </style>
 </head>
@@ -115,12 +159,20 @@
     </div>
 </main>
 
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+<!-- Кнопка добавления профиля (перенесена вверх) -->
+<div id="btnAddProfileWrapper">
     <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);" id="btnAddProfile">Добавить профиль</button>
 </div>
 
-<!-- Переключатель языков -->
-<div class="lang-switcher" id="langSwitcher"></div>
+<!-- Переключатель языков (футер справа) -->
+<div class="lang-switcher-container" id="langSwitcherContainer">
+    <button class="lang-current-btn" id="langCurrentBtn" onclick="toggleLangDropdown()" title="Сменить язык">
+        <span class="lang-flag" id="currentLangFlag">🇷🇺</span>
+    </button>
+    <div class="lang-dropdown" id="langDropdown">
+        <!-- Заполняется через JS -->
+    </div>
+</div>
 
 <script>
     // === ЛОКАЛИЗАЦИЯ ===
@@ -175,7 +227,8 @@
             loadError: "Failed to load item database",
             retry: "Retry",
             loadingItems: "Loading items...",
-            defaultProfileName: "NewTrader"
+            defaultProfileName: "NewTrader",
+            changeLangTitle: "Change language"
         },
         de: {
             pageTitle: "Skalds Schmiede - Händler-Editor für KGMarketPlace",
@@ -215,7 +268,8 @@
             loadError: "Gegenstandsdatenbank konnte nicht geladen werden",
             retry: "Wiederholen",
             loadingItems: "Gegenstände werden geladen...",
-            defaultProfileName: "NeuerHändler"
+            defaultProfileName: "NeuerHändler",
+            changeLangTitle: "Sprache ändern"
         },
         es: {
             pageTitle: "La Forja de Skald - Editor de Comerciantes para KGMarketPlace",
@@ -255,7 +309,8 @@
             loadError: "Error al cargar la base de datos de objetos",
             retry: "Reintentar",
             loadingItems: "Cargando objetos...",
-            defaultProfileName: "NuevoComerciante"
+            defaultProfileName: "NuevoComerciante",
+            changeLangTitle: "Cambiar idioma"
         },
         fr: {
             pageTitle: "La Forge de Skald - Éditeur de Marchands pour KGMarketPlace",
@@ -295,7 +350,8 @@
             loadError: "Échec du chargement de la base de données d'objets",
             retry: "Réessayer",
             loadingItems: "Chargement des objets...",
-            defaultProfileName: "NouveauMarchand"
+            defaultProfileName: "NouveauMarchand",
+            changeLangTitle: "Changer de langue"
         },
         pl: {
             pageTitle: "Kuźnia Skalda - Edytor Kupców dla KGMarketPlace",
@@ -335,7 +391,8 @@
             loadError: "Nie udało się załadować bazy przedmiotów",
             retry: "Ponów",
             loadingItems: "Ładowanie przedmiotów...",
-            defaultProfileName: "NowyKupiec"
+            defaultProfileName: "NowyKupiec",
+            changeLangTitle: "Zmień język"
         },
         pt: {
             pageTitle: "A Forja de Skald - Editor de Mercadores para KGMarketPlace",
@@ -375,7 +432,8 @@
             loadError: "Falha ao carregar o banco de dados de itens",
             retry: "Tentar novamente",
             loadingItems: "Carregando itens...",
-            defaultProfileName: "NovoMercador"
+            defaultProfileName: "NovoMercador",
+            changeLangTitle: "Mudar idioma"
         },
         ru: {
             pageTitle: "Кузница Скальда - Редактор Торговцев для KGMarketPlace",
@@ -415,7 +473,8 @@
             loadError: "Ошибка загрузки базы предметов",
             retry: "Повторить",
             loadingItems: "Загрузка предметов...",
-            defaultProfileName: "NewTrader"
+            defaultProfileName: "NewTrader",
+            changeLangTitle: "Сменить язык"
         },
         sv: {
             pageTitle: "Skalds Smédia - Handlarredigerare för KGMarketPlace",
@@ -455,7 +514,8 @@
             loadError: "Det gick inte att ladda föremålsdatabasen",
             retry: "Försök igen",
             loadingItems: "Laddar föremål...",
-            defaultProfileName: "NyHandlare"
+            defaultProfileName: "NyHandlare",
+            changeLangTitle: "Byt språk"
         },
         zh: {
             pageTitle: "斯卡尔德之炉 - KGMarketPlace 商人编辑器",
@@ -495,7 +555,8 @@
             loadError: "加载物品数据库失败",
             retry: "重试",
             loadingItems: "正在加载物品...",
-            defaultProfileName: "新商人"
+            defaultProfileName: "新商人",
+            changeLangTitle: "更改语言"
         }
     };
     
@@ -513,6 +574,12 @@
         applyTranslations();
         renderLanguageSwitcher();
         renderAll();
+        // Закрыть меню после выбора
+        document.getElementById('langDropdown').classList.remove('active');
+    }
+
+    function toggleLangDropdown() {
+        document.getElementById('langDropdown').classList.toggle('active');
     }
     
     function applyTranslations() {
@@ -527,6 +594,7 @@
         document.getElementById('pathHintText').textContent = t('pathHintText');
         document.getElementById('previewTitle').textContent = t('previewTitle');
         document.getElementById('btnAddProfile').textContent = t('btnAddProfile');
+        document.getElementById('langCurrentBtn').title = t('changeLangTitle');
         
         const newTabBtn = document.getElementById('btnNewTab');
         if (newTabBtn) newTabBtn.title = t('btnNewTabTitle');
@@ -543,18 +611,29 @@
     }
     
     function renderLanguageSwitcher() {
-        const container = document.getElementById('langSwitcher');
-        container.innerHTML = '';
+        const currentLangData = languages.find(l => l.code === currentLang) || languages.find(l => l.code === 'ru');
+        document.getElementById('currentLangFlag').textContent = currentLangData.flag;
+        
+        const dropdown = document.getElementById('langDropdown');
+        dropdown.innerHTML = '';
         
         languages.forEach(lang => {
             const btn = document.createElement('button');
-            btn.className = `lang-btn ${lang.code === currentLang ? 'active' : ''}`;
+            btn.className = `lang-dropdown-btn ${lang.code === currentLang ? 'active' : ''}`;
             btn.innerHTML = `<span class="lang-flag">${lang.flag}</span><span>${lang.name}</span>`;
             btn.onclick = () => setLanguage(lang.code);
-            container.appendChild(btn);
+            dropdown.appendChild(btn);
         });
     }
     
+    // Закрытие меню при клике вне его
+    document.addEventListener('click', (e) => {
+        const container = document.getElementById('langSwitcherContainer');
+        if (container && !container.contains(e.target)) {
+            document.getElementById('langDropdown').classList.remove('active');
+        }
+    });
+
     // === ОСНОВНОЙ КОД ===
     let itemsData = [];
     let dataLoaded = false;
