@@ -385,7 +385,6 @@
             renderTabs();
             renderAll();
             
-            // Если было запрошено переименование — начинаем его после рендера
             if (pendingRenameConfigId === configId) {
                 pendingRenameConfigId = null;
                 setTimeout(() => {
@@ -513,7 +512,7 @@
         
         try {
             const result = JSON.parse(fixed);
-            console.log('✅ JSON успешно исправлен и распарсен');
+            console.log('✅ Я нашёл твой JSON, всё хорошо');
             return result;
         } catch (e) {
             console.error('Не удалось исправить JSON:', e.message);
@@ -581,7 +580,6 @@
             const newConfig = createConfig(file.name, content);
             configs.push(newConfig);
             switchToTab(newConfig.id);
-            // Сразу интерпретируем содержимое
             parseCFG(content);
         };
         reader.readAsText(file);
@@ -785,13 +783,13 @@ Coins, 0, BlackMetal, 5`;
                 row.className = 'trade-row';
                 
                 const costSide = document.createElement('div');
-                costSide.innerHTML = '<div class="trade-side-header">Забирает (стоимость)</div>';
+                costSide.innerHTML = '<div class="trade-side-header">Стоимость</div>';
                 trade.costs.forEach((cost, cIndex) => {
                     costSide.appendChild(createItemRow(cost, pIndex, tIndex, 'costs', cIndex));
                 });
                 const addCostBtn = document.createElement('button');
                 addCostBtn.className = 'btn-add-item';
-                addCostBtn.textContent = '+ Добавить предмет';
+                addCostBtn.textContent = '+ Добавить';
                 addCostBtn.onclick = () => { 
                     trade.costs.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
@@ -804,13 +802,13 @@ Coins, 0, BlackMetal, 5`;
                 sep.innerHTML = '<span>↓ ОБМЕН ↓</span>';
 
                 const rewardSide = document.createElement('div');
-                rewardSide.innerHTML = '<div class="trade-side-header">Выдает (награда)</div>';
+                rewardSide.innerHTML = '<div class="trade-side-header">Награда</div>';
                 trade.rewards.forEach((reward, rIndex) => {
                     rewardSide.appendChild(createItemRow(reward, pIndex, tIndex, 'rewards', rIndex));
                 });
                 const addRewardBtn = document.createElement('button');
                 addRewardBtn.className = 'btn-add-item';
-                addRewardBtn.textContent = '+ Добавить предмет';
+                addRewardBtn.textContent = '+ Добавить';
                 addRewardBtn.onclick = () => { 
                     trade.rewards.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
@@ -822,7 +820,7 @@ Coins, 0, BlackMetal, 5`;
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = '🗑️ Удалить правило';
+                delBtn.textContent = 'Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -1010,7 +1008,7 @@ Coins, 0, BlackMetal, 5`;
         }
         
         if (profiles.length === 0) {
-            container.innerHTML = '<div class="empty-preview">Загрузите CFG или нажмите «Пример»</div>';
+            container.innerHTML = '<div class="empty-preview">Загрузите .cfg или нажмите «Пример»</div>';
             return;
         }
         
