@@ -414,7 +414,7 @@ textarea.form-control { resize: vertical; min-height: 80px; font-family: inherit
     grid-template-columns: 1fr 50px 52px 50px 1fr;
     gap: 12px;
     align-items: center;
-    background: linear-gradient(180deg, rgba(42, 37, 32, 0.95) 0%, rgba(30, 25, 20, 0.95) 100%);
+    background: url('assets_trader/basic_bar.png') center center / 100% 100% no-repeat;
     border: 2px solid #5c4a3a;
     border-radius: 6px;
     padding: 16px 20px;
@@ -425,7 +425,7 @@ textarea.form-control { resize: vertical; min-height: 80px; font-family: inherit
 }
 
 .trade-item-row-preview {
-    background: url('assets_trader/basic_bar.png') center center / 100% 100% no-repeat;
+
     border-radius: 4px;
     padding: 4px 8px;
     display: flex;
