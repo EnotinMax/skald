@@ -776,7 +776,7 @@ function createTradePreview(trade) {
         row.appendChild(info);
         costTextCol.appendChild(row);
     });
-    
+
     const costIconCol = document.createElement('div');
     costIconCol.className = 'cost-icon-col';
     trade.costs.forEach(cost => {
@@ -795,7 +795,6 @@ function createTradePreview(trade) {
     arrow.className = 'exchange-arrow';
     arrow.title = 'наоборот';
     arrow.onclick = () => {
-        // Меняем costs и rewards местами
         const temp = trade.costs;
         trade.costs = trade.rewards;
         trade.rewards = temp;
@@ -841,6 +840,8 @@ function createTradePreview(trade) {
     container.append(costTextCol, costIconCol, arrowCol, rewardIconCol, rewardTextCol);
     return container;
 }
+    
+    arrowCol.appendChild(arrow);
         
         const costIconCol = document.createElement('div');
         costIconCol.className = 'cost-icon-col';
@@ -854,49 +855,6 @@ function createTradePreview(trade) {
             costIconCol.appendChild(iconEl);
         });
         
-        const arrowCol = document.createElement('div');
-        arrowCol.className = 'arrow-col';
-        const arrow = document.createElement('div');
-        arrow.className = 'exchange-arrow';
-        arrowCol.appendChild(arrow);
-        
-        const rewardIconCol = document.createElement('div');
-        rewardIconCol.className = 'reward-icon-col';
-        trade.rewards.forEach(reward => {
-            const iconEl = document.createElement('div');
-            iconEl.className = 'item-icon-preview';
-            const img = document.createElement('img');
-            img.src = getItemIconUrl(reward.itemId);
-            img.alt = reward.itemId;
-            iconEl.appendChild(img);
-            rewardIconCol.appendChild(iconEl);
-        });
-        
-        const rewardTextCol = document.createElement('div');
-        rewardTextCol.className = 'reward-text-col';
-        trade.rewards.forEach(reward => {
-            const row = document.createElement('div');
-            row.className = 'trade-item-row-preview';
-            const info = document.createElement('div');
-            info.className = 'item-info-preview';
-            
-            const nameEl = document.createElement('div');
-            nameEl.className = 'item-name-preview';
-            let levelText = reward.level ? ` (${reward.level}★)` : '';
-            nameEl.textContent = getItemName(reward.itemId) + levelText;
-            
-            const qtyEl = document.createElement('div');
-            qtyEl.className = 'item-quantity-preview';
-            qtyEl.textContent = `x${reward.quantity}`;
-            
-            info.append(nameEl, qtyEl);
-            row.appendChild(info);
-            rewardTextCol.appendChild(row);
-        });
-        
-        container.append(costTextCol, costIconCol, arrowCol, rewardIconCol, rewardTextCol);
-        return container;
-    }
 
     function updateProfileId(index, newId) {
         profiles[index].id = newId.trim();
