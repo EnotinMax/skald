@@ -240,7 +240,7 @@
         </div>
         <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123"></textarea>
         <div class="code-actions">
-            <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
+            <button class="secondary" onclick="exportCFG()"> Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
         </div>
     </div>
@@ -259,7 +259,7 @@
             <button class="code-tab active">️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
-            <div class="empty-state-trader">Загрузка базы предметов...</div>
+            <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
         </div>
     </div>
 </main>
@@ -270,7 +270,6 @@
 
 <script>
     let itemsData = [];
-    let itemsLoaded = false;
     let profiles = [];
     let isSyncing = false;
     let syncTimeout;
@@ -285,18 +284,17 @@
             const response = await fetch(`${BASE_ICON_URL}items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
-            itemsLoaded = true;
             console.log(`✅ Загружено ${itemsData.length} предметов`);
+            console.log('📋 Пример предмета:', itemsData[0]);
             
-            // После загрузки - парсим пример
-            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
-            document.getElementById('cfgInput').value = exampleCFG;
-            parseCFG(exampleCFG);
-            
+            if (profiles.length > 0) {
+                renderWithFocusRestore(() => {
+                    renderVisual();
+                    renderPreview();
+                });
+            }
         } catch (err) {
-            console.error('[Trader Editor] Ошибка загрузки items.json:', err);
-            document.getElementById('editorPanel').innerHTML = 
-                '<div class="empty-state-trader" style="color: var(--danger);">⚠️ Ошибка загрузки базы предметов. Проверьте подключение к интернету.</div>';
+            console.error('❌ Ошибка загрузки items.json:', err);
         }
     }
 
@@ -305,13 +303,15 @@
     }
 
     function getItemIconUrl(itemId) {
-        if (!itemsLoaded) return `${BASE_ICON_URL}${UNKNOWN_ICON}`;
         const item = getItemById(itemId);
-        return item ? `${BASE_ICON_URL}${item.icon}` : `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+        if (item && item.icon) {
+            return `${BASE_ICON_URL}${item.icon}`;
+        }
+        return `${BASE_ICON_URL}${UNKNOWN_ICON}`;
     }
 
     function getItemName(itemId) {
-        if (!itemsLoaded) return itemId;
+        if (!itemsData.length) return itemId;
         const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
     }
@@ -374,13 +374,10 @@
                 currentProfile.trades.push({ raw: line, costs, rewards, edited: false });
             }
         }
-        
-        if (itemsLoaded) {
-            renderWithFocusRestore(() => {
-                renderVisual();
-                renderPreview();
-            });
-        }
+        renderWithFocusRestore(() => {
+            renderVisual();
+            renderPreview();
+        });
     }
 
     // --- Генерация CFG ---
@@ -470,7 +467,6 @@
                 const row = document.createElement('div');
                 row.className = 'trade-row';
                 
-                // СТОИМОСТЬ (сверху)
                 const costSide = document.createElement('div');
                 costSide.innerHTML = '<div class="trade-side-header">Забирает (стоимость)</div>';
                 trade.costs.forEach((cost, cIndex) => {
@@ -486,12 +482,10 @@
                 };
                 costSide.appendChild(addCostBtn);
 
-                // Разделитель
                 const sep = document.createElement('div');
                 sep.className = 'trade-vertical-separator';
                 sep.innerHTML = '<span>↓ ОБМЕН ↓</span>';
 
-                // НАГРАДА (снизу)
                 const rewardSide = document.createElement('div');
                 rewardSide.innerHTML = '<div class="trade-side-header">Выдает (награда)</div>';
                 trade.rewards.forEach((reward, rIndex) => {
@@ -507,7 +501,6 @@
                 };
                 rewardSide.appendChild(addRewardBtn);
 
-                // Кнопка удаления всей строки
                 const actions = document.createElement('div');
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
@@ -551,14 +544,12 @@
         const icon = document.createElement('img');
         icon.className = 'item-selector-icon';
         icon.src = getItemIconUrl(itemData.itemId);
-        icon.style.width = '16px';
-        icon.style.height = '16px';
+        icon.onerror = () => { icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`; };
         
         const input = document.createElement('input');
         input.className = 'item-selector-input';
         input.value = itemData.itemId;
-        input.placeholder = itemsLoaded ? 'Начните вводить ID или название...' : 'Загрузка...';
-        input.disabled = !itemsLoaded;
+        input.placeholder = 'ID или название...';
         input.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-id`);
         
         const dropdown = document.createElement('div');
@@ -567,8 +558,12 @@
         inputWrapper.append(icon, input);
         selectorWrapper.append(inputWrapper, dropdown);
         
+        // Функция фильтрации и отображения dropdown
         function updateDropdown(filter = '') {
-            if (!itemsLoaded) return;
+            if (!filter || itemsData.length === 0) {
+                dropdown.classList.remove('active');
+                return;
+            }
             
             dropdown.innerHTML = '';
             const lowerQuery = filter.toLowerCase();
@@ -582,7 +577,7 @@
             }).slice(0, 50);
             
             if (filtered.length === 0) {
-                const li = document.createElement('li');
+                const li = document.createElement('div');
                 li.className = 'item-option';
                 li.style.color = 'var(--text-secondary)';
                 li.style.fontStyle = 'italic';
@@ -593,16 +588,31 @@
             }
             
             filtered.forEach(item => {
-                const li = document.createElement('li');
+                const li = document.createElement('div');
                 li.className = 'item-option';
                 li.dataset.id = item.id;
-                li.innerHTML = `
-                    <img src="${BASE_ICON_URL}${item.icon}" alt="" style="width:16px;height:16px;margin-right:8px;">
-                    <div class="item-option-text">
-                        <span class="item-option-name">${item.nameRu || item.name}</span>
-                        <span class="item-option-id">${item.id}</span>
-                    </div>
-                `;
+                
+                const img = document.createElement('img');
+                img.src = `${BASE_ICON_URL}${item.icon}`;
+                img.alt = item.id;
+                img.onerror = () => { img.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`; };
+                
+                const textDiv = document.createElement('div');
+                textDiv.className = 'item-option-text';
+                
+                const nameSpan = document.createElement('span');
+                nameSpan.className = 'item-option-name';
+                nameSpan.textContent = item.nameRu || item.name;
+                
+                const idSpan = document.createElement('span');
+                idSpan.className = 'item-option-id';
+                idSpan.textContent = item.id;
+                
+                textDiv.appendChild(nameSpan);
+                textDiv.appendChild(idSpan);
+                li.appendChild(img);
+                li.appendChild(textDiv);
+                
                 li.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
@@ -610,8 +620,10 @@
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
+                
                 dropdown.appendChild(li);
             });
+            
             dropdown.classList.add('active');
         }
         
@@ -624,30 +636,30 @@
         input.addEventListener('input', (e) => {
             updateDropdown(e.target.value);
         });
+        
         input.addEventListener('focus', () => {
-            if (itemsLoaded && input.value.length > 0) {
+            if (itemsData.length > 0 && input.value.length > 0) {
                 updateDropdown(input.value);
-            } else if (itemsLoaded) {
-                updateDropdown(''); // Показать все при фокусе на пустом поле
             }
         });
+        
         input.addEventListener('blur', () => {
             setTimeout(() => {
                 dropdown.classList.remove('active');
                 const trimmedValue = input.value.trim();
-                if (itemsLoaded) {
-                    const exactMatch = itemsData.find(i => i.id === trimmedValue);
-                    if (exactMatch) {
-                        icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
-                    } else if (trimmedValue !== '') {
-                        icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
-                    }
+                const exactMatch = itemsData.find(i => i.id === trimmedValue);
+                if (exactMatch && exactMatch.icon) {
+                    icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
+                } else if (trimmedValue !== '') {
+                    icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
                 }
             }, 150);
         });
         
         document.addEventListener('click', (e) => {
-            if (!selectorWrapper.contains(e.target)) dropdown.classList.remove('active');
+            if (!selectorWrapper.contains(e.target)) {
+                dropdown.classList.remove('active');
+            }
         });
 
         const qtyInput = document.createElement('input');
@@ -691,7 +703,7 @@
         return row;
     }
 
-    // --- PREVIEW RENDERING (Vertical Layout) ---
+    // --- PREVIEW RENDERING ---
     function renderPreview() {
         const container = document.getElementById('gamePreview');
         container.innerHTML = '';
@@ -715,7 +727,6 @@
         const container = document.createElement('div');
         container.className = 'trade-item-preview';
         
-        // Left side (costs) - Vertical list
         const leftSide = document.createElement('div');
         leftSide.className = 'trade-side-preview';
         
@@ -743,6 +754,7 @@
             const img = document.createElement('img');
             img.src = getItemIconUrl(cost.itemId);
             img.alt = cost.itemId;
+            img.onerror = () => { img.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`; };
             iconEl.appendChild(img);
             
             row.appendChild(itemInfo);
@@ -750,11 +762,9 @@
             leftSide.appendChild(row);
         });
         
-        // Arrow in the middle
         const arrow = document.createElement('div');
         arrow.className = 'exchange-arrow';
         
-        // Right side (rewards) - Vertical list
         const rightSide = document.createElement('div');
         rightSide.className = 'trade-side-preview give-side';
         
@@ -782,6 +792,7 @@
             const img = document.createElement('img');
             img.src = getItemIconUrl(reward.itemId);
             img.alt = reward.itemId;
+            img.onerror = () => { img.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`; };
             iconEl.appendChild(img);
             
             row.appendChild(itemInfo);
@@ -813,12 +824,10 @@
         syncTimeout = setTimeout(() => {
             const cfg = generateCFG();
             document.getElementById('cfgInput').value = cfg;
-            if (itemsLoaded) {
-                renderWithFocusRestore(() => {
-                    renderVisual();
-                    renderPreview();
-                });
-            }
+            renderWithFocusRestore(() => {
+                renderVisual();
+                renderPreview();
+            });
             isSyncing = false;
         }, 150);
     }
@@ -842,15 +851,19 @@
         URL.revokeObjectURL(url);
     }
 
-    // Инициализация
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
-        
         let codeTimeout;
         document.getElementById('cfgInput').addEventListener('input', (e) => {
             clearTimeout(codeTimeout);
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
+        
+        if (profiles.length === 0) {
+            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
+            document.getElementById('cfgInput').value = exampleCFG;
+            parseCFG(exampleCFG);
+        }
     });
 </script>
 </body>
