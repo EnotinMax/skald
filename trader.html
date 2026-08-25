@@ -259,7 +259,7 @@
             <button class="code-tab active">️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
-            <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
+            <div class="empty-state-trader">Загрузка базы предметов...</div>
         </div>
     </div>
 </main>
@@ -270,30 +270,33 @@
 
 <script>
     let itemsData = [];
+    let itemsLoaded = false;
     let profiles = [];
     let isSyncing = false;
     let syncTimeout;
     
-    // Как в основном редакторе - с cache buster
     const BASE_ICON_URL = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
     const UNKNOWN_ICON = 'unknown.png';
 
-    // Загрузка базы предметов с cache buster как в основном редакторе
+    // Загрузка базы предметов
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
             const response = await fetch(`${BASE_ICON_URL}items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
-            console.log(`Загружено ${itemsData.length} предметов`);
-            if (profiles.length > 0) {
-                renderWithFocusRestore(() => {
-                    renderVisual();
-                    renderPreview();
-                });
-            }
+            itemsLoaded = true;
+            console.log(`✅ Загружено ${itemsData.length} предметов`);
+            
+            // После загрузки - парсим пример
+            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
+            document.getElementById('cfgInput').value = exampleCFG;
+            parseCFG(exampleCFG);
+            
         } catch (err) {
             console.error('[Trader Editor] Ошибка загрузки items.json:', err);
+            document.getElementById('editorPanel').innerHTML = 
+                '<div class="empty-state-trader" style="color: var(--danger);">⚠️ Ошибка загрузки базы предметов. Проверьте подключение к интернету.</div>';
         }
     }
 
@@ -302,13 +305,13 @@
     }
 
     function getItemIconUrl(itemId) {
+        if (!itemsLoaded) return `${BASE_ICON_URL}${UNKNOWN_ICON}`;
         const item = getItemById(itemId);
-        // Как в основном редакторе - unknown.png для неизвестных предметов
         return item ? `${BASE_ICON_URL}${item.icon}` : `${BASE_ICON_URL}${UNKNOWN_ICON}`;
     }
 
     function getItemName(itemId) {
-        if (!itemsData.length) return itemId;
+        if (!itemsLoaded) return itemId;
         const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
     }
@@ -371,10 +374,13 @@
                 currentProfile.trades.push({ raw: line, costs, rewards, edited: false });
             }
         }
-        renderWithFocusRestore(() => {
-            renderVisual();
-            renderPreview();
-        });
+        
+        if (itemsLoaded) {
+            renderWithFocusRestore(() => {
+                renderVisual();
+                renderPreview();
+            });
+        }
     }
 
     // --- Генерация CFG ---
@@ -545,11 +551,14 @@
         const icon = document.createElement('img');
         icon.className = 'item-selector-icon';
         icon.src = getItemIconUrl(itemData.itemId);
+        icon.style.width = '16px';
+        icon.style.height = '16px';
         
         const input = document.createElement('input');
         input.className = 'item-selector-input';
         input.value = itemData.itemId;
-        input.placeholder = 'ID или название...';
+        input.placeholder = itemsLoaded ? 'Начните вводить ID или название...' : 'Загрузка...';
+        input.disabled = !itemsLoaded;
         input.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-id`);
         
         const dropdown = document.createElement('div');
@@ -559,8 +568,11 @@
         selectorWrapper.append(inputWrapper, dropdown);
         
         function updateDropdown(filter = '') {
+            if (!itemsLoaded) return;
+            
             dropdown.innerHTML = '';
             const lowerQuery = filter.toLowerCase();
+            
             const filtered = itemsData.filter(item => {
                 if (item.id.toLowerCase() === lowerQuery) return true;
                 if (item.nameRu && item.nameRu.toLowerCase().includes(lowerQuery)) return true;
@@ -585,7 +597,7 @@
                 li.className = 'item-option';
                 li.dataset.id = item.id;
                 li.innerHTML = `
-                    <img src="${BASE_ICON_URL}${item.icon}" alt="">
+                    <img src="${BASE_ICON_URL}${item.icon}" alt="" style="width:16px;height:16px;margin-right:8px;">
                     <div class="item-option-text">
                         <span class="item-option-name">${item.nameRu || item.name}</span>
                         <span class="item-option-id">${item.id}</span>
@@ -613,19 +625,23 @@
             updateDropdown(e.target.value);
         });
         input.addEventListener('focus', () => {
-            if (itemsData.length > 0 && input.value.length > 0) {
+            if (itemsLoaded && input.value.length > 0) {
                 updateDropdown(input.value);
+            } else if (itemsLoaded) {
+                updateDropdown(''); // Показать все при фокусе на пустом поле
             }
         });
         input.addEventListener('blur', () => {
             setTimeout(() => {
                 dropdown.classList.remove('active');
                 const trimmedValue = input.value.trim();
-                const exactMatch = itemsData.find(i => i.id === trimmedValue);
-                if (exactMatch) {
-                    icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
-                } else if (trimmedValue !== '') {
-                    icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+                if (itemsLoaded) {
+                    const exactMatch = itemsData.find(i => i.id === trimmedValue);
+                    if (exactMatch) {
+                        icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
+                    } else if (trimmedValue !== '') {
+                        icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+                    }
                 }
             }, 150);
         });
@@ -797,10 +813,12 @@
         syncTimeout = setTimeout(() => {
             const cfg = generateCFG();
             document.getElementById('cfgInput').value = cfg;
-            renderWithFocusRestore(() => {
-                renderVisual();
-                renderPreview();
-            });
+            if (itemsLoaded) {
+                renderWithFocusRestore(() => {
+                    renderVisual();
+                    renderPreview();
+                });
+            }
             isSyncing = false;
         }, 150);
     }
@@ -824,20 +842,15 @@
         URL.revokeObjectURL(url);
     }
 
+    // Инициализация
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
+        
         let codeTimeout;
         document.getElementById('cfgInput').addEventListener('input', (e) => {
             clearTimeout(codeTimeout);
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
-        
-        // Загрузка примера при старте
-        if (profiles.length === 0) {
-            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
-            document.getElementById('cfgInput').value = exampleCFG;
-            parseCFG(exampleCFG);
-        }
     });
 </script>
 </body>
