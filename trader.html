@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skald - Редактор Торговцев (KGMarketPlace)</title>
+    <title>Кузница Скальда</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .trader-layout { display: flex; flex: 1; overflow: hidden; }
@@ -203,8 +203,8 @@
     <div class="header-brand">
         <img src="https://enotinmax.github.io/skald/logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/40?text=S'">
         <div class="header-text">
-            <h1>SKALD</h1>
-            <div class="subtitle">Редактор профилей торговцев (KGMarketPlace)</div>
+            <h1>Кузница Скальда</h1>
+            <div class="subtitle">Редактор Торговцев для KGMarketPlace</div>
         </div>
     </div>
     <div class="header-controls">
@@ -220,10 +220,10 @@
         </div>
         <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
         <div class="code-actions">
-            <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
+            <button class="secondary" onclick="document.getElementById('fileInput').click()">Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
-            <button class="secondary" onclick="loadSample()">📋 Пример</button>
+            <button class="secondary" onclick="loadSample()">Пример</button>
             <span class="code-hint" id="statusText">Готово</span>
         </div>
     </div>
@@ -257,7 +257,6 @@
     let syncTimeout;
     let dataLoaded = false;
 
-    // === УМНЫЙ ПАРСЕР JSON С АВТОИСПРАВЛЕНИЕМ ===
     function safeParseJSON(text) {
         try {
             return JSON.parse(text);
@@ -309,7 +308,7 @@
             renderAll();
             
         } catch (err) {
-            console.error('❌ Ошибка загрузки:', err);
+            console.error('Ошибка загрузки:', err);
             document.getElementById('statusText').textContent = 'Ошибка базы предметов';
         }
     }
@@ -346,9 +345,9 @@
         event.target.value = '';
     }
 
-    // === ЗАГРУЗКА ПРИМЕРА ===
+    // === пример ===
     function loadSample() {
-        const exampleCFG = `[TestTrader]
+        const exampleCFG = `[ExampleTrader]
 Coins, 100, SwordIron, 1, 2
 Wood, 1, Ruby, 10
 
