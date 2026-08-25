@@ -240,7 +240,7 @@
         </div>
         <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123"></textarea>
         <div class="code-actions">
-            <button class="secondary" onclick="exportCFG()"> Экспорт</button>
+            <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
         </div>
     </div>
@@ -270,6 +270,7 @@
 
 <script>
     let itemsData = [];
+    let itemsLoaded = false;
     let profiles = [];
     let isSyncing = false;
     let syncTimeout;
@@ -281,11 +282,12 @@
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
+            console.log('[Items] Загрузка items.json...');
             const response = await fetch(`${BASE_ICON_URL}items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
-            console.log(`✅ Загружено ${itemsData.length} предметов`);
-            console.log('📋 Пример предмета:', itemsData[0]);
+            itemsLoaded = true;
+            console.log(`[Items] Загружено ${itemsData.length} предметов. Пример:`, itemsData[0]);
             
             if (profiles.length > 0) {
                 renderWithFocusRestore(() => {
@@ -294,7 +296,8 @@
                 });
             }
         } catch (err) {
-            console.error('❌ Ошибка загрузки items.json:', err);
+            console.error('[Items] Ошибка загрузки items.json:', err);
+            itemsLoaded = false;
         }
     }
 
@@ -303,15 +306,18 @@
     }
 
     function getItemIconUrl(itemId) {
+        if (!itemId) return `${BASE_ICON_URL}${UNKNOWN_ICON}`;
         const item = getItemById(itemId);
         if (item && item.icon) {
+            console.log(`[Icon] ${itemId} -> ${item.icon}`);
             return `${BASE_ICON_URL}${item.icon}`;
         }
+        console.warn(`[Icon] ${itemId} не найден, использую unknown.png`);
         return `${BASE_ICON_URL}${UNKNOWN_ICON}`;
     }
 
     function getItemName(itemId) {
-        if (!itemsData.length) return itemId;
+        if (!itemId) return '';
         const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
     }
@@ -558,16 +564,27 @@
         inputWrapper.append(icon, input);
         selectorWrapper.append(inputWrapper, dropdown);
         
-        // Функция фильтрации и отображения dropdown
-        function updateDropdown(filter = '') {
-            if (!filter || itemsData.length === 0) {
-                dropdown.classList.remove('active');
+        function filterAndRender(query) {
+            console.log(`[Selector] Поиск: "${query}"`);
+            if (!query || query.length < 1) { 
+                dropdown.classList.remove('active'); 
+                return; 
+            }
+            
+            if (!itemsLoaded || itemsData.length === 0) {
+                console.warn('[Selector] items.json ещё не загружен');
+                const li = document.createElement('li');
+                li.className = 'item-option';
+                li.style.color = 'var(--text-secondary)';
+                li.style.fontStyle = 'italic';
+                li.textContent = 'Загрузка базы предметов...';
+                dropdown.innerHTML = '';
+                dropdown.appendChild(li);
+                dropdown.classList.add('active');
                 return;
             }
             
-            dropdown.innerHTML = '';
-            const lowerQuery = filter.toLowerCase();
-            
+            const lowerQuery = query.toLowerCase();
             const filtered = itemsData.filter(item => {
                 if (item.id.toLowerCase() === lowerQuery) return true;
                 if (item.nameRu && item.nameRu.toLowerCase().includes(lowerQuery)) return true;
@@ -576,8 +593,11 @@
                 return false;
             }).slice(0, 50);
             
+            console.log(`[Selector] Найдено ${filtered.length} предметов`);
+            
+            dropdown.innerHTML = '';
             if (filtered.length === 0) {
-                const li = document.createElement('div');
+                const li = document.createElement('li');
                 li.className = 'item-option';
                 li.style.color = 'var(--text-secondary)';
                 li.style.fontStyle = 'italic';
@@ -588,42 +608,26 @@
             }
             
             filtered.forEach(item => {
-                const li = document.createElement('div');
+                const li = document.createElement('li');
                 li.className = 'item-option';
                 li.dataset.id = item.id;
-                
-                const img = document.createElement('img');
-                img.src = `${BASE_ICON_URL}${item.icon}`;
-                img.alt = item.id;
-                img.onerror = () => { img.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`; };
-                
-                const textDiv = document.createElement('div');
-                textDiv.className = 'item-option-text';
-                
-                const nameSpan = document.createElement('span');
-                nameSpan.className = 'item-option-name';
-                nameSpan.textContent = item.nameRu || item.name;
-                
-                const idSpan = document.createElement('span');
-                idSpan.className = 'item-option-id';
-                idSpan.textContent = item.id;
-                
-                textDiv.appendChild(nameSpan);
-                textDiv.appendChild(idSpan);
-                li.appendChild(img);
-                li.appendChild(textDiv);
-                
+                li.innerHTML = `
+                    <img src="${BASE_ICON_URL}${item.icon}" alt="" onerror="this.src='${BASE_ICON_URL}${UNKNOWN_ICON}'">
+                    <div class="item-option-text">
+                        <span class="item-option-name">${item.nameRu || item.name}</span>
+                        <span class="item-option-id">${item.id}</span>
+                    </div>
+                `;
                 li.addEventListener('mousedown', (e) => {
                     e.preventDefault();
+                    console.log(`[Selector] Выбрано: ${item.id}`);
                     input.value = item.id;
                     icon.src = `${BASE_ICON_URL}${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
-                
                 dropdown.appendChild(li);
             });
-            
             dropdown.classList.add('active');
         }
         
@@ -634,12 +638,12 @@
         }
 
         input.addEventListener('input', (e) => {
-            updateDropdown(e.target.value);
+            filterAndRender(e.target.value);
         });
         
         input.addEventListener('focus', () => {
-            if (itemsData.length > 0 && input.value.length > 0) {
-                updateDropdown(input.value);
+            if (input.value.length > 0) {
+                filterAndRender(input.value);
             }
         });
         
@@ -647,19 +651,21 @@
             setTimeout(() => {
                 dropdown.classList.remove('active');
                 const trimmedValue = input.value.trim();
-                const exactMatch = itemsData.find(i => i.id === trimmedValue);
-                if (exactMatch && exactMatch.icon) {
-                    icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
-                } else if (trimmedValue !== '') {
-                    icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+                if (trimmedValue) {
+                    const exactMatch = itemsData.find(i => i.id === trimmedValue);
+                    if (exactMatch) {
+                        console.log(`[Blur] Точное совпадение: ${exactMatch.id} -> ${exactMatch.icon}`);
+                        icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
+                    } else {
+                        console.log(`[Blur] Не найдено: ${trimmedValue}, показываю unknown.png`);
+                        icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+                    }
                 }
             }, 150);
         });
         
         document.addEventListener('click', (e) => {
-            if (!selectorWrapper.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
+            if (!selectorWrapper.contains(e.target)) dropdown.classList.remove('active');
         });
 
         const qtyInput = document.createElement('input');
@@ -703,7 +709,7 @@
         return row;
     }
 
-    // --- PREVIEW RENDERING ---
+    // --- PREVIEW RENDERING (Vertical Layout) ---
     function renderPreview() {
         const container = document.getElementById('gamePreview');
         container.innerHTML = '';
