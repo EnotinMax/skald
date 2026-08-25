@@ -61,6 +61,8 @@
         .empty-state-trader { text-align: center; padding: 40px; color: var(--text-secondary); font-style: italic; }
         
         .loading-state { text-align: center; padding: 40px; color: var(--accent); font-size: 16px; }
+        .error-state { text-align: center; padding: 40px; color: var(--danger); }
+        .error-state button { margin-top: 12px; padding: 8px 16px; background: var(--accent); border: none; border-radius: 4px; color: white; cursor: pointer; }
         
         .preview-header {
             background: linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
@@ -254,14 +256,45 @@
     let syncTimeout;
     let dataLoaded = false;
 
-    // Загрузка с таймаутом и только с raw.githubusercontent.com
+    // === УМНЫЙ ПАРСЕР JSON С АВТОИСПРАВЛЕНИЕМ ===
+    function safeParseJSON(text) {
+        // 1. Пробуем стандартный парсинг
+        try {
+            const result = JSON.parse(text);
+            return result;
+        } catch (e) {
+            console.warn('Стандартный JSON.parse не сработал:', e.message);
+        }
+        
+        // 2. Пытаемся исправить пропущенные запятые между объектами
+        // Паттерн: }{  или }\n{  или }\r\n{  без запятой между ними
+        let fixed = text;
+        
+        // Исправляем "}\n{" -> "},\n{"
+        fixed = fixed.replace(/\}\s*\n\s*\{/g, '},\n{');
+        // Исправляем "}\r\n{" -> "},\r\n{"
+        fixed = fixed.replace(/\}\s*\r\n\s*\{/g, '},\r\n{');
+        // Исправляем "}{" (без перевода строки)
+        fixed = fixed.replace(/\}\s*\{/g, '},{');
+        
+        try {
+            const result = JSON.parse(fixed);
+            console.log('✅ JSON успешно исправлен и распарсен');
+            return result;
+        } catch (e) {
+            console.error('Не удалось исправить JSON:', e.message);
+            return null;
+        }
+    }
+
+    // Загрузка с таймаутом и умным парсером
     async function loadItemsData() {
         const url = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json';
         
         try {
             console.log('Загрузка items.json...');
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 секунд таймаут
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
             
             const response = await fetch(url + '?v=' + Date.now(), {
                 signal: controller.signal
@@ -272,31 +305,36 @@
                 throw new Error(`HTTP ${response.status}`);
             }
             
-            itemsData = await response.json();
+            const text = await response.text();
+            const parsed = safeParseJSON(text);
+            
+            if (!parsed || !Array.isArray(parsed)) {
+                throw new Error('JSON не является массивом');
+            }
+            
+            itemsData = parsed;
             console.log(`✅ Загружено ${itemsData.length} предметов`);
             dataLoaded = true;
             document.getElementById('statusText').textContent = `✅ ${itemsData.length} предметов`;
             
-            // Рендерим после загрузки
             renderAll();
             
         } catch (err) {
             console.error('❌ Ошибка загрузки:', err);
-            document.getElementById('statusText').textContent = '❌ Ошибка загрузки';
+            document.getElementById('statusText').textContent = '❌ Ошибка';
             
-            // Показываем сообщение об ошибке
-            document.getElementById('gamePreview').innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #e74c3c;">
-                    <p>Не удалось загрузить базу предметов.</p>
-                    <p style="font-size: 12px; color: #95a5a6;">Проверьте подключение к интернету</p>
+            const errorMsg = `
+                <div class="error-state">
+                    <p>⚠️ Не удалось загрузить базу предметов.</p>
+                    <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                        ${err.message}<br>
+                        Редактор работает в ограниченном режиме (без иконок и автодополнения).
+                    </p>
+                    <button onclick="loadItemsData()">🔄 Повторить</button>
                 </div>
             `;
-            document.getElementById('editorPanel').innerHTML = `
-                <div style="text-align: center; padding: 40px; color: #e74c3c;">
-                    <p>Не удалось загрузить базу предметов.</p>
-                    <button onclick="loadItemsData()" style="margin-top: 10px; padding: 8px 16px; background: var(--accent); border: none; border-radius: 4px; color: white; cursor: pointer;">Повторить</button>
-                </div>
-            `;
+            document.getElementById('gamePreview').innerHTML = errorMsg;
+            document.getElementById('editorPanel').innerHTML = errorMsg;
         }
     }
 
