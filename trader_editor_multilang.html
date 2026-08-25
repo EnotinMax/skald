@@ -5,106 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кузница Скальда - Редактор Торговцев для KGMarketPlace</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .exchange-arrow::after {
-            content: '>';
-            color: #e8d8a3;
-            font-size: 32px;
-            font-weight: 900;
-            font-family: monospace;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-            margin-left: 2px;
-            margin-top: -2px;
-        }
-        
-        /* === ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ (ФУТЕР СПРАВА) === */
-        .lang-switcher-container {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column-reverse; /* Меню всплывает вверх */
-            align-items: flex-end;
-            gap: 8px;
-        }
-
-        .lang-current-btn {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: var(--bg-primary);
-            border: 2px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 26px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            transition: all 0.2s;
-        }
-
-        .lang-current-btn:hover {
-            border-color: var(--accent);
-            transform: scale(1.05);
-        }
-
-        .lang-dropdown {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 6px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 4px;
-            min-width: 150px;
-        }
-
-        .lang-dropdown.active {
-            display: flex;
-            animation: fadeIn 0.15s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .lang-dropdown-btn {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 10px;
-            background: transparent;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            color: var(--text-secondary);
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.15s;
-            white-space: nowrap;
-        }
-
-        .lang-dropdown-btn:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-
-        .lang-dropdown-btn.active {
-            background: var(--accent-blue);
-            color: white;
-        }
-
-        /* Кнопка добавления профиля перенесена вверх, чтобы не перекрываться меню языков */
-        #btnAddProfileWrapper {
-            position: fixed;
-            top: 80px;
-            right: 20px;
-            z-index: 100;
-        }
-    </style>
 </head>
 
 <body>
@@ -118,6 +18,7 @@
         </div>
     </div>
     <div class="header-controls">
+        <button class="btn-primary" onclick="addNewProfile()" id="btnAddProfile" style="margin-right: 12px;">Добавить профиль</button>
         <a href="index.html" class="secondary" style="padding: 8px 14px; border-radius: 4px; text-decoration: none; color: white; font-size: 13px;" id="backLink">← К редактору диалогов</a>
     </div>
 </header>
@@ -132,7 +33,7 @@
         <div class="code-actions">
             <button class="secondary" onclick="document.getElementById('fileInput').click()" id="btnImport">Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
-            <button class="secondary" onclick="exportCFG()" id="btnExport">💾 Экспорт</button>
+            <button class="secondary" onclick="exportCFG()" id="btnExport">Экспорт</button>
             <button class="secondary" onclick="loadSample()" id="btnSample">Пример</button>
             <button class="secondary" onclick="clearCurrentConfig()" id="btnClear">Очистить</button>
             
@@ -159,29 +60,20 @@
     </div>
 </main>
 
-<!-- Кнопка добавления профиля (перенесена вверх) -->
-<div id="btnAddProfileWrapper">
-    <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);" id="btnAddProfile">Добавить профиль</button>
-</div>
-
-<!-- Переключатель языков (футер справа) -->
 <div class="lang-switcher-container" id="langSwitcherContainer">
     <button class="lang-current-btn" id="langCurrentBtn" onclick="toggleLangDropdown()" title="Сменить язык">
         <span class="lang-flag" id="currentLangFlag">🇷🇺</span>
     </button>
-    <div class="lang-dropdown" id="langDropdown">
-        <!-- Заполняется через JS -->
-    </div>
+    <div class="lang-dropdown" id="langDropdown"></div>
 </div>
 
 <script>
-    // === ЛОКАЛИЗАЦИЯ ===
     const languages = [
-        { code: 'en', flag: '🇬🇧', name: 'English' },
-        { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
-        { code: 'es', flag: '🇪🇸', name: 'Español' },
+        { code: 'en', flag: '🇬', name: 'English' },
+        { code: 'de', flag: '🇩', name: 'Deutsch' },
+        { code: 'es', flag: '🇪', name: 'Español' },
         { code: 'fr', flag: '🇫🇷', name: 'Français' },
-        { code: 'pl', flag: '🇵🇱', name: 'Polski' },
+        { code: 'pl', flag: '🇱', name: 'Polski' },
         { code: 'pt', flag: '🇵🇹', name: 'Português' },
         { code: 'ru', flag: '🇷🇺', name: 'Русский' },
         { code: 'sv', flag: '🇸🇪', name: 'Svenska' },
@@ -195,7 +87,7 @@
             headerSubtitle: "Trader Profile Editor for KGMarketPlace",
             backLink: "← To Dialogue Editor",
             btnImport: "Import",
-            btnExport: "💾 Export",
+            btnExport: "Export",
             btnSample: "Example",
             btnClear: "Clear",
             pathHintText: "Place the file in",
@@ -236,7 +128,7 @@
             headerSubtitle: "Händlerprofil-Editor für KGMarketPlace",
             backLink: "← Zum Dialog-Editor",
             btnImport: "Importieren",
-            btnExport: "💾 Exportieren",
+            btnExport: "Exportieren",
             btnSample: "Beispiel",
             btnClear: "Leeren",
             pathHintText: "Datei ablegen in",
@@ -277,7 +169,7 @@
             headerSubtitle: "Editor de Perfiles de Comerciantes para KGMarketPlace",
             backLink: "← Al Editor de Diálogos",
             btnImport: "Importar",
-            btnExport: "💾 Exportar",
+            btnExport: "Exportar",
             btnSample: "Ejemplo",
             btnClear: "Limpiar",
             pathHintText: "Coloca el archivo en",
@@ -318,7 +210,7 @@
             headerSubtitle: "Éditeur de Profils de Marchands pour KGMarketPlace",
             backLink: "← À l'Éditeur de Dialogues",
             btnImport: "Importer",
-            btnExport: "💾 Exporter",
+            btnExport: "Exporter",
             btnSample: "Exemple",
             btnClear: "Effacer",
             pathHintText: "Placez le fichier dans",
@@ -359,7 +251,7 @@
             headerSubtitle: "Edytor Profili Kupców dla KGMarketPlace",
             backLink: "← Do Edytora Dialogów",
             btnImport: "Importuj",
-            btnExport: "💾 Eksportuj",
+            btnExport: "Eksportuj",
             btnSample: "Przykład",
             btnClear: "Wyczyść",
             pathHintText: "Umieść plik w",
@@ -400,7 +292,7 @@
             headerSubtitle: "Editor de Perfis de Mercadores para KGMarketPlace",
             backLink: "← Para o Editor de Diálogos",
             btnImport: "Importar",
-            btnExport: "💾 Exportar",
+            btnExport: "Exportar",
             btnSample: "Exemplo",
             btnClear: "Limpar",
             pathHintText: "Coloque o arquivo em",
@@ -441,7 +333,7 @@
             headerSubtitle: "Редактор профилей торговцев для KGMarketPlace",
             backLink: "← К редактору диалогов",
             btnImport: "Импорт",
-            btnExport: "💾 Экспорт",
+            btnExport: "Экспорт",
             btnSample: "Пример",
             btnClear: "Очистить",
             pathHintText: "Файл нужно поместить в",
@@ -482,7 +374,7 @@
             headerSubtitle: "Handlarprofilredigerare för KGMarketPlace",
             backLink: "← Till Dialogredigeraren",
             btnImport: "Importera",
-            btnExport: "💾 Exportera",
+            btnExport: "Exportera",
             btnSample: "Exempel",
             btnClear: "Rensa",
             pathHintText: "Placera filen i",
@@ -523,7 +415,7 @@
             headerSubtitle: "KGMarketPlace 商人资料编辑器",
             backLink: "← 返回对话编辑器",
             btnImport: "导入",
-            btnExport: "💾 导出",
+            btnExport: "导出",
             btnSample: "示例",
             btnClear: "清空",
             pathHintText: "将文件放入",
@@ -574,7 +466,6 @@
         applyTranslations();
         renderLanguageSwitcher();
         renderAll();
-        // Закрыть меню после выбора
         document.getElementById('langDropdown').classList.remove('active');
     }
 
@@ -599,7 +490,6 @@
         const newTabBtn = document.getElementById('btnNewTab');
         if (newTabBtn) newTabBtn.title = t('btnNewTabTitle');
         
-        // Обновляем пустые состояния, если они сейчас видны
         const previewEmpty = document.getElementById('gamePreview').querySelector('.empty-preview');
         if (previewEmpty && profiles.length === 0) {
             previewEmpty.textContent = dataLoaded ? t('editorEmpty') : t('previewEmpty');
@@ -626,7 +516,6 @@
         });
     }
     
-    // Закрытие меню при клике вне его
     document.addEventListener('click', (e) => {
         const container = document.getElementById('langSwitcherContainer');
         if (container && !container.contains(e.target)) {
@@ -634,7 +523,6 @@
         }
     });
 
-    // === ОСНОВНОЙ КОД ===
     let itemsData = [];
     let dataLoaded = false;
     let isSyncing = false;
@@ -865,7 +753,6 @@
         return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
     }
 
-    // Локализация названий предметов: русский только для русского языка
     function getItemName(itemId) {
         if (!dataLoaded) return itemId;
         const item = getItemById(itemId);
@@ -1205,7 +1092,6 @@ Coins, 0, BlackMetal, 5`;
                 const div = document.createElement('div');
                 div.className = 'item-option';
                 div.dataset.id = item.id;
-                // В дропдауне всегда показываем имя на текущем языке
                 const displayName = currentLang === 'ru' ? (item.nameRu || item.name) : (item.name || item.nameRu);
                 div.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${displayName}</span><span class="item-option-id">${item.id}</span></div>`;
                 
@@ -1480,7 +1366,6 @@ Coins, 0, BlackMetal, 5`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Инициализация локализации
         document.documentElement.lang = currentLang;
         renderLanguageSwitcher();
         applyTranslations();
