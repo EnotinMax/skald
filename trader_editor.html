@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Кузница Скальда - Редактор Торговцев для KGMarketPlace</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Переопределение стрелки на символ > */
+        .exchange-arrow::after {
+            content: '>';
+            color: #e8d8a3;
+            font-size: 32px;
+            font-weight: 900;
+            font-family: monospace;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin-left: 2px;
+            margin-top: -2px;
+        }
+    </style>
 </head>
 
 <body>
@@ -574,7 +587,7 @@ Coins, 0, BlackMetal, 5`;
         });
     }
 
-      function createItemRow(itemData, pIndex, tIndex, side, itemIndex) {
+    function createItemRow(itemData, pIndex, tIndex, side, itemIndex) {
         const row = document.createElement('div');
         row.className = 'trade-item-row';
         
@@ -644,18 +657,19 @@ Coins, 0, BlackMetal, 5`;
         }
         
         function updateData(newId) {
-            // Обновляем данные только при финальном выборе, а не во время печати
             profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
             profiles[pIndex].trades[tIndex].edited = true;
             scheduleImmediateSync();
         }
 
+        // ИСПРАВЛЕНИЕ МЕРЦАНИЯ: при вводе мы ТОЛЬКО обновляем список, без перерисовки всей панели
         input.addEventListener('input', (e) => {
             if (dataLoaded) {
                 updateDropdown(e.target.value);
             }
         });
         
+        // Синхронизация происходит только при потере фокуса
         input.addEventListener('blur', () => { 
             setTimeout(() => { 
                 dropdown.classList.remove('active');
@@ -663,91 +677,7 @@ Coins, 0, BlackMetal, 5`;
             }, 150); 
         });
         
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                updateData(input.value);
-                dropdown.classList.remove('active');
-                input.blur();
-            } else if (e.key === 'Escape') {
-                dropdown.classList.remove('active');
-                input.blur();
-            }
-        });
-        
-        document.addEventListener('click', (e) => {
-            if (!selectorWrapper.contains(e.target)) {
-                dropdown.classList.remove('active');
-            }
-        });
-
-        const qtyInput = document.createElement('input');
-        qtyInput.type = 'number';
-        qtyInput.min = '1';
-        qtyInput.value = itemData.quantity;
-        qtyInput.title = 'Количество';
-        qtyInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-qty`);
-        qtyInput.onchange = (e) => {
-            profiles[pIndex].trades[tIndex][side][itemIndex].quantity = parseInt(e.target.value) || 1;
-            profiles[pIndex].trades[tIndex].edited = true;
-            scheduleSync();
-        };
-
-        const levelInput = document.createElement('input');
-        levelInput.type = 'number';
-        levelInput.min = '1';
-        levelInput.placeholder = 'Ур.';
-        levelInput.title = 'Уровень предмета (необязательно)';
-        levelInput.value = itemData.level || '';
-        levelInput.style.width = '50px';
-        levelInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-lvl`);
-        levelInput.onchange = (e) => {
-            const val = e.target.value ? parseInt(e.target.value) : null;
-            profiles[pIndex].trades[tIndex][side][itemIndex].level = val;
-            profiles[pIndex].trades[tIndex].edited = true;
-            scheduleSync();
-        };
-
-        const removeItemBtn = document.createElement('button');
-        removeItemBtn.className = 'btn-small danger';
-        removeItemBtn.textContent = '×';
-        removeItemBtn.style.padding = '2px 6px';
-        removeItemBtn.onclick = () => {
-            profiles[pIndex].trades[tIndex][side].splice(itemIndex, 1);
-            profiles[pIndex].trades[tIndex].edited = true;
-            scheduleSync();
-        };
-
-        row.append(selectorWrapper, qtyInput, levelInput, removeItemBtn);
-        return row;
-    }
-        
-        function updateData(newId) {
-            profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
-            profiles[pIndex].trades[tIndex].edited = true;
-            scheduleImmediateSync();
-        }
-
-        let inputTimeout;
-        input.addEventListener('input', (e) => {
-            clearTimeout(inputTimeout);
-            if (dataLoaded) updateDropdown(e.target.value);
-            inputTimeout = setTimeout(() => {
-                updateData(e.target.value);
-            }, 300);
-        });
-        
-        input.addEventListener('focus', () => { 
-            if (dataLoaded) updateDropdown(input.value); 
-        });
-        
-        input.addEventListener('blur', () => { 
-            setTimeout(() => { 
-                dropdown.classList.remove('active');
-                updateData(input.value);
-            }, 150); 
-        });
-        
+        // Или при нажатии Enter
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
