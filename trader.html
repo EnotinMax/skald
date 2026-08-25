@@ -238,7 +238,7 @@
         <div class="code-tabs">
             <button class="code-tab active">CFG Исходник</button>
         </div>
-        <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
+        <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123"></textarea>
         <div class="code-actions">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
@@ -256,7 +256,7 @@
     <!-- Правая панель: Редактор -->
     <div class="trader-editor-panel">
         <div class="code-tabs">
-            <button class="code-tab active">✏️ Редактор</button>
+            <button class="code-tab active">️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
             <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
@@ -273,9 +273,12 @@
     let profiles = [];
     let isSyncing = false;
     let syncTimeout;
+    
+    // Как в основном редакторе - с cache buster
     const BASE_ICON_URL = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
+    const UNKNOWN_ICON = 'unknown.png';
 
-    // Загрузка базы предметов как в оригинальном скрипте
+    // Загрузка базы предметов с cache buster как в основном редакторе
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
@@ -290,7 +293,7 @@
                 });
             }
         } catch (err) {
-            console.error('Ошибка загрузки items.json:', err);
+            console.error('[Trader Editor] Ошибка загрузки items.json:', err);
         }
     }
 
@@ -300,13 +303,12 @@
 
     function getItemIconUrl(itemId) {
         const item = getItemById(itemId);
-        if (item && item.icon) {
-            return `${BASE_ICON_URL}${item.icon}`;
-        }
-        return `${BASE_ICON_URL}unknown.png`;
+        // Как в основном редакторе - unknown.png для неизвестных предметов
+        return item ? `${BASE_ICON_URL}${item.icon}` : `${BASE_ICON_URL}${UNKNOWN_ICON}`;
     }
 
     function getItemName(itemId) {
+        if (!itemsData.length) return itemId;
         const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
     }
@@ -462,6 +464,7 @@
                 const row = document.createElement('div');
                 row.className = 'trade-row';
                 
+                // СТОИМОСТЬ (сверху)
                 const costSide = document.createElement('div');
                 costSide.innerHTML = '<div class="trade-side-header">Забирает (стоимость)</div>';
                 trade.costs.forEach((cost, cIndex) => {
@@ -477,10 +480,12 @@
                 };
                 costSide.appendChild(addCostBtn);
 
+                // Разделитель
                 const sep = document.createElement('div');
                 sep.className = 'trade-vertical-separator';
                 sep.innerHTML = '<span>↓ ОБМЕН ↓</span>';
 
+                // НАГРАДА (снизу)
                 const rewardSide = document.createElement('div');
                 rewardSide.innerHTML = '<div class="trade-side-header">Выдает (награда)</div>';
                 trade.rewards.forEach((reward, rIndex) => {
@@ -496,6 +501,7 @@
                 };
                 rewardSide.appendChild(addRewardBtn);
 
+                // Кнопка удаления всей строки
                 const actions = document.createElement('div');
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
@@ -554,26 +560,47 @@
         
         function updateDropdown(filter = '') {
             dropdown.innerHTML = '';
-            const lowerFilter = filter.toLowerCase();
-            const matches = itemsData.filter(item => 
-                item.id.toLowerCase().includes(lowerFilter) || 
-                (item.nameRu && item.nameRu.toLowerCase().includes(lowerFilter)) ||
-                item.name.toLowerCase().includes(lowerFilter)
-            ).slice(0, 50);
+            const lowerQuery = filter.toLowerCase();
+            const filtered = itemsData.filter(item => {
+                if (item.id.toLowerCase() === lowerQuery) return true;
+                if (item.nameRu && item.nameRu.toLowerCase().includes(lowerQuery)) return true;
+                if (item.name && item.name.toLowerCase().includes(lowerQuery)) return true;
+                if (item.id.toLowerCase().includes(lowerQuery)) return true;
+                return false;
+            }).slice(0, 50);
             
-            matches.forEach(item => {
-                const opt = document.createElement('div');
-                opt.className = 'item-option';
-                opt.innerHTML = `<img src="${BASE_ICON_URL}${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
-                opt.addEventListener('mousedown', (e) => {
+            if (filtered.length === 0) {
+                const li = document.createElement('li');
+                li.className = 'item-option';
+                li.style.color = 'var(--text-secondary)';
+                li.style.fontStyle = 'italic';
+                li.textContent = 'Не найдено (сохранится как кастомный ID)';
+                dropdown.appendChild(li);
+                dropdown.classList.add('active');
+                return;
+            }
+            
+            filtered.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'item-option';
+                li.dataset.id = item.id;
+                li.innerHTML = `
+                    <img src="${BASE_ICON_URL}${item.icon}" alt="">
+                    <div class="item-option-text">
+                        <span class="item-option-name">${item.nameRu || item.name}</span>
+                        <span class="item-option-id">${item.id}</span>
+                    </div>
+                `;
+                li.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
                     icon.src = `${BASE_ICON_URL}${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
-                dropdown.appendChild(opt);
+                dropdown.appendChild(li);
             });
+            dropdown.classList.add('active');
         }
         
         function updateData(newId) {
@@ -584,15 +611,25 @@
 
         input.addEventListener('input', (e) => {
             updateDropdown(e.target.value);
-            dropdown.classList.add('active');
-            updateData(e.target.value);
         });
         input.addEventListener('focus', () => {
-            if (itemsData.length > 0) {
+            if (itemsData.length > 0 && input.value.length > 0) {
                 updateDropdown(input.value);
-                dropdown.classList.add('active');
             }
         });
+        input.addEventListener('blur', () => {
+            setTimeout(() => {
+                dropdown.classList.remove('active');
+                const trimmedValue = input.value.trim();
+                const exactMatch = itemsData.find(i => i.id === trimmedValue);
+                if (exactMatch) {
+                    icon.src = `${BASE_ICON_URL}${exactMatch.icon}`;
+                } else if (trimmedValue !== '') {
+                    icon.src = `${BASE_ICON_URL}${UNKNOWN_ICON}`;
+                }
+            }, 150);
+        });
+        
         document.addEventListener('click', (e) => {
             if (!selectorWrapper.contains(e.target)) dropdown.classList.remove('active');
         });
@@ -692,8 +729,8 @@
             img.alt = cost.itemId;
             iconEl.appendChild(img);
             
-            row.appendChild(iconEl);
             row.appendChild(itemInfo);
+            row.appendChild(iconEl);
             leftSide.appendChild(row);
         });
         
@@ -795,6 +832,7 @@
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
         
+        // Загрузка примера при старте
         if (profiles.length === 0) {
             const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
             document.getElementById('cfgInput').value = exampleCFG;
