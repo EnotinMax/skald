@@ -1,0 +1,1409 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="pageTitle">Кузница Скальда - Редактор Торговцев для KGMarketPlace</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .exchange-arrow::after {
+            content: '>';
+            color: #e8d8a3;
+            font-size: 32px;
+            font-weight: 900;
+            font-family: monospace;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin-left: 2px;
+            margin-top: -2px;
+        }
+        
+        .bottom-right-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: flex-end;
+        }
+        
+        .lang-switcher {
+            display: flex;
+            gap: 4px;
+            background: var(--bg-primary);
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            flex-wrap: wrap;
+            max-width: 280px;
+            justify-content: flex-end;
+        }
+        .lang-switcher button {
+            background: transparent;
+            border: 1px solid transparent;
+            font-size: 18px;
+            cursor: pointer;
+            padding: 4px 6px;
+            border-radius: 4px;
+            transition: all 0.2s;
+            line-height: 1;
+        }
+        .lang-switcher button:hover {
+            background: var(--bg-tertiary);
+            transform: scale(1.1);
+        }
+        .lang-switcher button.active {
+            background: var(--accent);
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-brand">
+        <img src="https://enotinmax.github.io/skald/logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/40?text=S'">
+        <div class="header-text">
+            <h1 data-i18n="title">Кузница Скальда</h1>
+            <div class="subtitle" data-i18n="subtitle">Редактор профилей торговцев для KGMarketPlace</div>
+        </div>
+    </div>
+    <div class="header-controls">
+        <a href="index.html" class="secondary" style="padding: 8px 14px; border-radius: 4px; text-decoration: none; color: white; font-size: 13px;">
+            <span data-i18n="backToDialogs">← К редактору диалогов</span>
+        </a>
+    </div>
+</header>
+
+<main class="trader-layout">
+    <div class="trader-code-panel">
+        <div class="tabs-container" id="tabsContainer">
+            <button class="tab-add" onclick="addNewTab()" data-i18n-title="newTab" title="Новая вкладка">+</button>
+        </div>
+        
+        <textarea id="cfgInput" class="code-editor" data-i18n-placeholder="cfgPlaceholder" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
+        <div class="code-actions">
+            <button class="secondary" onclick="document.getElementById('fileInput').click()" data-i18n="import">Импорт</button>
+            <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
+            <button class="secondary" onclick="exportCFG()">💾 <span data-i18n="export">Экспорт</span></button>
+            <button class="secondary" onclick="loadSample()" data-i18n="example">Пример</button>
+            <button class="secondary" onclick="clearCurrentConfig()" data-i18n="clear">Очистить</button>
+            
+            <div class="path-hint">
+                <span data-i18n="pathHint1">Файл нужно поместить в</span><br>
+                <code>Valheim\BepInEx\config\Marketplace\Configs\Traders</code>
+            </div>
+        </div>
+    </div>
+
+    <div class="trader-preview-panel">
+        <div class="preview-header">
+            <h2 data-i18n="trader">Торговец</h2>
+        </div>
+        <div class="preview-content" id="gamePreview">
+            <div class="empty-preview" data-i18n="waitingData">Ожидание данных...</div>
+        </div>
+    </div>
+
+    <div class="trader-editor-panel">
+        <div id="editorPanel" class="editor-content">
+            <div class="empty-state-trader" data-i18n="loadCfgOrExample">Загрузите .cfg или нажмите «Пример»</div>
+        </div>
+    </div>
+</main>
+
+<div class="bottom-right-controls">
+    <div class="lang-switcher" id="langSwitcher">
+        <button onclick="setLanguage('en')" data-lang="en" title="English">🇬🇧</button>
+        <button onclick="setLanguage('de')" data-lang="de" title="Deutsch">🇩🇪</button>
+        <button onclick="setLanguage('es')" data-lang="es" title="Español">🇪🇸</button>
+        <button onclick="setLanguage('fr')" data-lang="fr" title="Français">🇫🇷</button>
+        <button onclick="setLanguage('pl')" data-lang="pl" title="Polski">🇵🇱</button>
+        <button onclick="setLanguage('pt')" data-lang="pt" title="Português">🇵🇹</button>
+        <button onclick="setLanguage('ru')" data-lang="ru" title="Русский">🇷🇺</button>
+        <button onclick="setLanguage('sv')" data-lang="sv" title="Svenska">🇸🇪</button>
+        <button onclick="setLanguage('zh')" data-lang="zh" title="中文">🇨🇳</button>
+    </div>
+    <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);" data-i18n="addProfile">Добавить профиль</button>
+</div>
+
+<script>
+    // === СИСТЕМА ЛОКАЛИЗАЦИИ ===
+    const translations = {
+        en: {
+            pageTitle: "Skald's Forge - Trader Editor for KGMarketPlace",
+            title: "Skald's Forge",
+            subtitle: "Trader Profile Editor for KGMarketPlace",
+            backToDialogs: "← To Dialog Editor",
+            newTab: "New tab",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Import",
+            export: "Export",
+            example: "Example",
+            clear: "Clear",
+            pathHint1: "Place the file in",
+            trader: "Trader",
+            waitingData: "Waiting for data...",
+            loadCfgOrExample: "Load .cfg or click «Example»",
+            addProfile: "Add Profile",
+            profile: "Profile:",
+            noTrades: "No trade rules",
+            cost: "Cost",
+            reward: "Reward",
+            exchange: "↓ EXCHANGE ↓",
+            add: "+ Add",
+            addTradeRule: "+ Add trade rule",
+            deleteRule: "Delete rule",
+            delete: "Delete",
+            selectItem: "Select item...",
+            notFound: "Not found (will be saved as custom ID)",
+            quantity: "Quantity",
+            levelHint: "Item level (optional)",
+            reverse: "reverse",
+            renameHint: "Click to rename",
+            closeTab: "Close tab",
+            clearConfirm: "Clear current tab?",
+            cannotCloseLastTab: "Cannot close the last tab",
+            enterTraderId: "Enter trader profile ID:",
+            loadingItems: "Loading items...",
+            loadError: "Error loading items database",
+            retry: "Retry",
+            defaultTabName: "skald_trader"
+        },
+        de: {
+            pageTitle: "Skalds Schmiede - Händler-Editor für KGMarketPlace",
+            title: "Skalds Schmiede",
+            subtitle: "Händlerprofil-Editor für KGMarketPlace",
+            backToDialogs: "← Zum Dialog-Editor",
+            newTab: "Neuer Tab",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importieren",
+            export: "Exportieren",
+            example: "Beispiel",
+            clear: "Leeren",
+            pathHint1: "Datei ablegen in",
+            trader: "Händler",
+            waitingData: "Warte auf Daten...",
+            loadCfgOrExample: ".cfg laden oder «Beispiel» klicken",
+            addProfile: "Profil hinzufügen",
+            profile: "Profil:",
+            noTrades: "Keine Handelsregeln",
+            cost: "Kosten",
+            reward: "Belohnung",
+            exchange: "↓ TAUSCH ↓",
+            add: "+ Hinzufügen",
+            addTradeRule: "+ Handelsregel hinzufügen",
+            deleteRule: "Regel löschen",
+            delete: "Löschen",
+            selectItem: "Gegenstand wählen...",
+            notFound: "Nicht gefunden (wird als benutzerdefinierte ID gespeichert)",
+            quantity: "Menge",
+            levelHint: "Gegenstandsstufe (optional)",
+            reverse: "umkehren",
+            renameHint: "Zum Umbenennen klicken",
+            closeTab: "Tab schließen",
+            clearConfirm: "Aktuellen Tab leeren?",
+            cannotCloseLastTab: "Letzter Tab kann nicht geschlossen werden",
+            enterTraderId: "Händlerprofil-ID eingeben:",
+            loadingItems: "Gegenstände werden geladen...",
+            loadError: "Fehler beim Laden der Gegenstandsdatenbank",
+            retry: "Wiederholen",
+            defaultTabName: "skald_haendler"
+        },
+        es: {
+            pageTitle: "Forja de Skald - Editor de Comerciantes para KGMarketPlace",
+            title: "Forja de Skald",
+            subtitle: "Editor de Perfiles de Comerciantes para KGMarketPlace",
+            backToDialogs: "← Al Editor de Diálogos",
+            newTab: "Nueva pestaña",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importar",
+            export: "Exportar",
+            example: "Ejemplo",
+            clear: "Limpiar",
+            pathHint1: "Coloque el archivo en",
+            trader: "Comerciante",
+            waitingData: "Esperando datos...",
+            loadCfgOrExample: "Cargue .cfg o haga clic en «Ejemplo»",
+            addProfile: "Añadir Perfil",
+            profile: "Perfil:",
+            noTrades: "Sin reglas de comercio",
+            cost: "Coste",
+            reward: "Recompensa",
+            exchange: "↓ INTERCAMBIO ↓",
+            add: "+ Añadir",
+            addTradeRule: "+ Añadir regla de comercio",
+            deleteRule: "Eliminar regla",
+            delete: "Eliminar",
+            selectItem: "Seleccionar objeto...",
+            notFound: "No encontrado (se guardará como ID personalizado)",
+            quantity: "Cantidad",
+            levelHint: "Nivel del objeto (opcional)",
+            reverse: "invertir",
+            renameHint: "Clic para renombrar",
+            closeTab: "Cerrar pestaña",
+            clearConfirm: "¿Limpiar la pestaña actual?",
+            cannotCloseLastTab: "No se puede cerrar la última pestaña",
+            enterTraderId: "Introduzca el ID del perfil de comerciante:",
+            loadingItems: "Cargando objetos...",
+            loadError: "Error al cargar la base de datos de objetos",
+            retry: "Reintentar",
+            defaultTabName: "skald_comerciante"
+        },
+        fr: {
+            pageTitle: "La Forge de Skald - Éditeur de Commerçants pour KGMarketPlace",
+            title: "La Forge de Skald",
+            subtitle: "Éditeur de Profils de Commerçants pour KGMarketPlace",
+            backToDialogs: "← À l'Éditeur de Dialogues",
+            newTab: "Nouvel onglet",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importer",
+            export: "Exporter",
+            example: "Exemple",
+            clear: "Effacer",
+            pathHint1: "Placer le fichier dans",
+            trader: "Commerçant",
+            waitingData: "En attente de données...",
+            loadCfgOrExample: "Chargez .cfg ou cliquez sur «Exemple»",
+            addProfile: "Ajouter un Profil",
+            profile: "Profil :",
+            noTrades: "Aucune règle d'échange",
+            cost: "Coût",
+            reward: "Récompense",
+            exchange: "↓ ÉCHANGE ↓",
+            add: "+ Ajouter",
+            addTradeRule: "+ Ajouter une règle d'échange",
+            deleteRule: "Supprimer la règle",
+            delete: "Supprimer",
+            selectItem: "Sélectionner un objet...",
+            notFound: "Non trouvé (sera enregistré comme ID personnalisé)",
+            quantity: "Quantité",
+            levelHint: "Niveau de l'objet (optionnel)",
+            reverse: "inverser",
+            renameHint: "Cliquez pour renommer",
+            closeTab: "Fermer l'onglet",
+            clearConfirm: "Effacer l'onglet actuel ?",
+            cannotCloseLastTab: "Impossible de fermer le dernier onglet",
+            enterTraderId: "Entrez l'ID du profil de commerçant :",
+            loadingItems: "Chargement des objets...",
+            loadError: "Erreur lors du chargement de la base de données des objets",
+            retry: "Réessayer",
+            defaultTabName: "skald_commercant"
+        },
+        pl: {
+            pageTitle: "Kuźnia Skalda - Edytor Kupców dla KGMarketPlace",
+            title: "Kuźnia Skalda",
+            subtitle: "Edytor Profili Kupców dla KGMarketPlace",
+            backToDialogs: "← Do Edytora Dialogów",
+            newTab: "Nowa karta",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importuj",
+            export: "Eksportuj",
+            example: "Przykład",
+            clear: "Wyczyść",
+            pathHint1: "Umieść plik w",
+            trader: "Kupiec",
+            waitingData: "Oczekiwanie na dane...",
+            loadCfgOrExample: "Załaduj .cfg lub kliknij «Przykład»",
+            addProfile: "Dodaj Profil",
+            profile: "Profil:",
+            noTrades: "Brak reguł handlu",
+            cost: "Koszt",
+            reward: "Nagroda",
+            exchange: "↓ WYMIANA ↓",
+            add: "+ Dodaj",
+            addTradeRule: "+ Dodaj regułę handlu",
+            deleteRule: "Usuń regułę",
+            delete: "Usuń",
+            selectItem: "Wybierz przedmiot...",
+            notFound: "Nie znaleziono (zostanie zapisane jako niestandardowe ID)",
+            quantity: "Ilość",
+            levelHint: "Poziom przedmiotu (opcjonalnie)",
+            reverse: "odwróć",
+            renameHint: "Kliknij, aby zmienić nazwę",
+            closeTab: "Zamknij kartę",
+            clearConfirm: "Wyczyścić bieżącą kartę?",
+            cannotCloseLastTab: "Nie można zamknąć ostatniej karty",
+            enterTraderId: "Wprowadź ID profilu kupca:",
+            loadingItems: "Ładowanie przedmiotów...",
+            loadError: "Błąd ładowania bazy przedmiotów",
+            retry: "Ponów",
+            defaultTabName: "skald_kupiec"
+        },
+        pt: {
+            pageTitle: "Forja de Skald - Editor de Comerciantes para KGMarketPlace",
+            title: "Forja de Skald",
+            subtitle: "Editor de Perfis de Comerciantes para KGMarketPlace",
+            backToDialogs: "← Para o Editor de Diálogos",
+            newTab: "Nova aba",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importar",
+            export: "Exportar",
+            example: "Exemplo",
+            clear: "Limpar",
+            pathHint1: "Coloque o arquivo em",
+            trader: "Comerciante",
+            waitingData: "Aguardando dados...",
+            loadCfgOrExample: "Carregue .cfg ou clique em «Exemplo»",
+            addProfile: "Adicionar Perfil",
+            profile: "Perfil:",
+            noTrades: "Sem regras de comércio",
+            cost: "Custo",
+            reward: "Recompensa",
+            exchange: "↓ TROCA ↓",
+            add: "+ Adicionar",
+            addTradeRule: "+ Adicionar regra de troca",
+            deleteRule: "Excluir regra",
+            delete: "Excluir",
+            selectItem: "Selecionar item...",
+            notFound: "Não encontrado (será salvo como ID personalizado)",
+            quantity: "Quantidade",
+            levelHint: "Nível do item (opcional)",
+            reverse: "inverter",
+            renameHint: "Clique para renomear",
+            closeTab: "Fechar aba",
+            clearConfirm: "Limpar a aba atual?",
+            cannotCloseLastTab: "Não é possível fechar a última aba",
+            enterTraderId: "Digite o ID do perfil de comerciante:",
+            loadingItems: "Carregando itens...",
+            loadError: "Erro ao carregar o banco de dados de itens",
+            retry: "Tentar novamente",
+            defaultTabName: "skald_comerciante"
+        },
+        ru: {
+            pageTitle: "Кузница Скальда - Редактор Торговцев для KGMarketPlace",
+            title: "Кузница Скальда",
+            subtitle: "Редактор профилей торговцев для KGMarketPlace",
+            backToDialogs: "← К редактору диалогов",
+            newTab: "Новая вкладка",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Импорт",
+            export: "Экспорт",
+            example: "Пример",
+            clear: "Очистить",
+            pathHint1: "Файл нужно поместить в",
+            trader: "Торговец",
+            waitingData: "Ожидание данных...",
+            loadCfgOrExample: "Загрузите .cfg или нажмите «Пример»",
+            addProfile: "Добавить профиль",
+            profile: "Профиль:",
+            noTrades: "Нет правил обмена",
+            cost: "Стоимость",
+            reward: "Награда",
+            exchange: "↓ ОБМЕН ↓",
+            add: "+ Добавить",
+            addTradeRule: "+ Добавить правило обмена",
+            deleteRule: "Удалить правило",
+            delete: "Удалить",
+            selectItem: "Выберите предмет...",
+            notFound: "Не найдено (сохранится как кастомный ID)",
+            quantity: "Количество",
+            levelHint: "Уровень предмета (необязательно)",
+            reverse: "наоборот",
+            renameHint: "Кликните для переименования",
+            closeTab: "Закрыть вкладку",
+            clearConfirm: "Очистить текущую вкладку?",
+            cannotCloseLastTab: "Нельзя закрыть последнюю вкладку",
+            enterTraderId: "Введите ID профиля торговца:",
+            loadingItems: "Загрузка предметов...",
+            loadError: "Ошибка загрузки базы предметов",
+            retry: "Повторить",
+            defaultTabName: "skald_trader"
+        },
+        sv: {
+            pageTitle: "Skalds Smidia - Handlarredigerare för KGMarketPlace",
+            title: "Skalds Smidia",
+            subtitle: "Handlarprofilredigerare för KGMarketPlace",
+            backToDialogs: "← Till Dialogredigeraren",
+            newTab: "Ny flik",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "Importera",
+            export: "Exportera",
+            example: "Exempel",
+            clear: "Rensa",
+            pathHint1: "Placera filen i",
+            trader: "Handlare",
+            waitingData: "Väntar på data...",
+            loadCfgOrExample: "Ladda .cfg eller klicka på «Exempel»",
+            addProfile: "Lägg till Profil",
+            profile: "Profil:",
+            noTrades: "Inga handelsregler",
+            cost: "Kostnad",
+            reward: "Belöning",
+            exchange: "↓ VÄXLING ↓",
+            add: "+ Lägg till",
+            addTradeRule: "+ Lägg till handelsregel",
+            deleteRule: "Ta bort regel",
+            delete: "Ta bort",
+            selectItem: "Välj föremål...",
+            notFound: "Hittades inte (sparas som anpassat ID)",
+            quantity: "Antal",
+            levelHint: "Föremålsnivå (valfritt)",
+            reverse: "omvänd",
+            renameHint: "Klicka för att byta namn",
+            closeTab: "Stäng flik",
+            clearConfirm: "Rensa aktuell flik?",
+            cannotCloseLastTab: "Kan inte stänga den sista fliken",
+            enterTraderId: "Ange handlarprofil-ID:",
+            loadingItems: "Laddar föremål...",
+            loadError: "Fel vid laddning av föremålsdatabasen",
+            retry: "Försök igen",
+            defaultTabName: "skald_handlare"
+        },
+        zh: {
+            pageTitle: "斯卡尔德锻造厂 - KGMarketPlace 商人编辑器",
+            title: "斯卡尔德锻造厂",
+            subtitle: "KGMarketPlace 商人档案编辑器",
+            backToDialogs: "← 返回对话编辑器",
+            newTab: "新标签页",
+            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
+            import: "导入",
+            export: "导出",
+            example: "示例",
+            clear: "清空",
+            pathHint1: "将文件放入",
+            trader: "商人",
+            waitingData: "等待数据...",
+            loadCfgOrExample: "加载 .cfg 或点击 «示例»",
+            addProfile: "添加档案",
+            profile: "档案:",
+            noTrades: "无交易规则",
+            cost: "成本",
+            reward: "奖励",
+            exchange: "↓ 交换 ↓",
+            add: "+ 添加",
+            addTradeRule: "+ 添加交易规则",
+            deleteRule: "删除规则",
+            delete: "删除",
+            selectItem: "选择物品...",
+            notFound: "未找到(将保存为自定义 ID)",
+            quantity: "数量",
+            levelHint: "物品等级(可选)",
+            reverse: "反转",
+            renameHint: "点击重命名",
+            closeTab: "关闭标签页",
+            clearConfirm: "清空当前标签页?",
+            cannotCloseLastTab: "无法关闭最后一个标签页",
+            enterTraderId: "输入商人档案 ID:",
+            loadingItems: "加载物品中...",
+            loadError: "加载物品数据库出错",
+            retry: "重试",
+            defaultTabName: "skald_商人"
+        }
+    };
+
+    let currentLang = localStorage.getItem('skald_trader_lang') || 'ru';
+    if (!translations[currentLang]) currentLang = 'ru';
+
+    function t(key) {
+        return (translations[currentLang] && translations[currentLang][key]) 
+            || (translations['en'] && translations['en'][key]) 
+            || key;
+    }
+
+    function setLanguage(lang) {
+        if (!translations[lang]) return;
+        currentLang = lang;
+        localStorage.setItem('skald_trader_lang', lang);
+        document.documentElement.lang = lang;
+        applyTranslations();
+        updateLangSwitcher();
+        renderAll();
+    }
+
+    function applyTranslations() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            el.textContent = t(key);
+        });
+        document.querySelectorAll('[data-i18n-title]').forEach(el => {
+            const key = el.getAttribute('data-i18n-title');
+            el.title = t(key);
+        });
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+            const key = el.getAttribute('data-i18n-placeholder');
+            el.placeholder = t(key);
+        });
+        document.title = t('pageTitle');
+    }
+
+    function updateLangSwitcher() {
+        document.querySelectorAll('.lang-switcher button').forEach(btn => {
+            btn.classList.toggle('active', btn.dataset.lang === currentLang);
+        });
+    }
+
+    // === ОСНОВНОЙ КОД ===
+    let itemsData = [];
+    let dataLoaded = false;
+    let isSyncing = false;
+    let syncTimeout;
+    
+    let configs = [];
+    let activeConfigId = null;
+    let tabCounter = 0;
+    let pendingRenameConfigId = null;
+    let profiles = [];
+
+    function generateRandomId() {
+        return Math.random().toString(36).substring(2, 8);
+    }
+
+    function createConfig(name = null, code = '', profilesData = []) {
+        tabCounter++;
+        const finalName = name || `${t('defaultTabName')}_${generateRandomId()}.cfg`;
+        return {
+            id: `config_${tabCounter}`,
+            name: finalName,
+            code: code,
+            profiles: profilesData
+        };
+    }
+
+    function addNewTab() {
+        const newConfig = createConfig();
+        configs.push(newConfig);
+        switchToTab(newConfig.id);
+    }
+
+    function switchToTab(configId) {
+        if (activeConfigId) {
+            const currentConfig = configs.find(c => c.id === activeConfigId);
+            if (currentConfig) {
+                currentConfig.code = document.getElementById('cfgInput').value;
+                currentConfig.profiles = JSON.parse(JSON.stringify(profiles));
+            }
+        }
+        
+        activeConfigId = configId;
+        const config = configs.find(c => c.id === configId);
+        
+        if (config) {
+            document.getElementById('cfgInput').value = config.code;
+            profiles = JSON.parse(JSON.stringify(config.profiles));
+            renderTabs();
+            renderAll();
+            
+            if (pendingRenameConfigId === configId) {
+                pendingRenameConfigId = null;
+                setTimeout(() => {
+                    const tab = document.querySelector(`.tab[data-config-id="${configId}"]`);
+                    if (tab) {
+                        const nameSpan = tab.querySelector('.tab-name');
+                        if (nameSpan) startRenameTab(configId, nameSpan);
+                    }
+                }, 0);
+            }
+        }
+    }
+
+    function closeTab(configId, event) {
+        event.stopPropagation();
+        
+        if (configs.length <= 1) {
+            alert(t('cannotCloseLastTab'));
+            return;
+        }
+        
+        const index = configs.findIndex(c => c.id === configId);
+        if (index === -1) return;
+        
+        configs.splice(index, 1);
+        
+        if (activeConfigId === configId) {
+            const newIndex = Math.min(index, configs.length - 1);
+            switchToTab(configs[newIndex].id);
+        } else {
+            renderTabs();
+        }
+    }
+
+    function startRenameTab(configId, nameSpan) {
+        const config = configs.find(c => c.id === configId);
+        if (!config) return;
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'tab-name-input';
+        input.value = config.name;
+        
+        nameSpan.replaceWith(input);
+        input.focus();
+        input.select();
+        
+        let finished = false;
+        const finishRename = () => {
+            if (finished) return;
+            finished = true;
+            const newName = input.value.trim();
+            if (newName) {
+                config.name = newName;
+            }
+            renderTabs();
+        };
+        
+        input.addEventListener('blur', finishRename);
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                input.blur();
+            } else if (e.key === 'Escape') {
+                input.value = config.name;
+                input.blur();
+            }
+        });
+    }
+
+    function renderTabs() {
+        const container = document.getElementById('tabsContainer');
+        const addButton = container.querySelector('.tab-add');
+        container.querySelectorAll('.tab').forEach(tab => tab.remove());
+        
+        configs.forEach(config => {
+            const tab = document.createElement('button');
+            tab.className = `tab ${config.id === activeConfigId ? 'active' : ''}`;
+            tab.dataset.configId = config.id;
+            
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'tab-name';
+            nameSpan.textContent = config.name;
+            nameSpan.title = t('renameHint');
+            nameSpan.onclick = (e) => {
+                e.stopPropagation();
+                if (config.id !== activeConfigId) {
+                    pendingRenameConfigId = config.id;
+                    switchToTab(config.id);
+                } else {
+                    startRenameTab(config.id, nameSpan);
+                }
+            };
+            
+            const closeBtn = document.createElement('button');
+            closeBtn.className = 'tab-close';
+            closeBtn.textContent = '×';
+            closeBtn.title = t('closeTab');
+            closeBtn.onclick = (e) => closeTab(config.id, e);
+            
+            tab.appendChild(nameSpan);
+            tab.appendChild(closeBtn);
+            
+            tab.onclick = () => switchToTab(config.id);
+            
+            container.insertBefore(tab, addButton);
+        });
+    }
+
+    function getCurrentConfig() {
+        return configs.find(c => c.id === activeConfigId);
+    }
+
+    function safeParseJSON(text) {
+        try {
+            return JSON.parse(text);
+        } catch (e) {
+            console.warn('Стандартный JSON.parse не сработал:', e.message);
+        }
+        
+        let fixed = text;
+        fixed = fixed.replace(/\}\s*\n\s*\{/g, '},\n{');
+        fixed = fixed.replace(/\}\s*\r\n\s*\{/g, '},\r\n{');
+        fixed = fixed.replace(/\}\s*\{/g, '},{');
+        
+        try {
+            const result = JSON.parse(fixed);
+            return result;
+        } catch (e) {
+            console.error('Не удалось исправить JSON:', e.message);
+            return null;
+        }
+    }
+
+    async function loadItemsData() {
+        const url = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json';
+        
+        try {
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000);
+            
+            const response = await fetch(url + '?v=' + Date.now(), {
+                signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            
+            const text = await response.text();
+            const parsed = safeParseJSON(text);
+            
+            if (!parsed || !Array.isArray(parsed)) {
+                throw new Error('JSON не является массивом');
+            }
+            
+            itemsData = parsed;
+            dataLoaded = true;
+            
+            renderAll();
+            
+        } catch (err) {
+            console.error('Ошибка загрузки:', err);
+            document.getElementById('gamePreview').innerHTML = `<div class="error-state"><p>${t('loadError')}</p><button onclick="loadItemsData()">${t('retry')}</button></div>`;
+        }
+    }
+
+    function getItemById(itemId) {
+        if (!dataLoaded) return null;
+        return itemsData.find(i => i.id === itemId);
+    }
+
+    function getItemIconUrl(itemId) {
+        if (!dataLoaded) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        const item = getItemById(itemId);
+        if (!item) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
+    }
+
+    // Локализация имён: для русского — nameRu, для остальных — name (английский)
+    function getItemName(itemId) {
+        if (!dataLoaded) return itemId;
+        const item = getItemById(itemId);
+        if (!item) return itemId;
+        if (currentLang === 'ru' && item.nameRu) return item.nameRu;
+        return item.name || itemId;
+    }
+
+    function handleFileImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const content = e.target.result;
+            const newConfig = createConfig(file.name, content);
+            configs.push(newConfig);
+            switchToTab(newConfig.id);
+            parseCFG(content);
+        };
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    function loadSample() {
+        const exampleCFG = `[TestTrader]
+Coins, 100, SwordIron, 1, 2
+Wood, 1, Ruby, 10
+
+[PetsTrader]
+Stone, 100, Wolf, 1, 5
+Ruby, 25, Boar, 10, 2
+
+[AdvancedTrader]
+SwordIron, 1, 9, Ruby, 666 = SwordIron, 1, 10
+BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123
+Coins, 0 = AxeBlackMetal, 1, 9
+Coins, 0, BlackMetal, 5`;
+        
+        document.getElementById('cfgInput').value = exampleCFG;
+        parseCFG(exampleCFG);
+    }
+
+    function clearCurrentConfig() {
+        const config = getCurrentConfig();
+        if (!config) return;
+        
+        if (!confirm(t('clearConfirm'))) return;
+        
+        config.code = '';
+        config.profiles = [];
+        document.getElementById('cfgInput').value = '';
+        profiles = [];
+        renderAll();
+    }
+
+    function parseSideTo(tokens, targetArray) {
+        let i = 0;
+        while (i < tokens.length) {
+            const itemId = tokens[i];
+            if (!itemId) { i++; continue; }
+            const qty = parseInt(tokens[i+1]) || 1;
+            let level = null;
+            let nextIndex = i + 2;
+            
+            if (i + 2 < tokens.length) {
+                const nextToken = tokens[i+2];
+                if (/^\d+$/.test(nextToken)) {
+                    level = parseInt(nextToken);
+                    nextIndex = i + 3;
+                }
+            }
+            targetArray.push({ itemId, quantity: qty, level });
+            i = nextIndex;
+        }
+    }
+
+    function parseCFG(text) {
+        const lines = text.split('\n');
+        profiles = [];
+        let currentProfile = null;
+
+        for (let line of lines) {
+            line = line.trim();
+            if (!line || line.startsWith('#') || line.startsWith(';')) continue;
+
+            if (line.startsWith('[') && line.endsWith(']')) {
+                currentProfile = { id: line.slice(1, -1).trim(), trades: [] };
+                profiles.push(currentProfile);
+            } else if (currentProfile) {
+                const costs = [];
+                const rewards = [];
+                
+                if (line.includes('=')) {
+                    const parts = line.split('=');
+                    const costTokens = parts[0].split(',').map(t => t.trim()).filter(t => t);
+                    const rewardTokens = parts[1].split(',').map(t => t.trim()).filter(t => t);
+                    parseSideTo(costTokens, costs);
+                    parseSideTo(rewardTokens, rewards);
+                } else {
+                    const tokens = line.split(',').map(t => t.trim()).filter(t => t);
+                    if (tokens.length >= 4) {
+                        costs.push({ itemId: tokens[0], quantity: parseInt(tokens[1]) || 1, level: null });
+                        rewards.push({ 
+                            itemId: tokens[2], 
+                            quantity: parseInt(tokens[3]) || 1, 
+                            level: tokens.length >= 5 ? (parseInt(tokens[4]) || null) : null 
+                        });
+                    }
+                }
+                currentProfile.trades.push({ raw: line, costs, rewards, edited: false });
+            }
+        }
+        
+        const config = getCurrentConfig();
+        if (config) {
+            config.profiles = JSON.parse(JSON.stringify(profiles));
+        }
+        
+        renderAll();
+    }
+
+    function generateCFG() {
+        let output = '';
+        for (const profile of profiles) {
+            output += `[${profile.id}]\n`;
+            for (const trade of profile.trades) {
+                if (!trade.edited && trade.raw) {
+                    output += `${trade.raw}\n`;
+                } else {
+                    const costStr = trade.costs.map(c => `${c.itemId}, ${c.quantity}${c.level ? `, ${c.level}` : ''}`).join(', ');
+                    const rewardStr = trade.rewards.map(r => `${r.itemId}, ${r.quantity}${r.level ? `, ${r.level}` : ''}`).join(', ');
+                    
+                    const isSimple = trade.costs.length === 1 && trade.rewards.length === 1 && !trade.costs[0].level && (!trade.raw || !trade.raw.includes('='));
+                    
+                    if (isSimple) {
+                        const c = trade.costs[0];
+                        const r = trade.rewards[0];
+                        output += `${c.itemId}, ${c.quantity}, ${r.itemId}, ${r.quantity}${r.level ? `, ${r.level}` : ''}\n`;
+                    } else {
+                        output += `${costStr} = ${rewardStr}\n`;
+                    }
+                }
+            }
+            output += '\n';
+        }
+        return output.trim();
+    }
+
+    function renderWithFocusRestore(renderFn) {
+        const activeEl = document.activeElement;
+        let focusPath = null, start = 0, end = 0;
+        
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+            focusPath = activeEl.getAttribute('data-path');
+            start = activeEl.selectionStart;
+            end = activeEl.selectionEnd;
+        }
+
+        renderFn();
+
+        if (focusPath) {
+            setTimeout(() => {
+                const newEl = document.querySelector(`[data-path="${focusPath}"]`);
+                if (newEl) {
+                    newEl.focus();
+                    if (newEl.setSelectionRange) {
+                        newEl.setSelectionRange(start, end);
+                    }
+                }
+            }, 0);
+        }
+    }
+
+    function renderAll() {
+        renderWithFocusRestore(() => {
+            renderVisual();
+            renderPreview();
+        });
+    }
+
+    function renderVisual() {
+        const panel = document.getElementById('editorPanel');
+        panel.innerHTML = '';
+
+        if (!dataLoaded) {
+            panel.innerHTML = `<div class="loading-state">${t('loadingItems')}</div>`;
+            return;
+        }
+
+        if (profiles.length === 0) {
+            panel.innerHTML = `<div class="empty-state-trader">${t('loadCfgOrExample')}</div>`;
+            return;
+        }
+
+        profiles.forEach((profile, pIndex) => {
+            const card = document.createElement('div');
+            card.className = 'profile-card';
+            
+            const header = document.createElement('div');
+            header.className = 'profile-header';
+            header.innerHTML = `<h3>${t('profile')}</h3><input type="text" class="form-control" value="${profile.id}" data-path="profile-${pIndex}-id" onchange="updateProfileId(${pIndex}, this.value)">`;
+            
+            const removeProfileBtn = document.createElement('button');
+            removeProfileBtn.className = 'btn-small danger';
+            removeProfileBtn.textContent = t('delete');
+            removeProfileBtn.onclick = () => { profiles.splice(pIndex, 1); scheduleSync(); };
+            header.appendChild(removeProfileBtn);
+            card.appendChild(header);
+
+            if (profile.trades.length === 0) {
+                const noTradesDiv = document.createElement('div');
+                noTradesDiv.style.cssText = 'color: var(--text-secondary); font-size: 12px; font-style: italic; margin-bottom: 8px;';
+                noTradesDiv.textContent = t('noTrades');
+                card.appendChild(noTradesDiv);
+            }
+
+            profile.trades.forEach((trade, tIndex) => {
+                const row = document.createElement('div');
+                row.className = 'trade-row';
+                
+                const costSide = document.createElement('div');
+                const costHeader = document.createElement('div');
+                costHeader.className = 'trade-side-header';
+                costHeader.textContent = t('cost');
+                costSide.appendChild(costHeader);
+                trade.costs.forEach((cost, cIndex) => {
+                    costSide.appendChild(createItemRow(cost, pIndex, tIndex, 'costs', cIndex));
+                });
+                const addCostBtn = document.createElement('button');
+                addCostBtn.className = 'btn-add-item';
+                addCostBtn.textContent = t('add');
+                addCostBtn.onclick = () => { 
+                    trade.costs.push({ itemId: '', quantity: 1, level: null }); 
+                    trade.edited = true; 
+                    scheduleSync();
+                };
+                costSide.appendChild(addCostBtn);
+
+                const sep = document.createElement('div');
+                sep.className = 'trade-vertical-separator';
+                sep.innerHTML = `<span>${t('exchange')}</span>`;
+
+                const rewardSide = document.createElement('div');
+                const rewardHeader = document.createElement('div');
+                rewardHeader.className = 'trade-side-header';
+                rewardHeader.textContent = t('reward');
+                rewardSide.appendChild(rewardHeader);
+                trade.rewards.forEach((reward, rIndex) => {
+                    rewardSide.appendChild(createItemRow(reward, pIndex, tIndex, 'rewards', rIndex));
+                });
+                const addRewardBtn = document.createElement('button');
+                addRewardBtn.className = 'btn-add-item';
+                addRewardBtn.textContent = t('add');
+                addRewardBtn.onclick = () => { 
+                    trade.rewards.push({ itemId: '', quantity: 1, level: null }); 
+                    trade.edited = true; 
+                    scheduleSync();
+                };
+                rewardSide.appendChild(addRewardBtn);
+
+                const actions = document.createElement('div');
+                actions.className = 'trade-actions';
+                const delBtn = document.createElement('button');
+                delBtn.className = 'btn-remove-trade';
+                delBtn.textContent = t('deleteRule');
+                delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
+                actions.appendChild(delBtn);
+
+                row.append(costSide, sep, rewardSide, actions);
+                card.appendChild(row);
+            });
+
+            const addTradeBtn = document.createElement('button');
+            addTradeBtn.className = 'btn-add-item';
+            addTradeBtn.style.marginTop = '12px';
+            addTradeBtn.textContent = t('addTradeRule');
+            addTradeBtn.onclick = () => { 
+                profile.trades.push({ 
+                    raw: '', 
+                    costs: [{ itemId: '', quantity: 1, level: null }], 
+                    rewards: [{ itemId: '', quantity: 1, level: null }], 
+                    edited: true 
+                }); 
+                scheduleSync();
+            };
+            card.appendChild(addTradeBtn);
+            panel.appendChild(card);
+        });
+    }
+
+    function createItemRow(itemData, pIndex, tIndex, side, itemIndex) {
+        const row = document.createElement('div');
+        row.className = 'trade-item-row';
+        
+        const selectorWrapper = document.createElement('div');
+        selectorWrapper.className = 'item-selector';
+        
+        const inputWrapper = document.createElement('div');
+        inputWrapper.className = 'item-selector-input-wrapper';
+        
+        const icon = document.createElement('img');
+        icon.className = 'item-selector-icon';
+        icon.src = getItemIconUrl(itemData.itemId);
+        
+        const input = document.createElement('input');
+        input.className = 'item-selector-input';
+        input.value = itemData.itemId;
+        input.placeholder = t('selectItem');
+        input.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-id`);
+        
+        const dropdown = document.createElement('div');
+        dropdown.className = 'item-selector-dropdown';
+        
+        inputWrapper.append(icon, input);
+        selectorWrapper.append(inputWrapper, dropdown);
+        
+        function updateDropdown(filter = '') {
+            if (!dataLoaded || itemsData.length === 0) return;
+            
+            dropdown.innerHTML = '';
+            const lowerFilter = filter.toLowerCase();
+            const filtered = itemsData.filter(item => {
+                if (item.id.toLowerCase() === lowerFilter) return true;
+                if (item.nameRu && item.nameRu.toLowerCase().includes(lowerFilter)) return true;
+                if (item.name && item.name.toLowerCase().includes(lowerFilter)) return true;
+                if (item.id.toLowerCase().includes(lowerFilter)) return true;
+                return false;
+            }).slice(0, 50);
+            
+            if (filtered.length === 0) {
+                const div = document.createElement('div');
+                div.className = 'item-option';
+                div.style.color = 'var(--text-secondary)';
+                div.style.fontStyle = 'italic';
+                div.style.padding = '6px 10px';
+                div.textContent = t('notFound');
+                dropdown.appendChild(div);
+                dropdown.classList.add('active');
+                return;
+            }
+            
+            filtered.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'item-option';
+                div.dataset.id = item.id;
+                const displayName = (currentLang === 'ru' && item.nameRu) ? item.nameRu : (item.name || item.id);
+                div.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${displayName}</span><span class="item-option-id">${item.id}</span></div>`;
+                
+                div.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    input.value = item.id;
+                    icon.src = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
+                    dropdown.classList.remove('active');
+                    updateData(item.id);
+                });
+                dropdown.appendChild(div);
+            });
+            dropdown.classList.add('active');
+        }
+        
+        function updateData(newId) {
+            profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
+            profiles[pIndex].trades[tIndex].edited = true;
+            scheduleImmediateSync();
+        }
+
+        input.addEventListener('input', (e) => {
+            if (dataLoaded) {
+                updateDropdown(e.target.value);
+            }
+        });
+        
+        input.addEventListener('blur', () => { 
+            setTimeout(() => { 
+                dropdown.classList.remove('active');
+                updateData(input.value);
+            }, 150); 
+        });
+        
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                updateData(input.value);
+                dropdown.classList.remove('active');
+                input.blur();
+            } else if (e.key === 'Escape') {
+                dropdown.classList.remove('active');
+                input.blur();
+            }
+        });
+        
+        document.addEventListener('click', (e) => {
+            if (!selectorWrapper.contains(e.target)) dropdown.classList.remove('active');
+        });
+
+        const qtyInput = document.createElement('input');
+        qtyInput.type = 'number';
+        qtyInput.min = '1';
+        qtyInput.value = itemData.quantity;
+        qtyInput.title = t('quantity');
+        qtyInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-qty`);
+        qtyInput.onchange = (e) => {
+            profiles[pIndex].trades[tIndex][side][itemIndex].quantity = parseInt(e.target.value) || 1;
+            profiles[pIndex].trades[tIndex].edited = true;
+            scheduleSync();
+        };
+
+        const levelInput = document.createElement('input');
+        levelInput.type = 'number';
+        levelInput.min = '1';
+        levelInput.placeholder = 'Lvl';
+        levelInput.title = t('levelHint');
+        levelInput.value = itemData.level || '';
+        levelInput.style.width = '50px';
+        levelInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-lvl`);
+        levelInput.onchange = (e) => {
+            const val = e.target.value ? parseInt(e.target.value) : null;
+            profiles[pIndex].trades[tIndex][side][itemIndex].level = val;
+            profiles[pIndex].trades[tIndex].edited = true;
+            scheduleSync();
+        };
+
+        const removeItemBtn = document.createElement('button');
+        removeItemBtn.className = 'btn-small danger';
+        removeItemBtn.textContent = '×';
+        removeItemBtn.style.padding = '2px 6px';
+        removeItemBtn.onclick = () => {
+            profiles[pIndex].trades[tIndex][side].splice(itemIndex, 1);
+            profiles[pIndex].trades[tIndex].edited = true;
+            scheduleSync();
+        };
+
+        row.append(selectorWrapper, qtyInput, levelInput, removeItemBtn);
+        return row;
+    }
+
+    function renderPreview() {
+        const container = document.getElementById('gamePreview');
+        container.innerHTML = '';
+        
+        if (!dataLoaded) {
+            container.innerHTML = `<div class="loading-state">${t('loadingItems')}</div>`;
+            return;
+        }
+        
+        if (profiles.length === 0) {
+            container.innerHTML = `<div class="empty-preview">${t('loadCfgOrExample')}</div>`;
+            return;
+        }
+        
+        profiles.forEach(profile => {
+            profile.trades.forEach(trade => {
+                const tradeEl = createTradePreview(trade);
+                if (tradeEl) container.appendChild(tradeEl);
+            });
+        });
+    }
+    
+    function createTradePreview(trade) {
+        if (trade.costs.length === 0 || trade.rewards.length === 0) return null;
+        
+        const container = document.createElement('div');
+        container.className = 'trade-item-preview';
+        
+        const costTextCol = document.createElement('div');
+        costTextCol.className = 'cost-text-col';
+        trade.costs.forEach(cost => {
+            const row = document.createElement('div');
+            row.className = 'trade-item-row-preview';
+            const info = document.createElement('div');
+            info.className = 'item-info-preview';
+            
+            const nameEl = document.createElement('div');
+            nameEl.className = 'item-name-preview';
+            let levelText = cost.level ? ` (${cost.level}★)` : '';
+            nameEl.textContent = getItemName(cost.itemId) + levelText;
+            
+            const qtyEl = document.createElement('div');
+            qtyEl.className = 'item-quantity-preview';
+            qtyEl.textContent = `x${cost.quantity}`;
+            
+            info.append(nameEl, qtyEl);
+            row.appendChild(info);
+            costTextCol.appendChild(row);
+        });
+        
+        const costIconCol = document.createElement('div');
+        costIconCol.className = 'cost-icon-col';
+        trade.costs.forEach(cost => {
+            const iconEl = document.createElement('div');
+            iconEl.className = 'item-icon-preview';
+            const img = document.createElement('img');
+            img.src = getItemIconUrl(cost.itemId);
+            img.alt = cost.itemId;
+            iconEl.appendChild(img);
+            costIconCol.appendChild(iconEl);
+        });
+        
+        const arrowCol = document.createElement('div');
+        arrowCol.className = 'arrow-col';
+        const arrow = document.createElement('div');
+        arrow.className = 'exchange-arrow';
+        arrow.title = t('reverse');
+        arrow.onclick = () => {
+            const temp = trade.costs;
+            trade.costs = trade.rewards;
+            trade.rewards = temp;
+            trade.edited = true;
+            scheduleSync();
+        };
+        arrowCol.appendChild(arrow);
+        
+        const rewardIconCol = document.createElement('div');
+        rewardIconCol.className = 'reward-icon-col';
+        trade.rewards.forEach(reward => {
+            const iconEl = document.createElement('div');
+            iconEl.className = 'item-icon-preview';
+            const img = document.createElement('img');
+            img.src = getItemIconUrl(reward.itemId);
+            img.alt = reward.itemId;
+            iconEl.appendChild(img);
+            rewardIconCol.appendChild(iconEl);
+        });
+        
+        const rewardTextCol = document.createElement('div');
+        rewardTextCol.className = 'reward-text-col';
+        trade.rewards.forEach(reward => {
+            const row = document.createElement('div');
+            row.className = 'trade-item-row-preview';
+            const info = document.createElement('div');
+            info.className = 'item-info-preview';
+            
+            const nameEl = document.createElement('div');
+            nameEl.className = 'item-name-preview';
+            let levelText = reward.level ? ` (${reward.level}★)` : '';
+            nameEl.textContent = getItemName(reward.itemId) + levelText;
+            
+            const qtyEl = document.createElement('div');
+            qtyEl.className = 'item-quantity-preview';
+            qtyEl.textContent = `x${reward.quantity}`;
+            
+            info.append(nameEl, qtyEl);
+            row.appendChild(info);
+            rewardTextCol.appendChild(row);
+        });
+        
+        container.append(costTextCol, costIconCol, arrowCol, rewardIconCol, rewardTextCol);
+        return container;
+    }
+
+    function updateProfileId(index, newId) {
+        profiles[index].id = newId.trim();
+        scheduleSync();
+    }
+
+    function addNewProfile() {
+        const name = prompt(t('enterTraderId'), 'NewTrader');
+        if (name) {
+            profiles.push({ id: name.trim(), trades: [] });
+            scheduleSync();
+        }
+    }
+
+    function scheduleSync() {
+        if (isSyncing) clearTimeout(syncTimeout);
+        isSyncing = true;
+        syncTimeout = setTimeout(() => {
+            doSync();
+        }, 150);
+    }
+    
+    function scheduleImmediateSync() {
+        if (isSyncing) clearTimeout(syncTimeout);
+        isSyncing = true;
+        syncTimeout = setTimeout(() => {
+            doSync();
+        }, 50);
+    }
+    
+    function doSync() {
+        const cfg = generateCFG();
+        document.getElementById('cfgInput').value = cfg;
+        
+        const config = getCurrentConfig();
+        if (config) {
+            config.code = cfg;
+            config.profiles = JSON.parse(JSON.stringify(profiles));
+        }
+        
+        renderWithFocusRestore(() => {
+            renderVisual();
+            renderPreview();
+        });
+        isSyncing = false;
+    }
+
+    function updateEditorFromCode() {
+        if (isSyncing) return;
+        const text = document.getElementById('cfgInput').value;
+        parseCFG(text);
+    }
+
+    function exportCFG() {
+        const config = getCurrentConfig();
+        if (!config) return;
+        
+        const cfg = generateCFG();
+        const blob = new Blob([cfg], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = config.name.endsWith('.cfg') ? config.name : `${config.name}.cfg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        // Применяем язык при загрузке
+        applyTranslations();
+        updateLangSwitcher();
+        
+        loadItemsData();
+        
+        const defaultConfig = createConfig();
+        configs.push(defaultConfig);
+        activeConfigId = defaultConfig.id;
+        renderTabs();
+        
+        let codeTimeout;
+        document.getElementById('cfgInput').addEventListener('input', (e) => {
+            clearTimeout(codeTimeout);
+            codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
+        });
+    });
+</script>
+</body>
+</html>
