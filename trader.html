@@ -257,7 +257,8 @@
         </div>
         <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
         <div class="code-actions">
-            <button class="secondary" onclick="importCFG()">📥 Импорт</button>
+            <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
+            <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
         </div>
@@ -292,11 +293,11 @@
     let isSyncing = false;
     let syncTimeout;
 
-    // Загрузка базы предметов как в основном скрипте (с cache buster)
+    // Загрузка базы предметов с правильным URL (GitHub Pages)
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
-            const response = await fetch(`https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json${cacheBuster}`);
+            const response = await fetch(`https://enotinmax.github.io/icons/items.json${cacheBuster}`);
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
             console.log(`Загружено ${itemsData.length} предметов`);
@@ -316,10 +317,11 @@
     }
 
     function getItemIconUrl(itemId) {
-        if (!itemsData.length) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
+        if (!itemsData.length) return 'https://enotinmax.github.io/icons/unknown.png';
         const item = getItemById(itemId);
-        if (!item) return 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/unknown.png';
-        return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
+        if (!item) return 'https://enotinmax.github.io/icons/unknown.png';
+        // Иконки находятся на GitHub Pages в том же каталоге
+        return `https://enotinmax.github.io/icons/${item.icon}`;
     }
 
     function getItemName(itemId) {
@@ -328,10 +330,19 @@
         return item ? (item.nameRu || item.name) : itemId;
     }
 
-    // --- Импорт CFG ---
-    function importCFG() {
-        const text = document.getElementById('cfgInput').value;
-        parseCFG(text);
+    // --- Импорт файла ---
+    function handleFileImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const content = e.target.result;
+            document.getElementById('cfgInput').value = content;
+            parseCFG(content);
+        };
+        reader.readAsText(file);
+        event.target.value = ''; // Сброс input для возможности повторной загрузки того же файла
     }
 
     // --- Парсинг CFG ---
@@ -523,7 +534,7 @@
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = '🗑️ Удалить правило';
+                delBtn.textContent = '️ Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -553,7 +564,7 @@
         const row = document.createElement('div');
         row.className = 'trade-item-row';
         
-        // Item Selector как в основном скрипте
+        // Item Selector
         const selectorWrapper = document.createElement('div');
         selectorWrapper.className = 'item-selector';
         
@@ -602,48 +613,58 @@
                 const li = document.createElement('li');
                 li.className = 'item-option';
                 li.dataset.id = item.id;
-                li.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                li.innerHTML = `<img src="https://enotinmax.github.io/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                li.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    input.value = item.id;
+                    icon.src = `https://enotinmax.github.io/icons/${item.icon}`;
+                    dropdown.classList.remove('active');
+                    updateData(item.id);
+                });
                 dropdown.appendChild(li);
             });
             dropdown.classList.add('active');
         }
         
-        function selectItem(id) {
-            const item = itemsData.find(i => i.id === id);
-            if (item) {
-                input.value = item.id;
-                icon.src = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
-                updateData(item.id);
-            }
-            dropdown.classList.remove('active');
-        }
-        
         function updateData(newId) {
             profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
             profiles[pIndex].trades[tIndex].edited = true;
-            scheduleSync();
+            // НЕМЕДЛЕННАЯ синхронизация при изменении ID
+            scheduleImmediateSync();
         }
 
-        input.addEventListener('input', () => updateDropdown(input.value));
-        input.addEventListener('focus', () => { if (input.value.length > 0) updateDropdown(input.value); });
-        input.addEventListener('blur', () => { setTimeout(() => { dropdown.classList.remove('active'); }, 150); });
+        // Автосинхронизация при вводе в поле ID
+        let inputTimeout;
+        input.addEventListener('input', (e) => {
+            clearTimeout(inputTimeout);
+            updateDropdown(e.target.value);
+            // Отложенная синхронизация для ввода текста
+            inputTimeout = setTimeout(() => {
+                updateData(e.target.value);
+            }, 300);
+        });
+        
+        input.addEventListener('focus', () => { 
+            if (input.value.length > 0) updateDropdown(input.value); 
+        });
+        
+        input.addEventListener('blur', () => { 
+            setTimeout(() => { 
+                dropdown.classList.remove('active');
+                // Финальная синхронизация при потере фокуса
+                updateData(input.value);
+            }, 150); 
+        });
+        
         input.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const highlighted = dropdown.querySelector('.highlighted');
-                if (highlighted) { highlighted.click(); }
-                else { dropdown.classList.remove('active'); input.blur(); }
+                updateData(input.value);
+                dropdown.classList.remove('active');
+                input.blur();
             } else if (e.key === 'Escape') {
                 dropdown.classList.remove('active');
                 input.blur();
-            }
-        });
-        
-        dropdown.addEventListener('mousedown', (e) => {
-            const option = e.target.closest('.item-option');
-            if (option) {
-                e.preventDefault();
-                selectItem(option.dataset.id);
             }
         });
         
@@ -817,14 +838,27 @@
         if (isSyncing) clearTimeout(syncTimeout);
         isSyncing = true;
         syncTimeout = setTimeout(() => {
-            const cfg = generateCFG();
-            document.getElementById('cfgInput').value = cfg;
-            renderWithFocusRestore(() => {
-                renderVisual();
-                renderPreview();
-            });
-            isSyncing = false;
+            doSync();
         }, 150);
+    }
+    
+    // Немедленная синхронизация (для быстрых изменений)
+    function scheduleImmediateSync() {
+        if (isSyncing) clearTimeout(syncTimeout);
+        isSyncing = true;
+        syncTimeout = setTimeout(() => {
+            doSync();
+        }, 50); // Быстрее чем обычная синхронизация
+    }
+    
+    function doSync() {
+        const cfg = generateCFG();
+        document.getElementById('cfgInput').value = cfg;
+        renderWithFocusRestore(() => {
+            renderVisual();
+            renderPreview();
+        });
+        isSyncing = false;
     }
 
     function updateEditorFromCode() {
