@@ -6,6 +6,7 @@
     <title>Skald - Редактор Торговцев (KGMarketPlace)</title>
     <link rel="stylesheet" href="style.css">
     <style>
+        /* === ОСНОВНАЯ РАЗМЕТКА === */
         .trader-layout { display: flex; flex: 1; overflow: hidden; }
         .trader-code-panel { width: 33%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: var(--bg-primary); }
         .trader-preview-panel { width: 34%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: #1a1510; overflow: hidden; }
@@ -33,7 +34,7 @@
         .trade-side-header { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 4px; }
         
         .trade-item-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
-        .trade-item-row .item-selector { flex: 2; }
+        .trade-item-row .item-selector { flex: 2; position: relative; }
         .trade-item-row input[type="number"] { width: 60px; padding: 7px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); text-align: center; font-size: 13px; }
         .trade-item-row input[type="number"]:focus { outline: none; border-color: var(--accent); }
         
@@ -91,7 +92,6 @@
             pointer-events: none;
         }
         
-        /* 5-колоночная сетка для trade item */
         .trade-item-preview {
             display: grid;
             grid-template-columns: 1fr 50px 52px 50px 1fr;
@@ -107,106 +107,40 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
         }
         
-        /* Колонки */
-        .cost-text-col { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px;
-            text-align: right;
-        }
-        .cost-icon-col { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px;
-            align-items: flex-end;
-        }
-        .arrow-col { 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-        }
-        .reward-icon-col { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px;
-            align-items: flex-start;
-        }
-        .reward-text-col { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 6px;
-            text-align: left;
-        }
+        .cost-text-col { display: flex; flex-direction: column; gap: 6px; text-align: right; }
+        .cost-icon-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+        .arrow-col { display: flex; align-items: center; justify-content: center; }
+        .reward-icon-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-start; }
+        .reward-text-col { display: flex; flex-direction: column; gap: 6px; text-align: left; }
         
-        .trade-item-row-preview {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 2px 0;
-        }
-        
+        .trade-item-row-preview { display: flex; align-items: center; gap: 8px; padding: 2px 0; }
         .cost-text-col .trade-item-row-preview { justify-content: flex-end; }
         .reward-text-col .trade-item-row-preview { justify-content: flex-start; }
         
-        .item-info-preview {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-        }
-        
-        .item-name-preview { 
-            color: #e8d8a3; 
-            font-family: 'Georgia', serif; 
-            font-size: 14px; 
-            font-weight: 600; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        
-        .item-quantity-preview { 
-            color: #f1c40f; 
-            font-size: 13px; 
-            font-weight: bold;
-        }
-        
-        .item-level-preview { 
-            color: #27ae60; 
-            font-size: 12px; 
-            font-weight: bold;
-        }
+        .item-info-preview { display: flex; flex-direction: column; gap: 1px; }
+        .item-name-preview { color: #e8d8a3; font-family: 'Georgia', serif; font-size: 14px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .item-quantity-preview { color: #f1c40f; font-size: 13px; font-weight: bold; }
         
         .item-icon-preview {
-            width: 48px; 
-            height: 48px;
+            width: 48px; height: 48px;
             background: linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(92, 74, 58, 0.3) 100%);
             border: 2px solid #7c6a5a;
             border-radius: 6px;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
             flex-shrink: 0;
         }
-        
-        .item-icon-preview img { 
-            width: 40px; 
-            height: 40px; 
-            object-fit: contain; 
-            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.6));
-        }
+        .item-icon-preview img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.6)); }
         
         .exchange-arrow {
-            width: 52px; 
-            height: 52px;
+            width: 52px; height: 52px;
             background: linear-gradient(135deg, #c0392b 0%, #922b21 100%);
             border: 3px solid #78281f;
             border-radius: 50%;
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.1);
             flex-shrink: 0;
         }
-        
         .exchange-arrow::after {
             content: '▶';
             color: #e8d8a3;
@@ -216,16 +150,44 @@
             margin-left: 3px;
         }
         
-        .empty-preview { 
-            text-align: center; 
-            padding: 60px 20px; 
-            color: #8b7355; 
-            font-family: 'Georgia', serif; 
-            font-style: italic; 
-            font-size: 16px; 
-            position: relative; 
-            z-index: 1; 
+        .empty-preview { text-align: center; padding: 60px 20px; color: #8b7355; font-family: 'Georgia', serif; font-style: italic; font-size: 16px; position: relative; z-index: 1; }
+
+        /* === ITEM SELECTOR STYLES === */
+        .item-selector-input-wrapper { display: flex; align-items: center; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; }
+        .item-selector-input-wrapper:focus-within { border-color: var(--accent); }
+        .item-selector-icon { width: 16px; height: 16px; margin: 0 8px; object-fit: contain; flex-shrink: 0; }
+        .item-selector-input { flex: 1; background: transparent; border: none; color: var(--text-primary); padding: 7px 8px 7px 0; font-size: 13px; outline: none; }
+        
+        .item-selector-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            right: 0;
+            max-height: 220px;
+            overflow-y: auto;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            z-index: 1000;
+            display: none;
+            padding: 4px 0;
         }
+        .item-selector-dropdown.active { display: block; }
+        .item-option {
+            display: flex;
+            align-items: center;
+            padding: 6px 10px;
+            cursor: pointer;
+            color: var(--text-primary);
+            font-size: 13px;
+            transition: background 0.15s;
+        }
+        .item-option:hover { background: var(--bg-tertiary); }
+        .item-option img { width: 16px; height: 16px; margin-right: 10px; object-fit: contain; flex-shrink: 0; }
+        .item-option-text { display: flex; flex-direction: column; }
+        .item-option-name { font-weight: 500; }
+        .item-option-id { font-family: monospace; color: var(--text-secondary); font-size: 11px; }
 
         @media (max-width: 1200px) {
             .trader-layout { flex-direction: column; }
@@ -259,7 +221,7 @@
         <div class="code-actions">
             <button class="secondary" onclick="document.getElementById('fileInput').click()">📥 Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
-            <button class="secondary" onclick="exportCFG()"> Экспорт</button>
+            <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
         </div>
     </div>
@@ -275,7 +237,7 @@
     <!-- Правая панель: Редактор -->
     <div class="trader-editor-panel">
         <div class="code-tabs">
-            <button class="code-tab active">️ Редактор</button>
+            <button class="code-tab active">✏️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
             <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
@@ -293,7 +255,7 @@
     let isSyncing = false;
     let syncTimeout;
 
-    // Загрузка базы предметов с правильным URL
+    // 1. Загрузка базы предметов с правильным URL и cache buster
     async function loadItemsData() {
         try {
             const cacheBuster = `?v=${Date.now()}`;
@@ -320,7 +282,6 @@
         if (!itemsData.length) return 'https://enotinmax.github.io/skald/icons/unknown.png';
         const item = getItemById(itemId);
         if (!item) return 'https://enotinmax.github.io/skald/icons/unknown.png';
-        // Правильный путь к иконкам
         return `https://enotinmax.github.io/skald/icons/${item.icon}`;
     }
 
@@ -330,7 +291,7 @@
         return item ? (item.nameRu || item.name) : itemId;
     }
 
-    // --- Импорт файла ---
+    // 2. Импорт файла
     function handleFileImport(event) {
         const file = event.target.files[0];
         if (!file) return;
@@ -342,10 +303,10 @@
             parseCFG(content);
         };
         reader.readAsText(file);
-        event.target.value = '';
+        event.target.value = ''; // Сброс для повторной загрузки того же файла
     }
 
-    // --- Парсинг CFG ---
+    // 3. Парсинг CFG
     function parseSideTo(tokens, targetArray) {
         let i = 0;
         while (i < tokens.length) {
@@ -409,7 +370,7 @@
         });
     }
 
-    // --- Генерация CFG ---
+    // 4. Генерация CFG
     function generateCFG() {
         let output = '';
         for (const profile of profiles) {
@@ -437,7 +398,7 @@
         return output.trim();
     }
 
-    // --- Управление фокусом ---
+    // 5. Управление фокусом (чтобы не слетал при вводе)
     function renderWithFocusRestore(renderFn) {
         const activeEl = document.activeElement;
         let focusPath = null, start = 0, end = 0;
@@ -463,7 +424,7 @@
         }
     }
 
-    // --- Визуальный рендеринг ---
+    // 6. Визуальный рендеринг
     function renderVisual() {
         const panel = document.getElementById('editorPanel');
         panel.innerHTML = '';
@@ -587,6 +548,8 @@
         selectorWrapper.append(inputWrapper, dropdown);
         
         function updateDropdown(filter = '') {
+            if (itemsData.length === 0) return; // Ждём загрузки
+            
             dropdown.innerHTML = '';
             const lowerFilter = filter.toLowerCase();
             const filtered = itemsData.filter(item => {
@@ -598,29 +561,32 @@
             }).slice(0, 50);
             
             if (filtered.length === 0) {
-                const li = document.createElement('li');
-                li.className = 'item-option';
-                li.style.color = 'var(--text-secondary)';
-                li.style.fontStyle = 'italic';
-                li.textContent = 'Не найдено (сохранится как кастомный ID)';
-                dropdown.appendChild(li);
+                const div = document.createElement('div');
+                div.className = 'item-option';
+                div.style.color = 'var(--text-secondary)';
+                div.style.fontStyle = 'italic';
+                div.style.padding = '6px 10px';
+                div.textContent = 'Не найдено (сохранится как кастомный ID)';
+                dropdown.appendChild(div);
                 dropdown.classList.add('active');
                 return;
             }
             
             filtered.forEach(item => {
-                const li = document.createElement('li');
-                li.className = 'item-option';
-                li.dataset.id = item.id;
-                li.innerHTML = `<img src="https://enotinmax.github.io/skald/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
-                li.addEventListener('mousedown', (e) => {
+                const div = document.createElement('div');
+                div.className = 'item-option';
+                div.dataset.id = item.id;
+                div.innerHTML = `<img src="https://enotinmax.github.io/skald/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                
+                // mousedown с preventDefault предотвращает потерю фокуса input'а
+                div.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
                     icon.src = `https://enotinmax.github.io/skald/icons/${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
-                dropdown.appendChild(li);
+                dropdown.appendChild(div);
             });
             dropdown.classList.add('active');
         }
@@ -634,14 +600,14 @@
         let inputTimeout;
         input.addEventListener('input', (e) => {
             clearTimeout(inputTimeout);
-            updateDropdown(e.target.value);
+            if (itemsData.length > 0) updateDropdown(e.target.value);
             inputTimeout = setTimeout(() => {
                 updateData(e.target.value);
             }, 300);
         });
         
         input.addEventListener('focus', () => { 
-            if (input.value.length > 0) updateDropdown(input.value); 
+            if (itemsData.length > 0) updateDropdown(input.value); 
         });
         
         input.addEventListener('blur', () => { 
@@ -708,7 +674,7 @@
         return row;
     }
 
-    // --- PREVIEW RENDERING (5 COLUMN GRID) ---
+    // 7. PREVIEW RENDERING (5 COLUMN GRID)
     function renderPreview() {
         const container = document.getElementById('gamePreview');
         container.innerHTML = '';
@@ -732,6 +698,7 @@
         const container = document.createElement('div');
         container.className = 'trade-item-preview';
         
+        // Колонка 1: Текст стоимости
         const costTextCol = document.createElement('div');
         costTextCol.className = 'cost-text-col';
         trade.costs.forEach(cost => {
@@ -754,6 +721,7 @@
             costTextCol.appendChild(row);
         });
         
+        // Колонка 2: Иконки стоимости
         const costIconCol = document.createElement('div');
         costIconCol.className = 'cost-icon-col';
         trade.costs.forEach(cost => {
@@ -766,12 +734,14 @@
             costIconCol.appendChild(iconEl);
         });
         
+        // Колонка 3: Стрелка
         const arrowCol = document.createElement('div');
         arrowCol.className = 'arrow-col';
         const arrow = document.createElement('div');
         arrow.className = 'exchange-arrow';
         arrowCol.appendChild(arrow);
         
+        // Колонка 4: Иконки награды
         const rewardIconCol = document.createElement('div');
         rewardIconCol.className = 'reward-icon-col';
         trade.rewards.forEach(reward => {
@@ -784,6 +754,7 @@
             rewardIconCol.appendChild(iconEl);
         });
         
+        // Колонка 5: Текст награды
         const rewardTextCol = document.createElement('div');
         rewardTextCol.className = 'reward-text-col';
         trade.rewards.forEach(reward => {
@@ -810,7 +781,7 @@
         return container;
     }
 
-    // --- Управление данными ---
+    // 8. Управление данными и синхронизация
     function updateProfileId(index, newId) {
         profiles[index].id = newId.trim();
         scheduleSync();
@@ -837,7 +808,7 @@
         isSyncing = true;
         syncTimeout = setTimeout(() => {
             doSync();
-        }, 50);
+        }, 50); // Быстрая синхронизация для ввода ID
     }
     
     function doSync() {
@@ -869,6 +840,7 @@
         URL.revokeObjectURL(url);
     }
 
+    // 9. Инициализация
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
         let codeTimeout;
