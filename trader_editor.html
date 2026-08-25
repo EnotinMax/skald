@@ -32,7 +32,7 @@
         <div class="code-actions">
             <button class="secondary" onclick="document.getElementById('fileInput').click()">Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
-            <button class="secondary" onclick="exportCFG()">Экспорт</button>
+            <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <button class="secondary" onclick="loadSample()">Пример</button>
             <button class="secondary" onclick="clearCurrentConfig()">Очистить</button>
             
@@ -45,10 +45,10 @@
 
     <div class="trader-preview-panel">
         <div class="preview-header">
-            <h2>Торговетс</h2>
+            <h2>Торговец</h2>
         </div>
         <div class="preview-content" id="gamePreview">
-            <div class="empty-preview">Ожидание данных</div>
+            <div class="empty-preview">Ожидание данных...</div>
         </div>
     </div>
 
@@ -73,19 +73,20 @@
     let activeConfigId = null;
     let tabCounter = 0;
     let pendingRenameConfigId = null;
+    let profiles = [];
 
     function generateRandomId() {
         return Math.random().toString(36).substring(2, 8);
     }
 
-    function createConfig(name = null, code = '', profiles = []) {
+    function createConfig(name = null, code = '', profilesData = []) {
         tabCounter++;
         const finalName = name || `skald_trader_${generateRandomId()}.cfg`;
         return {
             id: `config_${tabCounter}`,
             name: finalName,
             code: code,
-            profiles: profiles
+            profiles: profilesData
         };
     }
 
@@ -96,7 +97,6 @@
     }
 
     function switchToTab(configId) {
-        // Сохранить текущее состояние
         if (activeConfigId) {
             const currentConfig = configs.find(c => c.id === activeConfigId);
             if (currentConfig) {
@@ -241,7 +241,7 @@
         
         try {
             const result = JSON.parse(fixed);
-            console.log('✅ Я нашёл твой JSON, всё хорошо');
+            console.log('✅ JSON успешно исправлен и распарсен');
             return result;
         } catch (e) {
             console.error('Не удалось исправить JSON:', e.message);
@@ -278,6 +278,7 @@
             
         } catch (err) {
             console.error('❌ Ошибка загрузки:', err);
+            document.getElementById('gamePreview').innerHTML = `<div class="error-state"><p>Ошибка загрузки базы предметов</p><button onclick="loadItemsData()">Повторить</button></div>`;
         }
     }
 
@@ -346,8 +347,6 @@ Coins, 0, BlackMetal, 5`;
         profiles = [];
         renderAll();
     }
-
-    let profiles = [];
 
     function parseSideTo(tokens, targetArray) {
         let i = 0;
@@ -484,7 +483,7 @@ Coins, 0, BlackMetal, 5`;
         }
 
         if (profiles.length === 0) {
-            panel.innerHTML = '<div class="empty-state-trader">Загрузите CFG или нажмите «Пример»</div>';
+            panel.innerHTML = '<div class="empty-state-trader">Загрузите .cfg или нажмите «Пример»</div>';
             return;
         }
 
@@ -749,99 +748,33 @@ Coins, 0, BlackMetal, 5`;
         });
     }
     
-function createTradePreview(trade) {
-    if (trade.costs.length === 0 || trade.rewards.length === 0) return null;
-    
-    const container = document.createElement('div');
-    container.className = 'trade-item-preview';
-    
-    const costTextCol = document.createElement('div');
-    costTextCol.className = 'cost-text-col';
-    trade.costs.forEach(cost => {
-        const row = document.createElement('div');
-        row.className = 'trade-item-row-preview';
-        const info = document.createElement('div');
-        info.className = 'item-info-preview';
+    function createTradePreview(trade) {
+        if (trade.costs.length === 0 || trade.rewards.length === 0) return null;
         
-        const nameEl = document.createElement('div');
-        nameEl.className = 'item-name-preview';
-        let levelText = cost.level ? ` (${cost.level}★)` : '';
-        nameEl.textContent = getItemName(cost.itemId) + levelText;
+        const container = document.createElement('div');
+        container.className = 'trade-item-preview';
         
-        const qtyEl = document.createElement('div');
-        qtyEl.className = 'item-quantity-preview';
-        qtyEl.textContent = `x${cost.quantity}`;
-        
-        info.append(nameEl, qtyEl);
-        row.appendChild(info);
-        costTextCol.appendChild(row);
-    });
-
-    const costIconCol = document.createElement('div');
-    costIconCol.className = 'cost-icon-col';
-    trade.costs.forEach(cost => {
-        const iconEl = document.createElement('div');
-        iconEl.className = 'item-icon-preview';
-        const img = document.createElement('img');
-        img.src = getItemIconUrl(cost.itemId);
-        img.alt = cost.itemId;
-        iconEl.appendChild(img);
-        costIconCol.appendChild(iconEl);
-    });
-    
-    const arrowCol = document.createElement('div');
-    arrowCol.className = 'arrow-col';
-    const arrow = document.createElement('div');
-    arrow.className = 'exchange-arrow';
-    arrow.title = 'наоборот';
-    arrow.onclick = () => {
-        const temp = trade.costs;
-        trade.costs = trade.rewards;
-        trade.rewards = temp;
-        trade.edited = true;
-        scheduleSync();
-    };
-    arrowCol.appendChild(arrow);
-    
-    const rewardIconCol = document.createElement('div');
-    rewardIconCol.className = 'reward-icon-col';
-    trade.rewards.forEach(reward => {
-        const iconEl = document.createElement('div');
-        iconEl.className = 'item-icon-preview';
-        const img = document.createElement('img');
-        img.src = getItemIconUrl(reward.itemId);
-        img.alt = reward.itemId;
-        iconEl.appendChild(img);
-        rewardIconCol.appendChild(iconEl);
-    });
-    
-    const rewardTextCol = document.createElement('div');
-    rewardTextCol.className = 'reward-text-col';
-    trade.rewards.forEach(reward => {
-        const row = document.createElement('div');
-        row.className = 'trade-item-row-preview';
-        const info = document.createElement('div');
-        info.className = 'item-info-preview';
-        
-        const nameEl = document.createElement('div');
-        nameEl.className = 'item-name-preview';
-        let levelText = reward.level ? ` (${reward.level}★)` : '';
-        nameEl.textContent = getItemName(reward.itemId) + levelText;
-        
-        const qtyEl = document.createElement('div');
-        qtyEl.className = 'item-quantity-preview';
-        qtyEl.textContent = `x${reward.quantity}`;
-        
-        info.append(nameEl, qtyEl);
-        row.appendChild(info);
-        rewardTextCol.appendChild(row);
-    });
-    
-    container.append(costTextCol, costIconCol, arrowCol, rewardIconCol, rewardTextCol);
-    return container;
-}
-    
-    arrowCol.appendChild(arrow);
+        const costTextCol = document.createElement('div');
+        costTextCol.className = 'cost-text-col';
+        trade.costs.forEach(cost => {
+            const row = document.createElement('div');
+            row.className = 'trade-item-row-preview';
+            const info = document.createElement('div');
+            info.className = 'item-info-preview';
+            
+            const nameEl = document.createElement('div');
+            nameEl.className = 'item-name-preview';
+            let levelText = cost.level ? ` (${cost.level}★)` : '';
+            nameEl.textContent = getItemName(cost.itemId) + levelText;
+            
+            const qtyEl = document.createElement('div');
+            qtyEl.className = 'item-quantity-preview';
+            qtyEl.textContent = `x${cost.quantity}`;
+            
+            info.append(nameEl, qtyEl);
+            row.appendChild(info);
+            costTextCol.appendChild(row);
+        });
         
         const costIconCol = document.createElement('div');
         costIconCol.className = 'cost-icon-col';
@@ -855,6 +788,57 @@ function createTradePreview(trade) {
             costIconCol.appendChild(iconEl);
         });
         
+        const arrowCol = document.createElement('div');
+        arrowCol.className = 'arrow-col';
+        const arrow = document.createElement('div');
+        arrow.className = 'exchange-arrow';
+        arrow.title = 'наоборот';
+        arrow.onclick = () => {
+            const temp = trade.costs;
+            trade.costs = trade.rewards;
+            trade.rewards = temp;
+            trade.edited = true;
+            scheduleSync();
+        };
+        arrowCol.appendChild(arrow);
+        
+        const rewardIconCol = document.createElement('div');
+        rewardIconCol.className = 'reward-icon-col';
+        trade.rewards.forEach(reward => {
+            const iconEl = document.createElement('div');
+            iconEl.className = 'item-icon-preview';
+            const img = document.createElement('img');
+            img.src = getItemIconUrl(reward.itemId);
+            img.alt = reward.itemId;
+            iconEl.appendChild(img);
+            rewardIconCol.appendChild(iconEl);
+        });
+        
+        const rewardTextCol = document.createElement('div');
+        rewardTextCol.className = 'reward-text-col';
+        trade.rewards.forEach(reward => {
+            const row = document.createElement('div');
+            row.className = 'trade-item-row-preview';
+            const info = document.createElement('div');
+            info.className = 'item-info-preview';
+            
+            const nameEl = document.createElement('div');
+            nameEl.className = 'item-name-preview';
+            let levelText = reward.level ? ` (${reward.level}★)` : '';
+            nameEl.textContent = getItemName(reward.itemId) + levelText;
+            
+            const qtyEl = document.createElement('div');
+            qtyEl.className = 'item-quantity-preview';
+            qtyEl.textContent = `x${reward.quantity}`;
+            
+            info.append(nameEl, qtyEl);
+            row.appendChild(info);
+            rewardTextCol.appendChild(row);
+        });
+        
+        container.append(costTextCol, costIconCol, arrowCol, rewardIconCol, rewardTextCol);
+        return container;
+    }
 
     function updateProfileId(index, newId) {
         profiles[index].id = newId.trim();
