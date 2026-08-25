@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title data-i18n="pageTitle">Кузница Скальда - Редактор Торговцев для KGMarketPlace</title>
+    <title>Кузница Скальда - Редактор Торговцев для KGMarketPlace</title>
     <link rel="stylesheet" href="style.css">
     <style>
         .exchange-arrow::after {
@@ -17,47 +17,48 @@
             margin-top: -2px;
         }
         
-        .bottom-right-controls {
+        /* === ПЕРЕКЛЮЧАТЕЛЬ ЯЗЫКОВ === */
+        .lang-switcher {
             position: fixed;
-            bottom: 20px;
+            bottom: 80px;
             right: 20px;
             z-index: 100;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            align-items: flex-end;
-        }
-        
-        .lang-switcher {
-            display: flex;
             gap: 4px;
             background: var(--bg-primary);
-            padding: 6px;
-            border-radius: 8px;
             border: 1px solid var(--border);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-            flex-wrap: wrap;
-            max-width: 280px;
-            justify-content: flex-end;
+            border-radius: 8px;
+            padding: 6px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
         }
-        .lang-switcher button {
+        .lang-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
             background: transparent;
             border: 1px solid transparent;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 4px 6px;
             border-radius: 4px;
-            transition: all 0.2s;
-            line-height: 1;
+            color: var(--text-secondary);
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.15s;
+            white-space: nowrap;
+            min-width: 110px;
         }
-        .lang-switcher button:hover {
+        .lang-btn:hover {
             background: var(--bg-tertiary);
-            transform: scale(1.1);
+            color: var(--text-primary);
         }
-        .lang-switcher button.active {
-            background: var(--accent);
+        .lang-btn.active {
+            background: var(--accent-blue);
+            color: white;
             border-color: var(--accent-blue);
-            box-shadow: 0 0 8px rgba(52, 152, 219, 0.5);
+        }
+        .lang-flag {
+            font-size: 16px;
+            line-height: 1;
         }
     </style>
 </head>
@@ -68,33 +69,31 @@
     <div class="header-brand">
         <img src="https://enotinmax.github.io/skald/logo.png" alt="Logo" class="logo" onerror="this.src='https://via.placeholder.com/40?text=S'">
         <div class="header-text">
-            <h1 data-i18n="title">Кузница Скальда</h1>
-            <div class="subtitle" data-i18n="subtitle">Редактор профилей торговцев для KGMarketPlace</div>
+            <h1 id="headerTitle">Кузница Скальда</h1>
+            <div class="subtitle" id="headerSubtitle">Редактор профилей торговцев для KGMarketPlace</div>
         </div>
     </div>
     <div class="header-controls">
-        <a href="index.html" class="secondary" style="padding: 8px 14px; border-radius: 4px; text-decoration: none; color: white; font-size: 13px;">
-            <span data-i18n="backToDialogs">← К редактору диалогов</span>
-        </a>
+        <a href="index.html" class="secondary" style="padding: 8px 14px; border-radius: 4px; text-decoration: none; color: white; font-size: 13px;" id="backLink">← К редактору диалогов</a>
     </div>
 </header>
 
 <main class="trader-layout">
     <div class="trader-code-panel">
         <div class="tabs-container" id="tabsContainer">
-            <button class="tab-add" onclick="addNewTab()" data-i18n-title="newTab" title="Новая вкладка">+</button>
+            <button class="tab-add" onclick="addNewTab()" id="btnNewTab" title="Новая вкладка">+</button>
         </div>
         
-        <textarea id="cfgInput" class="code-editor" data-i18n-placeholder="cfgPlaceholder" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
+        <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
         <div class="code-actions">
-            <button class="secondary" onclick="document.getElementById('fileInput').click()" data-i18n="import">Импорт</button>
+            <button class="secondary" onclick="document.getElementById('fileInput').click()" id="btnImport">Импорт</button>
             <input type="file" id="fileInput" accept=".cfg,.txt" style="display: none;" onchange="handleFileImport(event)">
-            <button class="secondary" onclick="exportCFG()">💾 <span data-i18n="export">Экспорт</span></button>
-            <button class="secondary" onclick="loadSample()" data-i18n="example">Пример</button>
-            <button class="secondary" onclick="clearCurrentConfig()" data-i18n="clear">Очистить</button>
+            <button class="secondary" onclick="exportCFG()" id="btnExport">💾 Экспорт</button>
+            <button class="secondary" onclick="loadSample()" id="btnSample">Пример</button>
+            <button class="secondary" onclick="clearCurrentConfig()" id="btnClear">Очистить</button>
             
             <div class="path-hint">
-                <span data-i18n="pathHint1">Файл нужно поместить в</span><br>
+                <span id="pathHintText">Файл нужно поместить в</span><br>
                 <code>Valheim\BepInEx\config\Marketplace\Configs\Traders</code>
             </div>
         </div>
@@ -102,441 +101,460 @@
 
     <div class="trader-preview-panel">
         <div class="preview-header">
-            <h2 data-i18n="trader">Торговец</h2>
+            <h2 id="previewTitle">Торговец</h2>
         </div>
         <div class="preview-content" id="gamePreview">
-            <div class="empty-preview" data-i18n="waitingData">Ожидание данных...</div>
+            <div class="empty-preview" id="previewEmpty">Ожидание данных...</div>
         </div>
     </div>
 
     <div class="trader-editor-panel">
         <div id="editorPanel" class="editor-content">
-            <div class="empty-state-trader" data-i18n="loadCfgOrExample">Загрузите .cfg или нажмите «Пример»</div>
+            <div class="empty-state-trader" id="editorEmpty">Загрузите .cfg или нажмите «Пример»</div>
         </div>
     </div>
 </main>
 
-<div class="bottom-right-controls">
-    <div class="lang-switcher" id="langSwitcher">
-        <button onclick="setLanguage('en')" data-lang="en" title="English">🇬🇧</button>
-        <button onclick="setLanguage('de')" data-lang="de" title="Deutsch">🇩🇪</button>
-        <button onclick="setLanguage('es')" data-lang="es" title="Español">🇪🇸</button>
-        <button onclick="setLanguage('fr')" data-lang="fr" title="Français">🇫🇷</button>
-        <button onclick="setLanguage('pl')" data-lang="pl" title="Polski">🇵🇱</button>
-        <button onclick="setLanguage('pt')" data-lang="pt" title="Português">🇵🇹</button>
-        <button onclick="setLanguage('ru')" data-lang="ru" title="Русский">🇷🇺</button>
-        <button onclick="setLanguage('sv')" data-lang="sv" title="Svenska">🇸🇪</button>
-        <button onclick="setLanguage('zh')" data-lang="zh" title="中文">🇨🇳</button>
-    </div>
-    <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);" data-i18n="addProfile">Добавить профиль</button>
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
+    <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);" id="btnAddProfile">Добавить профиль</button>
 </div>
 
+<!-- Переключатель языков -->
+<div class="lang-switcher" id="langSwitcher"></div>
+
 <script>
-    // === СИСТЕМА ЛОКАЛИЗАЦИИ ===
+    // === ЛОКАЛИЗАЦИЯ ===
+    const languages = [
+        { code: 'en', flag: '🇬🇧', name: 'English' },
+        { code: 'de', flag: '🇩🇪', name: 'Deutsch' },
+        { code: 'es', flag: '🇪🇸', name: 'Español' },
+        { code: 'fr', flag: '🇫🇷', name: 'Français' },
+        { code: 'pl', flag: '🇵🇱', name: 'Polski' },
+        { code: 'pt', flag: '🇵🇹', name: 'Português' },
+        { code: 'ru', flag: '🇷🇺', name: 'Русский' },
+        { code: 'sv', flag: '🇸🇪', name: 'Svenska' },
+        { code: 'zh', flag: '🇨🇳', name: '中文' }
+    ];
+    
     const translations = {
         en: {
             pageTitle: "Skald's Forge - Trader Editor for KGMarketPlace",
-            title: "Skald's Forge",
-            subtitle: "Trader Profile Editor for KGMarketPlace",
-            backToDialogs: "← To Dialog Editor",
-            newTab: "New tab",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Import",
-            export: "Export",
-            example: "Example",
-            clear: "Clear",
-            pathHint1: "Place the file in",
-            trader: "Trader",
-            waitingData: "Waiting for data...",
-            loadCfgOrExample: "Load .cfg or click «Example»",
-            addProfile: "Add Profile",
-            profile: "Profile:",
+            headerTitle: "Skald's Forge",
+            headerSubtitle: "Trader Profile Editor for KGMarketPlace",
+            backLink: "← To Dialogue Editor",
+            btnImport: "Import",
+            btnExport: "💾 Export",
+            btnSample: "Example",
+            btnClear: "Clear",
+            pathHintText: "Place the file in",
+            previewTitle: "Trader",
+            previewEmpty: "Waiting for data...",
+            editorEmpty: 'Load a .cfg or click "Example"',
+            btnAddProfile: "Add profile",
+            btnNewTabTitle: "New tab",
+            profileLabel: "Profile:",
+            btnDelete: "Delete",
             noTrades: "No trade rules",
-            cost: "Cost",
-            reward: "Reward",
-            exchange: "↓ EXCHANGE ↓",
-            add: "+ Add",
-            addTradeRule: "+ Add trade rule",
-            deleteRule: "Delete rule",
-            delete: "Delete",
-            selectItem: "Select item...",
+            costHeader: "Cost",
+            rewardHeader: "Reward",
+            btnAdd: "+ Add",
+            separator: "↓ TRADE ↓",
+            btnDeleteRule: "Delete rule",
+            btnAddTradeRule: "+ Add trade rule",
+            inputPlaceholder: "Select item...",
             notFound: "Not found (will be saved as custom ID)",
-            quantity: "Quantity",
-            levelHint: "Item level (optional)",
-            reverse: "reverse",
-            renameHint: "Click to rename",
-            closeTab: "Close tab",
-            clearConfirm: "Clear current tab?",
-            cannotCloseLastTab: "Cannot close the last tab",
-            enterTraderId: "Enter trader profile ID:",
-            loadingItems: "Loading items...",
-            loadError: "Error loading items database",
+            qtyTitle: "Quantity",
+            levelPlaceholder: "Lvl.",
+            levelTitle: "Item level (optional)",
+            renameTitle: "Click to rename",
+            closeTabTitle: "Close tab",
+            cannotCloseLast: "Cannot close the last tab",
+            confirmClear: "Clear the current tab?",
+            promptProfileId: "Enter trader profile ID:",
+            arrowTitle: "reverse",
+            loadError: "Failed to load item database",
             retry: "Retry",
-            defaultTabName: "skald_trader"
+            loadingItems: "Loading items...",
+            defaultProfileName: "NewTrader"
         },
         de: {
             pageTitle: "Skalds Schmiede - Händler-Editor für KGMarketPlace",
-            title: "Skalds Schmiede",
-            subtitle: "Händlerprofil-Editor für KGMarketPlace",
-            backToDialogs: "← Zum Dialog-Editor",
-            newTab: "Neuer Tab",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importieren",
-            export: "Exportieren",
-            example: "Beispiel",
-            clear: "Leeren",
-            pathHint1: "Datei ablegen in",
-            trader: "Händler",
-            waitingData: "Warte auf Daten...",
-            loadCfgOrExample: ".cfg laden oder «Beispiel» klicken",
-            addProfile: "Profil hinzufügen",
-            profile: "Profil:",
+            headerTitle: "Skalds Schmiede",
+            headerSubtitle: "Händlerprofil-Editor für KGMarketPlace",
+            backLink: "← Zum Dialog-Editor",
+            btnImport: "Importieren",
+            btnExport: "💾 Exportieren",
+            btnSample: "Beispiel",
+            btnClear: "Leeren",
+            pathHintText: "Datei ablegen in",
+            previewTitle: "Händler",
+            previewEmpty: "Warte auf Daten...",
+            editorEmpty: 'Lade eine .cfg oder klicke auf "Beispiel"',
+            btnAddProfile: "Profil hinzufügen",
+            btnNewTabTitle: "Neuer Tab",
+            profileLabel: "Profil:",
+            btnDelete: "Löschen",
             noTrades: "Keine Handelsregeln",
-            cost: "Kosten",
-            reward: "Belohnung",
-            exchange: "↓ TAUSCH ↓",
-            add: "+ Hinzufügen",
-            addTradeRule: "+ Handelsregel hinzufügen",
-            deleteRule: "Regel löschen",
-            delete: "Löschen",
-            selectItem: "Gegenstand wählen...",
+            costHeader: "Kosten",
+            rewardHeader: "Belohnung",
+            btnAdd: "+ Hinzufügen",
+            separator: "↓ HANDEL ↓",
+            btnDeleteRule: "Regel löschen",
+            btnAddTradeRule: "+ Handelsregel hinzufügen",
+            inputPlaceholder: "Gegenstand wählen...",
             notFound: "Nicht gefunden (wird als benutzerdefinierte ID gespeichert)",
-            quantity: "Menge",
-            levelHint: "Gegenstandsstufe (optional)",
-            reverse: "umkehren",
-            renameHint: "Zum Umbenennen klicken",
-            closeTab: "Tab schließen",
-            clearConfirm: "Aktuellen Tab leeren?",
-            cannotCloseLastTab: "Letzter Tab kann nicht geschlossen werden",
-            enterTraderId: "Händlerprofil-ID eingeben:",
-            loadingItems: "Gegenstände werden geladen...",
-            loadError: "Fehler beim Laden der Gegenstandsdatenbank",
+            qtyTitle: "Menge",
+            levelPlaceholder: "Stufe",
+            levelTitle: "Gegenstandsstufe (optional)",
+            renameTitle: "Zum Umbenennen klicken",
+            closeTabTitle: "Tab schließen",
+            cannotCloseLast: "Letzter Tab kann nicht geschlossen werden",
+            confirmClear: "Aktuellen Tab leeren?",
+            promptProfileId: "Händlerprofil-ID eingeben:",
+            arrowTitle: "umkehren",
+            loadError: "Gegenstandsdatenbank konnte nicht geladen werden",
             retry: "Wiederholen",
-            defaultTabName: "skald_haendler"
+            loadingItems: "Gegenstände werden geladen...",
+            defaultProfileName: "NeuerHändler"
         },
         es: {
-            pageTitle: "Forja de Skald - Editor de Comerciantes para KGMarketPlace",
-            title: "Forja de Skald",
-            subtitle: "Editor de Perfiles de Comerciantes para KGMarketPlace",
-            backToDialogs: "← Al Editor de Diálogos",
-            newTab: "Nueva pestaña",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importar",
-            export: "Exportar",
-            example: "Ejemplo",
-            clear: "Limpiar",
-            pathHint1: "Coloque el archivo en",
-            trader: "Comerciante",
-            waitingData: "Esperando datos...",
-            loadCfgOrExample: "Cargue .cfg o haga clic en «Ejemplo»",
-            addProfile: "Añadir Perfil",
-            profile: "Perfil:",
-            noTrades: "Sin reglas de comercio",
-            cost: "Coste",
-            reward: "Recompensa",
-            exchange: "↓ INTERCAMBIO ↓",
-            add: "+ Añadir",
-            addTradeRule: "+ Añadir regla de comercio",
-            deleteRule: "Eliminar regla",
-            delete: "Eliminar",
-            selectItem: "Seleccionar objeto...",
+            pageTitle: "La Forja de Skald - Editor de Comerciantes para KGMarketPlace",
+            headerTitle: "La Forja de Skald",
+            headerSubtitle: "Editor de Perfiles de Comerciantes para KGMarketPlace",
+            backLink: "← Al Editor de Diálogos",
+            btnImport: "Importar",
+            btnExport: "💾 Exportar",
+            btnSample: "Ejemplo",
+            btnClear: "Limpiar",
+            pathHintText: "Coloca el archivo en",
+            previewTitle: "Comerciante",
+            previewEmpty: "Esperando datos...",
+            editorEmpty: 'Carga un .cfg o haz clic en "Ejemplo"',
+            btnAddProfile: "Añadir perfil",
+            btnNewTabTitle: "Nueva pestaña",
+            profileLabel: "Perfil:",
+            btnDelete: "Eliminar",
+            noTrades: "Sin reglas de intercambio",
+            costHeader: "Coste",
+            rewardHeader: "Recompensa",
+            btnAdd: "+ Añadir",
+            separator: "↓ INTERCAMBIO ↓",
+            btnDeleteRule: "Eliminar regla",
+            btnAddTradeRule: "+ Añadir regla de intercambio",
+            inputPlaceholder: "Seleccionar objeto...",
             notFound: "No encontrado (se guardará como ID personalizado)",
-            quantity: "Cantidad",
-            levelHint: "Nivel del objeto (opcional)",
-            reverse: "invertir",
-            renameHint: "Clic para renombrar",
-            closeTab: "Cerrar pestaña",
-            clearConfirm: "¿Limpiar la pestaña actual?",
-            cannotCloseLastTab: "No se puede cerrar la última pestaña",
-            enterTraderId: "Introduzca el ID del perfil de comerciante:",
-            loadingItems: "Cargando objetos...",
+            qtyTitle: "Cantidad",
+            levelPlaceholder: "Niv.",
+            levelTitle: "Nivel del objeto (opcional)",
+            renameTitle: "Clic para renombrar",
+            closeTabTitle: "Cerrar pestaña",
+            cannotCloseLast: "No se puede cerrar la última pestaña",
+            confirmClear: "¿Limpiar la pestaña actual?",
+            promptProfileId: "Introduce el ID del perfil de comerciante:",
+            arrowTitle: "invertir",
             loadError: "Error al cargar la base de datos de objetos",
             retry: "Reintentar",
-            defaultTabName: "skald_comerciante"
+            loadingItems: "Cargando objetos...",
+            defaultProfileName: "NuevoComerciante"
         },
         fr: {
-            pageTitle: "La Forge de Skald - Éditeur de Commerçants pour KGMarketPlace",
-            title: "La Forge de Skald",
-            subtitle: "Éditeur de Profils de Commerçants pour KGMarketPlace",
-            backToDialogs: "← À l'Éditeur de Dialogues",
-            newTab: "Nouvel onglet",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importer",
-            export: "Exporter",
-            example: "Exemple",
-            clear: "Effacer",
-            pathHint1: "Placer le fichier dans",
-            trader: "Commerçant",
-            waitingData: "En attente de données...",
-            loadCfgOrExample: "Chargez .cfg ou cliquez sur «Exemple»",
-            addProfile: "Ajouter un Profil",
-            profile: "Profil :",
+            pageTitle: "La Forge de Skald - Éditeur de Marchands pour KGMarketPlace",
+            headerTitle: "La Forge de Skald",
+            headerSubtitle: "Éditeur de Profils de Marchands pour KGMarketPlace",
+            backLink: "← À l'Éditeur de Dialogues",
+            btnImport: "Importer",
+            btnExport: "💾 Exporter",
+            btnSample: "Exemple",
+            btnClear: "Effacer",
+            pathHintText: "Placez le fichier dans",
+            previewTitle: "Marchand",
+            previewEmpty: "En attente de données...",
+            editorEmpty: 'Chargez un .cfg ou cliquez sur « Exemple »',
+            btnAddProfile: "Ajouter un profil",
+            btnNewTabTitle: "Nouvel onglet",
+            profileLabel: "Profil :",
+            btnDelete: "Supprimer",
             noTrades: "Aucune règle d'échange",
-            cost: "Coût",
-            reward: "Récompense",
-            exchange: "↓ ÉCHANGE ↓",
-            add: "+ Ajouter",
-            addTradeRule: "+ Ajouter une règle d'échange",
-            deleteRule: "Supprimer la règle",
-            delete: "Supprimer",
-            selectItem: "Sélectionner un objet...",
+            costHeader: "Coût",
+            rewardHeader: "Récompense",
+            btnAdd: "+ Ajouter",
+            separator: "↓ ÉCHANGE ↓",
+            btnDeleteRule: "Supprimer la règle",
+            btnAddTradeRule: "+ Ajouter une règle d'échange",
+            inputPlaceholder: "Sélectionner un objet...",
             notFound: "Non trouvé (sera enregistré comme ID personnalisé)",
-            quantity: "Quantité",
-            levelHint: "Niveau de l'objet (optionnel)",
-            reverse: "inverser",
-            renameHint: "Cliquez pour renommer",
-            closeTab: "Fermer l'onglet",
-            clearConfirm: "Effacer l'onglet actuel ?",
-            cannotCloseLastTab: "Impossible de fermer le dernier onglet",
-            enterTraderId: "Entrez l'ID du profil de commerçant :",
-            loadingItems: "Chargement des objets...",
-            loadError: "Erreur lors du chargement de la base de données des objets",
+            qtyTitle: "Quantité",
+            levelPlaceholder: "Niv.",
+            levelTitle: "Niveau de l'objet (optionnel)",
+            renameTitle: "Cliquer pour renommer",
+            closeTabTitle: "Fermer l'onglet",
+            cannotCloseLast: "Impossible de fermer le dernier onglet",
+            confirmClear: "Effacer l'onglet actuel ?",
+            promptProfileId: "Entrez l'ID du profil de marchand :",
+            arrowTitle: "inverser",
+            loadError: "Échec du chargement de la base de données d'objets",
             retry: "Réessayer",
-            defaultTabName: "skald_commercant"
+            loadingItems: "Chargement des objets...",
+            defaultProfileName: "NouveauMarchand"
         },
         pl: {
             pageTitle: "Kuźnia Skalda - Edytor Kupców dla KGMarketPlace",
-            title: "Kuźnia Skalda",
-            subtitle: "Edytor Profili Kupców dla KGMarketPlace",
-            backToDialogs: "← Do Edytora Dialogów",
-            newTab: "Nowa karta",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importuj",
-            export: "Eksportuj",
-            example: "Przykład",
-            clear: "Wyczyść",
-            pathHint1: "Umieść plik w",
-            trader: "Kupiec",
-            waitingData: "Oczekiwanie na dane...",
-            loadCfgOrExample: "Załaduj .cfg lub kliknij «Przykład»",
-            addProfile: "Dodaj Profil",
-            profile: "Profil:",
+            headerTitle: "Kuźnia Skalda",
+            headerSubtitle: "Edytor Profili Kupców dla KGMarketPlace",
+            backLink: "← Do Edytora Dialogów",
+            btnImport: "Importuj",
+            btnExport: "💾 Eksportuj",
+            btnSample: "Przykład",
+            btnClear: "Wyczyść",
+            pathHintText: "Umieść plik w",
+            previewTitle: "Kupiec",
+            previewEmpty: "Oczekiwanie na dane...",
+            editorEmpty: 'Załaduj .cfg lub kliknij "Przykład"',
+            btnAddProfile: "Dodaj profil",
+            btnNewTabTitle: "Nowa karta",
+            profileLabel: "Profil:",
+            btnDelete: "Usuń",
             noTrades: "Brak reguł handlu",
-            cost: "Koszt",
-            reward: "Nagroda",
-            exchange: "↓ WYMIANA ↓",
-            add: "+ Dodaj",
-            addTradeRule: "+ Dodaj regułę handlu",
-            deleteRule: "Usuń regułę",
-            delete: "Usuń",
-            selectItem: "Wybierz przedmiot...",
+            costHeader: "Koszt",
+            rewardHeader: "Nagroda",
+            btnAdd: "+ Dodaj",
+            separator: "↓ HANDEL ↓",
+            btnDeleteRule: "Usuń regułę",
+            btnAddTradeRule: "+ Dodaj regułę handlu",
+            inputPlaceholder: "Wybierz przedmiot...",
             notFound: "Nie znaleziono (zostanie zapisane jako niestandardowe ID)",
-            quantity: "Ilość",
-            levelHint: "Poziom przedmiotu (opcjonalnie)",
-            reverse: "odwróć",
-            renameHint: "Kliknij, aby zmienić nazwę",
-            closeTab: "Zamknij kartę",
-            clearConfirm: "Wyczyścić bieżącą kartę?",
-            cannotCloseLastTab: "Nie można zamknąć ostatniej karty",
-            enterTraderId: "Wprowadź ID profilu kupca:",
-            loadingItems: "Ładowanie przedmiotów...",
-            loadError: "Błąd ładowania bazy przedmiotów",
+            qtyTitle: "Ilość",
+            levelPlaceholder: "Poz.",
+            levelTitle: "Poziom przedmiotu (opcjonalnie)",
+            renameTitle: "Kliknij, aby zmienić nazwę",
+            closeTabTitle: "Zamknij kartę",
+            cannotCloseLast: "Nie można zamknąć ostatniej karty",
+            confirmClear: "Wyczyścić bieżącą kartę?",
+            promptProfileId: "Wprowadź ID profilu kupca:",
+            arrowTitle: "odwróć",
+            loadError: "Nie udało się załadować bazy przedmiotów",
             retry: "Ponów",
-            defaultTabName: "skald_kupiec"
+            loadingItems: "Ładowanie przedmiotów...",
+            defaultProfileName: "NowyKupiec"
         },
         pt: {
-            pageTitle: "Forja de Skald - Editor de Comerciantes para KGMarketPlace",
-            title: "Forja de Skald",
-            subtitle: "Editor de Perfis de Comerciantes para KGMarketPlace",
-            backToDialogs: "← Para o Editor de Diálogos",
-            newTab: "Nova aba",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importar",
-            export: "Exportar",
-            example: "Exemplo",
-            clear: "Limpar",
-            pathHint1: "Coloque o arquivo em",
-            trader: "Comerciante",
-            waitingData: "Aguardando dados...",
-            loadCfgOrExample: "Carregue .cfg ou clique em «Exemplo»",
-            addProfile: "Adicionar Perfil",
-            profile: "Perfil:",
-            noTrades: "Sem regras de comércio",
-            cost: "Custo",
-            reward: "Recompensa",
-            exchange: "↓ TROCA ↓",
-            add: "+ Adicionar",
-            addTradeRule: "+ Adicionar regra de troca",
-            deleteRule: "Excluir regra",
-            delete: "Excluir",
-            selectItem: "Selecionar item...",
+            pageTitle: "A Forja de Skald - Editor de Mercadores para KGMarketPlace",
+            headerTitle: "A Forja de Skald",
+            headerSubtitle: "Editor de Perfis de Mercadores para KGMarketPlace",
+            backLink: "← Para o Editor de Diálogos",
+            btnImport: "Importar",
+            btnExport: "💾 Exportar",
+            btnSample: "Exemplo",
+            btnClear: "Limpar",
+            pathHintText: "Coloque o arquivo em",
+            previewTitle: "Mercador",
+            previewEmpty: "Aguardando dados...",
+            editorEmpty: 'Carregue um .cfg ou clique em "Exemplo"',
+            btnAddProfile: "Adicionar perfil",
+            btnNewTabTitle: "Nova aba",
+            profileLabel: "Perfil:",
+            btnDelete: "Excluir",
+            noTrades: "Sem regras de troca",
+            costHeader: "Custo",
+            rewardHeader: "Recompensa",
+            btnAdd: "+ Adicionar",
+            separator: "↓ TROCA ↓",
+            btnDeleteRule: "Excluir regra",
+            btnAddTradeRule: "+ Adicionar regra de troca",
+            inputPlaceholder: "Selecionar item...",
             notFound: "Não encontrado (será salvo como ID personalizado)",
-            quantity: "Quantidade",
-            levelHint: "Nível do item (opcional)",
-            reverse: "inverter",
-            renameHint: "Clique para renomear",
-            closeTab: "Fechar aba",
-            clearConfirm: "Limpar a aba atual?",
-            cannotCloseLastTab: "Não é possível fechar a última aba",
-            enterTraderId: "Digite o ID do perfil de comerciante:",
-            loadingItems: "Carregando itens...",
-            loadError: "Erro ao carregar o banco de dados de itens",
+            qtyTitle: "Quantidade",
+            levelPlaceholder: "Nív.",
+            levelTitle: "Nível do item (opcional)",
+            renameTitle: "Clique para renomear",
+            closeTabTitle: "Fechar aba",
+            cannotCloseLast: "Não é possível fechar a última aba",
+            confirmClear: "Limpar a aba atual?",
+            promptProfileId: "Digite o ID do perfil do mercador:",
+            arrowTitle: "inverter",
+            loadError: "Falha ao carregar o banco de dados de itens",
             retry: "Tentar novamente",
-            defaultTabName: "skald_comerciante"
+            loadingItems: "Carregando itens...",
+            defaultProfileName: "NovoMercador"
         },
         ru: {
             pageTitle: "Кузница Скальда - Редактор Торговцев для KGMarketPlace",
-            title: "Кузница Скальда",
-            subtitle: "Редактор профилей торговцев для KGMarketPlace",
-            backToDialogs: "← К редактору диалогов",
-            newTab: "Новая вкладка",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Импорт",
-            export: "Экспорт",
-            example: "Пример",
-            clear: "Очистить",
-            pathHint1: "Файл нужно поместить в",
-            trader: "Торговец",
-            waitingData: "Ожидание данных...",
-            loadCfgOrExample: "Загрузите .cfg или нажмите «Пример»",
-            addProfile: "Добавить профиль",
-            profile: "Профиль:",
+            headerTitle: "Кузница Скальда",
+            headerSubtitle: "Редактор профилей торговцев для KGMarketPlace",
+            backLink: "← К редактору диалогов",
+            btnImport: "Импорт",
+            btnExport: "💾 Экспорт",
+            btnSample: "Пример",
+            btnClear: "Очистить",
+            pathHintText: "Файл нужно поместить в",
+            previewTitle: "Торговец",
+            previewEmpty: "Ожидание данных...",
+            editorEmpty: 'Загрузите .cfg или нажмите «Пример»',
+            btnAddProfile: "Добавить профиль",
+            btnNewTabTitle: "Новая вкладка",
+            profileLabel: "Профиль:",
+            btnDelete: "Удалить",
             noTrades: "Нет правил обмена",
-            cost: "Стоимость",
-            reward: "Награда",
-            exchange: "↓ ОБМЕН ↓",
-            add: "+ Добавить",
-            addTradeRule: "+ Добавить правило обмена",
-            deleteRule: "Удалить правило",
-            delete: "Удалить",
-            selectItem: "Выберите предмет...",
+            costHeader: "Стоимость",
+            rewardHeader: "Награда",
+            btnAdd: "+ Добавить",
+            separator: "↓ ОБМЕН ↓",
+            btnDeleteRule: "Удалить правило",
+            btnAddTradeRule: "+ Добавить правило обмена",
+            inputPlaceholder: "Выберите предмет...",
             notFound: "Не найдено (сохранится как кастомный ID)",
-            quantity: "Количество",
-            levelHint: "Уровень предмета (необязательно)",
-            reverse: "наоборот",
-            renameHint: "Кликните для переименования",
-            closeTab: "Закрыть вкладку",
-            clearConfirm: "Очистить текущую вкладку?",
-            cannotCloseLastTab: "Нельзя закрыть последнюю вкладку",
-            enterTraderId: "Введите ID профиля торговца:",
-            loadingItems: "Загрузка предметов...",
+            qtyTitle: "Количество",
+            levelPlaceholder: "Ур.",
+            levelTitle: "Уровень предмета (необязательно)",
+            renameTitle: "Кликните для переименования",
+            closeTabTitle: "Закрыть вкладку",
+            cannotCloseLast: "Нельзя закрыть последнюю вкладку",
+            confirmClear: "Очистить текущую вкладку?",
+            promptProfileId: "Введите ID профиля торговца:",
+            arrowTitle: "наоборот",
             loadError: "Ошибка загрузки базы предметов",
             retry: "Повторить",
-            defaultTabName: "skald_trader"
+            loadingItems: "Загрузка предметов...",
+            defaultProfileName: "NewTrader"
         },
         sv: {
-            pageTitle: "Skalds Smidia - Handlarredigerare för KGMarketPlace",
-            title: "Skalds Smidia",
-            subtitle: "Handlarprofilredigerare för KGMarketPlace",
-            backToDialogs: "← Till Dialogredigeraren",
-            newTab: "Ny flik",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "Importera",
-            export: "Exportera",
-            example: "Exempel",
-            clear: "Rensa",
-            pathHint1: "Placera filen i",
-            trader: "Handlare",
-            waitingData: "Väntar på data...",
-            loadCfgOrExample: "Ladda .cfg eller klicka på «Exempel»",
-            addProfile: "Lägg till Profil",
-            profile: "Profil:",
+            pageTitle: "Skalds Smédia - Handlarredigerare för KGMarketPlace",
+            headerTitle: "Skalds Smédia",
+            headerSubtitle: "Handlarprofilredigerare för KGMarketPlace",
+            backLink: "← Till Dialogredigeraren",
+            btnImport: "Importera",
+            btnExport: "💾 Exportera",
+            btnSample: "Exempel",
+            btnClear: "Rensa",
+            pathHintText: "Placera filen i",
+            previewTitle: "Handlare",
+            previewEmpty: "Väntar på data...",
+            editorEmpty: 'Ladda en .cfg eller klicka på "Exempel"',
+            btnAddProfile: "Lägg till profil",
+            btnNewTabTitle: "Ny flik",
+            profileLabel: "Profil:",
+            btnDelete: "Ta bort",
             noTrades: "Inga handelsregler",
-            cost: "Kostnad",
-            reward: "Belöning",
-            exchange: "↓ VÄXLING ↓",
-            add: "+ Lägg till",
-            addTradeRule: "+ Lägg till handelsregel",
-            deleteRule: "Ta bort regel",
-            delete: "Ta bort",
-            selectItem: "Välj föremål...",
+            costHeader: "Kostnad",
+            rewardHeader: "Belöning",
+            btnAdd: "+ Lägg till",
+            separator: "↓ HANDEL ↓",
+            btnDeleteRule: "Ta bort regel",
+            btnAddTradeRule: "+ Lägg till handelsregel",
+            inputPlaceholder: "Välj föremål...",
             notFound: "Hittades inte (sparas som anpassat ID)",
-            quantity: "Antal",
-            levelHint: "Föremålsnivå (valfritt)",
-            reverse: "omvänd",
-            renameHint: "Klicka för att byta namn",
-            closeTab: "Stäng flik",
-            clearConfirm: "Rensa aktuell flik?",
-            cannotCloseLastTab: "Kan inte stänga den sista fliken",
-            enterTraderId: "Ange handlarprofil-ID:",
-            loadingItems: "Laddar föremål...",
-            loadError: "Fel vid laddning av föremålsdatabasen",
+            qtyTitle: "Antal",
+            levelPlaceholder: "Niv.",
+            levelTitle: "Föremålsnivå (valfritt)",
+            renameTitle: "Klicka för att byta namn",
+            closeTabTitle: "Stäng flik",
+            cannotCloseLast: "Kan inte stänga den senaste fliken",
+            confirmClear: "Rensa aktuell flik?",
+            promptProfileId: "Ange handlarens profil-ID:",
+            arrowTitle: "omvänd",
+            loadError: "Det gick inte att ladda föremålsdatabasen",
             retry: "Försök igen",
-            defaultTabName: "skald_handlare"
+            loadingItems: "Laddar föremål...",
+            defaultProfileName: "NyHandlare"
         },
         zh: {
-            pageTitle: "斯卡尔德锻造厂 - KGMarketPlace 商人编辑器",
-            title: "斯卡尔德锻造厂",
-            subtitle: "KGMarketPlace 商人档案编辑器",
-            backToDialogs: "← 返回对话编辑器",
-            newTab: "新标签页",
-            cfgPlaceholder: "[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9",
-            import: "导入",
-            export: "导出",
-            example: "示例",
-            clear: "清空",
-            pathHint1: "将文件放入",
-            trader: "商人",
-            waitingData: "等待数据...",
-            loadCfgOrExample: "加载 .cfg 或点击 «示例»",
-            addProfile: "添加档案",
-            profile: "档案:",
+            pageTitle: "斯卡尔德之炉 - KGMarketPlace 商人编辑器",
+            headerTitle: "斯卡尔德之炉",
+            headerSubtitle: "KGMarketPlace 商人资料编辑器",
+            backLink: "← 返回对话编辑器",
+            btnImport: "导入",
+            btnExport: "💾 导出",
+            btnSample: "示例",
+            btnClear: "清空",
+            pathHintText: "将文件放入",
+            previewTitle: "商人",
+            previewEmpty: "等待数据...",
+            editorEmpty: '加载 .cfg 或点击"示例"',
+            btnAddProfile: "添加资料",
+            btnNewTabTitle: "新标签页",
+            profileLabel: "资料:",
+            btnDelete: "删除",
             noTrades: "无交易规则",
-            cost: "成本",
-            reward: "奖励",
-            exchange: "↓ 交换 ↓",
-            add: "+ 添加",
-            addTradeRule: "+ 添加交易规则",
-            deleteRule: "删除规则",
-            delete: "删除",
-            selectItem: "选择物品...",
+            costHeader: "费用",
+            rewardHeader: "奖励",
+            btnAdd: "+ 添加",
+            separator: "↓ 交易 ↓",
+            btnDeleteRule: "删除规则",
+            btnAddTradeRule: "+ 添加交易规则",
+            inputPlaceholder: "选择物品...",
             notFound: "未找到(将保存为自定义 ID)",
-            quantity: "数量",
-            levelHint: "物品等级(可选)",
-            reverse: "反转",
-            renameHint: "点击重命名",
-            closeTab: "关闭标签页",
-            clearConfirm: "清空当前标签页?",
-            cannotCloseLastTab: "无法关闭最后一个标签页",
-            enterTraderId: "输入商人档案 ID:",
-            loadingItems: "加载物品中...",
-            loadError: "加载物品数据库出错",
+            qtyTitle: "数量",
+            levelPlaceholder: "等级",
+            levelTitle: "物品等级(可选)",
+            renameTitle: "点击重命名",
+            closeTabTitle: "关闭标签页",
+            cannotCloseLast: "无法关闭最后一个标签页",
+            confirmClear: "清空当前标签页?",
+            promptProfileId: "输入商人资料 ID:",
+            arrowTitle: "反转",
+            loadError: "加载物品数据库失败",
             retry: "重试",
-            defaultTabName: "skald_商人"
+            loadingItems: "正在加载物品...",
+            defaultProfileName: "新商人"
         }
     };
-
+    
     let currentLang = localStorage.getItem('skald_trader_lang') || 'ru';
-    if (!translations[currentLang]) currentLang = 'ru';
-
+    
     function t(key) {
-        return (translations[currentLang] && translations[currentLang][key]) 
-            || (translations['en'] && translations['en'][key]) 
-            || key;
+        const langData = translations[currentLang] || translations.ru;
+        return langData[key] || translations.ru[key] || key;
     }
-
-    function setLanguage(lang) {
-        if (!translations[lang]) return;
-        currentLang = lang;
-        localStorage.setItem('skald_trader_lang', lang);
-        document.documentElement.lang = lang;
+    
+    function setLanguage(langCode) {
+        currentLang = langCode;
+        localStorage.setItem('skald_trader_lang', langCode);
+        document.documentElement.lang = langCode;
         applyTranslations();
-        updateLangSwitcher();
+        renderLanguageSwitcher();
         renderAll();
     }
-
+    
     function applyTranslations() {
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            const key = el.getAttribute('data-i18n');
-            el.textContent = t(key);
-        });
-        document.querySelectorAll('[data-i18n-title]').forEach(el => {
-            const key = el.getAttribute('data-i18n-title');
-            el.title = t(key);
-        });
-        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-            const key = el.getAttribute('data-i18n-placeholder');
-            el.placeholder = t(key);
-        });
         document.title = t('pageTitle');
+        document.getElementById('headerTitle').textContent = t('headerTitle');
+        document.getElementById('headerSubtitle').textContent = t('headerSubtitle');
+        document.getElementById('backLink').textContent = t('backLink');
+        document.getElementById('btnImport').textContent = t('btnImport');
+        document.getElementById('btnExport').textContent = t('btnExport');
+        document.getElementById('btnSample').textContent = t('btnSample');
+        document.getElementById('btnClear').textContent = t('btnClear');
+        document.getElementById('pathHintText').textContent = t('pathHintText');
+        document.getElementById('previewTitle').textContent = t('previewTitle');
+        document.getElementById('btnAddProfile').textContent = t('btnAddProfile');
+        
+        const newTabBtn = document.getElementById('btnNewTab');
+        if (newTabBtn) newTabBtn.title = t('btnNewTabTitle');
+        
+        // Обновляем пустые состояния, если они сейчас видны
+        const previewEmpty = document.getElementById('gamePreview').querySelector('.empty-preview');
+        if (previewEmpty && profiles.length === 0) {
+            previewEmpty.textContent = dataLoaded ? t('editorEmpty') : t('previewEmpty');
+        }
+        const editorEmpty = document.getElementById('editorPanel').querySelector('.empty-state-trader');
+        if (editorEmpty && profiles.length === 0) {
+            editorEmpty.textContent = t('editorEmpty');
+        }
     }
-
-    function updateLangSwitcher() {
-        document.querySelectorAll('.lang-switcher button').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.lang === currentLang);
+    
+    function renderLanguageSwitcher() {
+        const container = document.getElementById('langSwitcher');
+        container.innerHTML = '';
+        
+        languages.forEach(lang => {
+            const btn = document.createElement('button');
+            btn.className = `lang-btn ${lang.code === currentLang ? 'active' : ''}`;
+            btn.innerHTML = `<span class="lang-flag">${lang.flag}</span><span>${lang.name}</span>`;
+            btn.onclick = () => setLanguage(lang.code);
+            container.appendChild(btn);
         });
     }
-
+    
     // === ОСНОВНОЙ КОД ===
     let itemsData = [];
     let dataLoaded = false;
@@ -555,7 +573,7 @@
 
     function createConfig(name = null, code = '', profilesData = []) {
         tabCounter++;
-        const finalName = name || `${t('defaultTabName')}_${generateRandomId()}.cfg`;
+        const finalName = name || `skald_trader_${generateRandomId()}.cfg`;
         return {
             id: `config_${tabCounter}`,
             name: finalName,
@@ -605,7 +623,7 @@
         event.stopPropagation();
         
         if (configs.length <= 1) {
-            alert(t('cannotCloseLastTab'));
+            alert(t('cannotCloseLast'));
             return;
         }
         
@@ -671,7 +689,7 @@
             const nameSpan = document.createElement('span');
             nameSpan.className = 'tab-name';
             nameSpan.textContent = config.name;
-            nameSpan.title = t('renameHint');
+            nameSpan.title = t('renameTitle');
             nameSpan.onclick = (e) => {
                 e.stopPropagation();
                 if (config.id !== activeConfigId) {
@@ -685,7 +703,7 @@
             const closeBtn = document.createElement('button');
             closeBtn.className = 'tab-close';
             closeBtn.textContent = '×';
-            closeBtn.title = t('closeTab');
+            closeBtn.title = t('closeTabTitle');
             closeBtn.onclick = (e) => closeTab(config.id, e);
             
             tab.appendChild(nameSpan);
@@ -715,6 +733,7 @@
         
         try {
             const result = JSON.parse(fixed);
+            console.log('✅ JSON успешно исправлен и распарсен');
             return result;
         } catch (e) {
             console.error('Не удалось исправить JSON:', e.message);
@@ -744,12 +763,13 @@
             }
             
             itemsData = parsed;
+            console.log(`✅ Загружено ${itemsData.length} предметов`);
             dataLoaded = true;
             
             renderAll();
             
         } catch (err) {
-            console.error('Ошибка загрузки:', err);
+            console.error('❌ Ошибка загрузки:', err);
             document.getElementById('gamePreview').innerHTML = `<div class="error-state"><p>${t('loadError')}</p><button onclick="loadItemsData()">${t('retry')}</button></div>`;
         }
     }
@@ -766,13 +786,15 @@
         return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
     }
 
-    // Локализация имён: для русского — nameRu, для остальных — name (английский)
+    // Локализация названий предметов: русский только для русского языка
     function getItemName(itemId) {
         if (!dataLoaded) return itemId;
         const item = getItemById(itemId);
         if (!item) return itemId;
-        if (currentLang === 'ru' && item.nameRu) return item.nameRu;
-        return item.name || itemId;
+        if (currentLang === 'ru') {
+            return item.nameRu || item.name || itemId;
+        }
+        return item.name || item.nameRu || itemId;
     }
 
     function handleFileImport(event) {
@@ -814,7 +836,7 @@ Coins, 0, BlackMetal, 5`;
         const config = getCurrentConfig();
         if (!config) return;
         
-        if (!confirm(t('clearConfirm'))) return;
+        if (!confirm(t('confirmClear'))) return;
         
         config.code = '';
         config.profiles = [];
@@ -958,7 +980,7 @@ Coins, 0, BlackMetal, 5`;
         }
 
         if (profiles.length === 0) {
-            panel.innerHTML = `<div class="empty-state-trader">${t('loadCfgOrExample')}</div>`;
+            panel.innerHTML = `<div class="empty-state-trader">${t('editorEmpty')}</div>`;
             return;
         }
 
@@ -968,20 +990,17 @@ Coins, 0, BlackMetal, 5`;
             
             const header = document.createElement('div');
             header.className = 'profile-header';
-            header.innerHTML = `<h3>${t('profile')}</h3><input type="text" class="form-control" value="${profile.id}" data-path="profile-${pIndex}-id" onchange="updateProfileId(${pIndex}, this.value)">`;
+            header.innerHTML = `<h3>${t('profileLabel')}</h3><input type="text" class="form-control" value="${profile.id}" data-path="profile-${pIndex}-id" onchange="updateProfileId(${pIndex}, this.value)">`;
             
             const removeProfileBtn = document.createElement('button');
             removeProfileBtn.className = 'btn-small danger';
-            removeProfileBtn.textContent = t('delete');
+            removeProfileBtn.textContent = t('btnDelete');
             removeProfileBtn.onclick = () => { profiles.splice(pIndex, 1); scheduleSync(); };
             header.appendChild(removeProfileBtn);
             card.appendChild(header);
 
             if (profile.trades.length === 0) {
-                const noTradesDiv = document.createElement('div');
-                noTradesDiv.style.cssText = 'color: var(--text-secondary); font-size: 12px; font-style: italic; margin-bottom: 8px;';
-                noTradesDiv.textContent = t('noTrades');
-                card.appendChild(noTradesDiv);
+                card.innerHTML += `<div style="color: var(--text-secondary); font-size: 12px; font-style: italic; margin-bottom: 8px;">${t('noTrades')}</div>`;
             }
 
             profile.trades.forEach((trade, tIndex) => {
@@ -989,16 +1008,13 @@ Coins, 0, BlackMetal, 5`;
                 row.className = 'trade-row';
                 
                 const costSide = document.createElement('div');
-                const costHeader = document.createElement('div');
-                costHeader.className = 'trade-side-header';
-                costHeader.textContent = t('cost');
-                costSide.appendChild(costHeader);
+                costSide.innerHTML = `<div class="trade-side-header">${t('costHeader')}</div>`;
                 trade.costs.forEach((cost, cIndex) => {
                     costSide.appendChild(createItemRow(cost, pIndex, tIndex, 'costs', cIndex));
                 });
                 const addCostBtn = document.createElement('button');
                 addCostBtn.className = 'btn-add-item';
-                addCostBtn.textContent = t('add');
+                addCostBtn.textContent = t('btnAdd');
                 addCostBtn.onclick = () => { 
                     trade.costs.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
@@ -1008,19 +1024,16 @@ Coins, 0, BlackMetal, 5`;
 
                 const sep = document.createElement('div');
                 sep.className = 'trade-vertical-separator';
-                sep.innerHTML = `<span>${t('exchange')}</span>`;
+                sep.innerHTML = `<span>${t('separator')}</span>`;
 
                 const rewardSide = document.createElement('div');
-                const rewardHeader = document.createElement('div');
-                rewardHeader.className = 'trade-side-header';
-                rewardHeader.textContent = t('reward');
-                rewardSide.appendChild(rewardHeader);
+                rewardSide.innerHTML = `<div class="trade-side-header">${t('rewardHeader')}</div>`;
                 trade.rewards.forEach((reward, rIndex) => {
                     rewardSide.appendChild(createItemRow(reward, pIndex, tIndex, 'rewards', rIndex));
                 });
                 const addRewardBtn = document.createElement('button');
                 addRewardBtn.className = 'btn-add-item';
-                addRewardBtn.textContent = t('add');
+                addRewardBtn.textContent = t('btnAdd');
                 addRewardBtn.onclick = () => { 
                     trade.rewards.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
@@ -1032,7 +1045,7 @@ Coins, 0, BlackMetal, 5`;
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
                 delBtn.className = 'btn-remove-trade';
-                delBtn.textContent = t('deleteRule');
+                delBtn.textContent = t('btnDeleteRule');
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -1043,7 +1056,7 @@ Coins, 0, BlackMetal, 5`;
             const addTradeBtn = document.createElement('button');
             addTradeBtn.className = 'btn-add-item';
             addTradeBtn.style.marginTop = '12px';
-            addTradeBtn.textContent = t('addTradeRule');
+            addTradeBtn.textContent = t('btnAddTradeRule');
             addTradeBtn.onclick = () => { 
                 profile.trades.push({ 
                     raw: '', 
@@ -1075,7 +1088,7 @@ Coins, 0, BlackMetal, 5`;
         const input = document.createElement('input');
         input.className = 'item-selector-input';
         input.value = itemData.itemId;
-        input.placeholder = t('selectItem');
+        input.placeholder = t('inputPlaceholder');
         input.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-id`);
         
         const dropdown = document.createElement('div');
@@ -1113,7 +1126,8 @@ Coins, 0, BlackMetal, 5`;
                 const div = document.createElement('div');
                 div.className = 'item-option';
                 div.dataset.id = item.id;
-                const displayName = (currentLang === 'ru' && item.nameRu) ? item.nameRu : (item.name || item.id);
+                // В дропдауне всегда показываем имя на текущем языке
+                const displayName = currentLang === 'ru' ? (item.nameRu || item.name) : (item.name || item.nameRu);
                 div.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${displayName}</span><span class="item-option-id">${item.id}</span></div>`;
                 
                 div.addEventListener('mousedown', (e) => {
@@ -1167,7 +1181,7 @@ Coins, 0, BlackMetal, 5`;
         qtyInput.type = 'number';
         qtyInput.min = '1';
         qtyInput.value = itemData.quantity;
-        qtyInput.title = t('quantity');
+        qtyInput.title = t('qtyTitle');
         qtyInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-qty`);
         qtyInput.onchange = (e) => {
             profiles[pIndex].trades[tIndex][side][itemIndex].quantity = parseInt(e.target.value) || 1;
@@ -1178,8 +1192,8 @@ Coins, 0, BlackMetal, 5`;
         const levelInput = document.createElement('input');
         levelInput.type = 'number';
         levelInput.min = '1';
-        levelInput.placeholder = 'Lvl';
-        levelInput.title = t('levelHint');
+        levelInput.placeholder = t('levelPlaceholder');
+        levelInput.title = t('levelTitle');
         levelInput.value = itemData.level || '';
         levelInput.style.width = '50px';
         levelInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-lvl`);
@@ -1214,7 +1228,7 @@ Coins, 0, BlackMetal, 5`;
         }
         
         if (profiles.length === 0) {
-            container.innerHTML = `<div class="empty-preview">${t('loadCfgOrExample')}</div>`;
+            container.innerHTML = `<div class="empty-preview">${t('editorEmpty')}</div>`;
             return;
         }
         
@@ -1270,7 +1284,7 @@ Coins, 0, BlackMetal, 5`;
         arrowCol.className = 'arrow-col';
         const arrow = document.createElement('div');
         arrow.className = 'exchange-arrow';
-        arrow.title = t('reverse');
+        arrow.title = t('arrowTitle');
         arrow.onclick = () => {
             const temp = trade.costs;
             trade.costs = trade.rewards;
@@ -1324,7 +1338,7 @@ Coins, 0, BlackMetal, 5`;
     }
 
     function addNewProfile() {
-        const name = prompt(t('enterTraderId'), 'NewTrader');
+        const name = prompt(t('promptProfileId'), t('defaultProfileName'));
         if (name) {
             profiles.push({ id: name.trim(), trades: [] });
             scheduleSync();
@@ -1387,9 +1401,10 @@ Coins, 0, BlackMetal, 5`;
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Применяем язык при загрузке
+        // Инициализация локализации
+        document.documentElement.lang = currentLang;
+        renderLanguageSwitcher();
         applyTranslations();
-        updateLangSwitcher();
         
         loadItemsData();
         
