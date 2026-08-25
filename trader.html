@@ -273,12 +273,14 @@
     let profiles = [];
     let isSyncing = false;
     let syncTimeout;
+    const BASE_ICON_URL = 'https://raw.githubusercontent.com/EnotinMax/skald/main/icons/';
 
-    // Загрузка базы предметов с правильным URL
+    // Загрузка базы предметов как в оригинальном скрипте
     async function loadItemsData() {
         try {
-            const response = await fetch('https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json');
-            if (!response.ok) throw new Error('Failed to fetch items.json');
+            const cacheBuster = `?v=${Date.now()}`;
+            const response = await fetch(`${BASE_ICON_URL}items.json${cacheBuster}`);
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             itemsData = await response.json();
             console.log(`Загружено ${itemsData.length} предметов`);
             if (profiles.length > 0) {
@@ -297,15 +299,14 @@
     }
 
     function getItemIconUrl(itemId) {
-        if (!itemsData.length) return 'https://via.placeholder.com/48?text=?';
         const item = getItemById(itemId);
-        if (!item) return 'https://via.placeholder.com/48?text=?';
-        // Иконки находятся в том же каталоге что и items.json
-        return `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
+        if (item && item.icon) {
+            return `${BASE_ICON_URL}${item.icon}`;
+        }
+        return `${BASE_ICON_URL}unknown.png`;
     }
 
     function getItemName(itemId) {
-        if (!itemsData.length) return itemId;
         const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
     }
@@ -461,7 +462,6 @@
                 const row = document.createElement('div');
                 row.className = 'trade-row';
                 
-                // СТОИМОСТЬ (сверху)
                 const costSide = document.createElement('div');
                 costSide.innerHTML = '<div class="trade-side-header">Забирает (стоимость)</div>';
                 trade.costs.forEach((cost, cIndex) => {
@@ -477,12 +477,10 @@
                 };
                 costSide.appendChild(addCostBtn);
 
-                // Разделитель
                 const sep = document.createElement('div');
                 sep.className = 'trade-vertical-separator';
                 sep.innerHTML = '<span>↓ ОБМЕН ↓</span>';
 
-                // НАГРАДА (снизу)
                 const rewardSide = document.createElement('div');
                 rewardSide.innerHTML = '<div class="trade-side-header">Выдает (награда)</div>';
                 trade.rewards.forEach((reward, rIndex) => {
@@ -498,7 +496,6 @@
                 };
                 rewardSide.appendChild(addRewardBtn);
 
-                // Кнопка удаления всей строки
                 const actions = document.createElement('div');
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
@@ -567,11 +564,11 @@
             matches.forEach(item => {
                 const opt = document.createElement('div');
                 opt.className = 'item-option';
-                opt.innerHTML = `<img src="https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                opt.innerHTML = `<img src="${BASE_ICON_URL}${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
                 opt.addEventListener('mousedown', (e) => {
                     e.preventDefault();
                     input.value = item.id;
-                    icon.src = `https://raw.githubusercontent.com/EnotinMax/skald/main/icons/${item.icon}`;
+                    icon.src = `${BASE_ICON_URL}${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
@@ -695,8 +692,8 @@
             img.alt = cost.itemId;
             iconEl.appendChild(img);
             
-            row.appendChild(itemInfo);
             row.appendChild(iconEl);
+            row.appendChild(itemInfo);
             leftSide.appendChild(row);
         });
         
@@ -798,7 +795,6 @@
             codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
         
-        // Загрузка примера при старте
         if (profiles.length === 0) {
             const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9, Wood, 123`;
             document.getElementById('cfgInput').value = exampleCFG;
