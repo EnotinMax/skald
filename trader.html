@@ -8,9 +8,11 @@
     <style>
         /* Дополнительные стили специально для редактора торговцев */
         .trader-layout { display: flex; flex: 1; overflow: hidden; }
-        .trader-code-panel { width: 40%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: var(--bg-primary); }
-        .trader-visual-panel { width: 60%; display: flex; flex-direction: column; background: var(--bg-secondary); overflow: hidden; }
-        .trader-editor-content { flex: 1; overflow-y: auto; padding: 20px; }
+        .trader-code-panel { width: 33%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: var(--bg-primary); }
+        .trader-preview-panel { width: 34%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: #1a1510; overflow: hidden; }
+        .trader-editor-panel { width: 33%; display: flex; flex-direction: column; background: var(--bg-secondary); overflow: hidden; }
+        
+        .editor-content { flex: 1; overflow-y: auto; padding: 20px; }
         
         .profile-card { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
@@ -38,15 +40,6 @@
         .empty-state-trader { text-align: center; padding: 40px; color: var(--text-secondary); font-style: italic; }
         
         /* === PREVIEW PANEL - VALHEIM STYLE === */
-        .preview-panel { 
-            width: 50%; 
-            background: #1a1510; 
-            border-left: 2px solid var(--border);
-            display: flex; 
-            flex-direction: column;
-            overflow: hidden;
-        }
-        
         .preview-header {
             background: linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
             padding: 12px 20px;
@@ -150,11 +143,6 @@
             font-weight: bold;
         }
         
-        .item-stars {
-            color: #f39c12;
-            font-size: 11px;
-        }
-        
         .item-icon-preview {
             width: 48px;
             height: 48px;
@@ -212,37 +200,7 @@
         /* Адаптив */
         @media (max-width: 1200px) {
             .trader-layout { flex-direction: column; }
-            .trader-code-panel, .trader-visual-panel, .preview-panel { width: 100%; height: 33.33vh; }
-        }
-        
-        .preview-tabs {
-            display: flex;
-            background: var(--bg-secondary);
-            border-bottom: 2px solid var(--border);
-        }
-        
-        .preview-tab {
-            flex: 1;
-            padding: 12px;
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .preview-tab:hover {
-            background: var(--bg-tertiary);
-            color: var(--text-primary);
-        }
-        
-        .preview-tab.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-            background: rgba(243, 156, 18, 0.1);
+            .trader-code-panel, .trader-preview-panel, .trader-editor-panel { width: 100%; height: 33.33vh; }
         }
     </style>
 </head>
@@ -270,27 +228,28 @@
         <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;Wood, 1, Ruby, 10&#10;&#10;[PetsTrader]&#10;Stone, 100, Wolf, 1, 5&#10;BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123"></textarea>
         <div class="code-actions">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
-            <span class="code-hint">Авто-синхронизация включена</span>
+            <span class="code-hint">Авто-синхронизация</span>
         </div>
     </div>
 
-    <!-- Средняя панель: Визуальный редактор -->
-    <div class="trader-visual-panel">
-        <div class="preview-tabs">
-            <button class="preview-tab active" onclick="switchTab('editor')">️ Редактор</button>
-            <button class="preview-tab" onclick="switchTab('preview')">👁️ Preview</button>
+    <!-- Средняя панель: Preview -->
+    <div class="trader-preview-panel">
+        <div class="preview-header">
+            <h2>Trader</h2>
         </div>
-        <div id="editorPanel" class="trader-editor-content">
+        <div class="preview-content" id="gamePreview">
+            <!-- Preview content will be generated here -->
+        </div>
+    </div>
+
+    <!-- Правая панель: Редактор -->
+    <div class="trader-editor-panel">
+        <div class="code-tabs">
+            <button class="code-tab active">️ Редактор</button>
+        </div>
+        <div id="editorPanel" class="editor-content">
             <div class="empty-state-trader">
-                Нажмите "Импорт", чтобы загрузить CFG, или начните с добавления профиля.
-            </div>
-        </div>
-        <div id="previewPanel" class="preview-panel" style="display: none;">
-            <div class="preview-header">
-                <h2>Trader</h2>
-            </div>
-            <div class="preview-content" id="gamePreview">
-                <!-- Preview content will be generated here -->
+                Введите CFG код слева или добавьте новый профиль
             </div>
         </div>
     </div>
@@ -305,47 +264,39 @@
     let itemsData = [];
     let profiles = [];
     let isSyncing = false;
+    let syncTimeout;
 
     // Загрузка базы предметов
     async function loadItemsData() {
         try {
-            const response = await fetch('https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json');
+            const response = await fetch('https://enotinmax.github.io/icons/items.json');
             itemsData = await response.json();
             console.log(`Загружено ${itemsData.length} предметов`);
             // После загрузки данных перерисовываем всё
-            renderVisual();
-            renderPreview();
+            if (profiles.length > 0) {
+                renderVisual();
+                renderPreview();
+            }
         } catch (err) {
             console.error('Ошибка загрузки items.json:', err);
         }
     }
 
+    function getItemById(itemId) {
+        return itemsData.find(i => i.id === itemId);
+    }
+
     function getItemIconUrl(itemId) {
         if (!itemsData.length) return 'https://via.placeholder.com/48?text=?';
-        const item = itemsData.find(i => i.id === itemId);
-        return item ? `https://enotinmax.github.io/skald/icons/${item.icon}` : 'https://via.placeholder.com/48?text=?';
+        const item = getItemById(itemId);
+        if (!item) return 'https://via.placeholder.com/48?text=?';
+        return `https://enotinmax.github.io/icons/${item.icon}`;
     }
 
     function getItemName(itemId) {
         if (!itemsData.length) return itemId;
-        const item = itemsData.find(i => i.id === itemId);
+        const item = getItemById(itemId);
         return item ? (item.nameRu || item.name) : itemId;
-    }
-
-    function switchTab(tab) {
-        const tabs = document.querySelectorAll('.preview-tab');
-        tabs.forEach(t => t.classList.remove('active'));
-        
-        if (tab === 'editor') {
-            tabs[0].classList.add('active');
-            document.getElementById('editorPanel').style.display = 'block';
-            document.getElementById('previewPanel').style.display = 'none';
-        } else {
-            tabs[1].classList.add('active');
-            document.getElementById('editorPanel').style.display = 'none';
-            document.getElementById('previewPanel').style.display = 'flex';
-            renderPreview();
-        }
     }
 
     // --- Парсинг CFG ---
@@ -446,7 +397,7 @@
         panel.innerHTML = '';
 
         if (profiles.length === 0) {
-            panel.innerHTML = '<div class="empty-state-trader">Нет профилей. Нажмите "+ Новый профиль торговца"</div>';
+            panel.innerHTML = '<div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>';
             return;
         }
 
@@ -461,7 +412,7 @@
             const removeProfileBtn = document.createElement('button');
             removeProfileBtn.className = 'btn-small danger';
             removeProfileBtn.textContent = 'Удалить профиль';
-            removeProfileBtn.onclick = () => { profiles.splice(pIndex, 1); renderVisual(); updateCodeFromEditor(); };
+            removeProfileBtn.onclick = () => { profiles.splice(pIndex, 1); scheduleSync(); };
             header.appendChild(removeProfileBtn);
             card.appendChild(header);
 
@@ -485,8 +436,7 @@
                 addCostBtn.onclick = () => { 
                     trade.costs.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
-                    renderVisual();
-                    updateCodeFromEditor();
+                    scheduleSync();
                 };
                 costSide.appendChild(addCostBtn);
 
@@ -506,8 +456,7 @@
                 addRewardBtn.onclick = () => { 
                     trade.rewards.push({ itemId: '', quantity: 1, level: null }); 
                     trade.edited = true; 
-                    renderVisual();
-                    updateCodeFromEditor();
+                    scheduleSync();
                 };
                 rewardSide.appendChild(addRewardBtn);
 
@@ -517,7 +466,7 @@
                 delBtn.className = 'btn-remove-trade icon-btn-small';
                 delBtn.textContent = '️';
                 delBtn.title = 'Удалить правило обмена';
-                delBtn.onclick = () => { profile.trades.splice(tIndex, 1); renderVisual(); updateCodeFromEditor(); };
+                delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
                 row.append(costSide, sep, rewardSide, actions);
@@ -535,8 +484,7 @@
                     rewards: [{ itemId: '', quantity: 1, level: null }], 
                     edited: true 
                 }); 
-                renderVisual();
-                updateCodeFromEditor();
+                scheduleSync();
             };
             card.appendChild(addTradeBtn);
             panel.appendChild(card);
@@ -582,10 +530,10 @@
             matches.forEach(item => {
                 const opt = document.createElement('div');
                 opt.className = 'item-option';
-                opt.innerHTML = `<img src="https://enotinmax.github.io/skald/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
+                opt.innerHTML = `<img src="https://enotinmax.github.io/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
                 opt.addEventListener('click', () => {
                     input.value = item.id;
-                    icon.src = `https://enotinmax.github.io/skald/icons/${item.icon}`;
+                    icon.src = `https://enotinmax.github.io/icons/${item.icon}`;
                     dropdown.classList.remove('active');
                     updateData(item.id);
                 });
@@ -596,7 +544,7 @@
         function updateData(newId) {
             profiles[pIndex].trades[tIndex][side][itemIndex].itemId = newId;
             profiles[pIndex].trades[tIndex].edited = true;
-            updateCodeFromEditor();
+            scheduleSync();
         }
 
         input.addEventListener('input', (e) => {
@@ -623,7 +571,7 @@
         qtyInput.onchange = (e) => {
             profiles[pIndex].trades[tIndex][side][itemIndex].quantity = parseInt(e.target.value) || 1;
             profiles[pIndex].trades[tIndex].edited = true;
-            updateCodeFromEditor();
+            scheduleSync();
         };
 
         // Level Input
@@ -638,7 +586,7 @@
             const val = e.target.value ? parseInt(e.target.value) : null;
             profiles[pIndex].trades[tIndex][side][itemIndex].level = val;
             profiles[pIndex].trades[tIndex].edited = true;
-            updateCodeFromEditor();
+            scheduleSync();
         };
 
         // Кнопка удаления строки предмета
@@ -649,8 +597,7 @@
         removeItemBtn.onclick = () => {
             profiles[pIndex].trades[tIndex][side].splice(itemIndex, 1);
             profiles[pIndex].trades[tIndex].edited = true;
-            renderVisual();
-            updateCodeFromEditor();
+            scheduleSync();
         };
 
         row.append(selectorWrapper, qtyInput, levelInput, removeItemBtn);
@@ -730,7 +677,6 @@
             nameEl.className = 'item-name';
             let levelText = '';
             if (reward.level) {
-                const stars = '★'.repeat(Math.min(reward.level - 1, 4));
                 levelText = ` (${reward.level}★)`;
             }
             nameEl.textContent = getItemName(reward.itemId) + levelText;
@@ -763,32 +709,39 @@
     // --- Управление данными ---
     function updateProfileId(index, newId) {
         profiles[index].id = newId.trim();
-        updateCodeFromEditor();
+        scheduleSync();
     }
 
     function addNewProfile() {
         const name = prompt('Введите ID профиля торговца (например, MyTrader):', 'NewTrader');
         if (name) {
             profiles.push({ id: name.trim(), trades: [] });
-            renderVisual();
-            updateCodeFromEditor();
+            scheduleSync();
         }
     }
 
-    function updateCodeFromEditor() {
-        if (isSyncing) return;
+    function scheduleSync() {
+        if (isSyncing) {
+            clearTimeout(syncTimeout);
+        }
         isSyncing = true;
+        syncTimeout = setTimeout(() => {
+            updateAllViews();
+            isSyncing = false;
+        }, 100);
+    }
+
+    function updateAllViews() {
         const cfg = generateCFG();
         document.getElementById('cfgInput').value = cfg;
-        setTimeout(() => { isSyncing = false; }, 100);
+        renderVisual();
+        renderPreview();
     }
 
     function updateEditorFromCode() {
         if (isSyncing) return;
-        isSyncing = true;
         const text = document.getElementById('cfgInput').value;
         parseCFG(text);
-        setTimeout(() => { isSyncing = false; }, 100);
     }
 
     function exportCFG() {
@@ -804,17 +757,23 @@
         URL.revokeObjectURL(url);
     }
 
-    // Инициализация примером при загрузке
+    // Инициализация при загрузке
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
         // Слушатель изменений в текстовом поле
-        let timeout;
+        let codeTimeout;
         document.getElementById('cfgInput').addEventListener('input', (e) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
+            clearTimeout(codeTimeout);
+            codeTimeout = setTimeout(() => {
                 updateEditorFromCode();
             }, 500); // Задержка 500мс чтобы не парсить при каждом нажатии клавиши
         });
+        // Загрузим пример при старте
+        if (profiles.length === 0) {
+            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nWood, 1, Ruby, 10`;
+            document.getElementById('cfgInput').value = exampleCFG;
+            parseCFG(exampleCFG);
+        }
     });
 </script>
 
