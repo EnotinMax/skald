@@ -6,47 +6,68 @@
     <title>Skald - Редактор Торговцев (KGMarketPlace)</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Дополнительные стили специально для редактора торговцев */
         .trader-layout { display: flex; flex: 1; overflow: hidden; }
         .trader-code-panel { width: 33%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: var(--bg-primary); }
         .trader-preview-panel { width: 34%; display: flex; flex-direction: column; border-right: 2px solid var(--border); background: #1a1510; overflow: hidden; }
         .trader-editor-panel { width: 33%; display: flex; flex-direction: column; background: var(--bg-secondary); overflow: hidden; }
         
-        .editor-content { flex: 1; overflow-y: auto; padding: 20px; }
+        .editor-content { flex: 1; overflow-y: auto; padding: 16px; }
         
         .profile-card { background: var(--bg-primary); border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
         .profile-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
         .profile-header h3 { color: var(--accent); margin: 0; font-size: 16px; white-space: nowrap; }
         .profile-header input { flex: 1; font-family: monospace; font-size: 14px; }
         
-        .trade-row { display: flex; gap: 16px; align-items: flex-start; background: var(--bg-secondary); padding: 12px; border-radius: 6px; margin-bottom: 8px; border: 1px solid var(--border); position: relative; }
+        /* Вертикальная компоновка для предотвращения выезда за экран */
+        .trade-row { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            background: var(--bg-secondary); 
+            padding: 16px; 
+            border-radius: 6px; 
+            margin-bottom: 12px; 
+            border: 1px solid var(--border); 
+        }
         .trade-row:hover { border-color: var(--accent-blue); }
-        .trade-side { flex: 1; display: flex; flex-direction: column; gap: 8px; }
-        .trade-side-header { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; }
         
-        .trade-item-row { display: flex; gap: 8px; align-items: center; }
+        .trade-side-header { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: bold; margin-bottom: 4px; }
+        
+        .trade-item-row { display: flex; gap: 8px; align-items: center; margin-bottom: 6px; }
         .trade-item-row .item-selector { flex: 2; }
         .trade-item-row input[type="number"] { width: 60px; padding: 7px; background: var(--bg-primary); border: 1px solid var(--border); border-radius: 4px; color: var(--text-primary); text-align: center; font-size: 13px; }
         .trade-item-row input[type="number"]:focus { outline: none; border-color: var(--accent); }
         
-        .trade-separator { display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--accent); font-weight: bold; padding-top: 24px; min-width: 30px; }
-        .trade-actions { display: flex; flex-direction: column; gap: 8px; justify-content: flex-start; padding-top: 20px; }
+        .trade-vertical-separator { 
+            text-align: center; 
+            color: var(--accent); 
+            font-size: 14px; 
+            font-weight: bold; 
+            padding: 8px 0; 
+            border-top: 1px dashed var(--border); 
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
         
-        .btn-add-item { padding: 4px 8px; font-size: 11px; background: var(--bg-tertiary); border: 1px dashed var(--border); color: var(--text-secondary); width: 100%; margin-top: 4px; }
+        .trade-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
+        
+        .btn-add-item { padding: 6px 12px; font-size: 12px; background: var(--bg-tertiary); border: 1px dashed var(--border); color: var(--text-secondary); width: 100%; margin-top: 8px; border-radius: 4px; cursor: pointer; }
         .btn-add-item:hover { border-color: var(--accent); color: var(--accent); }
-        .btn-remove-trade { padding: 4px 8px; font-size: 11px; background: rgba(231, 76, 60, 0.2); color: var(--danger); border: 1px solid var(--danger); }
+        .btn-remove-trade { padding: 4px 8px; font-size: 11px; background: rgba(231, 76, 60, 0.2); color: var(--danger); border: 1px solid var(--danger); border-radius: 4px; cursor: pointer; }
         .btn-remove-trade:hover { background: var(--danger); color: white; }
 
         .empty-state-trader { text-align: center; padding: 40px; color: var(--text-secondary); font-style: italic; }
         
-        /* === PREVIEW PANEL - VALHEIM STYLE === */
+        /* === PREVIEW PANEL === */
         .preview-header {
             background: linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
             padding: 12px 20px;
             border-bottom: 2px solid #5c4a3a;
             text-align: center;
         }
-        
         .preview-header h2 {
             color: #e8d8a3;
             font-family: 'Georgia', serif;
@@ -55,30 +76,22 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
             letter-spacing: 1px;
         }
-        
         .preview-content {
             flex: 1;
             overflow-y: auto;
             padding: 20px;
-            background: 
-                radial-gradient(ellipse at top, rgba(139, 115, 85, 0.15) 0%, transparent 50%),
-                linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
+            background: radial-gradient(ellipse at top, rgba(139, 115, 85, 0.15) 0%, transparent 50%), linear-gradient(180deg, #2a2520 0%, #1a1510 100%);
             position: relative;
         }
-        
         .preview-content::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
+            top: 0; left: 0; right: 0; bottom: 0;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
             opacity: 0.4;
             pointer-events: none;
         }
         
-        /* Trade Items */
         .trade-item-preview {
             display: flex;
             align-items: center;
@@ -90,114 +103,51 @@
             margin-bottom: 12px;
             position: relative;
             z-index: 1;
-            box-shadow: 
-                0 4px 8px rgba(0,0,0,0.4),
-                inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
             transition: all 0.2s;
         }
-        
         .trade-item-preview:hover {
             border-color: #7c6a5a;
             transform: translateY(-2px);
-            box-shadow: 
-                0 6px 12px rgba(0,0,0,0.5),
-                inset 0 1px 0 rgba(255,255,255,0.08);
         }
+        .trade-side-preview { flex: 1; display: flex; align-items: center; gap: 12px; }
+        .trade-side-preview.give-side { justify-content: flex-end; text-align: right; }
         
-        .trade-side-preview {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        
-        .trade-side-preview.give-side {
-            justify-content: flex-end;
-            text-align: right;
-        }
-        
-        .item-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            min-width: 100px;
-        }
-        
-        .item-name {
-            color: #e8d8a3;
-            font-family: 'Georgia', serif;
-            font-size: 15px;
-            font-weight: 600;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-        }
-        
-        .item-quantity {
-            color: #f1c40f;
-            font-size: 13px;
-            font-weight: bold;
-        }
-        
-        .item-level {
-            color: #27ae60;
-            font-size: 12px;
-            font-weight: bold;
-        }
+        .item-info { display: flex; flex-direction: column; gap: 2px; min-width: 100px; }
+        .item-name { color: #e8d8a3; font-family: 'Georgia', serif; font-size: 15px; font-weight: 600; text-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
+        .item-quantity { color: #f1c40f; font-size: 13px; font-weight: bold; }
+        .item-level { color: #27ae60; font-size: 12px; font-weight: bold; }
         
         .item-icon-preview {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             background: linear-gradient(135deg, rgba(139, 115, 85, 0.3) 0%, rgba(92, 74, 58, 0.3) 100%);
             border: 2px solid #7c6a5a;
             border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
             box-shadow: 0 2px 6px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.1);
         }
-        
-        .item-icon-preview img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.6));
-        }
+        .item-icon-preview img { width: 40px; height: 40px; object-fit: contain; filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.6)); }
         
         .exchange-arrow {
-            width: 52px;
-            height: 52px;
+            width: 48px; height: 48px;
             background: linear-gradient(135deg, #27ae60 0%, #1e8449 100%);
             border: 2px solid #1e8449;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 
-                0 4px 8px rgba(0,0,0,0.4),
-                inset 0 2px 4px rgba(255,255,255,0.2);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4), inset 0 2px 4px rgba(255,255,255,0.2);
             flex-shrink: 0;
         }
-        
         .exchange-arrow::after {
             content: '▶';
             color: #e8f8e8;
-            font-size: 24px;
+            font-size: 22px;
             font-weight: bold;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-left: 4px;
+            margin-left: 3px;
         }
         
-        .empty-preview {
-            text-align: center;
-            padding: 60px 20px;
-            color: #8b7355;
-            font-family: 'Georgia', serif;
-            font-style: italic;
-            font-size: 16px;
-            position: relative;
-            z-index: 1;
-        }
-        
-        /* Адаптив */
+        .empty-preview { text-align: center; padding: 60px 20px; color: #8b7355; font-family: 'Georgia', serif; font-style: italic; font-size: 16px; position: relative; z-index: 1; }
+
         @media (max-width: 1200px) {
             .trader-layout { flex-direction: column; }
             .trader-code-panel, .trader-preview-panel, .trader-editor-panel { width: 100%; height: 33.33vh; }
@@ -225,7 +175,7 @@
         <div class="code-tabs">
             <button class="code-tab active">CFG Исходник</button>
         </div>
-        <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;Wood, 1, Ruby, 10&#10;&#10;[PetsTrader]&#10;Stone, 100, Wolf, 1, 5&#10;BlackMetal, 1, AxeBlackMetal, 1, 9, Coins, 25 = AxeBlackMetal, 1, 10, Wood, 123"></textarea>
+        <textarea id="cfgInput" class="code-editor" placeholder="[TestTrader]&#10;Coins, 100, SwordIron, 1, 2&#10;BlackMetal, 1, 2 = AxeBlackMetal, 1, 9"></textarea>
         <div class="code-actions">
             <button class="secondary" onclick="exportCFG()">💾 Экспорт</button>
             <span class="code-hint">Авто-синхронизация</span>
@@ -237,26 +187,21 @@
         <div class="preview-header">
             <h2>Trader</h2>
         </div>
-        <div class="preview-content" id="gamePreview">
-            <!-- Preview content will be generated here -->
-        </div>
+        <div class="preview-content" id="gamePreview"></div>
     </div>
 
     <!-- Правая панель: Редактор -->
     <div class="trader-editor-panel">
         <div class="code-tabs">
-            <button class="code-tab active">️ Редактор</button>
+            <button class="code-tab active">✏️ Редактор</button>
         </div>
         <div id="editorPanel" class="editor-content">
-            <div class="empty-state-trader">
-                Введите CFG код слева или добавьте новый профиль
-            </div>
+            <div class="empty-state-trader">Введите CFG код слева или добавьте новый профиль</div>
         </div>
     </div>
 </main>
 
-<!-- Кнопки добавления -->
-<div style="position: fixed; bottom: 20px; right: 20px; display: flex; gap: 10px; z-index: 100;">
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 100;">
     <button class="btn-primary" onclick="addNewProfile()" style="box-shadow: 0 4px 15px rgba(0,0,0,0.5);">+ Новый профиль</button>
 </div>
 
@@ -266,19 +211,27 @@
     let isSyncing = false;
     let syncTimeout;
 
-    // Загрузка базы предметов
+    // Надежная загрузка базы предметов с резервным URL
     async function loadItemsData() {
         try {
-            const response = await fetch('https://enotinmax.github.io/icons/items.json');
+            let response = await fetch('https://enotinmax.github.io/icons/items.json');
+            if (!response.ok) throw new Error('Primary fetch failed');
             itemsData = await response.json();
-            console.log(`Загружено ${itemsData.length} предметов`);
-            // После загрузки данных перерисовываем всё
-            if (profiles.length > 0) {
+        } catch (err) {
+            console.warn('Основной URL не сработал, используем резервный...', err);
+            try {
+                const res = await fetch('https://raw.githubusercontent.com/EnotinMax/skald/main/icons/items.json');
+                itemsData = await res.json();
+            } catch (e) {
+                console.error('Не удалось загрузить items.json:', e);
+            }
+        }
+        console.log(`Загружено ${itemsData.length} предметов`);
+        if (profiles.length > 0) {
+            renderWithFocusRestore(() => {
                 renderVisual();
                 renderPreview();
-            }
-        } catch (err) {
-            console.error('Ошибка загрузки items.json:', err);
+            });
         }
     }
 
@@ -344,7 +297,6 @@
                     parseSideTo(costTokens, costs);
                     parseSideTo(rewardTokens, rewards);
                 } else {
-                    // Старый формат: ItemA, QtyA, ItemB, QtyB, [LevelB]
                     const tokens = line.split(',').map(t => t.trim()).filter(t => t);
                     if (tokens.length >= 4) {
                         costs.push({ itemId: tokens[0], quantity: parseInt(tokens[1]) || 1, level: null });
@@ -355,12 +307,13 @@
                         });
                     }
                 }
-                
                 currentProfile.trades.push({ raw: line, costs, rewards, edited: false });
             }
         }
-        renderVisual();
-        renderPreview();
+        renderWithFocusRestore(() => {
+            renderVisual();
+            renderPreview();
+        });
     }
 
     // --- Генерация CFG ---
@@ -391,6 +344,32 @@
         return output.trim();
     }
 
+    // --- Управление фокусом (Решение проблемы "слетающего" ввода) ---
+    function renderWithFocusRestore(renderFn) {
+        const activeEl = document.activeElement;
+        let focusPath = null, start = 0, end = 0;
+        
+        if (activeEl && (activeEl.tagName === 'INPUT' || activeEl.tagName === 'TEXTAREA')) {
+            focusPath = activeEl.getAttribute('data-path');
+            start = activeEl.selectionStart;
+            end = activeEl.selectionEnd;
+        }
+
+        renderFn();
+
+        if (focusPath) {
+            setTimeout(() => {
+                const newEl = document.querySelector(`[data-path="${focusPath}"]`);
+                if (newEl) {
+                    newEl.focus();
+                    if (newEl.setSelectionRange) {
+                        newEl.setSelectionRange(start, end);
+                    }
+                }
+            }, 0);
+        }
+    }
+
     // --- Визуальный рендеринг ---
     function renderVisual() {
         const panel = document.getElementById('editorPanel');
@@ -407,11 +386,11 @@
             
             const header = document.createElement('div');
             header.className = 'profile-header';
-            header.innerHTML = `<h3>Профиль:</h3><input type="text" class="form-control" value="${profile.id}" onchange="updateProfileId(${pIndex}, this.value)">`;
+            header.innerHTML = `<h3>Профиль:</h3><input type="text" class="form-control" value="${profile.id}" data-path="profile-${pIndex}-id" onchange="updateProfileId(${pIndex}, this.value)">`;
             
             const removeProfileBtn = document.createElement('button');
             removeProfileBtn.className = 'btn-small danger';
-            removeProfileBtn.textContent = 'Удалить профиль';
+            removeProfileBtn.textContent = 'Удалить';
             removeProfileBtn.onclick = () => { profiles.splice(pIndex, 1); scheduleSync(); };
             header.appendChild(removeProfileBtn);
             card.appendChild(header);
@@ -424,8 +403,8 @@
                 const row = document.createElement('div');
                 row.className = 'trade-row';
                 
+                // СТОИМОСТЬ (сверху)
                 const costSide = document.createElement('div');
-                costSide.className = 'trade-side';
                 costSide.innerHTML = '<div class="trade-side-header">Забирает (стоимость)</div>';
                 trade.costs.forEach((cost, cIndex) => {
                     costSide.appendChild(createItemRow(cost, pIndex, tIndex, 'costs', cIndex));
@@ -440,12 +419,13 @@
                 };
                 costSide.appendChild(addCostBtn);
 
+                // Разделитель
                 const sep = document.createElement('div');
-                sep.className = 'trade-separator';
-                sep.textContent = '➔';
+                sep.className = 'trade-vertical-separator';
+                sep.innerHTML = '<span>↓ ОБМЕН ↓</span>';
 
+                // НАГРАДА (снизу)
                 const rewardSide = document.createElement('div');
-                rewardSide.className = 'trade-side';
                 rewardSide.innerHTML = '<div class="trade-side-header">Выдает (награда)</div>';
                 trade.rewards.forEach((reward, rIndex) => {
                     rewardSide.appendChild(createItemRow(reward, pIndex, tIndex, 'rewards', rIndex));
@@ -460,12 +440,12 @@
                 };
                 rewardSide.appendChild(addRewardBtn);
 
+                // Кнопка удаления всей строки
                 const actions = document.createElement('div');
                 actions.className = 'trade-actions';
                 const delBtn = document.createElement('button');
-                delBtn.className = 'btn-remove-trade icon-btn-small';
-                delBtn.textContent = '️';
-                delBtn.title = 'Удалить правило обмена';
+                delBtn.className = 'btn-remove-trade';
+                delBtn.textContent = '🗑️ Удалить правило';
                 delBtn.onclick = () => { profile.trades.splice(tIndex, 1); scheduleSync(); };
                 actions.appendChild(delBtn);
 
@@ -495,7 +475,6 @@
         const row = document.createElement('div');
         row.className = 'trade-item-row';
         
-        // Item Selector
         const selectorWrapper = document.createElement('div');
         selectorWrapper.className = 'item-selector';
         
@@ -509,7 +488,8 @@
         const input = document.createElement('input');
         input.className = 'item-selector-input';
         input.value = itemData.itemId;
-        input.placeholder = 'Выберите предмет...';
+        input.placeholder = 'ID или название...';
+        input.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-id`);
         
         const dropdown = document.createElement('div');
         dropdown.className = 'item-selector-dropdown';
@@ -517,7 +497,6 @@
         inputWrapper.append(icon, input);
         selectorWrapper.append(inputWrapper, dropdown);
         
-        // Логика выпадающего списка
         function updateDropdown(filter = '') {
             dropdown.innerHTML = '';
             const lowerFilter = filter.toLowerCase();
@@ -531,7 +510,8 @@
                 const opt = document.createElement('div');
                 opt.className = 'item-option';
                 opt.innerHTML = `<img src="https://enotinmax.github.io/icons/${item.icon}" alt=""><div class="item-option-text"><span class="item-option-name">${item.nameRu || item.name}</span><span class="item-option-id">${item.id}</span></div>`;
-                opt.addEventListener('click', () => {
+                opt.addEventListener('mousedown', (e) => {
+                    e.preventDefault(); // Предотвращаем потерю фокуса при клике
                     input.value = item.id;
                     icon.src = `https://enotinmax.github.io/icons/${item.icon}`;
                     dropdown.classList.remove('active');
@@ -562,19 +542,18 @@
             if (!selectorWrapper.contains(e.target)) dropdown.classList.remove('active');
         });
 
-        // Quantity Input
         const qtyInput = document.createElement('input');
         qtyInput.type = 'number';
         qtyInput.min = '1';
         qtyInput.value = itemData.quantity;
         qtyInput.title = 'Количество';
+        qtyInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-qty`);
         qtyInput.onchange = (e) => {
             profiles[pIndex].trades[tIndex][side][itemIndex].quantity = parseInt(e.target.value) || 1;
             profiles[pIndex].trades[tIndex].edited = true;
             scheduleSync();
         };
 
-        // Level Input
         const levelInput = document.createElement('input');
         levelInput.type = 'number';
         levelInput.min = '1';
@@ -582,6 +561,7 @@
         levelInput.title = 'Уровень предмета (необязательно)';
         levelInput.value = itemData.level || '';
         levelInput.style.width = '50px';
+        levelInput.setAttribute('data-path', `p${pIndex}-t${tIndex}-${side}-${itemIndex}-lvl`);
         levelInput.onchange = (e) => {
             const val = e.target.value ? parseInt(e.target.value) : null;
             profiles[pIndex].trades[tIndex][side][itemIndex].level = val;
@@ -589,7 +569,6 @@
             scheduleSync();
         };
 
-        // Кнопка удаления строки предмета
         const removeItemBtn = document.createElement('button');
         removeItemBtn.className = 'btn-small danger';
         removeItemBtn.textContent = '×';
@@ -614,13 +593,10 @@
             return;
         }
         
-        // Render all trades from all profiles
         profiles.forEach(profile => {
             profile.trades.forEach(trade => {
                 const tradeEl = createTradePreview(trade);
-                if (tradeEl) {
-                    container.appendChild(tradeEl);
-                }
+                if (tradeEl) container.appendChild(tradeEl);
             });
         });
     }
@@ -634,14 +610,14 @@
         // Left side (costs)
         const leftSide = document.createElement('div');
         leftSide.className = 'trade-side-preview';
-        
         trade.costs.forEach(cost => {
             const itemInfo = document.createElement('div');
             itemInfo.className = 'item-info';
             
             const nameEl = document.createElement('div');
             nameEl.className = 'item-name';
-            nameEl.textContent = getItemName(cost.itemId);
+            let levelText = cost.level ? ` (${cost.level}★)` : '';
+            nameEl.textContent = getItemName(cost.itemId) + levelText;
             
             const qtyEl = document.createElement('div');
             qtyEl.className = 'item-quantity';
@@ -654,31 +630,25 @@
             iconEl.className = 'item-icon-preview';
             const img = document.createElement('img');
             img.src = getItemIconUrl(cost.itemId);
-            img.alt = cost.itemId;
             iconEl.appendChild(img);
             
             leftSide.appendChild(iconEl);
             leftSide.appendChild(itemInfo);
         });
         
-        // Arrow (not a button)
         const arrow = document.createElement('div');
         arrow.className = 'exchange-arrow';
         
         // Right side (rewards)
         const rightSide = document.createElement('div');
         rightSide.className = 'trade-side-preview give-side';
-        
         trade.rewards.forEach(reward => {
             const itemInfo = document.createElement('div');
             itemInfo.className = 'item-info';
             
             const nameEl = document.createElement('div');
             nameEl.className = 'item-name';
-            let levelText = '';
-            if (reward.level) {
-                levelText = ` (${reward.level}★)`;
-            }
+            let levelText = reward.level ? ` (${reward.level}★)` : '';
             nameEl.textContent = getItemName(reward.itemId) + levelText;
             
             const qtyEl = document.createElement('div');
@@ -692,17 +662,13 @@
             iconEl.className = 'item-icon-preview';
             const img = document.createElement('img');
             img.src = getItemIconUrl(reward.itemId);
-            img.alt = reward.itemId;
             iconEl.appendChild(img);
             
             rightSide.appendChild(itemInfo);
             rightSide.appendChild(iconEl);
         });
         
-        container.appendChild(leftSide);
-        container.appendChild(arrow);
-        container.appendChild(rightSide);
-        
+        container.append(leftSide, arrow, rightSide);
         return container;
     }
 
@@ -713,7 +679,7 @@
     }
 
     function addNewProfile() {
-        const name = prompt('Введите ID профиля торговца (например, MyTrader):', 'NewTrader');
+        const name = prompt('Введите ID профиля торговца:', 'NewTrader');
         if (name) {
             profiles.push({ id: name.trim(), trades: [] });
             scheduleSync();
@@ -721,21 +687,17 @@
     }
 
     function scheduleSync() {
-        if (isSyncing) {
-            clearTimeout(syncTimeout);
-        }
+        if (isSyncing) clearTimeout(syncTimeout);
         isSyncing = true;
         syncTimeout = setTimeout(() => {
-            updateAllViews();
+            const cfg = generateCFG();
+            document.getElementById('cfgInput').value = cfg;
+            renderWithFocusRestore(() => {
+                renderVisual();
+                renderPreview();
+            });
             isSyncing = false;
-        }, 100);
-    }
-
-    function updateAllViews() {
-        const cfg = generateCFG();
-        document.getElementById('cfgInput').value = cfg;
-        renderVisual();
-        renderPreview();
+        }, 150);
     }
 
     function updateEditorFromCode() {
@@ -757,25 +719,21 @@
         URL.revokeObjectURL(url);
     }
 
-    // Инициализация при загрузке
     window.addEventListener('DOMContentLoaded', () => {
         loadItemsData();
-        // Слушатель изменений в текстовом поле
         let codeTimeout;
         document.getElementById('cfgInput').addEventListener('input', (e) => {
             clearTimeout(codeTimeout);
-            codeTimeout = setTimeout(() => {
-                updateEditorFromCode();
-            }, 500); // Задержка 500мс чтобы не парсить при каждом нажатии клавиши
+            codeTimeout = setTimeout(() => updateEditorFromCode(), 600);
         });
-        // Загрузим пример при старте
+        
+        // Загрузка примера при старте
         if (profiles.length === 0) {
-            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nWood, 1, Ruby, 10`;
+            const exampleCFG = `[TestTrader]\nCoins, 100, SwordIron, 1, 2\nBlackMetal, 1, 2 = AxeBlackMetal, 1, 9`;
             document.getElementById('cfgInput').value = exampleCFG;
             parseCFG(exampleCFG);
         }
     });
 </script>
-
 </body>
 </html>
