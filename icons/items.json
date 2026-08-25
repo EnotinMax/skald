@@ -679,6 +679,6 @@
   {"id": "YmirRemains", "name": "Ymir Flesh", "nameRu": "Плоть Имира", "category": "materials", "icon": "YmirRemains.png"},
   {"id": "chest_hildir1", "name": "Hildir's Chest 1", "nameRu": "Медный сундук Хильдир", "category": "misc", "icon": "chest_hildir1.png"},
   {"id": "chest_hildir2", "name": "Hildir's Chest 2", "nameRu": "Серебряный сундук Хильдир", "category": "misc", "icon": "chest_hildir2.png"},
-  {"id": "chest_hildir3", "name": "Hildir's Chest 3", "nameRu": "Бронзовый сундук Хильдир", "category": "misc", "icon": "chest_hildir3.png"}
+  {"id": "chest_hildir3", "name": "Hildir's Chest 3", "nameRu": "Бронзовый сундук Хильдир", "category": "misc", "icon": "chest_hildir3.png"},
   {"id": "EpicMMO_EXP", "name": "EpicMMO Exp", "nameRu": "EpicMMO Опыт", "category": "misc", "icon": "EpicMMO_EXP.png"}
 ]
